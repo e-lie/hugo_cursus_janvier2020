@@ -1,0 +1,10 @@
+baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
+languageCode = "fr-FR"
+title = "Cursus DevOps Janvier 2020"
+
+# Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
+theme = "hugo-theme-learn"
+
+# Pour la fonctionnalité de recherche
+[outputs]
+home = [ "HTML", "RSS", "JSON" ]
