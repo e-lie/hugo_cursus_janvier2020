@@ -142,7 +142,7 @@ On peut cependant alimenter le dictionnaire de variable Ansible au fur et à mes
 
 Exemple:
 
-```yml
+```yaml
 # this is just to avoid a call to |default on each iteration
 - set_fact:
     postconf_d: {}

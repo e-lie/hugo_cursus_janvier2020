@@ -309,7 +309,7 @@ Maintenant que nous avons deux images disponibles pour construire une petite inf
 
 - Comme nous allons provisionner le serveur à l'aide d'Ansible, mettez le dans le dossier `ansible_provision`.
 
-```yml
+```yaml
 version: '3.1'
 services:
     jenkins-master:
@@ -363,7 +363,7 @@ JenkinsAsCode
 
 - Pour le déployer sur notre serveur nous allons utiliser Ansible. Ajoutez le playbook `launch_jenkins.yml` suivant dans `Ansible_provisionning:
 
-```yml
+```yaml
 ---
 - hosts: jenkins
   # no become, we want to run jenkins as elk-admin

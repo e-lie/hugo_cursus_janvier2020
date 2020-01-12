@@ -26,7 +26,7 @@ db1 ansible_host=10.x.y.131 container_image=centos_ansible node_state=started
 
 - Ajoutez un dossier `provisioners` avec à l'intérieur un playbook `provision_lxd_infra.yml` contenant:
 
-```yml
+```yaml
 - hosts: localhost
   connection: local
   become: yes
@@ -85,7 +85,7 @@ db1 ansible_host=10.x.y.131 container_image=centos_ansible node_state=started
 
 - Ajoutez à l'intérieur du fichier:
 
-```yml
+```yaml
 - src: <nom_du_role_mysql>
 ```
 
@@ -95,7 +95,7 @@ db1 ansible_host=10.x.y.131 container_image=centos_ansible node_state=started
 
 - Pour installer notre base de données, ajoutez un playbook `dbservers.yml` appliqué au groupe `dbservers` avec juste une section:
 
-```yml
+```yaml
     ...
     roles:
         - <nom_role>
@@ -128,7 +128,7 @@ flaskapp
 - Les templates et les listes de handlers/tasks sont a mettre dans les fichiers correspondants (voir plus bas)
 - Le fichier `defaults/main.yml` permet de définir des valeurs par défaut pour les variables du role. Mettez à l'intérieur une application par défaut:
 
-```yml
+```yaml
 flask_apps:
   - name: defaultflask
     domain: defaultflask.test
@@ -147,7 +147,7 @@ Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (
 
 - Pour appeler notre nouveau role, supprimez les sections `tasks:` et `handlers:` du playbook `appservers.yml` et ajoutez à la place:
 
-```yml
+```yaml
   roles:
     - flaskapp
 ```

@@ -30,7 +30,7 @@ A quoi ça ressemble ?
 
 #### Une liste
 
-```yml
+```yaml
 - 1
 - Poire
 - "Message à caractère informatif"
@@ -38,7 +38,7 @@ A quoi ça ressemble ?
 
 #### Un dictionnaire
 
-```yml
+```yaml
 clé1: valeur1
 clé2: valeur2
 clé3: 3
@@ -46,7 +46,7 @@ clé3: 3
 
 #### Un exemple imbriqué plus complexe
 
-```yml
+```yaml
 marché: # debut du dictionnaire global "marché"
   lieu: Crimée Curial
   jour: dimanche
@@ -74,7 +74,7 @@ marché: # debut du dictionnaire global "marché"
 
 ## Structure d'un playbook
 
-```yml
+```yaml
 --- 
 - name: premier play # une liste de play (chaque play commence par un tiret)
   hosts: serveur_web # un premier play
@@ -160,7 +160,7 @@ Au contraire, `include_tasks` permet d'intégrer une liste de tâche **dynamique
 
 Par exemple:
 
-```yml
+```yaml
 vars:
   apps:
     - app1
@@ -266,7 +266,7 @@ Les facts sont des valeurs de variables récupérés au début de l'exécution d
 
 Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
 
-```yml
+```yaml
 - name: start nginx service
   systemd:
     name: nginx
@@ -284,7 +284,7 @@ Cette directive permet d'executer une tache plusieurs fois basée sur une liste 
 
 exemple:
 
-```yml
+```yaml
 - name: exemple de boucle
   debug:
     msg: {{ item }}
@@ -296,7 +296,7 @@ exemple:
 
 On peut également controler cette boucle avec quelques paramètres:
 
-```yml
+```yaml
 - debug:
     msg: "message numero {{ num }} : {{ message }}"
   loop: "{{ messages }}"

@@ -114,7 +114,7 @@ fi
 
 - A la racine de notre projet (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
   
-```yml
+```yaml
 version: '3'
 services:
   identidock:
@@ -141,7 +141,7 @@ services:
 
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du compose file (attention aux identation !!):
 
-```yml
+```yaml
     links:
       - dnmonster
 
@@ -153,7 +153,7 @@ Cette fois plutôt de construire l'image, nous indiquons de simplement de la ré
 
 - Ajoutons également un conteneur redis:
 
-```yml
+```yaml
     redis:
       image: redis:3.0
 ```

@@ -149,7 +149,7 @@ ansible-playbook --extra-vars="backend_name=<noeud a desactiver> backend_state=d
 
 - Copiez le résultat et collez le comme valeur d'une variable `awx_admin_password` à la place de `unsecurepass` dans le fichier `group_vars/awxservers.yml` comme suit:
 
-```yml
+```yaml
 awx_admin_password: !vault |
     $ANSIBLE_VAULT;1.1;AES256
     37336233643131373366333466313564303764383339353764383939353265616466633761613264
@@ -179,7 +179,7 @@ awx_admin_password: !vault |
 
 - Ajoutez à la racine du projet un fichier `.gitlab-ci.yml` avec à l'intérieur:
 
-```yml
+```yaml
 image:
   # This linux container (docker) we will be used for our pipeline : ubuntu bionic with ansible preinstalled in it
   name: williamyeh/ansible:ubuntu18.04
@@ -213,7 +213,7 @@ Nous allons maintenant configurer le pipeline pour qu'il puisse se connecter à 
 
 - Pour charger l'identité dans le contexte du pipeline ajoutez la section `before_script` suivante entre `variables` et `deploy`:
 
-```yml
+```yaml
 before_script: # some steps to execute before the main pipeline stage
 
   # Those command lines are use to activate the SSH identity in the pipeline container

@@ -150,7 +150,7 @@ Il existe des roles pour installer un peu n'importe quelle application serveur c
 
 Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles` pour décrire la liste des roles nécessaires à un projet.
 
-```yml
+```yaml
 - src: geerlingguy.repo-epel
 - src: geerlingguy.haproxy
 - src: geerlingguy.docke
@@ -167,7 +167,7 @@ Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles`
  à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré
 Si un role dépend d'autres roles, les dépendances sont décrite dans le fichier `meta/main.yml` comme suit
 
-```yml
+```yaml
 ---
 dependencies:
   - role: common

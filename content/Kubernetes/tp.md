@@ -1,10 +1,14 @@
+---
+title: 'TP Kubernetes'
+visible: true
+---
 
 ## Installer **microk8s**
 
 sudo snap install microk8s --edge --classic
 
 # Enable microk8s features
-microk8s.enable dns storage ingress
+microk8s.enable dashboard
 
 ## Installer le client Kubernetes Kubectl
 
@@ -16,9 +20,29 @@ microk8s.enable dns storage ingress
 `microk8s.config > ~/.kube/config`
 
 
-jx install --provider=kubernetes --external-ip 10.2.3.4 \
+<!-- jx install --provider=kubernetes --external-ip 10.2.3.4 \
 --ingress-service=default-http-backend \
 --ingress-deployment=default-http-backend \
 --ingress-namespace=default \
 --on-premise \
---domain=devlab.rs
+--domain=devlab.rs -->
+
+
+
+
+
+# TP - Commandes k8s
+
+`kubectl get nodes`
+
+`kubectl describe node/<votrenode>`
+
+`kubectl get all`
+
+`kubectl get namespaces`
+
+`kubectl get all -n kube-system`
+
+`kubectl get all --all-namespaces`
+
+`kubectl describe namespace/kube-system`

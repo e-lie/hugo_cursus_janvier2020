@@ -72,7 +72,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Créons un playbook : ajoutez un fichier `flaskhello_deploy.yml` avec à l'intérieur:
 
-```yml
+```yaml
 - hosts: <hotes_cible>
   
   tasks:
@@ -86,7 +86,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. ajoutez pour cela la directive `become: yes` au début du playbook.
 
-```yml
+```yaml
     - name: ensure basic apps present
       apt:
         name:
@@ -103,7 +103,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Ajoutez une tâche `systemd` pour s'assurer que le service `nginx` est démarré.
 
-```yml
+```yaml
     - name: ensure nginx started
       systemd:
         name: nginx
@@ -112,7 +112,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 
 - Ajoutez une tache pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
 
-```yml
+```yaml
     - name: "add the user flask"
       user:
         name: "flask"
@@ -132,7 +132,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
   
 - Utilisez le pour télécharger le code source de l'application (branche `master`) dans le dossier `/home/flask/hello` mais en désactivant la mise à jour (au cas ou le code change).
 
-```yml
+```yaml
     - name: git get app files
       git:
         repo: "https://github.com/e-lie/flask_hello_ansible.git"
@@ -156,7 +156,7 @@ Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'i
 
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
-```yml
+```yaml
     - name: install modules in a virtualenv
       pip:
         requirements: /home/flask/hello/requirements.txt
@@ -170,7 +170,7 @@ Notre application sera executée en tant qu'utilisateur flask pour des raisons d
 
 - Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
 
-```yml
+```yaml
     - name: change permissions of app directory
       file:
         path: /home/flask/hello
@@ -242,7 +242,7 @@ server {
 
 `flaskhello_deploy.yml`
 
-```yml
+```yaml
 - hosts: appservers
   become: yes
 
@@ -400,7 +400,7 @@ Ajoutez une section `handlers:` à la suite
 - Testez votre playbook. il devrait être idempotent sauf le restart de `hello.service`.
 - Testez le handler en ajoutant un commentaire dans le fichier de configuration `nginx.conf.j2`.
 
-<!-- ```yml
+<!-- ```yaml
     - name: template nginx site config
       template:
         src: templates/nginx.conf.j2
@@ -437,7 +437,7 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 
 - Ensuite remplacez la variable `app` par une liste `flask_apps` de deux dictionnaires (avec `name`, `domain`, `user` différents les deux dictionnaires et `repository` et `version` identiques).
 
-<!-- ```yml
+<!-- ```yaml
 flask_apps:
   - name: hello
     domain: "hello.test"
