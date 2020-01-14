@@ -8,3 +8,9 @@ theme = "hugo-theme-learn"
 # Pour la fonctionnalité de recherche
 [outputs]
 home = [ "HTML", "RSS", "JSON" ]
+
+[params]
+editURL = "https://github.com/e-lie/hugo_cursus_janvier2020"
+
+
+# [menu.shortcuts]
