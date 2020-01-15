@@ -1,6 +1,7 @@
 ---
 title: 'Cours 3 - Organiser un projet'
 draft: true
+---
 
 ## Organisation d'un dépot de code Ansible
 
