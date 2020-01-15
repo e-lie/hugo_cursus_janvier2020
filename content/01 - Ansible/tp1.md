@@ -103,6 +103,45 @@ exit
 Répétez l'opération pour host2
 {{% /expand %}}
 
+Nous allons maintenant créer une autre machine Centos pour voir l'installation:
+
+- Lançons notre conteneur `CentOS` avec `lxc launch images:centos/7/amd64 centos1`.
+
+- ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
+
+- Une fois dans le conteneur (centos) lancez les commandes suivantes:
+
+```bash
+# installer SSH
+yum update -y && yum install -y openssh-server sudo
+
+systemctl start sshd
+
+# verifier que python2 ou python3 est installé
+python --version || python3 --version
+
+## Attention copiez cette commande bien correctement
+# configurer sudo pour être sans password
+sed -i 's@\(%wheel.*\)ALL@\1 NOPASSWD: ALL@' /etc/sudoers
+
+# Créer votre utilisateur de connexion
+useradd -m -s /bin/bash -G wheel <yourname>
+
+# Définission du mot de passe
+passwd <yourname>
+
+exit
+```
+
+- On teste en copiant notre clé sur le conteneur puis en se connectant en SSH
+
+```bash
+ssh-keygen -t ed25519 # gardez l'emplacement par défaut et mettez une passphrase
+sudo lxc list # permet de trouver l'ip du conteneur
+ssh-copy-id -i ~/.ssh/id_ed25519 <yourname>@<ip_conteneur>
+ssh <yourname>@<ip_conteneur>
+```
+
 ## Créer un projet de code Ansible
 
 - Essayez de "pinguer" la nouvelle machine avec ansible comme précédemment. Quel est le problème ?
