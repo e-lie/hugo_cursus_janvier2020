@@ -1,6 +1,6 @@
 ---
 title: 'Cours 2 - Les playbooks Ansible'
-draft: false
+draft: true
 ---
 
 Les commandes ad-hoc sont des appels directs de modules Ansible qui fonctionnent de façon idempotente mais ne présente pas les avantages du code qui donne tout son intérêt à l'IaC:

@@ -89,7 +89,7 @@ LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu)
 
 - Nous allons essayer de nous connecter à `host1` et `host2` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`:
 
-{{% expand "Réponse  :" %}}
+{{% expand "Réponse   :" %}}
 ```bash
 sudo lxc list # pour récupérer l'adresse IP de host1
 ssh elk-master@<adresse_ip> # le mot de passe de la clé ssh est el4sticssh

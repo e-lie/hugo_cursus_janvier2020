@@ -1,6 +1,6 @@
 ---
 title: 'TP5 - Pipeline de test avec Jenkins et Docker'
-draft: false
+draft: true
 ---
 
 ## Créer une machine pour le Jenkins Master
