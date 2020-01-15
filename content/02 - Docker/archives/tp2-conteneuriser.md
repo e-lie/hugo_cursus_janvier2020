@@ -1,6 +1,6 @@
 ---
 title: 'Docker 4 - Créer une application multiconteneur - Correction'
-visible: true
+draft: true
 ---
 
 ## Démarrons une nouvelle application Flask 

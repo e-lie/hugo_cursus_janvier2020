@@ -1,6 +1,18 @@
 
 
 
+
+
+
+
+
+
+## Ce soir
+
+corriger légèrement les TP1 et 2 ansible (supprimer les parties centos)
+finir l'introduction en copiant les slides d'intro devops dans elasticsearch
+
+
 - Chercher et remplacer les occurences de `tecpi` dans les TPs pour les remplacer par <votre_hub_login> et préciser qu'il faut compléter
 
 

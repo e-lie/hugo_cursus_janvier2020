@@ -1,5 +1,5 @@
 ---
-title: 'TP1 Docker - réseaux et volumes'
+title: 'TP1 - réseaux et volumes'
 draft: false
 ---
 

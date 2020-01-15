@@ -24,18 +24,6 @@ draft: false
   - Organisation et création d'un role.
   - Imports et includes.
 
-- Module 4 : 
-  - Application multitiers avec loadbalancer simple.
-  - Organisation d'un projet.
-  - Variables avancées.
-  - Delegate, déployer un logiciel de façon orchestrée.
-  - Sécuriser les variables avec Ansible Vault.
-  - Déployer dans le cloud avec terraform et Ansible
-  - Inventaires dynamiques.
-  - Terraform comme provisionneur.
-  - Intégrer Terraform et Ansible.
-  - Explorer Ansible Tower/AWX
-
 
 ## Présentation d'Ansible
 

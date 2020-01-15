@@ -1,13 +1,26 @@
+---
+title: Préparation de la VM de travail
+weight: 2
+draft: no
+---
+
 ## Importez une machine Linux
 
-- Récupérez dans le partage une machine virtualbox ubuntu (18.04)
+- Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
   
-- Configurez la avec 6Go de RAM et 2 processeurs
+- Configurez la avec 8Go de RAM et 3 processeurs
   
 - Démarrez la machine
   
-- Faites le mises à jours (`update` et `upgrade`)
+- Faites le mises à jours (`sudo apt update` et `sudo apt upgrade`)
 
-- Installez VSCode depuis la logitèque (ou votre éditeur favoris)
+## Installer quelques logiciels
+
+- Installez VSCode avec le gestionnaire de paquet `snap install code --classic`
   
-- En ligne de commande installez `htop`, `ncdu` et `ansible`
+- En ligne de commande (`apt`) installez `git`, `htop`, `ncdu`
+
+## Explorer Ubuntu Bionic (18.04) : Démo
+
+## Explorer l'éditeur VSCode : Démo
+

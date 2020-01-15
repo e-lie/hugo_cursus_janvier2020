@@ -1,10 +1,25 @@
 
+TP1 - Installation
 
-# https://jenkins-x.io/docs/getting-started/setup/install/
+- Jenkins de base :
 
-- Download last version : `curl -L "https://github.com/jenkins-x/jx/releases/download/$(curl --silent "https://github.com/jenkins-x/jx/releases/latest" | sed 's#.*tag/\(.*\)\".*#\1#')/jx-linux-amd64.tar.gz" -o /tmp/jx.tar.gz`
-- Extract archive: `tar -xzvf /tmp/jx.tar.gz -C /tmp/`
-- Move to /usr/bin: `sudo mv /tmp/jx /usr/bin/`
-- Test installation: `jx --version`
+- Avec docker : chercher sur docker hub et pull
+- docker pull jenkins/jenkins:latest
+- docker run jenkins -p 8080:8080 --name jenkins
+- explorer Jenkins
+- installer des plugins
+- problème de scalabilité (peu de job en parallèles)
 
-# 
+- Jenkins scalable avec kubernetes et le plugin jenkins
+- créer un Dockerfile
+- from jenkins/jenkins:latest
+- installer les plugins
+- configurer le plugin kubernetes
+- vérifier que nos jobs se lance en parallèle
+- installer blueocean
+
+TP2 - Pipeline de test d'une application python
+
+reprendre les supports TP cybermaker
+
+

@@ -1,6 +1,6 @@
 ---
 title: 'Docker 2 - Construire une application simple - correction'
-visible: true
+draft: true
 ---
 
 
