@@ -280,7 +280,7 @@ les deux machines centos on un retour changed jaune alors que les machines ubunt
 
 {{% expand "Réponse  :" %}}
 ```
-ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
+ansible host1 --become --check -m systemd -a "name=nginx state=started"
 ```
 {{% /expand %}}
 
@@ -288,11 +288,11 @@ ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
 
 {{% expand "Réponse  :" %}}
 ```
-ansible adhoc_lab --become --check -m systemd -a "name=nginx state=stopped"
+ansible host1 --become --check -m systemd -a "name=nginx state=stopped"
 ```
 {{% /expand %}}
 
-- Relancez: `ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"`. Que remarque-t-on ?
+- Relancez: `ansible host1 --become --check -m systemd -a "name=nginx state=started"`. Que remarque-t-on ?
 
 {{% expand "Réponse  :" %}}
 
@@ -304,13 +304,13 @@ ansible adhoc_lab --become --check -m systemd -a "name=nginx state=stopped"
 - Enlevez le `--check` pour vous assurer que le service est arrêté sur chacune des machines.
 
 {{% expand "Réponse  :" %}}
-`ansible adhoc_lab --become -m systemd -a "name=nginx state=stopped"`
+`ansible host1 --become -m systemd -a "name=nginx state=stopped"`
 {{% /expand %}}
 
 - Redémarrez le
 
 {{% expand "Réponse  :" %}}
-`ansible adhoc_lab --become -m systemd -a "name=nginx state=started"`
+`ansible host1 --become -m systemd -a "name=nginx state=started"`
 {{% /expand %}}
 
 - Visitez dans un navigateur l'ip d'un des hôtes pour voir la page d'accueil nginx.
