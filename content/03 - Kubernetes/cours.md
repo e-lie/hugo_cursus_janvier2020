@@ -1,6 +1,6 @@
 ---
 title: 'Cours Kubernetes'
-draft: false
+draft: true
 ---
 
 

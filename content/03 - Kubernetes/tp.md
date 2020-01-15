@@ -1,6 +1,6 @@
 ---
 title: 'TP Kubernetes'
-draft: false
+draft: true
 ---
 
 ## Démarrage: créer un cluster Kubernetes avec microk8s
