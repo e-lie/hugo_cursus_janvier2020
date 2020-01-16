@@ -283,24 +283,35 @@ Cette directive permet d'executer une tache plusieurs fois basée sur une liste 
 exemple:
 
 ```yaml
-- name: exemple de boucle
-  debug:
-    msg: {{ item }}
-  loop:
-    - message1
-    - message2
-    - message3
+- hosts: localhost
+  tasks:
+    - name: exemple de boucle
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - message1
+        - message2
+        - message3
 ```
 
 On peut également controler cette boucle avec quelques paramètres:
 
 ```yaml
-- debug:
-    msg: "message numero {{ num }} : {{ message }}"
-  loop: "{{ messages }}"
-  loop_control:
-    loop_var: message
-    index_var: num
+- hosts: localhost
+  vars:
+    messages:
+      - message1
+      - message2
+      - message3
+
+  tasks:
+    - name: exemple de boucle
+      debug:
+        msg: "message numero {{ num }} : {{ message }}"
+      loop: "{{ messages }}"
+      loop_control:
+        loop_var: message
+        index_var: num
     
 ```
 
