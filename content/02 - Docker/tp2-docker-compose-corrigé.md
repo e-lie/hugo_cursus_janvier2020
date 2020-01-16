@@ -21,11 +21,9 @@ default_name = 'Joe Bloggs'
 
 @app.route('/', methods=['GET', 'POST'])
 def mainpage():
-
     name = default_name
     if request.method == 'POST':
         name = request.form['name']
-
     salted_name = salt + name
     name_hash = hashlib.sha256(salted_name.encode()).hexdigest()
     header = '<html><head><title>Identidock</title></head><body>'
@@ -42,9 +40,7 @@ def mainpage():
 
 @app.route('/monster/<name>')
 def get_identicon(name):
-
     image = cache.get(name)
-
     if image is None:
         print ("Cache miss", flush=True)
         r = requests.get('http://dnmonster:8080/monster/' + name + '?size=80')
@@ -54,35 +50,59 @@ def get_identicon(name):
     return Response(image, mimetype='image/png')
 
 if __name__ == '__main__':
-app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
 
 ```
 
-- En vous inspirant du TP précédent (version simple), dockerisez cette application (les dépendances sont
-  `Flask==0.10.1 uWSGI==2.0.8 requests==2.5.1 redis==2.10.3`)
+- Nous allons dockerisez cette application python de façon classique
+  - utilisons l'image docker de base python 3.7 du docker hub : cherchez sur [hub.docker.com](hub.docker.com)
+  - les dépendances python sont `Flask uWSGI requests redis` à installer avec `pip`. Pas besoin de `virtualenv pour isoler car on a déjà un conteneur : installer les dépendance à la racine du conteneur.
 
-- `uWSGI` est un serveur python de production très adapté pour servir des applications flask. Notre serveur intégré flask.
- nous allons l'utiliser.
 
-- Au début du Dockerfile, créez l'instruction pour ajouter un utilisateur et groupe dédié avec `groupadd -r uwsgi && useradd -r -g uwsgi uwsgi`
+- Nous allons utiliser `uWSGI` qui est un serveur python de production très adapté pour servir des applications flask (mieux que le serveur intégré flask).
 
-- Exposez le port `9090` et `9191` plutôt que `5000`.
+- Dans le Dockerfile, créez l'instruction pour ajouter un utilisateur et groupe dédié à uWSGI avec `groupadd -r uwsgi && useradd -r -g uwsgi uwsgi`.
 
-- Juste avant de lancer l'application, changez d'utilisateur avec l'instruction `USER`.
+- Exposez le port `9090` et `9191` qui seront les deux ports de norte mini backend. L'instruction expose est indicative elle n'ouvre pas effectivement les ports.
 
-- A la fin , plutôt que d'utiliser `flask run` pour lancer l'application nous allons appeler uwsgi :
+- Juste avant de lancer l'application, changez d'utilisateur vers `uwsgi` avec l'instruction `USER`.
 
-```Dockerfile
-CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", "--callable", "app", "--stats", "0.0.0.0:9191"]
-- Juste avant de lancer l'application, changez d'utilisateur avec l'instruction `USER`.
-
-- A la fin , plutôt que d'utiliser `flask run` pour lancer l'application nous allons appeler uwsgi :
+- A la fin , plutôt que d'utiliser `flask run` pour lancer l'application nous allons appeler `uwsgi` avec CMD :
 
 ```Dockerfile
 CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", "--callable", "app", "--stats", "0.0.0.0:9191"]
 ```
+
+{{% expand "Réponse  :" %}}
+- Correction `Dockerfile`:
+```Dockerfile
+FROM python:3.7
+RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
+RUN pip install Flask uWSGI requests redis
+WORKDIR /app
+COPY app/identidock.py /app
+EXPOSE 9090 9191
+USER uwsgi
+CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
+"--callable", "app", "--stats", "0.0.0.0:9191"]
+```
+{{% /expand %}}
+
 
 - Construire l'application, la lancer et vérifier avec `docker exec`,  `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
+
+
+{{% expand "Réponse  :" %}}
+- `docker build -t identidock .`
+- `docker run --detach --name identidock -p 9090:9090 identidock`
+- `docker exec -it identidock /bin/bash`
+
+Une fois dans le conteneur lancez: 
+- `whoami` et `id`
+- vérifiez aussi avec `ps aux` que le serveur est bien lancé.
+
+{{% /expand %}}
+
 
 ## Faire varier la configuration en fonction de l'environnement
 
@@ -96,25 +116,46 @@ Nous pourrions créer deux images pour les deux situations mais ce serait aller 
 set -e
 if [ "$ENV" = 'DEV' ]; then
     echo "Running Development Server"
-    exec python "/app/identidock.py"
+    exec python3 "/app/identidock.py"
 else
     echo "Running Production Server"
     exec uwsgi --http 0.0.0.0:9090 --wsgi-file /app/identidock.py --callable app --stats 0.0.0.0:9191
 fi
 ```
 
-- Déclarez maintenant la variable d'environnement `ENV` avec comme valeur par défaut `PROD` (cela ne sert pas fonctionnellement (else) mais par soucis de déclarativité il est intéressant de l'ajouter).
+- Ajoutez au Dockerfile une deuxième instruction `COPY` en dessous de la précédente pour mettre le script dans le conteneur.
+- Ajoutez un `RUN chmod a+x /boot.sh` pour le rendre executable.
+- Modifiez l'instruction `CMD` pour lancer le script de boot plutôt que `uwsgi` directement.
+- Modifiez l'instruction expose pour déclarer le port 5000 en plus.
+- Ajoutez au dessus une instruction `ENV ENV PROD` pour définir la variable d'environnement `ENV` à la valeur `PROD` par défaut.
 
-- Ajoutez une instruction `CMD` pour lancer le script de boot.
+- Testez votre conteneur en mode DEV avec `docker run --env ENV=DEV -p 5000:5000 identidock`, visitez localhost:5000
+- Et en mode `PROD` avec `docker run --env -p 9090:9090 identidock`. Visitez localhost:9090.
 
+{{% expand "Réponse  :" %}}
+- Correction `Dockerfile`:
+```Dockerfile
+FROM python:3.7
+RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
+RUN pip install Flask uWSGI requests redis
+WORKDIR /app
+COPY app /app
+COPY boot.sh /
+RUN chmod a+x /boot.sh
+ENV ENV PROD
+EXPOSE 9090 9191 5000
+USER uwsgi
+CMD ["/boot.sh"]
+```
+{{% /expand %}}
 
 ## Articuler deux images avec Docker compose
 
-- Observons le code de l'application ensemble s'il n'est pas clair pur vous.
+- Observons le code de l'application ensemble s'il n'est pas clair pour vous.
 
 - A la racine de notre projet (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
   
-```yaml
+```yml
 version: '3'
 services:
   identidock:
@@ -135,13 +176,13 @@ services:
   - on définit ensuite la valeur de l'environnement de lancement du conteneur
   - on définit un volume (le dossier `app` dans le conteneur sera le contenu de notre dossier de code)
 
-- Lancez le service (pour le moment mono conteneur) avec `docker-compose up`
+- Lancez le service (pour le moment mono conteneur) avec `docker-compose up --rm`
 - Visitez la page web.
 - Essayez de modifier l'application et de recharger la page web. Voilà comment, grâce à un volume on peut développer sans reconstruire l'image à chaque fois !
 
-- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du compose file (attention aux identation !!):
+- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon" et l'afficher dans l'application `identidock`. Ajoutez à la suite du compose file (attention aux identation !!):
 
-```yaml
+```yml
     links:
       - dnmonster
 
@@ -153,25 +194,66 @@ Cette fois plutôt de construire l'image, nous indiquons de simplement de la ré
 
 - Ajoutons également un conteneur redis:
 
-```yaml
+```yml
     redis:
       image: redis:3.0
 ```
 
 - Et un deuxième lien `- redis`
 
+
+- Correction: `docker-compose.yml`
+```yml
+version: '3'
+services:
+  identidock:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      ENV: DEV
+    volumes:
+      - ./app:/app
+    networks:
+      - monsternet
+
+
+  dnmonster:
+    image: amouat/dnmonster:1.0
+    networks:
+      - monsternet
+
+  redis:
+    image: redis:3.0
+
+networks:
+  monsternet:
+```
+
+- Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
+
 - Créez un deuxième fichier compose `docker-compose.prod.yml` pour lancer l'application en configuration de production.
+```yml
+version: '3'
+services:
+  identidock:
+    build: .
+    ports:
+      - "9090:9090"
+      - "9191:9191"
+    environment:
+      ENV: PROD
+    volumes:
+      - ./app:/app
+    links:
+      - dnmonster
+      - redis
+
+  dnmonster:
+    image: amouat/dnmonster:1.0
+
+  redis:
+    image: redis:3.0
+```
 
 - N'hésitez pas à passer du temps à explorer les options et commande de `docker-compose`. Ainsi que [la documentation du langage (DSL) des compose-file](https://docs.docker.com/compose/compose-file/).
-
-
-## Assembler l'application Flask avec compose
-
-(Facultatif si vous êtes en avance)
-
-- Créer un fichier docker compose pour faire fonctionner l'application Flask "complexe" du TP précédent (v0.18) avec mysql et elasticsearch.
-
-- Pour elasticsearch utilisez la [documentation officielle pour docker](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
-
-- Vous pouvez ajouter un [kibana](https://www.elastic.co/guide/en/kibana/current/docker.html) (interface web de elasticsearch et bien plus) pour découvrir cet outil de recherche.
-  - les paramètres par défaut suffisent pour kibana en mettant simplement le conteneur dans un    réseau commun. Vous pouvez donc supprimez les variables d'environnement de configuration.

@@ -1,6 +1,6 @@
 ---
 title: "TP4 - Loadbalancer, AWX et Cloud" 
-draft: true
+draft: no
 ---
 
 ## Prérequis : Digitalocean token et clé SSH
@@ -244,9 +244,7 @@ before_script: # some steps to execute before the main pipeline stage
 - Observez le résultat.
 
 
-## Démo AWX
-
-<!-- # Explorer AWX
+# Explorer AWX
 
 - Identifiez vous sur awx avec le login `admin` et le mot de passe précédemment configuré.
 
@@ -264,6 +262,6 @@ before_script: # some steps to execute before the main pipeline stage
 
 - Modifiez votre job, dans la section `Plannifier` configurer l'exécution du playbook site.yml toutes les 15 minutes.
 
-- Allez dans la section plannification. Puis visitez l'historique des Jobs. -->
+- Allez dans la section plannification. Puis visitez l'historique des Jobs.
 
 

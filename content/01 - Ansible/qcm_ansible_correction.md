@@ -43,11 +43,49 @@ Quel module Ansible sert à installer des paquets sous ubuntu ?
 1. `package`
 1. **V** `apt`
 1. `debian_pkg`
+1. `yum`
+1. `apt_get`
 
 **Question 6**
+
+Les variables ansible sont stockée sous la forme ?
+
+1. `d'une base de donnée noSQL`
+1. `d'un dictionnaire séparé pour chaque playbook`
+1. `d'un fichier binaire récupéré depuis une API`
+1. **V** `d'un gros dictionnaire global`
+
+**Question 7**
 
 Qu'est ce qu'une commande adhoc ?
 
 1. Un module Ansible qui permet d'utiliser des commandes bash dans les playbooks.
-1. **V** Une façon d'appeler directement un module ansible à des fins d'orchestration du parc de machine.
-1. Une commande qui appelle un role pour configurer automatiquement une machine.
+2. **V** Une façon d'appeler directement un module ansible à des fins d'orchestration du parc de machine.
+3. Une commande qui appelle un role pour configurer automatiquement une machine.
+
+**Question 8**
+
+Quelle est la nouvelle syntaxe pour les boucles dans Ansible ?
+
+1. `for: {{ une_liste }}` à la fin d'une tache.
+1. `for_item_in: {{ une_liste }}` à la fin d'une tache.
+1. `with_items: {{ une_liste }}` à la fin d'une tache.
+1. **V** `loop: {{ une_liste }}` à la fin d'une tache.
+
+**Question 9**
+
+Au sein d'un play, la section `roles:` s'exécute...
+
+1. Toujours après la section `tasks:`
+1. Toujours avant la section `tasks:` c'est d'ailleurs pour cela qu'il existe une section `pre_tasks:`
+1. En fonction de l'ordre des taches dans le playbook
+2. En fonction de la configuration dans `ansible.cfg`
+
+**Question 10**
+
+Quelle est la nouvelle syntaxe pour les boucles dans Ansible
+
+1. `for: {{ une_liste }}` à la fin d'une tache.
+1. `for_item_in: {{ une_liste }}` à la fin d'une tache.
+1. `with_items: {{ une_liste }}` à la fin d'une tache.
+1. **V** `loop: {{ une_liste }}` à la fin d'une tache.

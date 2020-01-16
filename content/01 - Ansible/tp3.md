@@ -21,7 +21,7 @@ app1 ansible_host=10.x.y.121 container_image=ubuntu_ansible node_state=started
 app2 ansible_host=10.x.y.122 container_image=ubuntu_ansible node_state=started
 
 [dbservers]
-db1 ansible_host=10.x.y.131 container_image=centos_ansible node_state=started
+db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 ```
 
 - Ajoutez un dossier `provisioners` avec à l'intérieur un playbook `provision_lxd_infra.yml` contenant:

@@ -1,6 +1,6 @@
 ---
 title: 'Cours 4 - Sécurité et Cloud'
-draft: yes
+draft: no
 ---
 
 # Sécurité
