@@ -110,7 +110,7 @@ Une fois dans le conteneur lancez:
 - Créez un compte sur `hub.docker.com`.
 - Lancez `docker login` pour vous identifier en CLI.
 - Donnons un nom tag public avec votre login docker hub à notre image pour pouvoir la pousser sur le registry `docker tag identidock <votre_hub_login>/identidock:0.1`
-- Puis poussons l'image sur le hub docker avec : `docker push`
+- Puis poussons l'image sur le hub docker avec : `docker push <votre_hub_login>/identidock:0.1` 
 
 
 ## Faire varier la configuration en fonction de l'environnement
@@ -297,6 +297,10 @@ services:
 networks:
   identinet:
     driver: bridge
+
+volumes:
+  identiredis_volume:
+    driver: local
 ```
 
 - Commentons ce code:
