@@ -73,8 +73,8 @@ if __name__ == '__main__':
 CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", "--callable", "app", "--stats", "0.0.0.0:9191"]
 ```
 
-{{% expand "Réponse  :" %}}
-- Correction `Dockerfile`:
+{{% expand "Correction `Dockerfile`  :" %}}
+
 ```Dockerfile
 FROM python:3.7
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
