@@ -157,9 +157,10 @@ CMD ["/boot.sh"]
 ```
 {{% /expand %}}
 
-Conclusions.
-  - On peut faire des images multicontextes qui s'adaptent au contexte.
-  - Les variables d'environnement sont souvent utilisée pour configurer les conteneurs au moment de leur lancement. (plus dynamique qu'un fichier de configuration)
+Conclusions:
+
+- On peut faire des images multicontextes qui s'adaptent au contexte.
+- Les variables d'environnement sont souvent utilisée pour configurer les conteneurs au moment de leur lancement. (plus dynamique qu'un fichier de configuration)
 
 
 ## Articuler deux images avec Docker compose
