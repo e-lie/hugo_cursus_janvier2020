@@ -110,6 +110,7 @@ Une fois dans le conteneur lancez:
 - Créez un compte sur `hub.docker.com`.
 - Lancez `docker login` pour vous identifier en CLI.
 - Donnons un nom tag public avec votre login docker hub à notre image pour pouvoir la pousser sur le registry `docker tag identidock <votre_hub_login>/identidock:0.1`
+- Puis poussons l'image sur le hub docker avec : `docker push`
 
 
 ## Faire varier la configuration en fonction de l'environnement
@@ -263,7 +264,7 @@ networks:
 version: '3'
 services:
   identidock:
-    image: <votre_hub_login>/identidock:cursusjanvier2020
+    image: <votre_hub_login>/identidock:0.1
     ports:
       - "9090:9090"
       - "9191:9191"
