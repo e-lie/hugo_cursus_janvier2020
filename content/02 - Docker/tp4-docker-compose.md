@@ -175,7 +175,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - ENV=DEV
+      - CONTEXT=DEV
     volumes:
       - ./app:/app
 ```
