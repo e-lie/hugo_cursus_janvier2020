@@ -238,7 +238,7 @@ Passons à l'exploration des volumes:
 ```bash
 docker network create moby-counter
 docker container run -d --name redis --network moby-counter redis
-docker container run -d --name moby-counter --network moby-counter -p moby-counter russmckendrick/moby-counter
+docker container run -d --name moby-counter --network moby-counter -p 8000:80 russmckendrick/moby-counter
 ```
 
 - Visitez votre application dans le navigateur. faites un motif reconnaissable en cliquant.
