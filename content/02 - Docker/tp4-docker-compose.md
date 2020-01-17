@@ -223,7 +223,8 @@ networks:
       - identinet
 ```
 
-- Correction: `docker-compose.yml`
+- Correction: `docker-compose.yml`:
+  
 ```yml
 version: '3'
 services:
@@ -257,6 +258,7 @@ networks:
 - Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
 
 - Créez un deuxième fichier compose `docker-compose.prod.yml` (à compléter) pour lancer l'application en configuration de production:
+
 ```yml
 version: '3'
 services:
