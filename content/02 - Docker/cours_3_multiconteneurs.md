@@ -1,36 +1,14 @@
-title: Conteneurs Docker
-class: animation-fade
-layout: true
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
+---
+title: Cours 3 - description multiconteneur
+draft: false
 ---
 
-class: impact
-
-# {{title}}
-## *Modularisez et maîtrisez vos applications*
-
----
-
-class: impact
-
-# Docker Compose
-
----
-
-# Docker compose
 
 - Nous avons pu constater que lancer plusieurs conteneurs liés avec leur mapping réseaux et liens implique des commandes assez lourdes. Cela devient ingérable si l'ont a de grosses applications microservice avec des réseaux et des volumes spécifiques.
 
 - Pour faciliter tout cela et dans l'optique de l'**Infrastructure as Code**, docker introduit un outil nommé **docker-compose** qui permet décrire de applications multiconteneurs grâce à des fichiers **YAML**
 
----
+
 
 ```yml
 version: '2.2'
@@ -58,7 +36,7 @@ networks:
   esnet:
 ```
 
----
+
 
 ## Le workflow de Docker Compose
 
@@ -68,7 +46,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
   
 - `build` reconstruit toutes les images créées à partir de Dockerfiles. La commande up ne construira pas une image à moins qu'elle n'existe pas, donc utilisez cette commande à chaque fois que vous avez besoin de mettre à jour une image.
 
----
+
 
 - `ps` Fournit des informations sur le statut des conteneurs gérés par Compose.
 
@@ -81,9 +59,9 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - `rm` Enlève les contenants à l'arrêt. N'oubliez pas d'utiliser l'argument `-v` pour supprimer tout les volumes gérés par docker.
 
----
 
-# Visualisation des applications Microservice complexes
+
+## Visualisation des applications Microservice complexes
 
 - Certaines applications microservice peuvent avoir potentiellement des dizaines de petits conteneurs spécialisés. Le service devient alors difficile à lire dans le compose file.
 
@@ -91,3 +69,18 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - Cet outil peut-être utilisé dans le cadre d'un automatisation d'intégration continue pour produire la documentation agrémentée d'une image automatiquement en fonction du code.
 
+## Un GUI pour Docker: Portainer
+
+Un bonne façon de visualiser l'état d'un application complexe est d'utiliser une application classique d'admin Docker: Portainer.
+
+Elle s'installer sous forme d'un conteneur (avec un volume pour pas perdre les données):
+
+```bash
+docker run --detach --name portainer \
+    -p 9000:9000 \
+    -v portainer_data:/data \
+    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+    portainer/portainer
+```
+
+Elle doit avoir accès au socket docker pour administrer (il faut bien sécuriser l'interface par exemple la laisser dans un réseau privé)

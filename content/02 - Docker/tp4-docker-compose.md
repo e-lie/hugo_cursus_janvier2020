@@ -1,5 +1,5 @@
 ---
-title: 'TP2 - Multiconteneurs'
+title: 'TP4 - Multiconteneurs avec compose'
 draft: false
 ---
 
@@ -103,6 +103,14 @@ Une fois dans le conteneur lancez:
 
 {{% /expand %}}
 
+- Validez la version actuelle du code avec `git init && git add -A && git commit -m tp_compose_init`
+
+## Pousser notre conteneur sur un registry (le docker hub)
+
+- Créez un compte sur `hub.docker.com`.
+- Lancez `docker login` pour vous identifier en CLI.
+- Donnons un nom tag public avec votre login docker hub à notre image pour pouvoir la pousser sur le registry `docker tag identidock <votre_hub_login>/identidock:0.1`
+
 
 ## Faire varier la configuration en fonction de l'environnement
 
@@ -114,7 +122,7 @@ Nous pourrions créer deux images pour les deux situations mais ce serait aller 
 ```bash
 #!/bin/bash
 set -e
-if [ "$ENV" = 'DEV' ]; then
+if [ "$CONTEXT" = 'DEV' ]; then
     echo "Running Development Server"
     exec python3 "/app/identidock.py"
 else
@@ -129,8 +137,8 @@ fi
 - Modifiez l'instruction expose pour déclarer le port 5000 en plus.
 - Ajoutez au dessus une instruction `ENV ENV PROD` pour définir la variable d'environnement `ENV` à la valeur `PROD` par défaut.
 
-- Testez votre conteneur en mode DEV avec `docker run --env ENV=DEV -p 5000:5000 identidock`, visitez localhost:5000
-- Et en mode `PROD` avec `docker run --env -p 9090:9090 identidock`. Visitez localhost:9090.
+- Testez votre conteneur en mode DEV avec `docker run --env CONTEXT=DEV -p 5000:5000 identidock`, visitez localhost:5000
+- Et en mode `PROD` avec `docker run --env CONTEXT=PROD -p 9090:9090 identidock`. Visitez localhost:9090.
 
 {{% expand "Réponse  :" %}}
 - Correction `Dockerfile`:
@@ -142,16 +150,19 @@ WORKDIR /app
 COPY app /app
 COPY boot.sh /
 RUN chmod a+x /boot.sh
-ENV ENV PROD
+ENV CONTEXT PROD
 EXPOSE 9090 9191 5000
 USER uwsgi
 CMD ["/boot.sh"]
 ```
 {{% /expand %}}
 
-## Articuler deux images avec Docker compose
+Conclusions.
+  - On peut faire des images multicontextes qui s'adaptent au contexte.
+  - Les variables d'environnement sont souvent utilisée pour configurer les conteneurs au moment de leur lancement. (plus dynamique qu'un fichier de configuration)
 
-- Observons le code de l'application ensemble s'il n'est pas clair pour vous.
+
+## Articuler deux images avec Docker compose
 
 - A la racine de notre projet (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
   
@@ -163,7 +174,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      ENV: DEV
+      - ENV=DEV
     volumes:
       - ./app:/app
 ```
@@ -174,33 +185,42 @@ services:
   - `build: .` d'abord l'image d'origine de notre conteneur est le résultat de la construction du répertoire courant
   - la ligne suivante décrit le mapping de ports.
   - on définit ensuite la valeur de l'environnement de lancement du conteneur
-  - on définit un volume (le dossier `app` dans le conteneur sera le contenu de notre dossier de code)
+  - on définit un volume (le dossier `app` dans le conteneur sera le contenu de notre dossier de code) de cette façon si on modifie le code pas besoin de rebuilder l'application !!!
 
-- Lancez le service (pour le moment mono conteneur) avec `docker-compose up --rm`
+- Lancez le service (pour le moment mono conteneur) avec `docker-compose up`.
 - Visitez la page web.
-- Essayez de modifier l'application et de recharger la page web. Voilà comment, grâce à un volume on peut développer sans reconstruire l'image à chaque fois !
+- Essayez de modifier l'application et de recharger la page web. Voilà comment, grâce à un volume on peut développer sans reconstruire l'image à chaque fois ! (grace au volume /app)
 
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon" et l'afficher dans l'application `identidock`. Ajoutez à la suite du compose file (attention aux identation !!):
 
 ```yml
-    links:
-      - dnmonster
+    networks:
+      - identinet
 
   dnmonster:
     image: amouat/dnmonster:1.0
+    networks:
+      - identinet
 ```
 
-Cette fois plutôt de construire l'image, nous indiquons de simplement de la récupérer sur le docker hub. Nous ajoutons également un lien qui indique à docker de configurer le réseau convenablement.
+- Cette fois plutôt de construire l'image, nous indiquons de simplement de la récupérer sur le docker hub avec le mot clé `image: `.
+- Mais surtout nous déclarons un réseau `identidock` pour mettre les deux conteneurs de notre application.
+- Il faut déclarer ce réseau à la fin du fichier:
+
+```yml
+networks:
+  identinet:
+    driver: bridge
+```
 
 - Ajoutons également un conteneur redis:
 
 ```yml
-    redis:
-      image: redis:3.0
+  redis:
+    image: redis
+    networks:
+      - identinet
 ```
-
-- Et un deuxième lien `- redis`
-
 
 - Correction: `docker-compose.yml`
 ```yml
@@ -215,45 +235,74 @@ services:
     volumes:
       - ./app:/app
     networks:
-      - monsternet
+      - identinet
 
 
   dnmonster:
     image: amouat/dnmonster:1.0
     networks:
-      - monsternet
+      - identinet
 
   redis:
-    image: redis:3.0
+    image: redis
+    networks:
+      - identinet
 
 networks:
-  monsternet:
+  identinet:
+    driver: bridge
 ```
 
 - Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
 
-- Créez un deuxième fichier compose `docker-compose.prod.yml` pour lancer l'application en configuration de production.
+- Créez un deuxième fichier compose `docker-compose.prod.yml` (à compléter) pour lancer l'application en configuration de production:
 ```yml
 version: '3'
 services:
   identidock:
-    build: .
+    image: <votre_hub_login>/identidock:cursusjanvier2020
     ports:
       - "9090:9090"
       - "9191:9191"
     environment:
-      ENV: PROD
-    volumes:
-      - ./app:/app
-    links:
-      - dnmonster
-      - redis
+      - CONTEXT=PROD
+    networks:
+      - identinet
 
   dnmonster:
     image: amouat/dnmonster:1.0
+    networks:
+      - identinet
 
   redis:
-    image: redis:3.0
+    image: redis
+    networks:
+      - identinet
+    volumes:
+      - identiredis_volume:/data
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+    - REDIS_HOSTS=local:redis:6379
+    ports:
+    - "8081:8081"
+    networks:
+      - identinet
+
+networks:
+  identinet:
+    driver: bridge
 ```
+
+- Commentons ce code:
+  - plus de volume `/app` pour identidock car nous sommes en prod
+  - on ouvre le port de l'app 9090 mais aussi le port de stat du serveur uWSGI 9191
+  - CONTEXT = PROD pour lancer l'application avec le serveur uWSGI
+  - On a mis un volume nommé à redis pour conserver les données sur le long terme
+  - on a ajouté un GUI web redis accessible sur localhost:8081 pour voir le conteneur de la DB redis.
+  - le tout dans le même réseau
+
+- Le dépot de correction [https://github.com/e-lie/tp4_docker_compose_correction_202001.git](https://github.com/e-lie/tp4_docker_compose_correction_202001.git)
 
 - N'hésitez pas à passer du temps à explorer les options et commande de `docker-compose`. Ainsi que [la documentation du langage (DSL) des compose-file](https://docs.docker.com/compose/compose-file/).

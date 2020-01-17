@@ -1,6 +1,6 @@
 ---
-title: 'TP1 - réseaux et volumes'
-draft: true
+title: 'TP3 - réseaux et volumes'
+draft: false
 ---
 
 <!--
@@ -11,6 +11,24 @@ draft: true
 # Add points to recreate moby and redis at the start of second part.
 -->
 
+## Portainer
+
+- Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec docker.
+
+```bash
+docker run --detach --name portainer \
+    -p 9000:9000 \
+    -v portainer_data:/data \
+    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+    portainer/portainer
+```
+
+- Remarque sur la commande précédente, pour que portainer puisse fonctionner et contrôler docker lui même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'api docker de l'hote grace au paramètre `--mount` ci dessus.
+
+- Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
+- Créez votre user admin avec le formulaire.
+- Explorons l'interface de portainer.
+- Créer un conteneur
  
 ## Docker networking
 
@@ -18,7 +36,7 @@ Pour expérimenter avec le réseau, nous allons lancer une petite application no
 
 Récupérons les images depuis Docker Hub:
 
-- `docker image pull redis:alpine`
+- `docker image pull redis`
 - `docker image pull russmckendrick/moby-counter`
 
 Pour connecter les deux applications créons un réseau manuellement:
@@ -26,10 +44,10 @@ Pour connecter les deux applications créons un réseau manuellement:
 - `docker network create moby-counter`
 
 Puis lancons les deux applications en utilisant notre réseau
-- `docker container run -d --name redis --network <réseau> redis:alpine`
-- `docker container run -d --name moby-counter --network <réseau> -p <mapping_web> russmckendrick/moby-counter`
+- `docker container run -d --name redis --network moby-counter redis`
+- `docker container run -d --name moby-counter --network moby-counter -p 8000:80 russmckendrick/moby-counter`
 
-- Visitez la page de notre application. Qu'en pensez vous ? Moby est le nom de la mascotte Docker :). Faites un motif reconnaissable en cliquant.
+- Visitez la page de notre application. Qu'en pensez vous ? Moby est le nom de la mascotte Docker :).
 
 Comment notre application se connecte-t-elle au conteneur redis ? Elle utilise ces instructions JS dans son fichier `server.js`:
 
@@ -43,16 +61,16 @@ En résumé par défaut, notre application se connecte sur l'hôte `redis` avec 
 
 Explorons un peu notre réseau Docker.
 
-- Executez (`docker exec`) la commande `ping -c 3 redis` sur notre conteneur applicatif. Quelle est l'adresse ip affichée ?
+- Executez à l'intérieur du conteneur `moby-counter` avec (`docker exec`) la commande `ping -c 3 redis` sur notre conteneur applicatif. Quelle est l'adresse ip affichée ?
 
 {{% expand "Réponse  :" %}}
 ```
 docker exec moby-counter cat ping -c3 redis
-
-=> le conteneur connait le nom de domaine associée à l'adresse ip du conteneur redis
 ```
-{{% /expand %}}
 
+- => le conteneur connait le nom de domaine associée à l'adresse ip du conteneur redis car Docker fournit un service DNS automatique aux conteneurs.
+
+{{% /expand %}}
 
 - De même, affichez le contenu des fichiers `/etc/hosts` et `/etc/resolv.conf`. Nous constatons que docker a automatiquement configuré le nom d'hôte de la machine avec l'identifiant du conteneur.
 
@@ -124,7 +142,7 @@ nslookup: can't resolve 'redis': Name does not resolve
 {{% /expand %}}
 
 
-Bie don que vous ne puissiez pas avoir deux conteneurs avec les mêmes noms, comme nous l'avons déjà découvert, notre deuxième réseau fonctionne complètement isolé de notre premier réseau, ce qui signifie que nous pouvons toujours utiliser lemaine `redis` ; pour ce faire, nous devons ajouter le drapeau `--network-alias` :
+Bien que vous ne puissiez pas avoir deux conteneurs avec les mêmes noms, comme nous l'avons déjà découvert, notre deuxième réseau fonctionne complètement isolé de notre premier réseau, ce qui signifie que nous pouvons toujours utiliser le domaine `redis` ; pour ce faire, nous devons ajouter le drapeau `--network-alias` :
 
 - Créons un deuxième redis avec le même domaine: `docker container run -d --name redis2 --network moby-counter2 --network-alias redis redis:alpine`
 
@@ -138,13 +156,13 @@ Server:    127.0.0.11
 Address 1: 127.0.0.11
 
 Name:      redis
-Address 1: 172.20.0.3 redis2.moby-counter2 => maintenant que nous avons ajouté le network alias redis  pointe bien vers le conteneur redis2
+Address 1: 172.20.0.3 redis2.moby-counter2 => maintenant que nous avons ajouté le network alias redis pointe bien vers le conteneur redis2
 ```
 {{% /expand %}}
 
 
 - Vous pouvez retrouver la configuration du réseau et les conteneurs qui lui sont relié avec `docker network inspect moby-counter`.
-  Notez la section IPAM.
+  Notez la section IPAM (IP Address Management).
 
 {{% expand "Réponse  :" %}}
 ```json
@@ -205,21 +223,40 @@ Address 1: 172.20.0.3 redis2.moby-counter2 => maintenant que nous avons ajouté 
 
 ## Docker Volumes
 
-- Lancez `docker volume prune` pour faire le ménage de volume éventuellement créé dans les TPs précédent (pour ne pas interférer avec ce exercice).
+ Pour ne pas interférer avec la deuxième partie du TP :
+
+- Stoppez tous les conteneurs redis et moby-counter avec `docker stop` ou portainer.
+- Supprimez les conteneurs arrêtés avec `docker container prune`
+- Lancez `docker volume prune` pour faire le ménage de volume éventuellement créés dans les TPs précédent
 - Lancez `docker volume ls` pour vérifier qu'aucun volume n'est créé sinon supprimez les avec `docker volume rm --force <id_volume>`
-- Arrêtez et supprimez le conteneur redis (n°1).
-- Visitez votre application dans le navigateur. Elle est maintenant déconnectée de son backend.
-- Recréez le conteneur `redis` dans le réseau `moby-counter`
-- Rechargez la page, plusieurs fois. Que s'est-il passé ?
+- Lancez aussi `docker network prune` pour nettoyer les réseaux inutilisés
+
+Passons à l'exploration des volumes:
+
+- Recréez le réseau `moby-counter` et les conteneurs `redis` et `moby-counter` à l'intérieur:
+
+```bash
+docker network create moby-counter
+docker container run -d --name redis --network moby-counter redis
+docker container run -d --name moby-counter --network moby-counter -p moby-counter russmckendrick/moby-counter
+```
+
+- Visitez votre application dans le navigateur. faites un motif reconnaissable en cliquant.
+- supprimez le conteneur `redis` : `docker rm --force redis`
+- Rechargez la page web: l'app est deconnectée de son backend.
+- Recréez le `redis` à nouveau dans le réseau `moby-counter`: `docker container run -d --name redis --network moby-counter redis`
+- Redémarrez le conteneur moby-counter : `docker restart moby-counter`
+- Rechargez la page. Que s'est-il passé ? 
 
 {{% expand "Réponse  :" %}}
-L'application refonctionne mais les données (les logo docker) on été effacées.
+L'application refonctionne mais les données (les logo docker) on été effacées => plus de logo car les positions des balaines étaient stockée dans le redis
 {{% /expand %}}
-
 
 - Supprimez à nouveau le conteneur redis.
 
-Avons nous vraiment perdu les données de notre conteneur ? le Dockerfile pour l'image officielle Redis ressemble à ça:
+#### Avons nous vraiment perdu les données de notre conteneur ? (spoiler non)
+
+le Dockerfile pour l'image officielle Redis ressemble à ça:
 
 ```Dockerfile
 FROM alpine:3.5
@@ -258,21 +295,18 @@ EXPOSE 6379
 CMD [ "redis-server" ]
 ```
 
-Notez, vers la fin du fichier, il y a deux instructions VOLUME et WORKDIR; Cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
+Notez, vers la fin du fichier, il y a une instruction `VOLUME /data`; Cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
 
-- Pour le confimer listez les volumes et inspectez les pour trouver l'identifiant d'un précédent volume.
+La beaucoup de conteneurs docker sont des applications `stateful` c'est à dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
 
-{{% expand "Réponse  :" %}}
-```bash
-docker volume ls
-```
-{{% /expand %}}
+- Pour le confimer allez voir la liste des volumes dans portainer. Normalement il devrait y avoir un volume portainer_data et un volume anonyme avec un hash.
+  
+- Copiez l'id du volume anonyme du type: `4d8e8cfec5461406de805fc37913177cab1325893ad7972c16275bcf851d27ed`
 
+- Créez un nouveau conteneur redis en rattachant le volume du précédent redis.
+`docker container run -d --name redis --volume <volume_id>:/data --network moby-counter redis:alpine`
 
-- Créez un nouveau conteneur redis en rattachant l'un des précédents volumes redis.
-`docker container run -d --name redis -v <volume_id>:/data --network moby-counter redis:alpine`
-
-- Visitez la page de l'application. Normalement un motif de moby d'une précédente session devrait s'afficher (après un délai)
+- Redémarrez `moby-counter` et visitez la page de l'application. Normalement un motif de moby d'une précédente session devrait s'afficher (après un délai)
 
 - Affichez le contenu du volume avec la commande : `docker container exec redis ls -lhat /data`
 
@@ -287,11 +321,7 @@ drwxr-xr-x    2 redis    redis       4.0K Jul 30 22:28 .
 ```
 {{% /expand %}}
 
-
-
-Finalement nous allons écraser ce volume anonyme par le notre.
-  
- A l'heure actuelle la bonne façon de créer des volumes consiste à les créer manuellement (volume nommés). `docker volume create redis_data`.
+Finalement nous allons écraser ce volume anonyme par le notre : la bonne façon de créer des volumes consiste à les créer manuellement (volume nommés). `docker volume create redis_data`.
 
 - Créez un nouveau conteneur attaché à ce volume nommé : `docker container run -d --name redis -v redis_data:/data --network moby-counter redis:alpine`
 
@@ -301,7 +331,7 @@ C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounte
 
 - Lancez `docker volume inspect redis_data`.
 
-- Créez un réseau `moby-counter2` et ajoutez un deuxième conteneur Redis:
+- Créez un réseau `moby-counter2` et ajoutez un deuxième conteneur `redis2` qui va partager les même données que le premier :
   - situé à l'intérieur du nouveau réseau (`moby-counter2`) comme à la partie précédent.
   - partageant le volume de données du premier (Cf cours)
   - monté en read-only (`:ro` après le paramètre de la question précédente)
@@ -314,7 +344,6 @@ docker container run -d --name redis2 -v redis_data:/data:ro --network moby-coun
 ```
 {{% /expand %}}
 
-
 - Ajoutez une deuxième instance de l'application dans le deuxième réseau connectée à ce nouveau redis.
   
 {{% expand "Réponse  :" %}}
@@ -324,7 +353,7 @@ docker run -itd --name moby-counter2 --network moby-counter2 -p 9090:80 russmcke
 {{% /expand %}}
 
 
-- Visitez la deuxième application: vous devriez voir également le motif de moby apparaître.
+- Visitez la deuxième application: vous devriez voir également le même motif de moby apparaître.
 
 {{% expand "Réponse  :" %}}
 ```

@@ -1,47 +1,27 @@
-title: Conteneurs Docker
-class: animation-fade
-layout: true
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
+---
+title: Cours 2 - Volumes et réseaux 
+draft: false
 ---
 
-class: impact
-
-# {{title}}
-## *Modularisez et maîtrisez vos applications*
-
----
-
-class: impact
-
-# Volumes et réseau 
-
----
 
 ## Cycle de vie d'un conteneur
 
 - Un conteneur a un cycle de vie très court: il doit pouvoir être créé et supprimé rapidement même en contexte de production.
---
+
 
 Conséquences:
 
 - On ne peux pas garder les données persistantes dans la boîte.
 - On a besoin de méchanisme d'autoconfiguration en particuler réseau car les ip des différentes boîtes changent tout le temps.
---
+
 
 Solutions:
 - Des volumes (partagés ou non, distribués ou non) montés dans les conteneurs
 - Des réseaux dynamiques par défaut automatiques (DHCP mais surtout DNS automatiques)
   
----
 
-# Volumes
+
+## Volumes
 
 **Bind Mounting**
 Lorsqu'un répertoire hôte spécifique est utilisé dans un volume (la syntaxe `-v HOST_DIR:CONTAINER_DIR`), elle est souvent appelée **bind mounting**.
@@ -56,30 +36,30 @@ touch testfile
 
 ```
 
----
 
-# La sous commande `volume`
+
+### La sous commande `volume`
 
 - `docker volume ls`
 - `docker volume inspect`
 - `docker volume prune`
 - etc.
 
----
 
-# Partager des données avec un volume
+
+### Partager des données avec un volume
 
 - Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
---
+
 
 - Pour lancer un conteneur avec les volumes d'un autre monté on peut utiliser `--volumes-from <container>`
---
+
 
 - On peut aussi créer le volume à l'avance et l'attacher après coup à un conteneur.
---
+
 
 - par défaut le driver de volume est `local` c'est à dire créer un dossier sur le disque de l'hôte
---
+
 
 ```bash
 docker volume create --driver local \
@@ -88,9 +68,9 @@ docker volume create --driver local \
     monVolume
 ```
 
----
 
-# Plugins de volumes
+
+### Plugins de volumes
 
 On peut utiliser d'autres systèmes de stockage en installant de nouveau plugin driver de volume.
 
@@ -100,9 +80,9 @@ Exemples:
 - Amazon EBS (vendor specific)
 - etc.
 
----
 
-# Permissions
+
+### Permissions
 
 - Un volume est créé en fonction des permissions du dossier préexistant (internet ou externe).
 ```Dockerfile
@@ -115,15 +95,14 @@ USER graphite
 CMD ["echo", "Data container for graphite"]
 ```
 
----
 
-class: impact
 
-# Réseau
 
----
+## Réseau
 
-# Gestion des ports réseaux (port mapping)
+
+
+### Gestion des ports réseaux (port mapping)
 
 - Par défaut les conteneurs n'ouvrent pas de port même s'il sont déclarés avec `EXPOSE` dans le Dockerfile.
 
@@ -131,9 +110,9 @@ class: impact
 
 - Instruction `port:` d'un compose file.
 
----
 
-# Bridge et overlay
+
+### Bridge et overlay
 
 - Un réseau bridge est une façon de créer un pont entre deux cartes réseaux pour construire un réseau à partir de deux.
 
@@ -144,9 +123,9 @@ class: impact
 - Un réseau overlay est un réseau virtuel privé déployé par dessus un réseau existant (typiquement public). Pour par exemple pour faire un cloud multi DC.
 
 
----
 
-# Le réseau docker est très automatique
+
+### Le réseau docker est très automatique
 
 - Serveur DNS et DHCP intégré dans le "user-defined networks" (IPAM)
 
@@ -156,9 +135,9 @@ class: impact
 
 - Ingress: un load balancer automatiquement connecté aux noeuds d'un swarm [doc overlay](https://docs.docker.com/network/overlay/)
 
----
 
-# Lier des conteneurs
+
+### Lier des conteneurs
 
 - On peut créer un lien entre des conteneurs
   - avec l'option `--link` de `docker run`
@@ -167,13 +146,13 @@ class: impact
 
 - Aujourd'hui il faut utiliser un réseau dédié créé par l'utilisateur ("user-defined bridge network") (Cf TP réseau)
 
-# Partager des données entre conteneurs
+### Partager des données entre conteneurs
 
 - Pour partager des données il faut monter des volumes partagés.
 
----
 
-# Plugins réseaux
+
+### Plugins réseaux
 
 - Les réseaux par défaut docker 
 - Plusieurs autres solutions spécifiques de réseau sont disponibles pour des questions de performance et de sécurité
@@ -184,4 +163,3 @@ class: impact
   - Du multicast UDP
   - ...
   
----
