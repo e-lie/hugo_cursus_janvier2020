@@ -167,7 +167,7 @@ Conclusions:
 
 - A la racine de notre projet (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
   
-```yml
+```yaml
 version: '3'
 services:
   identidock:
@@ -194,7 +194,7 @@ services:
 
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon" et l'afficher dans l'application `identidock`. Ajoutez à la suite du compose file (attention aux identation !!):
 
-```yml
+```yaml
     networks:
       - identinet
 
@@ -208,7 +208,7 @@ services:
 - Mais surtout nous déclarons un réseau `identidock` pour mettre les deux conteneurs de notre application.
 - Il faut déclarer ce réseau à la fin du fichier:
 
-```yml
+```yaml
 networks:
   identinet:
     driver: bridge
@@ -216,7 +216,7 @@ networks:
 
 - Ajoutons également un conteneur redis:
 
-```yml
+```yaml
   redis:
     image: redis
     networks:
@@ -225,7 +225,7 @@ networks:
 
 - Correction: `docker-compose.yml`:
   
-```yml
+```yaml
 version: '3'
 services:
   identidock:
@@ -259,7 +259,7 @@ networks:
 
 - Créez un deuxième fichier compose `docker-compose.prod.yml` (à compléter) pour lancer l'application en configuration de production:
 
-```yml
+```yaml
 version: '3'
 services:
   identidock:
