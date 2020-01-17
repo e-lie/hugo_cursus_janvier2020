@@ -19,7 +19,7 @@ draft: false
 docker run --detach --name portainer \
     -p 9000:9000 \
     -v portainer_data:/data \
-    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+    -v /var/run/docker.sock:/var/run/docker.sock
     portainer/portainer
 ```
 
@@ -110,7 +110,7 @@ Address 1: 172.19.0.2 redis.moby-counter => on récupère bien l'ip de redis
 {{% /expand %}}
 
 
-- Créez un deuxième réseau `moby-counter2` et une deuxième instance de l'application dans ce réseau : `docker run -itd --name moby-counter2 --network moby-counter2 -p 9090:80 russmckendrick/moby-counter`
+- Créez un deuxième réseau `moby-counter2` et une deuxième instance de l'application dans ce réseau : `docker run --name moby-counter2 --network moby-counter2 -p 9090:80 russmckendrick/moby-counter`
 
 
 - Lors que vous pingez `redis` depuis cette nouvelle instance de l'application, quelle ip obtenez vous ?
@@ -144,7 +144,7 @@ nslookup: can't resolve 'redis': Name does not resolve
 
 Bien que vous ne puissiez pas avoir deux conteneurs avec les mêmes noms, comme nous l'avons déjà découvert, notre deuxième réseau fonctionne complètement isolé de notre premier réseau, ce qui signifie que nous pouvons toujours utiliser le domaine `redis` ; pour ce faire, nous devons ajouter le drapeau `--network-alias` :
 
-- Créons un deuxième redis avec le même domaine: `docker container run -d --name redis2 --network moby-counter2 --network-alias redis redis:alpine`
+- Créons un deuxième redis avec le même domaine: `docker container run -d --name redis2 --network moby-counter2 --network-alias redis redis`
 
 - Relancez la résolution précédente avec `nslookup`.
 
