@@ -140,7 +140,7 @@ fi
 - Testez votre conteneur en mode DEV avec `docker run --env CONTEXT=DEV -p 5000:5000 identidock`, visitez localhost:5000
 - Et en mode `PROD` avec `docker run --env CONTEXT=PROD -p 9090:9090 identidock`. Visitez localhost:9090.
 
-{{% expand Correction `Dockerfile`: %}}
+{{% expand "Correction `Dockerfile`:" %}}
 
 ```Dockerfile
 FROM python:3.7
