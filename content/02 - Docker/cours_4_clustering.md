@@ -63,7 +63,7 @@ Docker Swarm est donc facile à mettre en place et intégré au workflow docker 
 
 Depuis fin 2019, Docker Desktop intègre également une distribution de Kubernetes signe que ce dernier est devenu incontournable.
 
- ## Architecture de Docker Swarm
+## Architecture de Docker Swarm
 
 ![](../../images/docker/archi_swarm.png)
 
@@ -145,17 +145,17 @@ Globalement le Swarm mode de docker introduit 4 nouvelles sous commandes et 3 ty
 - les services
 - les stacks
 
- ## Docker Nodes
+## Docker Nodes
 
  Les noeuds ajoutés au cluster sont manipulables avec la sous commande  `docker node ...`.
 
- ## Docker Services
+## Docker Services
  
  En mode swarm, docker ne gère plus les conteneurs un par un mais sour forme de services répliqués. `docker service create` ressemble beaucoup à `docker run` mais on peut préciser le nombre d'instances identiques à lancer, le placement sur le cluster etc.
 
  `docker service create --name monster_icon -p 9090:9090 --replicas 3 tecpi/monster_icon:0.1`
  
- ## Docker Stacks
+## Docker Stacks
 
 De la même façon qu'on utilise docker compose pour décrire un déploiement de développement multiconteneur, Docker Swarm propose le concept de **stack** qui consiste en la description en YAML d'un ensemble de services répliqués et déployés d'un certaine façon. En simplifié un fichier de stack docker est simplement un docker-compose file, en version 3 avec une section `deploy` pour chaque service du type:
 
