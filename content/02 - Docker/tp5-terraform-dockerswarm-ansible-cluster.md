@@ -37,7 +37,7 @@ Depuis fin 2019, Docker Desktop inclue aussi une distribution de dev de Kubernet
 En mode swarm, docker ne gère plus les conteneurs un par un mais sour forme de services répliqués. `docker service create` ressemble beaucoup à `docker run` mais on peut préciser le nombre d'instances identiques à lancer, le placement sur le cluster etc. Lançons par exemple notre application monster_icon à l'aide d'un service avec 3 réplicats:
 
 - `docker service create --name monster_icon -p 9090:9090 --replicas 3 tecpi/monster_icon:0.1`
-- Visitez `localhost:9000`.
+- Visitez `localhost:9090`.
 - Lancez `docker service ls` puis `docker service ps monster_icon` vous liste les conteneurs liés à ce service.
 - `docker service logs monster_icon` affiche les logs aggrégés des trois conteneurs.
 - visitez votre portainer pour observer le service `monster_icon`
@@ -171,7 +171,7 @@ unzip ./terraform-provider-ansible-linux_amd64.zip -d ~/.terraform.d/plugins/
 
 ## Terraform digital ocean
 
-- Le fichier qui décrit les VPS et ressources à créer avec terraform est `provisionner/terraform/main.tf`. Nous allons commentez ensemble ce fichier:
+- Le fichier qui décrit les VPS et ressources à créer avec terraform est `terraform/digitalocean_vps.tf` et `terraform/ansible_hosts.tf`. Nous allons commentez ensemble ce fichier:
 
 !! La documentation pour utiliser terraform avec digitalocean se trouve ici [https://www.terraform.io/docs/providers/do/index.html](https://www.terraform.io/docs/providers/do/index.html)
 
