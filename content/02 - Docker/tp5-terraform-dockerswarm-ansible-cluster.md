@@ -149,8 +149,8 @@ Terraform n'est pas disponible sous forme de dépôt ubuntu/debian. Pour l'insta
 
 ```bash
 cd /tmp
-wget https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip
-sudo unzip ./terraform_0.12.10_linux_amd64.zip -d /usr/local/bin/
+wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip
+sudo unzip ./terraform_0.12.19_linux_amd64.zip -d /usr/local/bin/
 ```
 
 - Testez l'installation avec `terraform --version`
@@ -171,7 +171,7 @@ unzip ./terraform-provider-ansible-linux_amd64.zip -d ~/.terraform.d/plugins/
 
 ## Terraform digital ocean
 
-- Le fichier qui décrit les VPS et ressources à créer avec terraform est `terraform/digitalocean_vps.tf` et `terraform/ansible_hosts.tf`. Nous allons commentez ensemble ce fichier:
+- Les fichiers qui décrivent les VPS et ressources à créer avec terraform sont `terraform/digitalocean_vps.tf` et `terraform/ansible_hosts.tf`. Nous allons commentez ensemble ce fichier:
 
 !! La documentation pour utiliser terraform avec digitalocean se trouve ici [https://www.terraform.io/docs/providers/do/index.html](https://www.terraform.io/docs/providers/do/index.html)
 
@@ -190,6 +190,27 @@ token: 0de8a7ae2f643a86c1a5975e820c37587d1e1199e70d127793de1d023bdeffdf
 fingerprint: 05:f7:18:15:4a:77:3c:4c:86:70:85:aa:cb:18:b7:68
 ```
 
+Avant de pouvoir continuer nous devons compléter les groupes dans `terraform/ansible_hosts`.
+
+Mais pour cela nous devons connaître les groupes utililisés pour le role ansible d'installation de docker swarm.
+
+## Chercher le role Docker Swarm Ansible
+
+- Visitez le dépôt officiel de role ansible nommé **Galaxy** [https://galaxy.ansible.com/](https://galaxy.ansible.com/)
+
+- Cherchez le role docker swarm de `thomasjpfan`.
+- Ajoutez ce role au fichier `requirement.yml` de `ansible/roles`.
+- Pour installer facilement des roles utilisez depuis le dossier ansible la commande: `ansible-galaxy install -r roles/requirements.yml -p roles`
+
+### Compléter les groupes ansible dans le terraform ansible provider
+
+- Avant d'exécuter ce role il faut compléter les groupes pour désigner correctement les workers et les managers dans `terraform/ansible_hosts.tf` :
+- En lisant le du role sur galaxy on constate qu'il utiliser le role `docker_swarm_manager` pour désigner les noeuds manager et `docker_swarm_worker` pour désigner les worker.
+- Nous avons aussi besoin d'un groupe pour désigner l'ensemble des noeuds swarm. Comme vous pouvez le constater dans `ansible/playbooks/swarm_nodes_setup.yml` nous vous proposons `swarm_nodes` comme groupe global swarm.
+- A partir de ces informations complétez `ansible_hosts` avec `groups = ["swarm_nodes","docker_swarm_manager"]` et `groups = ["swarm_nodes", "docker_swarm_worker"]`.
+
+### Lancer le provisionning des VPS
+
 - Maintenant que ces deux fichiers sont complétés (quoi créer et comment s'identifier auprès du provider) nous pouvons lancer la création de nos VPS:
   - `terraform init` permet à terraform de télécharger les "driver" nécessaire pour s'interfacer avec notre provider. Cette commande crée un dossier .terraform
   - `terraform plan` est facultative et permet de calculer et récapituler les créations modifications de ressources à partir de la description de `main.tf`
@@ -205,15 +226,14 @@ Maintenant que nous avons des machines dans le cloud nous devons fournir leurs I
 
 Une bonne intégration entre Ansible et Terraform permet de décrire précisément les liens entre resource terraform et hote ansible ainsi que les groupes de machines ansible. Pour cela notre binder propose de dupliquer les ressources dans `main.tf` pour créer explicitement les hotes ansible à partir des données dynamiques de terraform.
 
-- Ouvrons à nouveau le fichier `main.tf` pour étudier le mapping entre les ressources digitalocean et leur duplicat ansible.
+- Ouvrons à nouveau le fichier `ansible_hosts.tf` pour étudier le mapping entre les ressources digitalocean et leur duplicat ansible.
 
 - Pour vérifier le fonctionnement de notre inventaire dynamique, allez à la racine du projet et lancez:
 
 ```
-cd terraform
-export ANSIBLE_TF_DIR=$(pwd)
+source .env
 cd ../ansible
-./terraform-inventory.py
+./terraform-inventory.
 ```
 
 - La seconde appelle l'inventaire dynamique et vous renvoie un résultat en json décrivant les groupes, variables et adresses IP des machines crées avec terraform.
@@ -222,16 +242,7 @@ cd ../ansible
 
 - Nous pouvons maintenant tester la connexion avec ansible directement: `ansible all -m ping`.
 
-## Installer Docker Swarm avec Ansible
-
-- Visitez le dépôt officiel de role ansible nommé **Galaxy** [https://galaxy.ansible.com/](https://galaxy.ansible.com/)
-
-- Cherchez le role docker swarm de `thomasjpfan`.
-- Ajoutez ce role au fichier `requirement.yml` de `ansible/roles`.
-
-- Pour installer facilement des roles utilisez depuis le dossier ansible la commande: `ansible-galaxy install -r roles/requirements.yml -p roles`
-
-- Avant d'exécuter ce role il faut compléter les groupes pour désigner correctement les workers et les managers dans `terraform/ansible_hosts.tf` : démo et explication du formateur.
+## Installation de Docker Swarm
 
 - Lancez le playbook `ansible/site_setup.yml` pour installer swarm sur les trois VPS digital ocean.
 
@@ -242,6 +253,7 @@ cd ../ansible
 - Listez les noeuds swarm avec `docker node ls`
 - récupérez la stack portainer du projet avec `wget https://raw.githubusercontent.com/e-lie/cursus_janvier2020_docker_tp5_base/cursusjanvier2020-docker-tp5/swarm_stacks/portainer_stack.yml`.
 - déployez la stack avec `docker stack deploy -c portainer_stack.yml portainerstack`.
+- Visitez `<ip>:9000` -> portainer est disponible depuis n'importe quel noeud également alors que nous l'avons installé sur le manager. 
 
 Nous allons maintenant déployer la stack monster avec un playbook ansible
 
@@ -253,7 +265,6 @@ Nous allons maintenant déployer la stack monster avec un playbook ansible
 - Visitez la page `<ip>:9090` -> notre app rechargez la page plusieurs fois.
   - l'adresse qui sert la page est différente à chaque fois !
   - pourquoi ?
-- Visitez `<ip>:9000` -> portainer est disponible depuis n'importe quel noeud également alors que nous l'avons installé sur le manager. 
 
 ![](../../images/docker/ingress-routing-mesh.png)
 
@@ -279,7 +290,7 @@ Si tout va bien votre cluster devrait être complètement
 
 ## Correction
 
-Vous trouverez la correction de ce TP dans le dépôt initial en checkoutant le commit `git checkout cursus-janvier2020-docker-tp5`.
+Vous trouverez la correction de ce TP dans le dépôt [https://github.com/e-lie/cursus_janvier2020_docker_tp5_correction.git](https://github.com/e-lie/cursus_janvier2020_docker_tp5_correction.git).
 
 ## NE PAS OUBLIER DE DETRUIRE LES VPS 
 

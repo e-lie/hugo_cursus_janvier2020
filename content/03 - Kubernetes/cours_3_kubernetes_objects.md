@@ -152,6 +152,8 @@ En général on ne les manipule pas directement
 
 Plutôt que d'utiliser les replicaset il est recommander d'utiliser un objet de plus haut niveau les `deployments`.
 
+De la même façon que les ReplicaSets gères les pods, les Deployments gèrent les ReplicaSet.
+
 Un `deployment` est un peu l'équivalent d'un `service` docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`
 
 exemple:
@@ -188,6 +190,22 @@ spec:
 - pour supprimer un deployment `kubectl 
 
 
+## DaemonSets
+
+Another reason to replicate a set of Pods is to schedule a single Pod on every node within the cluster. Generally, the motivation for replicating a Pod to every node is to land some sort of agent or daemon on each node, and the Kubernetes object for achieving this is the DaemonSet.
+
+Par exemple pour des besoin de monitoring 
+
+Given the similarities between DaemonSets and ReplicaSets, it’s important to understand when to use one over the other. ReplicaSets should be used when your application is completely decoupled from the node and you can run multiple copies on a given node without special consideration. DaemonSets should be used when a single copy of your application must run on all or a subset of the nodes in the cluster.
+
+## Jobs
+
+In contrast, a regular Pod will continually restart regardless of its exit code. Jobs are useful for things you only want to do once, such as database migrations or batch jobs. If run as a regular Pod, your database migration task would run in a loop, continually repopulating the database after every exit.
+
+## Stockage
+
+
+
 
 ## Role Based Access Control
 
@@ -202,3 +220,6 @@ Cependant quatre roles sont conçus pour les utilisateurs finaux génériques :
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
 
+## CLI Cheatsheet:
+
+Tout cela fait beaucoup de commande voici une récapitulation des principales commande [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
