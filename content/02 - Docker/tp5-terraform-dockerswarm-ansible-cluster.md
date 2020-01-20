@@ -210,9 +210,9 @@ Une bonne intégration entre Ansible et Terraform permet de décrire préciséme
 - Pour vérifier le fonctionnement de notre inventaire dynamique, allez à la racine du projet et lancez:
 
 ```
-cd terraform/do_swarm_manual
-source .env
-cd ../../ansible
+cd terraform
+export ANSIBLE_TF_DIR=$(pwd)
+cd ../ansible
 ./inventory_terraform.py
 ```
 
