@@ -1,6 +1,6 @@
 ---
 title: 'TP2 Jenkins - Configurer Jenkins avec Docker et le déployer dans Swarm'
-visible: true
+draft: true
 ---
 
 ## Découvrir swarm
