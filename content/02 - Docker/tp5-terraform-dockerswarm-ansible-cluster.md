@@ -218,7 +218,7 @@ cd ../ansible
 
 - La seconde appelle l'inventaire dynamique et vous renvoie un résultat en json décrivant les groupes, variables et adresses IP des machines crées avec terraform.
 
-- Complétez le `ansible.cfg` avec le chemin de l'inventaire dynamique: `./inventory_terraform.py`
+- Complétez le `ansible.cfg` avec le chemin de l'inventaire dynamique: `./terraform-inventory.py`
 
 - Nous pouvons maintenant tester la connexion avec ansible directement: `ansible all -m ping`.
 
