@@ -224,9 +224,9 @@ Maintenant que nous avons des machines dans le cloud nous devons fournir leurs I
 
 - Le meilleur inventaire dynamique pour terraform est [https://github.com/nbering/terraform-provider-ansible/](https://github.com/nbering/terraform-inventory/). 
 
-Une bonne intégration entre Ansible et Terraform permet de décrire précisément les liens entre resource terraform et hote ansible ainsi que les groupes de machines ansible. Pour cela notre binder propose de dupliquer les ressources dans `main.tf` pour créer explicitement les hotes ansible à partir des données dynamiques de terraform.
+Une bonne intégration entre Ansible et Terraform permet de décrire précisément les liens entre resource terraform et hote ansible ainsi que les groupes de machines ansible. Pour cela notre provider ansible propose de dupliquer les ressources terraform dans pour créer explicitement les hotes ansible à partir des données dynamiques de terraform.
 
-- Ouvrons à nouveau le fichier `ansible_hosts.tf` pour étudier le mapping entre les ressources digitalocean et leur duplicat ansible.
+- Ouvrons à nouveau le fichier `ansible_hosts.tf` pour étudier le mapping entre les ressources digitalocean et leur duplicat ansible : la variable `ansible_host` de terraform est initialisée en récupérant la valeur générée par les ressources `digital_ocean_droplets` de `digitalocean_vps.tf`.
 
 - Pour vérifier le fonctionnement de notre inventaire dynamique, allez à la racine du projet et lancez:
 
@@ -258,7 +258,7 @@ cd ../ansible
 Nous allons maintenant déployer la stack monster avec un playbook ansible
 
 - Ouvrez le fichier `ansible/playbook/deploy_monsterstack.yml`
-  - Que explorez la doc du module `docker_stack`
+  - Explorez la doc du module ansible `docker_stack`.
   - Lancez ce playbook.
 
 - récupérez l'ip de n'importe lequel des noeuds avec `ansible-inventory --list`
@@ -268,7 +268,7 @@ Nous allons maintenant déployer la stack monster avec un playbook ansible
 
 ![](../../images/docker/ingress-routing-mesh.png)
 
-- Visitez `<ip>:8081` -> regardez les valeur binaire images et le compteur se mettre à jour
+- Visitez `<ip>:8081` -> regardez les valeur binaire des images et le compteur se mettre à jour
 
 ## Redimensionner notre cluster dynamiquement !!!
 
@@ -282,11 +282,11 @@ Nous allons maintenant déployer la stack monster avec un playbook ansible
 
 ## La puissance de l'automatisation
 
-- Essayez de créer et de détruire tout le cluster avec :
+- Essayez de détruire et recréer tout le cluster avec :
   - `./cluster.sh destroy_infra`
   - `./cluster.sh setup_full`
 
-Si tout va bien votre cluster devrait être complètement
+Si tout va bien votre cluster devrait être complètement réinstallé avec une commande
 
 ## Correction
 
@@ -294,6 +294,6 @@ Vous trouverez la correction de ce TP dans le dépôt [https://github.com/e-lie/
 
 ## NE PAS OUBLIER DE DETRUIRE LES VPS 
 
-Pour ne pas payer des serveurs inutiles il faut absolument penser à détruire les droplets evac `terraform destroy` ou `./cluster destroy_infra`. Puis vérifions dans Digital Ocean qu'il n'y a plus de droplets.
+Pour ne pas payer des serveurs inutiles il faut absolument penser à détruire les droplets avec `terraform destroy` ou `./cluster destroy_infra`. Puis vérifions dans Digital Ocean qu'il n'y a plus de droplets.
 
 
