@@ -213,7 +213,7 @@ Une bonne intégration entre Ansible et Terraform permet de décrire préciséme
 cd terraform
 export ANSIBLE_TF_DIR=$(pwd)
 cd ../ansible
-./inventory_terraform.py
+./terraform-inventory.py
 ```
 
 - La seconde appelle l'inventaire dynamique et vous renvoie un résultat en json décrivant les groupes, variables et adresses IP des machines crées avec terraform.
