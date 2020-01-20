@@ -235,7 +235,7 @@ cd ../ansible
 
 - Lancez le playbook `ansible/site_setup.yml` pour installer swarm sur les trois VPS digital ocean.
 
-## Déployer notre stack Jenkins
+## Déployer notre stack Monster Icon
 
 - Récupérez l'ip du swarm manager avec `ansible-inventory --host docker_swarm_manager`
 - Connectez vous en ssh au manager.
