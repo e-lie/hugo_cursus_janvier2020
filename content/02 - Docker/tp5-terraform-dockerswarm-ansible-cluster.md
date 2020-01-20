@@ -241,7 +241,7 @@ cd ../ansible
 - Connectez vous en ssh au manager.
 - Listez les noeuds swarm avec `docker node ls`
 - récupérez la stack portainer du projet avec `wget https://raw.githubusercontent.com/e-lie/cursus_janvier2020_docker_tp5_base/cursusjanvier2020-docker-tp5/swarm_stacks/portainer_stack.yml`.
-- déployez la stack avec `docker stack deploy -c <fichier> portainerstack>`.
+- déployez la stack avec `docker stack deploy -c portainer_stack.yml portainerstack`.
 
 Nous allons maintenant déployer la stack monster avec un playbook ansible
 
@@ -255,7 +255,7 @@ Nous allons maintenant déployer la stack monster avec un playbook ansible
   - pourquoi ?
 - Visitez `<ip>:9000` -> portainer est disponible depuis n'importe quel noeud également alors que nous l'avons installé sur le manager. 
 
-![](../../images/docker/archi_swarm.png)
+![](../../images/docker/ingress-routing-mesh.png)
 
 - Visitez `<ip>:8081` -> regardez les valeur binaire images et le compteur se mettre à jour
 
