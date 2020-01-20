@@ -6,8 +6,9 @@ draft: false
 ## Docker, Ansible, Terraform : combiner et comparer différents outils d'Infrastructure as Code (IaC)
 
 L'objectif de ce TP est double:
-  - Installer et expérimenter avec Docker Swarm pour découvrir l'orchestration de conteneurs
-  - Combiner trois solutions d'infrastructure as code, **Docker**, **Ansible** et **Terraform** pour voir en quoi elles sont **différentes** et **complémentaires**.
+
+- Installer et expérimenter avec Docker Swarm pour découvrir l'orchestration de conteneurs
+- Combiner trois solutions d'infrastructure as code, **Docker**, **Ansible** et **Terraform** pour voir en quoi elles sont **différentes** et **complémentaires**.
 
 ## Orchestrons une application dockerisée avec les services et stacks docker
 
@@ -18,6 +19,7 @@ Nous allons repartir de la correction du TP4 sur Docker compose et l'intégrer �
 - Récupérer le projet de base [https://github.com/e-lie/cursus_janvier2020_docker_tp5_base](https://github.com/e-lie/cursus_janvier2020_docker_tp5_base)
 
 Notre application (quasiment identique à celle du TP4) se trouve dans le dossier flaskapp_src:
+
 - Observer le contenu de ce dossier
 - Testez l'application avec : `docker-compose up --build`.
 - Visitez `localhost: 5000`.
@@ -34,12 +36,12 @@ Depuis fin 2019, Docker Desktop inclue aussi une distribution de dev de Kubernet
 
 En mode swarm, docker ne gère plus les conteneurs un par un mais sour forme de services répliqués. `docker service create` ressemble beaucoup à `docker run` mais on peut préciser le nombre d'instances identiques à lancer, le placement sur le cluster etc. Lançons par exemple notre application monster_icon à l'aide d'un service avec 3 réplicats:
 
-  - `docker service create --name monster_icon -p 9090:9090 --replicas 3 tecpi/monster_icon:0.1`
-  - Visitez `localhost:9000`.
-  - Lancez `docker service ls` puis `docker service ps monster_icon` vous liste les conteneurs liés à ce service.
-  - `docker service logs monster_icon` affiche les logs aggrégés des trois conteneurs.
-  - visitez votre portainer pour observer le service `monster_icon`
-  - `docker service rm monster_icon` supprime tous les conteneurs.
+- `docker service create --name monster_icon -p 9090:9090 --replicas 3 tecpi/monster_icon:0.1`
+- Visitez `localhost:9000`.
+- Lancez `docker service ls` puis `docker service ps monster_icon` vous liste les conteneurs liés à ce service.
+- `docker service logs monster_icon` affiche les logs aggrégés des trois conteneurs.
+- visitez votre portainer pour observer le service `monster_icon`
+- `docker service rm monster_icon` supprime tous les conteneurs.
 
 De la même façon qu'on utilise docker compose pour décrire un déploiement de développement multiconteneur, Docker Swarm propose le concept de **stack** qui consiste en la description en YAML d'un ensemble de services répliqués et déployés d'un certaine façon. En simplifié un fichier de stack docker est simplement un docker-compose file, en version 3 avec une section `deploy` pour chaque service du type:
 
