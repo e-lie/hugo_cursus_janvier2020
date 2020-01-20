@@ -72,7 +72,7 @@ docker volume create --driver local \
 
 ### Plugins de volumes
 
-On peut utiliser d'autres systèmes de stockage en installant de nouveau plugin driver de volume.
+On peut utiliser d'autres systèmes de stockage en installant de nouveaux plugins driver de volume.
 
 Exemples:
 

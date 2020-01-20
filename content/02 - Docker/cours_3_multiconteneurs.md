@@ -40,13 +40,11 @@ networks:
 
 ## Le workflow de Docker Compose
 
-Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec Compose. La plupart se passent d'explications et ont des équivalents Docker directs, mais il vaut la peine d'en être conscient :
+Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec Compose. 
 
-- `up` démarre tous les conteneurs définis dans le fichier compose et agrège la sortie des logs. Normalement, vous voudrez utiliser l'argument -d pour exécuter Compose en arrière-plan.
+- `up` démarre tous les conteneurs définis dans le fichier compose et agrège la sortie des logs. Normalement, vous voudrez utiliser l'argument `-d` pour exécuter Compose en arrière-plan.
   
 - `build` reconstruit toutes les images créées à partir de Dockerfiles. La commande up ne construira pas une image à moins qu'elle n'existe pas, donc utilisez cette commande à chaque fois que vous avez besoin de mettre à jour une image.
-
-
 
 - `ps` Fournit des informations sur le statut des conteneurs gérés par Compose.
 
@@ -60,7 +58,6 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 - `rm` Enlève les contenants à l'arrêt. N'oubliez pas d'utiliser l'argument `-v` pour supprimer tout les volumes gérés par docker.
 
 
-
 ## Visualisation des applications Microservice complexes
 
 - Certaines applications microservice peuvent avoir potentiellement des dizaines de petits conteneurs spécialisés. Le service devient alors difficile à lire dans le compose file.
@@ -69,7 +66,8 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - Cet outil peut-être utilisé dans le cadre d'un automatisation d'intégration continue pour produire la documentation agrémentée d'une image automatiquement en fonction du code.
 
-## Un GUI pour Docker: Portainer
+
+## Un GUI d'admin simple pour Docker (et Swarm): Portainer
 
 Un bonne façon de visualiser l'état d'un application complexe est d'utiliser une application classique d'admin Docker: Portainer.
 
@@ -79,8 +77,10 @@ Elle s'installer sous forme d'un conteneur (avec un volume pour pas perdre les d
 docker run --detach --name portainer \
     -p 9000:9000 \
     -v portainer_data:/data \
-    --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+    -v /var/run/docker.sock:/var/run/docker.sock \
     portainer/portainer
 ```
 
-Elle doit avoir accès au socket docker pour administrer (il faut bien sécuriser l'interface par exemple la laisser dans un réseau privé)
+Pour administrer l'engine docker (ou le cluster) une façon simple de procéder est de donner au conteneur portainer l'accès au socket docker sous forme d'un bind mount (`-v /var/run/docker.sock:/var/run/docker.sock`). On parle alors d'accès en local. Sur un cluster on connecte généralement portainer en mode remote sur le socket du cluster.
+
+Comme portainer peut virtuellement tout faire sur votre cluster et donc sur les machines hôtes, il faut bien sécuriser l'interface par exemple la laisser dans un réseau privé et activer le RBAC (role based acces control (payant)).

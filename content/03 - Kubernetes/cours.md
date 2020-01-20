@@ -4,16 +4,7 @@ draft: true
 ---
 
 
-## Le client Kubectl
 
-- Les contextes
-
-## Architecture de Kubernetes - Partie 1
-
-Conteneurs dans des pods dans des namespaces exposés comme des services
-
-<!-- ![](../../images/gopher-404.jpg?width=500px) -->
-![](../../images/k8s_archi1.png)
 
 ### Namespaces
 
