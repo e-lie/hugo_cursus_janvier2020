@@ -163,7 +163,7 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InhuNUhNMUZtZksydXhFSVJsRmZGcS1RdXJEZHNN
 
 Observons la dashboard : Démo.
 
-## Mettre en place un custer K8s dans le cloud avec DigitalOcean
+## Mettre en place un cluster K8s dans le cloud avec DigitalOcean
 
 - Clonez le projet modèle : [https://github.com/e-lie/cursus_janvier2020_tp1_k8s](https://github.com/e-lie/cursus_janvier2020_tp1_k8s)
 - récupérez un token et ssh_key_fingerprint du TP4 Ansible.
@@ -204,7 +204,23 @@ Les roles et les secrets
 
 ATTENTION PROBLEME de permission car déploie dans un autre namespace que le tuto précédent :/
 
+kubectl apply -f recommended.yamlwget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+
+ATTENTION PROBLEME de permission car déploie dans un autre namespace que le tuto précédent :/
+
 kubectl apply -f recommended.yaml
+
+kubectl proxy
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+
+kubectl get secret
+
+kubernetes-dashboard-token-2ddd2
+
+kubectl  -n kubernetes-dashboard describe kubernetes-dashboard-token-2ddd2
+
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Im96ZmwxV2MwUHc3SFE3T3A0VGxVVmlYN09xOTFpWUdfSzBmaTVwcTJLZzgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi0yZGRkMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImU1YTY3YTkwLWQ5NzEtNGY3Ni05NzViLTA0M2NjMzNhMzFjYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.fCR3b-zfNyehCBCzuEzUe2Dd0PmDiHbY3OPMKUJXNsIKv18iVbmSCEbKv2nAj3tbmPDb3JkRl_OjbVFVpHY6K0rybrwLOlroWvSCOAkWLV_4b0NtsJw0wrGsPeJz9arPjJFmZ_-Ol3s3Jgts30GQBLOh_CNwRcBix3ijHEN71CII-EZoBkTVpYHksmnYeBOmH0zqscZYf2UJ-kWE5LRk8OsJmZsHynO2lWBIG-hn5NWXQbGLc1M_2N9xmOQ_1zajvhfaErElctMME-1gx92bVGzpMDpCOAZH42AZm7LIZMIFW11Nt169YesFclgV2GRUk6anms8Hclo019KIaTp2EQ
 
 kubectl proxy
 
