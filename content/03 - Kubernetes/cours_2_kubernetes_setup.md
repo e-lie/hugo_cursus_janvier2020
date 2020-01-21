@@ -136,7 +136,7 @@ Installer un cluster de production Kubernetes à la main est nettement plus comp
 - Déployer la base de donnée `etcd` avec `kubeadm`
 - Connecter les noeuds worker au master.
 
-L'installation est décrite dans la [documentation officielle]()
+L'installation est décrite dans la [documentation officielle](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
 ## Installer un cluster Complètement à la main
 
