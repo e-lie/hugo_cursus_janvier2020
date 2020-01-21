@@ -134,6 +134,8 @@ Pour voir notre application visitez : `localhost:<3xxxx>`. Un étrange robot noi
 
 La liste complète [https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202](https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202)
 
+- Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
+
 ### Dashboard Kubernetes
 
 Kubernetes possède une dashboard officielle pour visualiser et contrôler les ressources. Cette dashboard est distribuée dans microk8s sous forme d'un addon à activer.
