@@ -148,7 +148,7 @@ Nous allons nous connecter par token : k8s gère en interne des identités appel
 
 - Listons les secrets du namespace `kube-system` : `kc -n kube-system get secret`
 - Parsons ce résultat avec des commande unix pour récupérer le nom de secret du token : `token_name=$(kc -n kube-system get secret | grep default-token | cut -d " " -f1)`
-- Affichons la valeur du token en le décrivant : `kc -n kube-system describe secret $token`
+- Affichons la valeur du token en le décrivant : `kc -n kube-system describe secret $token_name`
 
 ```
 ...
