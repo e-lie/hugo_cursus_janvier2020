@@ -35,6 +35,13 @@ Go into a container:
 
 https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes
 
+### Ingress example avec nginx et microk8s
+
+https://kndrck.co/posts/microk8s_ingress_example/
+
+vraiment compréhensible simple à tester sur digital ocean mais 404 à la fin :/
+
+
 
 ## Run your container in pods
 

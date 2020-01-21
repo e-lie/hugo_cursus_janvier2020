@@ -1,12 +1,12 @@
 ---
 title: TP1 - Installation et configuration de Kubernetes
-draft: true
+draft: false
 ---
 
-Au cours de ce TP nous allons passer rapidement sur deux manières de configurer kubernetes :
+Au cours de ce TP nous allons passer rapidement en revue deux manières de mettre en place kubernetes :
 
-- cluster de développement avec `microk8s`
-- cluster managed loué chez le provider digital digital ocean
+- Un cluster de développement avec `microk8s`
+- Un cluster managed loué chez le provider Digital Ocean
 <!-- - cluster installé et géré manuellement grâce à Ansible (sur des VPS digital ocean) -->
 
 ## Découverte de Kubernetes avec microk8s
@@ -160,21 +160,36 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InhuNUhNMUZtZksydXhFSVJsRmZGcS1RdXJEZHNN
 
 Observons la dashboard : Démo.
 
-### Ingress example avec nginx et microk8s
-
-https://kndrck.co/posts/microk8s_ingress_example/
-
-vraiment compréhensible simple à tester sur digital ocean mais 404 à la fin :/
-
-
 ## Mettre en place un custer K8s dans le cloud avec DigitalOcean
 
-- télécharger le projet modèle
-- compléter le code terraform
-  - changer le nom de votre cluster
-  - lancer la création du cluster -> ça prend environ 5 minutes
-  - un fichier a été ajouté en local
-gg
+- Clonez le projet modèle : [https://github.com/e-lie/cursus_janvier2020_tp1_k8s](https://github.com/e-lie/cursus_janvier2020_tp1_k8s)
+- récupérez un token et ssh_key_fingerprint du TP4 Ansible.
+- renommez `secrets.auto.tfvars` sans le .dist et complétez.
+- Complétez le code terraform de `digitalocean_k8s.tf` pour changer `k8s-tp-cluster` par `k8s-<votre_nom>-tp-cluster`
+- Lancez la création du cluster depuis le dossier terraform avec `terraform init` et `terraform apply`.
+
+La création prend 5 minutes. un fichier de sortie terraform `kubeconfig_do` a été ajouté en local. Il contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
+
+## Merger la configuration kubectl
+
+- Ouvrez avec gedit les fichier les fichiers `kubeconfig_do` et `~/.kube/config`.
+- fusionnez dans `~/.kube/config` les éléments des listes YAML de:
+  - `clusters`
+  - `contexts`
+  - `users`
+- mettez la clé `current-context:` à `do-lon1-<nom_cluster>` (compléter avec votre valeur)
+
+- Testons la connection avec `kc get nodes`.
+
+## Déployer l'application
+
+- Lancez `kc cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par digital ocean.
+- Déployez l'application `microbot` comme dans la partie précédente avec `microk8s`
+- Pour visitez l'application vous devez trouver l'IP publique d'un des noeuds du cluster:
+  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques.
+
+
+<!--   
 ### Accéder à la dashboard kubernetes
 
 Les roles et les secrets
@@ -199,7 +214,7 @@ kubernetes-dashboard-token-2ddd2
 kubectl  -n kubernetes-dashboard describe kubernetes-dashboard-token-2ddd2
 
 token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Im96ZmwxV2MwUHc3SFE3T3A0VGxVVmlYN09xOTFpWUdfSzBmaTVwcTJLZzgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi0yZGRkMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImU1YTY3YTkwLWQ5NzEtNGY3Ni05NzViLTA0M2NjMzNhMzFjYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.fCR3b-zfNyehCBCzuEzUe2Dd0PmDiHbY3OPMKUJXNsIKv18iVbmSCEbKv2nAj3tbmPDb3JkRl_OjbVFVpHY6K0rybrwLOlroWvSCOAkWLV_4b0NtsJw0wrGsPeJz9arPjJFmZ_-Ol3s3Jgts30GQBLOh_CNwRcBix3ijHEN71CII-EZoBkTVpYHksmnYeBOmH0zqscZYf2UJ-kWE5LRk8OsJmZsHynO2lWBIG-hn5NWXQbGLc1M_2N9xmOQ_1zajvhfaErElctMME-1gx92bVGzpMDpCOAZH42AZm7LIZMIFW11Nt169YesFclgV2GRUk6anms8Hclo019KIaTp2EQ
-
+ -->
 
 
 

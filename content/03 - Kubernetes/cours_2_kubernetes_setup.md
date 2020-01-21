@@ -1,6 +1,6 @@
 ---
 title: Cours 2 - Mettre en place un cluster Kubernetes
-draft: true
+draft: false
 ---
 
 
@@ -17,7 +17,7 @@ draft: true
 
 Les nœuds d’un cluster sont les machines (serveurs physiques, machines virtuelles, etc.) qui exécutent vos applications et vos workflows. Le master node Kubernetes contrôle chaque noeud; vous interagirez rarement directement avec les nœuds.
 
-![](../../images/k8s_archi1.png)
+![](../../images/kubernetes/k8s_archi1.png)
 
 - Pour utiliser Kubernetes, vous utilisez les objets de l’API Kubernetes pour décrire l’état souhaité de votre cluster: quelles applications ou autres processus que vous souhaitez exécuter, quelles images de conteneur elles utilisent, le nombre de réplicas, les ressources réseau et disque que vous mettez à disposition, et plus encore.
 

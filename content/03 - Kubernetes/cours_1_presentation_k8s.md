@@ -1,21 +1,29 @@
 ---
 title: Cours 1 - Présentation de Kubernetes
-draft: true
+draft: false
 ---
-
 
 Kubernetes est la solution dominante d'orchestration de conteneurs développée en Open Source au sein de la Cloud Native Computing Foundation.
 
-
 ## Historique et popularité
 
-- Une autre solution très à la mode qui monte en force depuis 6 ans. Un buzz word du DevOps :)
-- Une solution **robuste**, **structurante** et **open source** d'orchestration docker.
-- Au coeur du consortium **Cloud Native Computing Foundation** très influent dans le monde de l'informatique.
+![](../../images/kubernetes/k8s_logo.png)
 
-TODO
+Kubernetes est un orchestrateur développé originellement par Google et basé sur une dizaine d'année d'expérience de déploiement d'application énormes.
+
+La première version est sortie en 2014 et K8S est devenu depuis l'un des projets open source les plus populaire du monde.
+
+Autour de ce projet s'est développée la **Cloud Native Computing Foundation** qui comprend : Google, CoreOS, Mesosphere, Red Hat, Twitter, Huawei, Intel, Cisco, IBM, Docker, Univa, and VMware.
+
+Il s'agit d'une solution **robuste**, **structurante** et **open source**  qui se construit autour des objectifs de:
+
+- Velocité
+- Scaling des logiciels et des équipe de développement
+- L'abstraction et l'uniformisation des infrastructures
+
 
 ## Architecture de Kubernetes
+
 ### Les ressources k8s en bref
 
 ![](../../images/docker/kubernetes.png?width=600px)
@@ -36,16 +44,16 @@ TODO
 #### Swarm
 
 - Swarm plus intégré avec la CLI et le workflow docker.
-- Swarm est plus fluide, moins structurant mais moins automatique que Kubernetes.
-- Swarm groupes les containers entre eux par **stack** mais c'est un groupement assez lâche.
-- Kubernetes au contraire créé des **pods** avec une meilleure cohésion qui sont toujours déployés ensembles
+- Swarm est plus fluide, moins structurant mais moins puissant pour l'automatisation que Kubernetes.
+- Swarm groupe les containers entre eux par **stack** mais c'est un groupement assez lâche.
+- Kubernetes au contraire créé des **pods**, avec une meilleure cohésion qui sont toujours déployés ensembles puis les scale avec des **deployments** et **services**.
   - => Kubernetes à une meilleure fault tolerance que Swarm
   - un service swarm est un seul conteneur répliqué, un service Kubernetes est un groupes de conteneur (pods) répliqué.
 - Kubernetes a plus d'outils intégrés. Il s'agit plus d'un écosystème qui couvre un large panel de cas d'usage.
 - Kubernetes peut fonctionner avec autre chose que Docker (Rkt par exemple)
 - Swarm a un mauvais monitoring par défaut et le stockage distribué n'est pas intégré de façon standard.
 - Dans un contexte on premise, Swarm est beaucoup plus simple à mettre en oeuvre et plus rapide à migrer qu'une stack Kubernetes.
-- Swarm est mieux pour les cluster moyen et Kubernetes pour les très gros ?
+
 
 ## Solution concurrentes
 
