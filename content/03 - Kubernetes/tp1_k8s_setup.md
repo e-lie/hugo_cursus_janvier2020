@@ -43,6 +43,7 @@ Cependant nous allons installer et configurer une version externe de kubectl pou
 
 ### Installer le client Kubernetes `Kubectl`
 
+- Télécharger la clé dev google : `curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
 - Ajouter le dépot officiel kubernetes pour Ubuntu : `echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list`
 - Mettre à jour les dépôts et installer **kubectl** : `sudo apt update && sudo apt install -y kubectl`
 - Pour vérifier l'installation lancez : `kubectl version --short`

@@ -30,6 +30,18 @@ Go into a container:
 
 `kubectl top nodes`
 
+## Installer une application avec Redis
+
+Modèle pour déployer ma monsterstack
+
+https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
+
+## Installer un wordpress pour le Persistent volume
+
+https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
+Marche bien
+
 
 ## Nginx ou Contour Ingress sur Digital Ocean
 
@@ -37,9 +49,48 @@ https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-
 
 ### Ingress example avec nginx et microk8s
 
-https://kndrck.co/posts/microk8s_ingress_example/
+ Nous allons déployer un service
 
-vraiment compréhensible simple à tester sur digital ocean mais 404 à la fin :/
+- Install Ingress 
+
+microk8s.kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+
+- Enable Ingress Addon
+
+microk8s.enable ingress
+
+4. Run a local Docker Registry
+
+You can skip this step if you wanna host your image on a public/private repository.
+
+docker run -p 5000:5000 registry
+
+5. Clone Example Repository And Build Docker Image
+
+git clone https://github.com/kendricktan/microk8s-ingress-example
+cd microk8s-ingress-example
+
+docker build . -t my-microk8s-app
+docker tag my-microk8s-app localhost:5000/my-microk8s-app
+docker push localhost:5000/my-microk8s-app
+
+6. Run Applications And Ingress
+
+microk8s.kubectl apply -f bar-deployment.yml
+microk8s.kubectl apply -f foo-deployment.yml
+microk8s.kubectl apply -f ingress.yml
+
+7. Expose Deployments to Ingress
+
+If you skip this step you'll get a 503 service unavailable
+
+microk8s.kubectl expose deployment foo-app --type=LoadBalancer --port=8080
+microk8s.kubectl expose deployment bar-app --type=LoadBalancer --port=8080
+
+8. Testing Endpoint Out
+
+curl -kL https://127.0.0.1/bar
+curl -kL https://127.0.0.1/foo
 
 
 
