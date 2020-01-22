@@ -30,6 +30,7 @@ Nous allons utiliser la version de helm packagée dans microk8s:
 - Visitez localhost:8080
 - cherchez le nom du pod jenkins
 - afficher les logs du pod avec `kc logs`
-- récupérez le password d'init
-
+- récupérez le password admin d'init et collez le dans le navigateur
 - Notre jenkins de travail est prêt
+
+- Avant de continuer nous allons cependant Mettre un Loadbalancer Ingress en nous inspirant du TP3

@@ -1,10 +1,7 @@
 ---
-title: Cours 1 - Jenkins 
+title: Cours 2 - Jenkins Intro
 draft: false
 ---
-
-
-
 
 
 ## Couteau suisse d'automatisation

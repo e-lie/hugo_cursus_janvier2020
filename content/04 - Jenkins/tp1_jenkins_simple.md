@@ -1,6 +1,6 @@
 ---
 title: 'TP1 Jenkins - Pipeline de test avec Jenkins et Docker'
-draft: true
+draft: false
 ---
 
 ## Installer Jenkins avec Docker (version simple)
