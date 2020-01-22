@@ -95,7 +95,7 @@ Notre pod aura alors **la garantie** de disposer d'un dixième de cpu et de 50 m
 
 Pour déployer notre stack de microservices nous allons utiliser des `services` k8s. Mais d'abord passons à l'échelle supérieure avec les déploiements.
 
-Correction de `monster-pod.yaml`:
+##### Correction de `monster-pod.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -175,27 +175,7 @@ spec:
 
 - Pour créer un replicaset il faut aussi  preciser le nombre de replicas. Ajoutez au même niveau d'indentation que `template:` une ligne `replicas: 3`
 
-
-```yaml
-spec:
-  template:
-    spec:
-      containers:
-      - image: tecpi/monster_icon:0.1
-        name: monstericon
-        env:
-        - name: CONTEXT
-          value: DEV
-        ports:
-        - containerPort: 5000
-          name: monstericon
-    metadata:
-      labels:
-        app: monsterstack
-        tier: monstericon
-```
-
-A ce stade nous avons décrit les pods de notre déploiement avec leurs étiquettes
+A ce stade nous avons décrit les pods de notre déploiement avec leurs étiquettes.
 
 Maintenant il s'agit de rajouter quelques options pour parametrer notre replicaset:
 
@@ -209,7 +189,7 @@ Maintenant il s'agit de rajouter quelques options pour parametrer notre replicas
     type: Recreate
 ```
 
-Cette section indique le nombre de réplicas de notre pod et les labels à utiliser pour les repérer parmis les autres.
+Cette section indique le nombre de réplicas de notre pod et les labels à utiliser pour repérer les pods du replicaset parmis les autres.
 
 Enfin est précisée la stratégie de mise à jour (rollout) des pod pour le déploiement: Recreate désigne la stratégie la plus brutale de suppression complete des pods puis de redeploiement.
 
@@ -221,13 +201,48 @@ Enfin est précisée la stratégie de mise à jour (rollout) des pod pour le dé
 - Affichez également les replicasets avec `kc get replicasets -o wide`.
 - Listez également les pods et faites describe sur l'un des pods monstericon. On peut constater que les annotation on bien été transmises à chaque pod de notre déploiement.
 
+##### Correction du déploiement monstericon
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monstericon 
+  labels:
+    app: monsterstack
+spec:
+  selector:
+    matchLabels:
+      app: monsterstack
+      tier: monstericon
+  strategy:
+    type: Recreate
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: monsterstack
+        tier: monstericon
+    spec:
+      containers:
+      - image: tecpi/monster_icon:0.1
+        name: monstericon
+        env:
+        - name: CONTEXT
+          value: DEV
+        ports:
+        - containerPort: 5000
+          name: monstericon
+```
+
+#### Déploiement semblable pour dnmonster
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
 
 - copiez `monster-icon-deployment.yaml` en `dnmonster-deployment.yaml`
 - modifiez tous les `monstericon` en `dnmonster` avec un copier et remplacer.
 - Changeons également la section `containers` pour qu'elle s'adapte au conteneur `dnmonster`.
-  - chngez le port en 8080
+  - changez le port en 8080
   - supprimez la section `env` inutile
 - Enfin mettez le nombre de replicas à 5.
 
@@ -261,7 +276,7 @@ Ajoutez le code suivant au début de chaque fichier déploiement. Complétez pou
     - le port par le port du service
     - les selector app et tier par ceux du déploiement correspondant.
 
-Le type sera: `NodePort` pour dnmonster et redis et `LoadBalancer` pour monstericon.
+Le type sera: `ClusterIP` pour dnmonster et redis et `LoadBalancer` pour monstericon.
 
 Appliquez vos trois fichiers.
 
@@ -320,16 +335,8 @@ spec:
 
 Vous pouvez normalement accéder à l'application sur `http://localhost/monstericon`
 
-<!-- 
-# Correction
+### Correction
 
-le dépot git de correction est accessible [] -->
+le dépot git de correction est accessible ici [https://github.com/e-lie/tp2_k8s_monsterstack_correction.git](https://github.com/e-lie/tp2_k8s_monsterstack_correction.git)
 
 
-## Fin du fastidieux - Installer des programmes avec Helm
-
-Helm est un gestionnaire de paquet K8s qui permet d'installer des paquets sans faire des copier-coller pénibles de yaml.
-
-- Suivez le [Quickstart] (https://helm.sh/docs/intro/quickstart/) en utilisant à la place de la commande `helm` la version de microk8s `microk8s.helm`.
-
-- Essayons d'installer awx avec helm

@@ -4,7 +4,7 @@ draft: true
 ---
 
 
-Dans Kubernetes la configuration de nos services / applications se fait généralement via des fichiers yaml.
+Nous avons vu que dans Kubernetes la configuration de nos services / applications se fait généralement via de multiples fichiers yaml.
 
 Quand on a une seule application cela reste gérable mais dès qu’on a plusieurs environnements, applications et services, on se retrouve vite submergé de fichiers qui sont de plus assez semblables. Pour palier à ce problème il existe l'utilitaire Helm.
 
@@ -19,7 +19,7 @@ Mais Helm ce n’est pas que ca, il propose également:
   - il comprend un système facilitant les Updates et Rollbacks de vos applications.
 
 
-Nous verrons qu'un chart helm est un peu l'équivalent d'une role Ansible dans l'écosystème Kubernetes.
+Nous verrons qu'un chart helm est un peu l'équivalent d'un role Ansible dans l'écosystème Kubernetes.
 
 
 ### Concepts
