@@ -5,6 +5,12 @@ draft: false
 
 La première partie de ce TP va consister à créer des objets kubernetes pour déployer notre Stack monster_icon.
 
+Mais d'abord créons une application d'exemple Wordpress Mysql
+
+### Installer un Wordpress Mysql d'exemple
+
+[Suivez ce tutoriel]chttps://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
+
 ### Pods
 
 Les pods sont des ensembles de conteneurs toujours gardés ensembles.
