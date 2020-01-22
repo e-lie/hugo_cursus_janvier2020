@@ -230,7 +230,6 @@ Kubernetes gère lui-même ses composants interne sous forme de pods et services
 
 Si vous ne trouvez pas un objet essayez de lancer la commande kubectl avec l'option `-A` ou `--all-namespaces`
 
-Pour créer un objet de type
 
 ### Les Pods
 
