@@ -9,7 +9,7 @@ Mais d'abord créons une application d'exemple Wordpress Mysql
 
 ### Installer un Wordpress Mysql d'exemple
 
-[Suivez ce tutoriel]chttps://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
+[Suivez ce tutoriel](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
 
 ### Pods
 
