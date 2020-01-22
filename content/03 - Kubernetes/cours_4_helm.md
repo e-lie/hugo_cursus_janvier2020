@@ -59,3 +59,5 @@ Voici quelques commandes de bases pour Helm :
 
 Visitons un exemple de Chart : [minecraft](https://github.com/helm/charts/tree/master/stable/minecraft/templates)
 
+On constate que Helm rassemble des fichier descriptions d'objets k8s avec des variables Jinja à l'intérieur ce qui permet de factoriser le code et gérer puissamment la différence entre les versions.
+
