@@ -1,9 +1,9 @@
 ---
 title: Cours 3 - Kubernetes Objects
-draft: true
+draft: false
 ---
 
-
+<!-- 
 ## Principes d'orchestration
 
 #### Haute disponibilité
@@ -99,7 +99,7 @@ On peut compléter Swarm avec d'autre découvertes de services comme:
   - **Consul**: (Hashicorp): Assez simple d'installation et fournit avec une sympathique interface web.
   - **Etcd** : A prouvé ses performances aux plus grandes échelle mais un peu plus complexe. (à la base de kubernetes mais côté control plane et non pas application)
 
-- Kubernetes propose un service discovery extrêment flexible grace aux `deployments` et `services`
+- Kubernetes propose un service discovery extrêment flexible grace aux `deployments` et `services` -->
 
 
 ## L'API et les Objets Kubernetes
@@ -111,6 +111,107 @@ Définit des objets généralement via l’interface en ligne de commande, kubec
 - en décrivant un objet dans un fichier YAML ou JSON et en le passant au client `kubectl apply -f monpod.yml`
 
 Vous pouvez également écrire des porgramment qui utilisent directement l’API Kubernetes directement pour interagir avec le cluster et définir ou modifier l’état souhaité. **Kubernetes est complètement automatisable !**
+
+### La commande `apply`
+
+Kubernetes encourage le principe de l'infrastructure as code : il est recommandé d'utiliser une description YAML et versionnée des objets et configurations kubernetes plutôt que la CLI.
+
+Pour cela la commande de base est `kubectl apply -f object.yaml`.
+
+La commande inverse `kubectl delete -f object.yaml` permet de détruire un objet précédement appliqué dans le cluster à partir de sa description.
+
+Lorsqu'on vient d'appliquer une description on peut l'afficher dans le terminal avec `kubectl apply -f myobj.yaml view-last-applied`
+
+Globalement Kubernetes garde un historique de toutes les transformations des objets exploration avec la commande `kubectl history ...`
+
+### Syntaxe de base d'une description YAML Kubernetes:
+
+
+Les description Yaml permettent de décrire de façon lisibles et manipulable de nombreuses caractéristiques à la fois des ressources Kubernetes (un peu comme un compose-file par rapport à la CLI Docker).
+
+##### Exemples
+
+Création d'un service simple:
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  ports:
+    - port: 443
+      targetPort: 8443
+  selector:
+    k8s-app: kubernetes-dashboard
+```
+
+Création d'un "compte utiliseur" `ServiceAccount`
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+```
+
+Remarques de syntaxe:
+
+- Toutes les descriptions doivent commencer par spécifier la version d'API (minimale) avec laquelle ils sont sensés être créé
+- Il faut également préciser le type d'objet avec `kind`
+- Le nom dans `metadata:\n  name: value` est également obligatoire.
+
+- On rajoute généralement une description longue démarrant par `spec:`
+
+#### Description multiressources
+
+- On peut mettre plusieurs ressources à la suite dans un fichier k8s :  permet de décrire une installation complexe en un seul fichier
+  - exemple la dashboard kubernetes [https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml](https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml)
+
+- L'ordre n'importe pas car les ressources sont décrites déclarativement c'est-à-dire que:
+  - Les dépendances entre les ressources sont déclarées
+  - Le control plane de Kubernetes se charge de plannifier l'ordre correct de création en fonction des dépendances (pods avant le déploiement, role avec l'utilisateur lié au role)
+  - On préfère cependant les mettre dans un ordre logique pour que les humain puissent les lire.
+
+- On peut sauter des lignes dans le YAML et rendre plus lisible les descriptions
+- On sépare les différents objets par `---`
+
+## Les fichier kustomization
+
+Décrire un ensemble de resources dans le même fichier est intéressant mais on pourrait préférer rassembler plusieurs fichiers dans un même dossier et les appliquer d'un coup
+
+Pour cela K8s propose le concept de `kustomization`.
+
+Exemple:
+
+```yaml
+k8s-mysql/
+├── kustomization.yaml
+├── mysql-deployment.yaml
+└── wordpress-deployment.yaml
+```
+
+`kustomization.yaml`
+
+```yaml
+secretGenerator:
+  - name: mysql-pass
+    literals:
+      - password=YOUR_PASSWORD
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+```
+
+On peut ensuite l'appliquer avec `kubectl apply -k ./`
+
+A notre que `kubectl kustomize .` permet de visualiser l'ensemble de modification avant de les appliquer (`kubectl kustomize . | less` pour mieux lire)
 
 ## Objets de base
 
@@ -129,15 +230,59 @@ Kubernetes gère lui-même ses composants interne sous forme de pods et services
 
 Si vous ne trouvez pas un objet essayez de lancer la commande kubectl avec l'option `-A` ou `--all-namespaces`
 
+Pour créer un objet de type
+
 ### Les Pods
 
 Un Pod est l’unité d’exécution de base d’une application Kubernetes–l’unité la plus petite et la plus simple dans le modèle d’objets de Kubernetes–que vous créez ou déployez. Un Pod représente des process en cours d’exécution dans votre Cluster.
 
-Un Pod encapsule un conteneur applicatif (ou, dans certains cas, plusieurs conteneurs), des ressources de stockage, **une IP réseau unique**, et des options qui contrôlent comment le ou les conteneurs doivent s’exécuter.
+Un Pod encapsule un conteneur applicatif (ou souvent plusieurs conteneurs), des ressources de stockage, **une IP réseau unique**, et des options qui contrôlent comment le ou les conteneurs doivent s’exécuter (restart policy). Cette collection de conteneurs et volumes tournent dans le même environnement d'exécution mais les processus sont isolés.
 
-Un Pod représente une unité de déploiement : un petit nombre de conteneurs qui sont étroitement liés et qui partagent des ressources.
+Un Pod représente une unité de déploiement : un petit nombre de conteneurs qui sont étroitement liés et qui partagent:
+  - les même ressources de calcul
+  - des volumes communs
+  - la même IP donc le même nom de domaine
+  - peuvent se parler sur localhost
+  - peuvent se parler en IPC
+  - on un nom différent et des logs différents
 
-Chaque Pod est destiné à exécuter une instance unique d’une application donnée. Si vous désirez mettre à l’échelle votre application horizontalement, (par ex., exécuter plusieurs instances), vous devez utiliser plusieurs Pods, un pour chaque instance
+Chaque Pod est destiné à exécuter une instance unique d’un workload donné. Si vous désirez mettre à l’échelle votre workload horizontalement, (par ex., exécuter plusieurs instances), vous devez utiliser plusieurs Pods, un pour chaque instance.
+
+Pour plus de détail sur la philosophie des pods regardez [ce bon article](https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/)
+
+K8s fournit un ensemble de commande pour débugger des conteneurs
+
+- `kubectl logs <pod-name> -c <conteneur_name>` (le nom du conteneur est inutile si un seul)
+- `kubectl exec -it <pod-name> -c <conteneur_name> -- bash`
+- `kubectl attach -it <pod-name>`
+
+Enfin pour debugger la sortie réseau d'un programme on peut rapidement forwarder un port depuis un pods vers l'extérieur du cluster:
+
+- `kubectl port-forward <pod-name> <port_interne>:<port_externe>`
+- C'est une commande de debug seulement : pour exposer correctement des processus k8s il faut créer un service par exemple de type NodePort pour un port.
+
+Pour copier un fichier dans un pod on peut utiliser: `kubectl cp <pod-name>:</path/to/remote/file> </path/to/local/file>`
+
+Pour monitorer rapidement les ressources consommées par un ensemble de processus il existe les commande `kubectl top nodes` et `kubectl top pods`
+
+##### Un manifeste de Pod
+
+`kuard-pod.yaml`
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nom_pod
+spec:
+  containers:
+    - image: tecpi/pod_image:0.1
+      name: nom_conteneur
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+```
 
 ### Les ReplicaSet
 
@@ -146,13 +291,15 @@ Un peu comme le paramètre `replicas:`  d'un service docker mais en plus précis
 
 - `kubectl get rs` pour afficher la liste des replicas.
 
-En général on ne les manipule pas directement
+En général on ne les manipule pas directement.
 
 ### Les Deployments
 
 Plutôt que d'utiliser les replicaset il est recommander d'utiliser un objet de plus haut niveau les `deployments`.
 
-De la même façon que les ReplicaSets gères les pods, les Deployments gèrent les ReplicaSet.
+De la même façon que les ReplicaSets gèrent les pods, les Deployments gèrent les ReplicaSet.
+
+Un déploiement sert surtout comme son nom l'indique à gérer le déploiement d'une nouvelle version d'un pod.
 
 Un `deployment` est un peu l'équivalent d'un `service` docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`
 
@@ -184,30 +331,29 @@ spec:
 
 - Pour les afficher `kubectl get deployments`
 
-- La commande `kubectl run` sert à créer un `deployment` à partir d'un modèle.
-- Sinon on utilise généralement la commande `kubectl apply -f`
-
-- pour supprimer un deployment `kubectl 
+- La commande `kubectl run` sert à créer un `deployment` à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
 
 
 ## DaemonSets
 
-Another reason to replicate a set of Pods is to schedule a single Pod on every node within the cluster. Generally, the motivation for replicating a Pod to every node is to land some sort of agent or daemon on each node, and the Kubernetes object for achieving this is the DaemonSet.
+Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod sur chaque nœud du cluster. En général, la motivation pour répliquer un Pod sur chaque nœud est de faire atterrir une sorte d'agent ou de démon sur chaque nœud, et l'objet Kubernetes pour y parvenir est le DaemonSet. Par exemple pour des besoins de monitoring. 
 
-Par exemple pour des besoin de monitoring 
-
-Given the similarities between DaemonSets and ReplicaSets, it’s important to understand when to use one over the other. ReplicaSets should be used when your application is completely decoupled from the node and you can run multiple copies on a given node without special consideration. DaemonSets should be used when a single copy of your application must run on all or a subset of the nodes in the cluster.
+Étant donné les similitudes entre les DaemonSets et les ReplicaSets, il est important de comprendre quand utiliser l'un plutôt que l'autre. Les ReplicaSets doivent être utilisés lorsque votre application est complètement découplée du nœud et que vous pouvez en exécuter plusieurs copies sur un nœud donné sans considération particulière. Les DaemonSets doivent être utilisés lorsqu'une seule copie de votre application doit être exécutée sur tous les nœuds du cluster ou sur un sous-ensemble de ces nœuds.
 
 ## Jobs
 
-In contrast, a regular Pod will continually restart regardless of its exit code. Jobs are useful for things you only want to do once, such as database migrations or batch jobs. If run as a regular Pod, your database migration task would run in a loop, continually repopulating the database after every exit.
-
-## Stockage
-
-
+Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod normal, votre tâche de migration de base de données se déroulera en boucle, en repeuplant continuellement la base de données.
 
 
 ## Role Based Access Control
+
+Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces.
+
+- Classiquement on crée des `roles` comme admin ou monitoring qui désignent un ensemble de permission
+- On crée ensuite des utilisateurs appelés `serviceaccounts` dans K8s.
+- On lie les roles et serviceaccounts à l'aide d'objets rolebindings. Exemple de la dashboard.
+
+A coté des roles crées pour les utilisateurs et processus du cluster il existe des modèles de role prédéfinits qui sont affichables avec:
 
 `kubectl get clusterroles`
 
@@ -220,6 +366,8 @@ Cependant quatre roles sont conçus pour les utilisateurs finaux génériques :
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
 
-## CLI Cheatsheet:
+microk8s n'a pas les fonctionnalités de RBAC activée par defaut. Il faut lancer `microk8s.enable rbac` pour les configurer. Mais ne le faite pas pour ne pas perturber le TP.
+
+## K8s CLI Cheatsheet:
 
 Tout cela fait beaucoup de commande voici une récapitulation des principales commande [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
