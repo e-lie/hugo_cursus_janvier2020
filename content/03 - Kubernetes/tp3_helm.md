@@ -19,6 +19,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 - créez un alias et ajoutez le au `~/.bashrc`: `alias helm='microk8s.helm'`
 - Lancez `source ~/.bashrc` pour l'activer. -->
 
+- `microk8s.disable helm`
 - `snap install helm --classic`
 - `unalias helm`
 
