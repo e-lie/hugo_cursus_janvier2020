@@ -1,9 +1,14 @@
 ---
-title: 'TP1 Jenkins - Pipeline de test avec Jenkins et Docker'
+title: 'TP1 Jenkins - Pipeline de test et déploiement avec Jenkins et Kubernetes'
 draft: false
 ---
 
+
 ## Installer Jenkins avec Docker (version simple)
+
+
+#### Nous avons utilisé l'installation kubernetes du TP3 kubernetes (la config docker ci dessous est conservée à tire informatif)
+
 
 - Créer un dossier `tp_jenkins`.
 
@@ -46,7 +51,6 @@ services:
 - Cliquez sur `Installer les plugins recommandés`
 
 - Créez un utilisateur à votre convenance. Jenkins est prêt.
-
 
 
 ## Créer un premier pipeline
@@ -239,11 +243,39 @@ Dockerfile
 
 - Construisez l'image : `docker build -t flask_hello .`
 - Lancez la pour tester son fonctionnement: `docker run --rm --name flask_hello -p 5000:5000 flask_hello`
+
 - Pour lancez les test il suffit d'écraser au moment de lancer le conteneur la commande par défaut `./app.py` pas la commande `./test.py`:
 
 ```
 docker run --rm --name flask_hello -p 5000:5000 flask_hello ./test.py --verbose
 ```
+
+- Lancez un registry docker en local  sur le port 4000 avec `docker run -p 4000:5000 registry` LAISSEZ LE TOURNER.
+- tagguez l'image pour la poussez sur ce registry : `docker tag flask_hello localhost:4000/flask_hello`
+- poussez la avec `docker push localhost:4000/flask_hello`
+
+## Installer Jenkins dans Kubernetes
+
+Nous allons installer Jenkins avec Helm et le chart Jenkins Stable. Cela va permettre d'utiliser des pods k8s comme agents Jenkins. Pour cela :
+
+- Commencez par récupérer le fichier des valeurs de configuration du chart Jenkins stable avec : `wget https://raw.githubusercontent.com/helm/charts/master/stable/jenkins/values.yaml`
+
+Ce fichier contient plein d'options sur comment configurer l'installation de Jenkins et Jenkins lui même:
+  - sur quel port exposer le service
+  - quels plugins Jenkins installer
+  - le nom et mot de passe de l'admin
+  - etc
+
+- Modifiez: `adminUser` et `adminPassword` pour mettre les votre
+- Modifiez `serviceType: Nodeport`
+- Ajoutez `nodePort: 32000` à la ligne juste en dessous de servicetype
+
+Maintenant lançons l'installation avec : `helm install --name jenkins -f values.yaml stable/jenkins --namespace jenkins`
+
+- Chargez la page localhost:32000 pour accéder à Jenkins et utilisez le login configuré.
+
+- Installez le plugin blue ocean dans l'administration de Jenkins
+
 
 ## Tester notre application avec un pipeline
 
@@ -252,65 +284,184 @@ Pour tester notre application nous allons créer un `pipeline as code` c'est à 
 `Jenkinsfile`
 
 ```
+
 pipeline {
-  agent { docker { image 'python:3.7.2' } }
-  stages {
-    stage('build') {
-      steps {
-        sh 'pip install -r requirements.txt'
-      }
-    }
-    stage('test') {
-      steps {
-        sh 'python test.py'
-      }   
+  agent {
+    kubernetes {
+      // this label will be the prefix of the generated pod's name
+      label 'jenkins-agent-my-app'
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    component: ci
+spec:
+  containers:
+    - name: python
+      image: python:3.7
+      command:
+        - cat
+      tty: true
+"""
     }
   }
+
+  stages {
+    stage('Test python') {
+      steps {
+        container('python') {
+          sh "pip install -r requirements.txt"
+          sh "python test.py"
+        }
+      }
+    }
+  }
+
 }
 ```
 
 - Créez un commit pour le code de l'application.
-- Créez un nouveau projet framagit `flask_hello_jenkins` et poussez le code.
+- Créez un nouveau projet github `flask_hello_jenkins` et poussez le code.
 - Copiez l'adresse SSH de votre nouveau dépot (menu `clone` de la page d'accueil).
 - Allez dans Blue Ocean et créez un nouveau pipeline de type `git` (pas github ou autre) en collant l'adresse SSH précédent.
 - Blue Ocean vous présente une clé SSH et vous propose de l'ajouter à votre dépot pour l'authentification.
   - Cliquez sur `copy to clipboard`
-  - Allez dans framagit > settings > SSH keys et ajoutez la clé
-  - retourné sur la page jenkins et faite `Créer le pipeline`
+  - Allez dans github > settings > SSH keys et ajoutez la clé
+  - retournez sur la page jenkins et faite `Créer le pipeline`
   
 - A partir d'ici le pipeline démarre
   - d'abord (étape 1) Jenkins s'authentifie en SSH et clone le dépôt du projet automatiquement
   - puis il lit le `Jenkinsfile` et créé les étapes (steps) nécessaires à partir de leur définition
-  - `agent { docker { image 'python:3.7.2' } }` indique que Jenkins doit utiliser une image docker pour exécuter les test
-  - l'étape `build` installe les requirements nécessaire
-  - l'étape `test` lance simplement le fichier de test précédemment créé
+  - `agent { kubernetes ... containers: ... - python:3.7.2' }` indique que Jenkins doit utiliser un pod kubernetes basé sur l'image docker python pour exécuter les test
+  - l'étape `Test Python` installe les requirements nécessaire et lance simplement le fichier de test précédemment créé
 
 - Observez comment Blue ocean créé des étapes d'une chaine (le pipeline) et vous permet de consulter les logs détaillés de chaque étape.
 
-- Le corrigé de cette application flask et du Jenkinsfile est disponible sur framagit : [https://framagit.org/e-lie/flask_app_jenkins](https://framagit.org/e-lie/flask_app_jenkins). Basculez sur le tag `flask_simple_test` avec `git co <tag_name>` pour avoir l'étape correspondante.
 
 
-## Utilisons notre Dockerfile pour simplifier le pipeline
 
-Dans le `Jenkinsfile` précédent nous avons demandé à Jenkins de partir de l'image `python:3.7.2` et d'installer les requirements. Mais nous avons déjà un Dockerfile pour cela on peut donc simplifier le pipeline comme suit:
+## Utilisons notre Dockerfile pour construire un artefact
+
+Dans le `Jenkinsfile` précédent nous avons demandé à Jenkins de partir de l'image `python:3.7.2` et d'installer les requirements.
+
+Mais sous avons aussi un Dockerfile qui va nous permettre de construire l'image et la pousser automatiquement sur notre registry. Ajoutez le stage build suivant
 
 ```
-pipeline {
-  agent { dockerfile true }
-  stages {
-    stage('test') {
+    stage('Build image') {
       steps {
-        sh 'python test.py'
-      }   
+        container('docker') {
+          sh "docker build -t localhost:4000/pythontest:latest ."
+          sh "docker push localhost:4000/pythontest:latest"
+        }
+      }
     }
-  }
-}
+```
+
+Pour builder l'image le contexte du pipeline doit avoir docker disponible. Pour cela nous allons ajouter un deuxième conteneur et un volume à notre pod jenkins agent. Ajoutez un deuxième conteneur à la liste `spec: containers:` de la configuration de l'agent kubernetes comme suit:
+
+```yaml
+    - name: docker
+      image: docker
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-sock
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
 ```
 
 - Commitez, poussez cette version et relancez le pipeline.
 - Observez les logs en particulier la partie build de l'image : Jenkins utilise docker pour relancer le build
 
-## Utilisons une image du Hub docker pour gagner du temps
+## Déployer notre application dans Kubernetes
+
+Nous allons enfin ajouter un stage Deploy pour lancer notre application dans le cluster et pouvoir la tester.
+
+créez un dossier `kubernetes` avec à l'intérieur deux fichiers:
+
+- `deployment.yaml`
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pythontest 
+  labels:
+    app: pythontest
+spec:
+  selector:
+    matchLabels:
+      app: pythontest
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pythontest
+    spec:
+      containers:
+      - image: localhost:4000/pythontest:latest
+        name: pythontest
+        ports:
+        - containerPort: 5000
+          name: microport
+```
+
+- `service.yaml`
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: pythontest
+  labels:
+    app: pythontest
+spec:
+  ports:
+    - port: 5000
+      nodePort: 31000
+  selector:
+    app: pythontest 
+  type: NodePort
+```
+
+Ajoutez un stage Deploy au pipeline Jenkinsfile comme suit:
+
+```
+    stage('Deploy') {
+      steps {
+        container('kubectl') {
+          sh "kubectl apply -f ./kubernetes/deployment.yaml"
+          sh "kubectl apply -f ./kubernetes/service.yaml"
+        }
+      }
+    }
+```
+
+Pour exécuter ces commande il nous faut kubectl dans le pod. Ajoutons pour cela un conteneur kubectl dans le pod à la suite du conteneur docker précédemment ajouté et avant la section `volumes:`:
+
+```yaml
+    - name: kubectl
+      image: lachlanevenson/k8s-kubectl:v1.17.2 # use a version that matches your K8s version
+      command:
+        - cat
+      tty: true
+```
+
+- Poussez ces modification et lancez un build à nouveau.
+
+
+### Correction
+
+- Le corrigé de cette application flask du Jenkinsfile et du déploiement Kubernetes est disponible sur github : [https://github.com/e-lie/cursus202001_jenkins_pipeline_k8s](https://github.com/e-lie/cursus202001_jenkins_pipeline_k8s).
+
+<!-- ## Utilisons une image du Hub docker pour gagner du temps
 
 Dans la version précédent Jenkins relance `docker build` pour créer une image. Imaginons que les images sont construites à chaque push et poussées sur le docker hub. on peut alors utiliser l'image préconstruite pour gagner du temps. Nous allons pousser flask_hello sur docker hub.
 
@@ -336,7 +487,7 @@ pipeline {
 }
 ```
 
-- Poussez à nouveau l'app et relancez le pipeline.
+- Poussez à nouveau l'app et relancez le pipeline. -->
 
 
 ## Ajouter le déclenchement automatique du pipeline à chaque push.
