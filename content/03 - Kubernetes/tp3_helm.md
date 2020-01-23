@@ -12,14 +12,15 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 ### Ajoutons un nouvel alias
 
-Nous allons utiliser la version de helm packagée dans microk8s:
+<!-- Nous allons utiliser la version de helm packagée dans microk8s:
 
 - Activez la avec : `microk8s.enable helm`
 - Initialisez helm en installant le composant serveur tiller dans le cluster avec `microk8s.helm init`
 - créez un alias et ajoutez le au `~/.bashrc`: `alias helm='microk8s.helm'`
-- Lancez `source ~/.bashrc` pour l'activer.
+- Lancez `source ~/.bashrc` pour l'activer. -->
 
-
+- `snap install helm --classic`
+- `unalias helm`
 
 - Suivez le [Quickstart] (https://helm.sh/docs/intro/quickstart/) 
 
