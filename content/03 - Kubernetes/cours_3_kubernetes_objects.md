@@ -147,6 +147,7 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+  type: NodePort
 ```
 
 Création d'un "compte utiliseur" `ServiceAccount`
@@ -318,6 +319,8 @@ metadata:
     app: nginx
 spec:
   replicas: 3
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: nginx
@@ -337,6 +340,30 @@ spec:
 
 - La commande `kubectl run` sert à créer un `deployment` à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
 
+### Les Services
+
+Dans Kubernetes, un service est une abstraction qui rassemble un ensemble de pods grace à des tags configure une politique permettant d’y accéder depuis l'intérieur ou l'extérieur du cluster.
+
+Un service K8s est en particulier adapté pour implémenter une architecture micro-service.
+
+L’ensemble des pods ciblés par un service est déterminé par un `selector`
+
+Par exemple, considérons un backend de traitement d’image stateless qui s’exécute avec 3 replicas. Ces réplicas sont interchangeables et les frontends ne se soucient pas du backend qu’ils utilisent. Bien que les pods réels qui composent l’ensemble backend puissent changer, les clients frontends ne devraient pas avoir besoin de le savoir, pas plus qu’ils ne doivent suivre eux-mêmes l’ensemble des backends.
+
+L’abstraction du service permet ce découplage en 
+
+
+Les Services sont de quatre types
+
+- ClusterIP: expose le service sur une IP interne au cluster appelée ClusterIP. Les autres pod peuvent alors accéder au service mais pas l'extérieur.
+
+- NodePort: expose le service depuis l'IP publique de n'importe lequel des noeuds du cluster en faisant un mapping static avec un port personnalisé typiquement dans les 30000. Cela permet d'accéder aux pods interne répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+
+- LoadBalancer: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigés sont automatiquement créés.
+
+- ExternalName: Mappe le service grace à coreDNS au contenu du champ externalName (par exemplefoo.bar.example.com), en renvoyant un enregistrement CNAME avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place.
+
+- On peut aussi créer des services headless en spécifiant `ClusterIP: none` pour les communication interne au cluster non basé sur les IP.
 
 ## DaemonSets
 
@@ -369,8 +396,7 @@ Cependant quatre roles sont conçus pour les utilisateurs finaux génériques :
 - Le rôle `edit` permet à un utilisateur final de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
-
-microk8s n'a pas les fonctionnalités de RBAC activée par defaut. Il faut lancer `microk8s.enable rbac` pour les configurer. Mais ne le faite pas pour ne pas perturber le TP.
+microk8s n'a pas les fonctionnalités de RBAC activées par defaut. Il faut lancer `microk8s.enable rbac` pour les configurer. (Mais ne le faite pas pour ne pas perturber le TPà
 
 ## K8s CLI Cheatsheet:
 
