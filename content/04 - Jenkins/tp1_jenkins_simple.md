@@ -344,6 +344,24 @@ spec:
 - Observez comment Blue ocean créé des étapes d'une chaine (le pipeline) et vous permet de consulter les logs détaillés de chaque étape.
 
 
+## Ajouter le déclenchement automatique du pipeline à chaque push.
+
+Ajoutons un trigger Jenkins pour déclencher automatiquement le pipeline dès que le code sur le dépot change. Une façon simple de faire cela est d'utiliser le trigger `pollSCM`:
+
+- Ajouter en dessous de la ligne `agent` du `Jenkinsfile` les trois lignes suivantes:
+
+<!-- TODO: mettre un git hook à la place -->
+
+```
+  triggers {
+      pollSCM('* * * * *')
+  }
+```
+
+Cet ajout indique à Jenkins de vérifier toute les minute si le dépôt à été mis à jour.
+
+- Créez un commit et poussez le code.
+- Pour que le trigger soit pris en compte il faut d'abord relancer le build manuellement : allez sur l'interface et relancez le build. Normalement les tests sont toujours fonctionnels.
 
 
 ## Utilisons notre Dockerfile pour construire un artefact
@@ -495,24 +513,6 @@ pipeline {
 - Poussez à nouveau l'app et relancez le pipeline. -->
 
 
-## Ajouter le déclenchement automatique du pipeline à chaque push.
-
-Ajoutons un trigger Jenkins pour déclencher automatiquement le pipeline dès que le code sur le dépot change. Une façon simple de faire cela est d'utiliser le trigger `pollSCM`:
-
-- Ajouter en dessous de la ligne `agent` du `Jenkinsfile` les trois lignes suivantes:
-
-<!-- TODO: mettre un git hook à la place -->
-
-```
-  triggers {
-      pollSCM('* * * * *')
-  }
-```
-
-Cet ajout indique à Jenkins de vérifier toute les minute si le dépôt à été mis à jour.
-
-- Créez un commit et poussez le code.
-- Pour que le trigger soit pris en compte il faut d'abord relancer le build manuellement : allez sur l'interface et relancez le build. Normalement les tests sont toujours fonctionnels.
 
 ## Ajoutez une branche feature et du TDD
 
