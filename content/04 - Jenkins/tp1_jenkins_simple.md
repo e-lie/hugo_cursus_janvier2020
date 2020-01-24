@@ -272,7 +272,7 @@ Ce fichier contient plein d'options sur comment configurer l'installation de Jen
 Maintenant lançons l'installation avec :
 
 - `kc create namespace jenkins` 
-- `kc config set-context jenkins --namespace=jenkins`
+- `kc config set-context --current --namespace=jenkins`
 - `helm install --name-template jenkins -f values.yaml stable/jenkins`
 
 - Chargez la page localhost:32000 pour accéder à Jenkins et utilisez le login configuré.
