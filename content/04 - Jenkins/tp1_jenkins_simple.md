@@ -239,7 +239,7 @@ Dockerfile
 
 - Construisez l'image : `docker build -t flask_hello .`
 - Lancez la pour tester son fonctionnement: `docker run --rm --name flask_hello -p 5000:5000 flask_hello`
-- Pour lancez les test il suffit d'écraser au moment de lancer le conteneur la commande par défaut `./app.py` pas la commande `./test.py`:
+- Pour lancez les test il suffit d'écraser au moment de lancer le conteneur la commande par défaut `./app.py` par la commande `./test.py`:
 
 ```
 docker run --rm --name flask_hello -p 5000:5000 flask_hello ./test.py --verbose

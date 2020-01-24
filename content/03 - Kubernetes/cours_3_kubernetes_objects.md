@@ -219,6 +219,11 @@ A notre que `kubectl kustomize .` permet de visualiser l'ensemble de modificatio
 
 Tous les objets kubernetes sont rangés dans différents espaces de travails isolés appelés `namespaces`.
 
+Cette isolation permet 3 choses:
+  - ne voir que ce qui concerne une tache particulière (diminuer la charge cognitive lorsqu'on opère un cluster)
+  - créer des limites de ressources CPU RAM etc pour le namespace
+  - définir des roles et permissions sur le namespace qui s'appliquent à toutes les ressources à l'intérieur.
+
 Lorsqu'on lit ou créé des objets sans préciser le namespace, ces objets sont liés au namespace `default`
 
 Pour utiliser un namespace autre que `default` avec `kubectl` il faut :
