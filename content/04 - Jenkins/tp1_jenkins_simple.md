@@ -266,10 +266,14 @@ Ce fichier contient plein d'options sur comment configurer l'installation de Jen
   - etc
 
 - Modifiez: `adminUser` et `adminPassword` pour mettre les votre
-- Modifiez `serviceType: Nodeport`
+- Modifiez `serviceType: NodePort`
 - Ajoutez `nodePort: 32000` à la ligne juste en dessous de servicetype
 
-Maintenant lançons l'installation avec : `helm install --name jenkins -f values.yaml stable/jenkins --namespace jenkins`
+Maintenant lançons l'installation avec :
+
+- `kc create namespace jenkins` 
+- `kc config set-context jenkins --namespace=jenkins`
+- `helm install --name-template jenkins -f values.yaml stable/jenkins`
 
 - Chargez la page localhost:32000 pour accéder à Jenkins et utilisez le login configuré.
 
