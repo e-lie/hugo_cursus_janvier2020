@@ -350,7 +350,7 @@ Ajoutons un trigger Jenkins pour déclencher automatiquement le pipeline dès qu
 
 - Ajouter en dessous de la ligne `agent` du `Jenkinsfile` les trois lignes suivantes:
 
-<!-- TODO: mettre un git hook à la place -->
+<!-- TODO: mettre un git hook à la place si serveur (jenkins joignable depuis internet)-->
 
 ```
   triggers {
