@@ -398,6 +398,3 @@ Cependant quatre roles sont conçus pour les utilisateurs finaux génériques :
 
 microk8s n'a pas les fonctionnalités de RBAC activées par defaut. Il faut lancer `microk8s.enable rbac` pour les configurer. (Mais ne le faite pas pour ne pas perturber le TPà
 
-## K8s CLI Cheatsheet:
-
-Tout cela fait beaucoup de commande voici une récapitulation des principales commande [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
