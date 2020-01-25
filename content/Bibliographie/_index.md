@@ -18,7 +18,7 @@ draft: false
 
 ## Docker
 
-- [McKendrick,Gallagher2017] Mastering Docker - Second Edition
+- McKendrick,Gallagher2017 Mastering Docker - Second Edition
 
 ##### Pour aller plus loin :
 
@@ -38,7 +38,7 @@ draft: false
 
 ##### Cheatsheet
 
-- Tout cela fait beaucoup de commande voici une récapitulation des principales commande [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/]
+- [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
 
 ## Jenkins
 
