@@ -6,7 +6,7 @@ draft: false
 
 ## Ansible
 
-- Geerling[Rolling] - Ansible for DevOps - Leanpub
+- Jeff Geerling - Ansible for DevOps - Leanpub
 
 ##### Pour aller plus loin :
 
