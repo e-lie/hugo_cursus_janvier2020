@@ -10,6 +10,7 @@ weight: 3
 - Developpeur backend et DevOps (Sewan Group / Yunohost)
 - Formateur DevOps, Linux, Python
 - Philosophie de la technique
+- ajout
 
 ## A propos de vous
 
