@@ -7,7 +7,7 @@ draft: false
 Il existe 3 possibilités "simples":
 
 1. Utiliser un ingress controller accessible sur l'IP des noeuds du cluster.
-   1. + simple dans minikube avec `minikube addon enable ingress`
+   1. + simple dans minikube avec `minikube addons enable ingress`
    2. - avec l'installation helm générique il faut un peu configurer pour avoir la meme chose que dans minikube
    3. - il faut ajouter manuellement un loadbalancer pour avoir la HA
 3. Utiliser un loadbalancer du cloud provider (pointant vers un service ou un ingress)   
