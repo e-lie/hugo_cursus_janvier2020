@@ -19,6 +19,8 @@ Pour les certificats HTTPS il faut préciser dans l'ingress object le secret con
 Pour émettre le certificat avec letsencrypt il faut utiliser generalement le chart cert-manager.
 
 
+
+
 Installer nginx ingress controller pour exposer ses services sur l'ip de chaque noeud
 -------------------------------------------------------------------------------------
 
@@ -64,6 +66,8 @@ en combinaison par exemple avec metalLB ou le LB d'un cloud provider : on peut l
 - https://medium.com/containerum/how-to-launch-nginx-ingress-and-cert-manager-in-kubernetes-55b182a80c8f
 
 
+
+
 Installer metallb pour avoir un loadbalancer intégré sur un cluster on premise
 ------------------------------------------------------------------------------
 
@@ -72,6 +76,8 @@ Installer metallb pour avoir un loadbalancer intégré sur un cluster on premise
 Exemple dans minikube:
 
 - [https://ervikrant06.github.io/kubernetes/metallb-LB-on-minikube/](https://ervikrant06.github.io/kubernetes/metallb-LB-on-minikube/)
+
+
 
 
 Génerer un certificat et le lier à un ingress

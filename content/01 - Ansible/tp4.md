@@ -29,9 +29,11 @@ Terraform est un outils pour décrire une infrastructure de machines virtuelles 
 Terraform n'est pas disponible sous forme de dépôt ubuntu/debian. Pour l'installer il faut le télécharger et le copier manuellement:
 
 ```bash
+export TERRAFORM_VERSION=0.12.24
 cd /tmp
-wget https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip
-sudo unzip ./terraform_0.12.10_linux_amd64.zip -d /usr/local/bin/
+wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+sudo unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/
+
 ```
 
 - Testez l'installation avec `terraform --version`
