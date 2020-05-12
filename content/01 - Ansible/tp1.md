@@ -77,39 +77,18 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
-- Affichez la liste des conteneurs avec `sudo lxc list`.
-- Maintenant lançons notre premier conteneur `ubuntu` avec `lxc launch images:ubuntu/bionic/amd64 ubu1`.
+- LXD est déjà installé et initialisé sur notre ubuntu (`apt install lxd` et `lxd init`). Affichez la liste des conteneurs avec `sudo lxc list`.
+- Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
 - Listez à nouveau les conteneurs lxc.
-- Ce conteneur est un ubuntu minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec ubu1 -- bash`.
+- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
 - Nous pouvons installer des logiciels dans le conteneur comme dans une VM. Pour sortir du conteneur on peut simplement utiliser `exit`.
 
-- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Deux images sont disponibles l'image ubuntu vide téléchargée et utilisée pour créer ubu1 et une autre `ubuntu_ansible`. Cette deuxième image contient déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH)
-- Créez un nouveau conteneur à partir de cette image avec: `sudo lxc launch ubuntu_ansible host1`
-- Supprimez le conteneur `ubu1` avec `sudo lxc delete ubu1`.
+- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Deux images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et une autre `ubuntu_ansible`. Cette deuxième image ubuntu contient déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH). Nous allons configurer de la même façon notre conteneur centos vide puis en faire une image.
 
-- Nous allons essayer de nous connecter à `host1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez que le sudo est configuré sans mot de passe avec `sudo -i`. L'utilisateur ssh configuré dans l'image est `elkmaster` et le mot de passe de la clé ssh est `el4sticssh`.
 
-{{% expand "Réponse   :" %}}
-```bash
-sudo lxc list # pour récupérer l'adresse IP de host1
-ssh elkmaster@<adresse_ip> # le mot de passe de la clé ssh est el4sticssh
-```
-- Une fois dans le conteneur:
+## Configurer un conteneur centos pour Ansible
 
-```
-sudo -i
-exit
-exit
-```
-{{% /expand %}}
-
-<!-- Nous allons maintenant créer une autre machine Centos pour voir l'installation:
-
-- Lançons notre conteneur `CentOS` avec `lxc launch images:centos/7/amd64 centos1`.
-
-- ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
-
-- Une fois dans le conteneur (centos) lancez les commandes suivantes:
+- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur (centos) lancez les commandes suivantes:
 
 ```bash
 # installer SSH
@@ -125,22 +104,50 @@ python --version || python3 --version
 sed -i 's@\(%wheel.*\)ALL@\1 NOPASSWD: ALL@' /etc/sudoers
 
 # Créer votre utilisateur de connexion
-useradd -m -s /bin/bash -G wheel <yourname>
+useradd -m -s /bin/bash -G wheel stagiaire
 
 # Définission du mot de passe
-passwd <yourname>
+passwd stagiaire
 
 exit
 ```
 
-- On teste en copiant notre clé sur le conteneur puis en se connectant en SSH
+Maintenant nous devons configurer une identite (ou clé) ssh pour pouvoir nous connecter au serveur de façon plus automatique et sécurisée. Cette clé a déjà été créé pour votre utilisateur stagiaire. Il reste à copier la version publique dans le conteneur.
+
+- Vérifiez qu'il existe bien une clé `id_ed25519` et `id_ed25519.pub` dans le dossier `~/.ssh` (Sinon on peut la créer avec `ssh-keygen -t ed25519`). la **passphrase** de la clé est **devops101**.
+
+- On copie ensuite notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:
 
 ```bash
-ssh-keygen -t ed25519 # gardez l'emplacement par défaut et mettez une passphrase
 sudo lxc list # permet de trouver l'ip du conteneur
-ssh-copy-id -i ~/.ssh/id_ed25519 <yourname>@<ip_conteneur>
-ssh <yourname>@<ip_conteneur>
-``` -->
+ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
+ssh stagiaire@<ip_conteneur>
+```
+
+## Multiplier les conteneurs : exporter une image de base
+
+LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'images (archive du systeme de fichier + manifeste).
+
+Nous allons maintenant créer snapshots opérationnels de base qui vont nous permettre de construire notre lab d'infrastructure en local.
+
+```
+sudo lxc stop centos1
+sudo lxc publish --alias centos_ansible centos1
+sudo lxc image list
+```
+
+```
+sudo lxc launch ubuntu_ansible host1
+sudo lxc launch centos_ansible host2
+```
+
+- Essayez de vous connecter à `host1` et `host2` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+
+- Une fois la modification faite supprimé le conteneur initial.
+ 
+```
+sudo lxc delete centos1
+```
 
 ## Créer un projet de code Ansible
 
@@ -203,7 +210,7 @@ ansible_user=<votre_user>
 
 - Ansible implique le cas échéant (login avec clé ssh) de déverrouiller la clé ssh pour se connecter à **chaque** hôte. Lorsqu'on en a plusieurs il est donc nécessaire de la déverrouiller en amont avec l'agent ssh pour ne pas perturber l'exécution des commandes ansible. Pour cela : `ssh-add`.
 
-- Créez un groupe `adhoc_lab` et ajoutez la première machine (host1) ainsi qu'une deuxième nommée `host2` créée également à partir de l'image `ubuntu_ansible`.
+- Créez un groupe `adhoc_lab` et ajoutez les deux machines `host1` et  `host2`.
 
 {{% expand "Réponse  :" %}}
 ```ini
@@ -224,12 +231,12 @@ host2 ansible_host=<ip>
 
 - Nous avons jusqu'à présent utilisé une connexion ssh par clé et précisé l'utilisateur de connexion dans le fichier `ansible.cfg`. Cependant on peut aussi utiliser une connexion par mot de passe et préciser l'utilisateur et le mot de passe dans l'inventaire ou en lançant la commande.
 
-En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des mode de connexion différents pour chaque machine.
+En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
 
 ## Installons nginx avec quelques modules et commandes ad-hoc
 
-<!-- - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
+- Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
 
 
 ```ini
@@ -245,15 +252,13 @@ host2 ansible_host=<ip>
 [adhoc_lab:children]
 ubuntu_hosts
 centos_hosts
-``` -->
+```
 
-<!-- Dans un inventaire ansible on commence toujours par créer les plus petits sous groupes puis on les rassemble en plus grands groupes.
+Dans un inventaire ansible on commence toujours par créer les plus petits sous groupes puis on les rassemble en plus grands groupes.
 
-- Pinguer chacun des 3 groupes avec une commande ad hoc. -->
+- Pinguer chacun des 3 groupes avec une commande ad hoc.
 
-<!-- - Utilisez le module `setup` pour obtenir des informations sur les machines. -->
-
-Nous allons maintenant installer `nginx` sur les 4 machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
+Nous allons maintenant installer `nginx` sur les 2 machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
 
 - Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
   - Allez voir la documentation de ce module
@@ -266,6 +271,14 @@ ansible adhoc_lab --become -m package -a "name=nginx state=present"
 ```
 {{% /expand %}}
 
+- Pour résoudre le problème installez `epel-release` sur la  machine centos.
+
+{{% expand "Réponse  :" %}}
+```
+ansible centos_hosts --become -m package -a "name=epel-release state=present"
+```
+{{% /expand %}}
+
 - Relancez la commande d'installation de `nginx`. Que remarque-t-on ?
 
 {{% expand "Réponse  :" %}}
@@ -273,45 +286,24 @@ ansible adhoc_lab --become -m package -a "name=nginx state=present"
 ansible adhoc_lab -m package -a name=nginx state=present
 ```
 
-les deux machines centos on un retour changed jaune alors que les machines ubuntu on un retour ok vert. C'est l'idempotence: ansible nous indique que nginx est déjà présent sur les ubuntu.
+la machine centos a un retour changed jaune alors que la machine ubuntu a un retour ok vert. C'est l'idempotence: ansible nous indique que nginx était déjà présent sur le serveur ubuntu.
 {{% /expand %}}
 
-- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 4 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur les machines ubuntu.
+- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur la machine ubuntu et non démarré sur la machine centos.
+
+- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 4 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur les machines ubuntu (retour vert) et pas encore démarré sur les machines centos (retour jaune).
 
 {{% expand "Réponse  :" %}}
 ```
-ansible host1 --become --check -m systemd -a "name=nginx state=started"
+ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
 ```
 {{% /expand %}}
 
-- Essayez d'arrêtez le service en le passant à l'état `stopped` mais en gardant `check`.
+- L'option `--check` à vérifier l'état des ressources sur les machines mais sans modifier la configuration`. Relancez la commande précédente pour le vérifier. Normalement le retour de la commande est le même (l'ordre peu varier).
 
-{{% expand "Réponse  :" %}}
-```
-ansible host1 --become --check -m systemd -a "name=nginx state=stopped"
-```
-{{% /expand %}}
+- Lancez la commande avec `state=stopped` : le retour est inversé.
 
-- Relancez: `ansible host1 --become --check -m systemd -a "name=nginx state=started"`. Que remarque-t-on ?
-
-{{% expand "Réponse  :" %}}
-
-- On remarque que le service est toujours dans l'état `started` (retour vert) car le `--check` à bloqué la modification de la ressource.
-
-{{% /expand %}}
-
-
-- Enlevez le `--check` pour vous assurer que le service est arrêté sur chacune des machines.
-
-{{% expand "Réponse  :" %}}
-`ansible host1 --become -m systemd -a "name=nginx state=stopped"`
-{{% /expand %}}
-
-- Redémarrez le
-
-{{% expand "Réponse  :" %}}
-`ansible host1 --become -m systemd -a "name=nginx state=started"`
-{{% /expand %}}
+- Enlevez le `--check` pour vous assurer que le service est démarré sur chacune des machines.
 
 - Visitez dans un navigateur l'ip d'un des hôtes pour voir la page d'accueil nginx.
 
