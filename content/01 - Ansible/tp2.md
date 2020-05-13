@@ -208,7 +208,7 @@ Pour gérer les fichier de configuration on utilise généralement le module `te
 
 - Utilisez ensuite `systemd` pour démarrer ce service (`state: restarted` ici pour le cas ou le fichier à changé).
 
-# Configurer nginx
+## Configurer nginx
 
 - Comme précédemment créez un fichier de configuration `hello.test.conf` dans le dossier `/etc/nginx/sites-available` à partir du fichier modèle:
 
@@ -238,7 +238,7 @@ server {
 - Visitez l'application dans un navigateur et debugger le cas échéant.
 
 
-### Correction
+# Correction intermédiaire
 
 `flaskhello_deploy.yml`
 

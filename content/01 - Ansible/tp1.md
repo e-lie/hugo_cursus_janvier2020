@@ -77,18 +77,23 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
-- LXD est déjà installé et initialisé sur notre ubuntu (`apt install lxd` et `lxd init`). Affichez la liste des conteneurs avec `sudo lxc list`.
+LXD est déjà installé et initialisé sur notre ubuntu (`apt install lxd` ou `snap install lxd` et `lxd init`).
+
+- Affichez la liste des conteneurs avec `sudo lxc list`. Aucun conteneur ne tourne.
 - Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
 - Listez à nouveau les conteneurs lxc.
 - Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
 - Nous pouvons installer des logiciels dans le conteneur comme dans une VM. Pour sortir du conteneur on peut simplement utiliser `exit`.
 
-- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Deux images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et une autre `ubuntu_ansible`. Cette deuxième image ubuntu contient déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH). Nous allons configurer de la même façon notre conteneur centos vide puis en faire une image.
+- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH). 
+
+## Facultatif : Configurer un conteneur pour Ansible manuellement
+{{% expand "Facultatif :" %}}
 
 
-## Configurer un conteneur centos pour Ansible
+- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur  lancez les commandes suivantes:
 
-- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur (centos) lancez les commandes suivantes:
+##### Pour centos
 
 ```bash
 # installer SSH
@@ -112,7 +117,31 @@ passwd stagiaire
 exit
 ```
 
-Maintenant nous devons configurer une identite (ou clé) ssh pour pouvoir nous connecter au serveur de façon plus automatique et sécurisée. Cette clé a déjà été créé pour votre utilisateur stagiaire. Il reste à copier la version publique dans le conteneur.
+##### Pour ubuntu
+
+```bash
+# installer SSH
+apt update && apt install -y openssh-server sudo
+
+# verifier que python2 ou python3 est installé
+python --version || python3 --version
+
+## Attention copiez cette commande bien correctement
+# configurer sudo pour être sans password
+sed -i 's@\(%sudo.*\)ALL@\1 NOPASSWD: ALL@' /etc/sudoers
+
+# Créer votre utilisateur de connexion
+useradd -m -s /bin/bash -G sudo stagiaire
+
+# Définission du mot de passe
+passwd stagiaire
+
+exit
+```
+
+#### Copier la clé ssh à l'intérieur
+
+Maintenant nous devons configurer une identité (ou clé) ssh pour pouvoir nous connecter au serveur de façon plus automatique et sécurisée. Cette clé a déjà été créé pour votre utilisateur stagiaire. Il reste à copier la version publique dans le conteneur.
 
 - Vérifiez qu'il existe bien une clé `id_ed25519` et `id_ed25519.pub` dans le dossier `~/.ssh` (Sinon on peut la créer avec `ssh-keygen -t ed25519`). la **passphrase** de la clé est **devops101**.
 
@@ -131,7 +160,7 @@ ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
 ssh stagiaire@<ip_conteneur>
 ```
 
-## Multiplier les conteneurs : exporter une image de base
+### Exporter nos conteneurs en image pour pouvoir les multipliers
 
 LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'images (archive du systeme de fichier + manifeste).
 
@@ -156,22 +185,23 @@ sudo lxc launch centos_ansible host2
 sudo lxc delete centos1
 ```
 
-## Créer un projet de code Ansible
-
-- Essayez de "pinguer" la nouvelle machine avec ansible comme précédemment. Quel est le problème ?
-
-{{% expand "Réponse  :" %}}
-- Ajoutez la machine au fichier `/etc/ansible/hosts`.
-- Lancez `ansible all -m ping`.
-- Le problème de connexion provient du fait que ansible ne peut pas deviner l'utilisateur de connexion. Nous utiliserons `ansible.cfg` avec le parametre `ansible_user` par la suite pour régler ce problème de connexion.
 {{% /expand %}}
 
-Lorsqu'on développe Ansible fonctionne comme un projet de code.
+## Créer un projet de code Ansible
 
-- Créez quelque part un dossier projet `adhoc_lab` sur le Bureau.
+Lorsqu'on développe avec Ansible il est conseillé de le gérer comme un véritable projet de code :
+
+- versionner le projet avec Git
+- Ajouter tous les paramètres nécessaires dans un dossier pour être au plus proche du code. Par exemple utiliser un inventaire `inventory.cfg` ou `hosts` et une configuration locale au projet `ansible.cfg`
+
+Nous allons créer un tel projet de code pour la suite du tp1
+
+- Créez un dossier projet `tp1` sur le Bureau.
+
+
+{{% expand "Facultatif  :" %}}
 - Initialisez le en dépôt git:
 
-{{% expand "Réponse  :" %}}
 ```
 cd adhoc_lab
 git init
@@ -182,22 +212,19 @@ git init
 - Installez l'extension Ansible dans VSCode.
 - Ouvrez le dossier du projet avec `Open Folder...`
 
-Un projet Ansible géré par git implique généralement une configuration Ansible spécifique décrite dans un fichier `ansible.cfg`
+Un projet Ansible implique généralement une configuration Ansible spécifique décrite dans un fichier `ansible.cfg`
 
 - Ajoutez à la racine du projet un tel fichier `ansible.cfg` avec à l'intérieur:
 
-{{% expand "Réponse  :" %}}
 ```ini
 [defaults]
 inventory = ./inventory.cfg
 roles_path = ./roles
 host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
 ```
-{{% /expand %}}
 
 - Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
 
-{{% expand "Réponse  :" %}}
 ```
 sudo lxc list # récupérer l'ip de la machine
 ```
@@ -210,10 +237,12 @@ host1 ansible_host=<ip>
 [all:vars]
 ansible_user=<votre_user>
 ```
-{{% /expand %}}
 
-- Dans le dossier du projet, essayez de relancer la commande ad-hoc `ping` sur cette machine. Ansible cherche la configuration locale dans le dossier courant. Conséquence: on lance généralement toutes les commandes ansible depuis la racine de notre projet.
+## Contacter nos nouvelles machines
 
+Ansible cherche la configuration locale dans le dossier courant. Conséquence: on **lance généralement** toutes les commandes ansible depuis **la racine de notre projet**.
+
+- Dans le dossier du projet, essayez de relancer la commande ad-hoc `ping` sur cette machine.
 
 - Ansible implique le cas échéant (login avec clé ssh) de déverrouiller la clé ssh pour se connecter à **chaque** hôte. Lorsqu'on en a plusieurs il est donc nécessaire de la déverrouiller en amont avec l'agent ssh pour ne pas perturber l'exécution des commandes ansible. Pour cela : `ssh-add`.
 

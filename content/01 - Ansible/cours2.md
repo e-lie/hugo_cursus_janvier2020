@@ -170,7 +170,7 @@ tasks:
     loop: "{{ apps }}"
 ```
 
-Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas être connu à l'avance on **doit** utiliser `include_tasks`.
+Ce code indique à Ansible d'executer une série de tâches pour chaque application de la liste. On pourrait remplacer cette liste par une liste dynamique. Comme le nombre d'import ne peut pas facilement être connu à l'avance on **doit** utiliser `include_tasks`.
 
 ### Élévation de privilège
 
@@ -181,9 +181,9 @@ L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` po
   - au début du play (après `hosts`) : toutes les tâches seront executée avec cette élévation par défaut.
   - après n'importe quelle tâche : l'élévation concerne uniquement la tâche cible.
 
-<!-- - Pour executer une tâche avec un autre utilisateur que l'utilisateur de connexion on le précise en ajoutant à `become:`, `become_user: username`
+- Pour executer une tâche avec un autre utilisateur que root (become simple) ou celui de connexion (sans become) on le précise en ajoutant à `become: yes`, `become_user: username`
 
-- Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
+<!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
 `su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
 
 

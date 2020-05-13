@@ -26,12 +26,12 @@ Cette formation est basée sur une machine de travail **Ubuntu Bionic (18.04)** 
 
 La formation se déroule en accédant simultanément à 2 machines distantes :
 
-- La machine du formateur, ou sont réalisées les démonstrations et la présentation du cours
-- Votre machine stagiaire individuelle.
+- La machine du formateur, où sont réalisées les démonstrations et la présentation du cours.
+- Votre machine stagiaire individuelle pour effectuer le TP.
 
 1. récupérez l'adresse ip ou le non de domaine de ces deux machines fournis pour la formation (la connexion s'effectue sur le port 5901 par exemple `formateur.dopl.uk:5901`)
-2. connectez vous à la machine formateur en mode "passif" ou "viewer" à l'aide du mot de passe fournis
-3. connectez vous à la machine stagiaire en mode controle (normal) à l'aide du mot de passe adéquat
+2. connectez vous à la machine formateur en mode "passif" ou "viewer" à l'aide du mot de passe viewer fournis par le formateur.
+3. connectez vous à la machine stagiaire en mode controle (normal) à l'aide du mot de passe également fournis par le formateur.
 4. Indiquez au formateur que vous avez bien accès aux deux machines.
 
 
@@ -43,7 +43,7 @@ La formation se déroule en accédant simultanément à 2 machines distantes :
   
 - Démarrez la machine
   
-- Faites le mises à jours (`sudo apt update` et `sudo apt upgrade`)
+- Faites les mises à jours (`sudo apt update` et `sudo apt upgrade`)
 
 ## Installer quelques logiciels
 
