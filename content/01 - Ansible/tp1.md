@@ -202,10 +202,12 @@ Nous allons créer un tel projet de code pour la suite du tp1
 
 
 {{% expand "Facultatif  :" %}}
-- Initialisez le en dépôt git:
+- Initialisez le en dépôt git et configurez git:
 
 ```
-cd adhoc_lab
+cd tp1
+git config --global user.name "<votre nom>"
+git config --global user.email "<votre email>"
 git init
 ```
 {{% /expand %}}

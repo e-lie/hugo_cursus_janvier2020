@@ -42,11 +42,10 @@ app2 ansible_host=10.x.y.z
 ansible all -m ping
 ```
 
+{{% expand "Facultatif  :" %}}
 - Configurez git et initialisez un dépôt git dans ce dossier.
 
 ```
-git config --global user.name "<votre nom>"
-git config --global user.email "<votre email>"
 git init   # à executer à la racine du projet
 ```
 
@@ -62,6 +61,7 @@ git init   # à executer à la racine du projet
 git add -A
 git commit -m "démarrage tp2"
 ```
+{{% /expand %}}
 
 ## Premier playbook : installer les dépendances
 
@@ -179,7 +179,7 @@ Notre application sera executée en tant qu'utilisateur flask pour des raisons d
         recurse: true
 ```
 
-## Déployer configurer le service qui fera tourner l'application
+## Module Template : configurer le service qui fera tourner l'application
 
 Notre application doit tourner comme c'est souvent le cas en tant que service (systemd). Pour cela nous devons créer un fichier service adapté `hello.service` dans le le dossier `/etc/systemd/system/`.
 
@@ -242,6 +242,8 @@ server {
 
 `flaskhello_deploy.yml`
 
+
+{{% expand "Code de correction :" %}}
 ```yaml
 - hosts: appservers
   become: yes
@@ -336,6 +338,10 @@ server {
 - Copiez la correction dans un nouveau fichier `flaskhello_deploy.yml`.
 - Lancez le playbook de correction `ansible-playbook flaskhello_deploy.yml`.
 - Après avoir ajouté `hello.test` à votre `/etc/hosts` testez votre application en visitant la page `hello.test`.
+{{% /expand %}}
+
+
+{{% expand "Facultatif  :" %}}
 - Validez/Commitez votre version corrigée:
   
 ```
@@ -346,7 +352,9 @@ git commit -m "tp2 correction intermediaire"
 - Installez l'extension `git graph` dans vscode.
 - Cliquez sur le bouton `Git Graph` en bas à gauche de la fenêtre puis cliquez sur le dernier point (commit) avec la légende **tp2 correction intermediaire**. Vous pouvez voir les fichiers et modifications ajoutées depuis le dernier commit.
 
-!!! Nous constatons que git a mémorisé les versions successives du code et permet de revenir à une version fonctionnelle de votre déploiement.
+!!! Nous constatons que git a mémorisé les versions successives du code et permet de revenir à une version antérieure de votre déploiement.
+
+{{% /expand %}}
 
 # Améliorer notre playbook avec des variables.
 
@@ -372,6 +380,7 @@ Ajoutons des variables pour gérer dynamiquement les paramètres de notre déplo
 
 - Relancez le playbook : toutes les tâches devraient renvoyer `ok` à part les "restart" car les valeurs sont identiques.
 
+{{% expand "Facultatif  :" %}}
 - Ajoutez deux variables `repository` et `version` pour l'adresse du dépôt git et la version de l'application `master` par défaut.
 
 
@@ -383,6 +392,7 @@ app:
   repository: https://github.com/e-lie/flask_hello_ansible.git
   version: master
 ``` -->
+{{% /expand %}}
 
 Correction de cette sous partie disponible dans le dépôt: [https://github.com/e-lie/ansible_tp2_before_handlers_correction](https://github.com/e-lie/ansible_tp2_before_handlers_correction).
 
@@ -400,7 +410,7 @@ Ajoutez une section `handlers:` à la suite
 - Testez votre playbook. il devrait être idempotent sauf le restart de `hello.service`.
 - Testez le handler en ajoutant un commentaire dans le fichier de configuration `nginx.conf.j2`.
 
-<!-- ```yaml
+```yaml
     - name: template nginx site config
       template:
         src: templates/nginx.conf.j2
@@ -415,14 +425,14 @@ Ajoutez une section `handlers:` à la suite
         name: "nginx"
         state: reloaded
 
-=> penser aussi à supprimer la tâche de restart de nginx précédente
-``` -->
+# => penser aussi à supprimer la tâche de restart de nginx précédente
+```
 
 ## Rendre le playbook dynamique avec une boucle.
 
 Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d'application à installer (liste potentiellement définie durant l'exécution).
 
-- Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installation.
+- Identifiez dans le playbook précédent les tâches qui sont exactement communes aux deux installations.
 
 !!! il s'agit des taches d'installation des dépendances apt et de vérification de l'état de nginx (démarré)
 
@@ -437,7 +447,7 @@ Plutôt qu'une variable `app` unique on voudrait fournir au playbook une liste d
 
 - Ensuite remplacez la variable `app` par une liste `flask_apps` de deux dictionnaires (avec `name`, `domain`, `user` différents les deux dictionnaires et `repository` et `version` identiques).
 
-<!-- ```yaml
+```yaml
 flask_apps:
   - name: hello
     domain: "hello.test"
@@ -450,7 +460,7 @@ flask_apps:
     user: "flask2"
     version: master
     repository: https://github.com/e-lie/flask_hello_ansible.git
-``` -->
+```
 
 - Utilisez les directives `loop` et `loop_control`+`loop_var` sur la tâche `include_tasks` pour inclure les taches pour chacune des deux applications.
 
@@ -460,15 +470,15 @@ flask_apps:
 
 ## Correction
 
-Vous trouverez la correction complète à l'adresse [https://github.com/e-lie/ansible_flask_tp2_correction](https://github.com/e-lie/ansible_flask_tp2_correction).
+Vous trouverez la correction complète du tp2 à l'adresse [https://github.com/e-lie/ansible_flask_tp2_correction](https://github.com/e-lie/ansible_flask_tp2_correction).
 
 (`git clone https://github.com/e-lie/ansible_flask_tp2_correction tp2_correction` pour la récupérer).
 
-# Bonus
+## Bonus
 
 Pour ceux ou celles qui sont allés vite, vous pouvez tenter de créer une nouvelle version de votre playbook portable entre centos et ubuntu. Pour cela utilisez la directive `when: ansible_os_family == 'Debian'` ou `RedHat`.
 
-# Bonus 2 pour pratiquer
+## Bonus 2 pour pratiquer
 
 Essayez de déployer une version plus complexe d'application flask avec une base de donnée mysql: [https://github.com/miguelgrinberg/microblog/tree/v0.17](https://github.com/miguelgrinberg/microblog/tree/v0.17)
 

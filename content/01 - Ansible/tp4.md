@@ -1,9 +1,19 @@
 ---
-title: "TP4 - Loadbalancer, AWX et Cloud" 
-draft: true
+title: "TP4 - Orchestration, Serveur de contrôle et Cloud" 
+draft: false
 ---
 
-### Prérequis : Digitalocean token et clé SSH
+
+## Cloner le projet modèle
+
+- Pour simplifier le démarrage, clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp4_v2](https://github.com/e-lie/ansible_tp4_v2).
+- Ouvrez le projet `ansible_tp4_v2` avec VSCode
+
+## Facultatif: Infrastructure dans le cloud avec Terraform et Ansible
+
+{{% expand "Facultatif  :" %}}
+
+### Digitalocean token et clé SSH
 
 - Pour louer les machines dans le cloud pour ce TP vous aurez besoin d'un compte digitalocean : celui du formateur ici mais vous pouvez facilement utiliser le votre. Il faut récupérer les éléments suivant pour utiliser le compte de cloud du formateur:
     - un token d'API digitalocean fourni pour la formation. Cela permet de commander des machines auprès de ce provider.
@@ -22,7 +32,7 @@ draft: true
 - Aller sur digital ocean dans la section `account` en haut à droite puis `security` et ajoutez un nouvelle clé ssh. Notez sa fingerprint dans le fichier précédent. -->
 
 
-## Installer terraform et le provider ansible
+### Installer terraform et le provider ansible
 
 Terraform est un outils pour décrire une infrastructure de machines virtuelles et ressources IaaS (infrastructure as a service) et les créer (commander). Il s'intègre en particulier avec AWS, DigitalOcean mais peut également créer des machines dans un cluster VMWare en interne (on premise) pour créer par exemple un cloud mixte.
 
@@ -52,14 +62,9 @@ mkdir -p ~/.terraform.d/plugins
 unzip ./terraform-provider-ansible-linux_amd64.zip -d ~/.terraform.d/plugins/
 ```
 
-## Cloner le projet modèle
+.
 
-
-- Pour simplifier le démarrage, clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp4_v2](https://github.com/e-lie/ansible_tp4_v2).
-
-- Ouvrez le projet `ansible_tp4_v2` avec VSCode.
-
-## Terraform digital ocean
+### Terraform digital ocean
 
 
 - Le fichier qui décrit les VPS et ressources à créer avec terraform est `provisionner/terraform/main.tf`. Nous allons commentez ensemble ce fichier:
@@ -92,7 +97,7 @@ fingerprint: 05:f7:18:15:4a:77:3c:4c:86:70:85:aa:cb:18:b7:68
 
 Maintenant que nous avons des machines dans le cloud nous devons fournir leurs IP à Ansible pour pouvoir les configurer. Pour cela nous allons utiliser un inventaire dynamique.
 
-## Terraform dynamic inventory
+### Terraform dynamic inventory
 
 - Le meilleur inventaire dynamique pour terraform est [https://github.com/nbering/terraform-provider-ansible/](https://github.com/nbering/terraform-inventory/). 
 
@@ -114,12 +119,17 @@ source .env
 
 - Nous pouvons maintenant tester la connexion avec ansible directement: `ansible all -m ping`.
 
+{{% /expand %}}
 
 ## Infrastructure multi-tiers avec load balancer
 
-Pour configurer notre infrastructure simple:
+Pour configurer notre infrastructure:
 
 - Installez les roles avec `ansible-galaxy install -r roles/requirements.yml -p roles`.
+
+- Si vous n'avez pas fait la partie Terraform, complétez l'inventaire statique (inventory.cfg):
+
+
 
 - Lancez le playbook `site.yml`
 
@@ -147,8 +157,9 @@ ansible-playbook --extra-vars="backend_name=<noeud a desactiver> backend_state=d
 
 - Nous allons maintenant mettre à jour
 
-## Ajoutons un serveur AWX (facultatif)
+## Falcultatif : ajoutons un serveur de control AWX (/ Ansible Tower)
 
+{{% expand "Facultatif  :" %}}
 - Choisissez un mot de passe et chiffrez le avec `ansible-vault encrypt_string <votre_mot_de_passe>`.
 
 - Copiez le résultat et collez le comme valeur d'une variable `awx_admin_password` à la place de `unsecurepass` dans le fichier `group_vars/awxservers.yml` comme suit:
@@ -172,6 +183,7 @@ awx_admin_password: !vault |
 - Visitez cette dans un navigateur: AWX devrait démarrer.
 
 - Complétez l'inventaire statique `inventory.cfg` avec les ip de l'inventaire dynamique (pour que la config soit plus simple une fois dans AWX)
+{{% /expand %}}
 
 ## Versionner le projet et utiliser la CI gitlab avec Ansible pour automatiser le déploiement
 

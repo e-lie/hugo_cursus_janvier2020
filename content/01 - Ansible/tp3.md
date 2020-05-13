@@ -1,11 +1,11 @@
 ---
 title: "TP3 - Structurer le projet avec des roles" 
-draft: true 
+draft: false
 ---
 
 ## Ajouter un provisionneur d'infra maison pour créer les machines automatiquement
 
-- Dupliquez le dossier du projet tp2 en `tp3_provisionner_roles` ou clonez la correction du TP2 (lien à la fin du TP2).
+- Clonez la correction du TP2 (lien à la fin du TP2) et renommez là en `tp3_provisionner_roles`.
 - Chargez ce dossier dans VSCode (vous pouvez fermer le tp2).
 
 Dans notre infra virtuelle, nous avons trois machines dans deux groupes. Quand notre lab d'infra grossit il devient laborieux de créer les machines et affecter les ip à la main. En particulier détruire le lab et le reconstruire est pénible. Nous allons pour cela introduire un playbook de provisionning qui va créer les conteneurs lxd en définissant leur ip à partir de l'inventaire.
@@ -24,7 +24,9 @@ app2 ansible_host=10.x.y.122 container_image=ubuntu_ansible node_state=started
 db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 ```
 
-- Ajoutez un dossier `provisioners` avec à l'intérieur un playbook `provision_lxd_infra.yml` contenant:
+- Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `sudo lxc list` et copier simple les deux chiffre du milieu des adresses IP)
+
+- Ajoutez un playbook `provision_lxd_infra.yml` contenant:
 
 ```yaml
 - hosts: localhost
@@ -73,11 +75,13 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Etudions le playbook (explication démo).
 
-- Lancez le playbook avec `sudo` car `lxd` se contrôle en root.
+- Lancez le playbook avec `sudo` car `lxd` se contrôle en root sur localhost: `sudo ansible-playbook provision_lxd_infra` (c'est le seul cas exceptionnel ou ansible-playbook doit être lancé avec sudo, pour les autre playbooks ce n'est pas le cas)
 
 - Lancez `sudo lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé.
 
-## Ajouter une machine mysql simple avec un role externe
+## Facultatif: Ajouter une machine mysql simple avec un role externe
+
+{{% expand "Facultatif  :" %}}
 
 - Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
 - Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du role `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux roles de références.
@@ -105,9 +109,11 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancer la configuration de toute l'infra avec ce playbook.
 
+{{% /expand %}}
 
 ## Transformer notre playbook en role
 
+- Si ce n'est pas fait, créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
 - Créer un dossier `flaskapp` dans `roles`.
 - Ajoutez à l'intérieur l'arborescence:
 
@@ -154,7 +160,9 @@ Ces valeurs seront écrasées par celles fournies dans le dossier `group_vars` (
 
 - Votre role est prêt : lancez `appservers.yml` et debuggez le résultat le cas échéant.
 
-## Ajouter un paramètre d'exécution à notre rôle pour mettre à jour l'application.
+## Facultatif: Ajouter un paramètre d'exécution à notre rôle pour mettre à jour l'application.
+
+{{% expand "Facultatif  :" %}}
 
 Notre role `flaskapp` est jusqu'ici concu pour être un rôle de configuration, idéalement lancé régulièrement à l'aide d'un cron ou de AWX. En particulier, nous avons mis les paramètres `update` et `force` à `false` au niveau de notre tâche qui clone le code avec git. Ces paramètres indiquent si la tâche doit récupérer systématiquement la dernière version. Dans notre cas il pourrait être dangereux de mettre à jour l'application à chaque fois donc nous avons mis `false` pour éviter d'écraser l'application existante avec une version récente.
 
@@ -172,14 +180,14 @@ Nous aimerions maintenant créer un playbook `upgrade_apps.yml` qui contrairemen
 
 - Charger l'application dans un navigateur avec l'une des IPs. Vous devriez voir "version: 2" apparaître en bas de la page.
 
+{{% /expand %}}
 
-
-# Correction
+## Correction
 
 Le dépot de correction se trouve à l'adresse: [https://github.com/e-lie/ansible_tp3_correction](https://github.com/e-lie/ansible_tp3_correction)
 
 Il contient également des éléments du TP4 (loadbalancer, playbook de déploiement, awx)
 
-# Bonus 
+## Bonus 
 
 Essayez différents exemples de projets de Geerlingguy accessibles sur github à l'adresse [https://github.com/geerlingguy/ansible-for-devops](https://github.com/geerlingguy/ansible-for-devops).
