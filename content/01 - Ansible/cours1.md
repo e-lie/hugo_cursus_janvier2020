@@ -77,6 +77,7 @@ Il permet d'avoir un état descriptif de la configuration:
 ### Ansible pour le déploiement et l'orchestration
 
 Peut être utilisé pour des **opérations ponctuelles** comme le **déploiement**:
+
     - vérifier les dépendances et l'état requis d'un système
     - récupérer la nouvelle version d'un code source
     - effectuer une migration de base de données (si outil de migration)
@@ -152,6 +153,7 @@ Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles,
 La solution classique pour cela est vagrant qui permet de décrire dans un Vagrantfile des machines et de piloter par exemple virtualbox pour créer ces machines virtuelles.
 
 Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
+
   - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
   - seulement sur linux
 
@@ -161,6 +163,7 @@ Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOce
 ### Les inventaires statiques
 
 Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules Ansible. Les machines de cette liste sont:
+
     - Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
     - La méthode connexion est précisée soit globalement soit pour chaque machine.
     - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.

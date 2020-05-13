@@ -127,14 +127,15 @@ Pour configurer notre infrastructure:
 
 - Installez les roles avec `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
-- Si vous n'avez pas fait la partie Terraform, complétez l'inventaire statique (inventory.cfg):
+- Si vous n'avez pas fait la partie Terraform:
+  - complétez l'inventaire statique (inventory.cfg)
+  - changer dans ansible.cfg l'inventaire en `./inventory.cfg` comme pour les TP précédents
+  - Supprimez les conteneurs app1 et app2 du TP précédent puis lancez le playbook de provisionning lxd : `sudo ansible-playbook provisionner/provision_lxd_infra.yml`
 
-
-
-- Lancez le playbook `site.yml`
+- Lancez le playbook global `site.yml`
 
 - Utilisez la commande `ansible-inventory --graph` pour afficher l'arbre des groupes et machines de votre inventaire
-- Utilisez la de même pour récupérer l'ip du `balancer0` avec : `ansible-inventory --host=balancer0`
+- Utilisez la de même pour récupérer l'ip du `balancer0` (ou `balancer1`) avec : `ansible-inventory --host=balancer0`
 - Ajoutez `hello.test` et `hello2.test` dans `/etc/hosts` pointant vers l'ip de `balancer0`.
 
 - Chargez les pages `hello.test` et `hello2.test`.
