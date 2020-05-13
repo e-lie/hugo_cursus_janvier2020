@@ -11,4 +11,4 @@ chapter: true
 
 # Ansible
 
-Découvrir le couteau suisse de l'automatisation et de l'infrastructure as code
+Découvrir le couteau suisse de l'automatisation et de l'infrastructure as code.
