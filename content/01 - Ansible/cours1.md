@@ -37,8 +37,6 @@ Il fait donc également partie de façon centrale du mouvement **DevOps** car il
 
 Ansible a été créé en **2012** (plus récent que ses concurrents Puppet et Chef) autour d'une recherche de **simplicité** et du principe de configuration **agentless**.
 
-![](https://eliegavoty.fr/jirafeau/f.php?h=1fA6wxrx&p=1)
-
 Très orienté linux/opensource et versatile il obtient rapidement un franc succès et s'avère être un couteau suisse très adapté à l'automatisation DevOps et Cloud dans des environnements hétérogènes.
 
 Red Hat rachète Ansible en 2015 et développe un certain nombre de produits autour (Ansible Tower, Ansible container avec Openshift). 
@@ -46,9 +44,11 @@ Red Hat rachète Ansible en 2015 et développe un certain nombre de produits aut
 
 ### Architecture : simplicité et portabilité avec ssh et python
 
-![](https://eliegavoty.fr/jirafeau/f.php?h=0SJHMoCE&p=1)
+![](../../images/devops/ansible_overview.jpg)
 
-!!!Ansible est **agentless** c'est à dire qu'il ne nécessite aucun service/daemon spécifique sur les machines à configurer.!!!
+{{% notice note %}}
+Ansible est **agentless** c'est à dire qu'il ne nécessite aucun service/daemon spécifique sur les machines à configurer.
+{{% /notice %}}
 
 La simplicité d'Ansible provient également du fait qu'il s'appuie sur des technologies linux omniprésentes et devenues universelles.
 
@@ -78,10 +78,10 @@ Il permet d'avoir un état descriptif de la configuration:
 
 Peut être utilisé pour des **opérations ponctuelles** comme le **déploiement**:
 
-    - vérifier les dépendances et l'état requis d'un système
-    - récupérer la nouvelle version d'un code source
-    - effectuer une migration de base de données (si outil de migration)
-    - tests opérationnels (vérifier qu'un service répond)
+- vérifier les dépendances et l'état requis d'un système
+- récupérer la nouvelle version d'un code source
+- effectuer une migration de base de données (si outil de migration)
+- tests opérationnels (vérifier qu'un service répond)
 
 <!-- Permet d'exécuter des **opérations transversales synchronisées** (orchestration) sur plusieurs machines (Cf TP4):
 
@@ -124,20 +124,23 @@ Ansible est très complémentaire à docker:
 - Il permet de provisionner des machines avec docker ou kubernetes installé pour ensuite déployer des conteneurs.
 - Il permet une orchestration simple des conteneur avec le module `docker_container`.
 
-!!!Plus récemment avec l'arrivé d'`Ansible container`  il est possible de construire et déployer des conteneurs docker avec du code ansible. Cette solution fait partie de la stack Red Hat Openshift. Concrêtement le langage ansible remplace (avantageusement ?) le langage Dockerfile pour la construction des images Docker.!!!
+{{% notice note %}}
+Plus récemment avec l'arrivé d'`Ansible container`  il est possible de construire et déployer des conteneurs docker avec du code ansible. Cette solution fait partie de la stack Red Hat Openshift. Concrêtement le langage ansible remplace (avantageusement ?) le langage Dockerfile pour la construction des images Docker.
+{{% /notice %}}
 
 
 ## Partie 1, Installation, configuration et commandes ad hoc.
 
 Pour l'installation plusieurs options sont possibles:
-  - Avec le gestionnaire de paquet de la distribution ou homebrew sur OSX:
-    - version généralement plus ancienne (2.4 ou 2.6)
-    - facile à mettre à jour avec le reste du système
-    - Pour installer une version récente on il existe des dépots spécifique à ajouter: exemple sur ubuntu: `sudo apt-add-repository --yes --update ppa:ansible/ansible`
-  - Avec `pip` le gestionnaire de paquet du langage python: `sudo pip3 install`
-    - installe la dernière version stable (2.8 actuellement)
-    - commande d'upgrade spécifique `sudo pip3 install ansible --upgrade`
-    - possibilité d'installer facilement une version de développement pour tester de nouvelles fonctionnalité ou anticiper les migrations.
+
+- Avec le gestionnaire de paquet de la distribution ou homebrew sur OSX:
+  - version généralement plus ancienne (2.4 ou 2.6)
+  - facile à mettre à jour avec le reste du système
+  - Pour installer une version récente on il existe des dépots spécifique à ajouter: exemple sur ubuntu: `sudo apt-add-repository --yes --update ppa:ansible/ansible`
+- Avec `pip` le gestionnaire de paquet du langage python: `sudo pip3 install`
+  - installe la dernière version stable (2.8 actuellement)
+  - commande d'upgrade spécifique `sudo pip3 install ansible --upgrade`
+  - possibilité d'installer facilement une version de développement pour tester de nouvelles fonctionnalité ou anticiper les migrations.
 
 Pour voir l'ensemble des fichier installé par un paquet `pip3` :
 
@@ -154,8 +157,8 @@ La solution classique pour cela est vagrant qui permet de décrire dans un Vagra
 
 Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pilotés avec le démon LXD.
 
-  - plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
-  - seulement sur linux
+- plus légers car des conteneurs (beaucoup moins de ram utilisée pour un lab normal)
+- seulement sur linux
 
 Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
 Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
@@ -164,9 +167,9 @@ Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOce
 
 Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules Ansible. Les machines de cette liste sont:
 
-    - Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
-    - La méthode connexion est précisée soit globalement soit pour chaque machine.
-    - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
+- Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
+- La méthode connexion est précisée soit globalement soit pour chaque machine.
+- Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
 
 exemple:
 

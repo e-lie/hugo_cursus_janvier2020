@@ -51,6 +51,8 @@ Plusieurs remarques:
   - On les range alors dans le dossier `library` du projet ou d'un role et on le précise éventuellement dans `ansible.cfg`.
 - Observons le role `Common` :  il est utilisé ici pour rassembler les taches de base des communes à toutes les machines. Par exemple s'assurer que les clés ssh de l'équipe sont présentes, que les dépots spécifiques sont présents etc. 
 
+![](../../images/devops/ansible2.png)
+
 ## Roles Ansible
 
 ### Objectif:
@@ -126,7 +128,9 @@ Tous les rôles ansible sont communautaires (pas de roles officiels) et généra
 
 Mais on peut voir la popularité la qualité et les tests qui garantissement la plus ou moins grande fiabilité du role
 
-Il existe des roles pour installer un peu n'importe quelle application serveur courante aujourd'hui. Passez du temps à explorer le web avant de développer quelque chose avec Ansible !!!
+{{% notice note %}}
+Il existe des roles pour installer un peu n'importe quelle application serveur courante aujourd'hui. Passez du temps à explorer le web avant de développer quelque chose avec Ansible
+{{% /notice %}}
 
 ### Installer des roles avec `requirements.yml`
 
