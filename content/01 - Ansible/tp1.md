@@ -117,10 +117,10 @@ Maintenant nous devons configurer une identite (ou clé) ssh pour pouvoir nous c
 - Vérifiez qu'il existe bien une clé `id_ed25519` et `id_ed25519.pub` dans le dossier `~/.ssh` (Sinon on peut la créer avec `ssh-keygen -t ed25519`). la **passphrase** de la clé est **devops101**.
 
 ```
-    sudo cd /root/.ssh
-    sudo cp id* /home/stagiaire/.ssh/
-    sudo chown -R stagiaire:stagiaire /home/stagiaire/.ssh
-    ssh-add
+sudo cd /root/.ssh
+sudo cp id* /home/stagiaire/.ssh/
+sudo chown -R stagiaire:stagiaire /home/stagiaire/.ssh
+ssh-add
 ```
 
 - On copie ensuite notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:

@@ -10,9 +10,13 @@ Cette formation est basée sur une machine de travail **Ubuntu Bionic (18.04)** 
 ## Formation à distance - accéder à une machine distante grâce à VNC
 
 
-### Sur windows et linux
+### Sur windows
 
-- Installez tigerVNC et lancez `vncviewer` ou `tigervnc`
+- Installez tightVNC et lancez le
+
+### Sur linux
+
+- Installez vinagre et lancez le
 
 ### Sur MacOS
 
