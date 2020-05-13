@@ -18,7 +18,7 @@ $ sudo apt install ansible
 
 ```
 ansible --version
-=> 2.9.x
+=> 2.8.x
 ```
 
 
