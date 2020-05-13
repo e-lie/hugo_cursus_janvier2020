@@ -5,9 +5,7 @@ draft: true
 
 TODO: rassembler l'ensemble des corrections de projets en un seul dépôt git avec le TP1
 TODO: intégrer également une correction du tp1 avec un fichier de script contenant les commandes adhoc
-TODO: Supprimer la partie création des images lxd (fournir les images dans un dépôt git ?)
 
-TODO: Supprimer des parties peu utiles
 TODO: Répartir la biblio par section
 
 TODO: réparer la coloration yaml sur netflify (maj de hugo ?)
