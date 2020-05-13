@@ -80,12 +80,14 @@ LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu)
 LXD est déjà installé et initialisé sur notre ubuntu (`apt install lxd` ou `snap install lxd` et `lxd init`).
 
 - Affichez la liste des conteneurs avec `sudo lxc list`. Aucun conteneur ne tourne.
-- Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
+- Maintenant lançons notre premier conteneur `centos` avec `sudo lxc launch images:centos/7/amd64 centos1`.
 - Listez à nouveau les conteneurs lxc.
-- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
+- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `sudo lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `sudo lxc exec centos1 -- bash`.
 - Nous pouvons installer des logiciels dans le conteneur comme dans une VM. Pour sortir du conteneur on peut simplement utiliser `exit`.
 
-- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH). 
+- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH).
+
+- Supprimez la machine centos1 avec `sudo lxc stop centos1 && sudo lxc delete centos1`
 
 ## Facultatif : Configurer un conteneur pour Ansible manuellement
 {{% expand "Facultatif :" %}}
@@ -173,11 +175,11 @@ sudo lxc image list
 ```
 
 ```
-sudo lxc launch ubuntu_ansible host1
-sudo lxc launch centos_ansible host2
+sudo lxc launch ubuntu_ansible ubu1
+sudo lxc launch centos_ansible centos1
 ```
 
-- Essayez de vous connecter à `host1` et `host2` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
 
 - Une fois la modification faite supprimé le conteneur initial.
  
@@ -232,7 +234,7 @@ sudo lxc list # récupérer l'ip de la machine
 Créez et complétez le fichier `inventory.cfg` d'après ce modèle:
 
 ```ini
-host1 ansible_host=<ip>
+ubu1 ansible_host=<ip>
 
 [all:vars]
 ansible_user=<votre_user>
@@ -246,7 +248,7 @@ Ansible cherche la configuration locale dans le dossier courant. Conséquence: o
 
 - Ansible implique le cas échéant (login avec clé ssh) de déverrouiller la clé ssh pour se connecter à **chaque** hôte. Lorsqu'on en a plusieurs il est donc nécessaire de la déverrouiller en amont avec l'agent ssh pour ne pas perturber l'exécution des commandes ansible. Pour cela : `ssh-add`.
 
-- Créez un groupe `adhoc_lab` et ajoutez les deux machines `host1` et  `host2`.
+- Créez un groupe `adhoc_lab` et ajoutez les deux machines `ubu1` et  `centos1`.
 
 {{% expand "Réponse  :" %}}
 ```ini
@@ -254,8 +256,8 @@ Ansible cherche la configuration locale dans le dossier courant. Conséquence: o
 ansible_user=<votre_user>
 
 [adhoc_lab]
-host1 ansible_host=<ip>
-host2 ansible_host=<ip>
+ubu1 ansible_host=<ip>
+centos1 ansible_host=<ip>
 ```
 {{% /expand %}}
 
@@ -280,10 +282,10 @@ En précisant les paramètres de connexion dans le playbook il et aussi possible
 ansible_user=<votre_user>
 
 [ubuntu_hosts]
-host1 ansible_host=<ip>
+ubu1 ansible_host=<ip>
 
 [centos_hosts]
-host2 ansible_host=<ip>
+centos1 ansible_host=<ip>
 
 [adhoc_lab:children]
 ubuntu_hosts
@@ -327,7 +329,7 @@ la machine centos a un retour changed jaune alors que la machine ubuntu a un ret
 
 - Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur la machine ubuntu et non démarré sur la machine centos.
 
-- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 4 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur les machines ubuntu (retour vert) et pas encore démarré sur les machines centos (retour jaune).
+- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur les machines ubuntu (retour vert) et pas encore démarré sur les machines centos (retour jaune).
 
 {{% expand "Réponse  :" %}}
 ```
