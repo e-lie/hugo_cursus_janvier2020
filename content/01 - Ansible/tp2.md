@@ -1,6 +1,6 @@
 ---
 title: "TP2 - Créer un playbook de déploiement d'application flask" 
-draft: true
+draft: false
 ---
 
 ## Création du projet
