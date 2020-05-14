@@ -70,6 +70,41 @@ marché: # debut du dictionnaire global "marché"
 #fin du dictionnaire global
 ```
 
+Pour mieux visualiser l'imbrication complexe des dictionnaires et des listes en YAML on peut utiliser un convertisseur YAML -> JSON : [https://www.json2yaml.com/](https://www.json2yaml.com/).
+
+Notre marché devient:
+
+```json
+{
+  "marché": {
+    "lieu": "Crimée Curial",
+    "jour": "dimanche",
+    "horaire": {
+      "unité": "heure",
+      "min": 9,
+      "max": 14
+    },
+    "fruits": [
+      {
+        "nom": "pomme",
+        "couleur": "verte",
+        "pesticide": "avec"
+      },
+      {
+        "nom": "poires",
+        "couleur": "jaune",
+        "pesticide": "sans"
+      }
+    ],
+    "légumes": [
+      "courgettes",
+      "salade",
+      "potiron"
+    ]
+  }
+}
+```
+
 ## Structure d'un playbook
 
 ```yaml
