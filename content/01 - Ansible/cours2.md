@@ -236,7 +236,7 @@ Ces parties dynamiques utilisent 3 types de procédés:
 
 - Les structures de contrôles (seulement dans les templates): `{% for host in groups['appserver'] %}`.
 
-- Les filtres qui permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}`
+- Les filtres qui permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
 
 ### Variables Ansible
 
@@ -354,6 +354,17 @@ On peut également controler cette boucle avec quelques paramètres:
 
 Cette fonctionnalité était anciennement accessible avec le mot clé `with_items:` qui est maintenant déprécié.
 
+### Filtres Jinja
+
+Pour transformer la valeur des variables à la volée lors de leur appel on peut utiliser des filtres (jinja2) :
+
+- par exemple on peut fournir une valeur par défaut pour une variable avec filtre default: `{{ hostname | default('localhost') }}` 
+- Un autre usage courant des filtres est de reformater et filtrer des listes et dictionnaires de paramètre. Ces syntaxes sont peut intuitives. Vous pouvez vous entrainer en regardant ces tutoriels:
+  - [https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/](https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/)
+  - [https://www.tailored.cloud/devops/advanced-list-operations-ansible/](https://www.tailored.cloud/devops/advanced-list-operations-ansible/)
+
+
+La liste complète des filtres ansible se trouve ici : [https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html)
 
 #### Debugger un playbook.
 
@@ -366,4 +377,3 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 - Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
   - `p <ma_variable>` permet d'afficher la valeur d'une variable.
   - `continue` ou `c` de reprendre l'exécution.
-
