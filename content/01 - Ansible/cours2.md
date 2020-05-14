@@ -70,7 +70,7 @@ marché: # debut du dictionnaire global "marché"
 #fin du dictionnaire global
 ```
 
-Pour mieux visualiser l'imbrication complexe des dictionnaires et des listes en YAML on peut utiliser un convertisseur YAML -> JSON : [https://www.json2yaml.com/](https://www.json2yaml.com/).
+Pour mieux visualiser l'imbrication des dictionnaires et des listes en YAML on peut utiliser un convertisseur YAML -> JSON : [https://www.json2yaml.com/](https://www.json2yaml.com/).
 
 Notre marché devient:
 
@@ -104,6 +104,8 @@ Notre marché devient:
   }
 }
 ```
+
+Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML qui est une liste de dictionnaires.
 
 ## Structure d'un playbook
 
