@@ -10,48 +10,50 @@ Cette formation est basée sur une machine de travail **Ubuntu Bionic (18.04)** 
 ## Formation à distance - accéder à une machine distante grâce à VNC
 
 
-### Sur windows
+### Instructions Windows
 
-- Installez tightVNC et lancez le
+- Installer mobaxterm
+- Se connecter avec mobaxterm :
+  - session VNC:
+    - Hôte `127.0.0.1:5901`
+    - Dans `network settings` utiliser `proxy SSH` avec `stagiaire@<votrenom>.dopl.uk`
+    - La connection nécessite de rentrer deux fois le mdp `devops101`
 
-### Sur linux
+### Instruction MacOS
 
-- Installez vinagre et lancez le
+- Lancez dans un terminal `ssh -L 5901:localhost:5901 stagiaire@<votrenom>.dopl.uk &`. Le mot de passe ssh est `devops101`
+- Garder le terminal ouvert puis lancez `Partage d'écran.app` et connection sur `localhost:5901` avec le mdp `devops101` également.
 
-### Sur MacOS
+### Instruction Linux
 
-- Lancez simplement l'utilitaire "Partage d'écran"
+- Installez `Vinagre`
+- Se connecter avec vinagre:
+  - session VNC:
+    - Hôte `127.0.0.1:5901`
+    - Dans utiliser l'option `tunnel SSH` avec `stagiaire@<votrenom>.dopl.uk`
+    - La connection nécessite de rentrer deux fois le mdp `devops101`
 
-### Se connecter
 
-La formation se déroule en accédant simultanément à 2 machines distantes :
+### Une fois sur la session linux distante
 
-- La machine du formateur, où sont réalisées les démonstrations et la présentation du cours.
-- Votre machine stagiaire individuelle pour effectuer le TP.
-
-1. récupérez l'adresse ip ou le non de domaine de ces deux machines fournis pour la formation (la connexion s'effectue sur le port 5901 par exemple `formateur.dopl.uk:5901`)
-2. connectez vous à la machine formateur en mode "passif" ou "viewer" à l'aide du mot de passe viewer fournis par le formateur.
-3. connectez vous à la machine stagiaire en mode controle (normal) à l'aide du mot de passe également fournis par le formateur.
-4. Indiquez au formateur que vous avez bien accès aux deux machines.
-
+ - Conseil: mettez VNC en plein écran (nous ferons tout sur la machine distante)
+ - Ouvrez le raccourci "machine formateur" sur le bureau pour suivre le déroulement en mode démonstration des cours et TPs (VNCeption).
 
 ## Formation présentiel - importer une machine Linux virtualbox
 
 - Récupérez  une machine virtualbox ubuntu ou xubuntu (18.04): sur un disque externe, dans le partage réseau (au cas ou elle n'est pas fournie par exemple pour une formation à distance vous pouvez en récupérer sur le net par exemple [ici](https://www.osboxes.org/xubuntu/) ou en [installant depuis l'image ISO officielle](https://www.numetopia.fr/comment-installer-ubuntu-dans-virtualbox/))
   
-- Configurez la avec 8Go de RAM et 3 processeurs
+- Configurez la avec 4Go de RAM minimum (8Go si possible) et et 2 à 4 processeurs.
   
 - Démarrez la machine
   
 - Faites les mises à jours (`sudo apt update` et `sudo apt upgrade`)
 
-## Installer quelques logiciels
+### Installer quelques logiciels (dans le cas d'une machine vierge)
 
 - Installez VSCode avec le gestionnaire de paquet snap : `snap install code --classic`
   
-- En ligne de commande (`apt`) installez `git`, `htop`, `ncdu`
+- En ligne de commande (`apt`) installez `lxd`, `git`, `htop`, `ncdu`
 
-## Explorer Ubuntu Bionic (18.04) : Démo
 
-## Explorer l'éditeur VSCode : Démo
 
