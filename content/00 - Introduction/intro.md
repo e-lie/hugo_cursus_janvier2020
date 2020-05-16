@@ -182,3 +182,8 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 - Kubernetes : infrastructure de conteneurs (iac et cloud)
 - Jenkins : CI/CD pour intégrer ensemble le dev et les opérations
 
+
+## Aller plus loin
+
+- La DevOps roadmap: [https://github.com/kamranahmedse/developer-roadmap#devops-roadmap](https://github.com/kamranahmedse/developer-roadmap#devops-roadmap)
+
