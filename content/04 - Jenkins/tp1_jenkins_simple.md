@@ -271,8 +271,8 @@ Ce fichier contient plein d'options sur comment configurer l'installation de Jen
 
 Maintenant lançons l'installation avec :
 
-- `kc create namespace jenkins`
-- `kc config set-context --current --namespace=jenkins`
+- `kubectl create namespace jenkins`
+- `kubectl config set-context --current --namespace=jenkins`
 - `helm repo add stable https://kubernetes-charts.storage.googleapis.com/`
 - `helm repo update`
 - `helm install --name-template jenkins -f values.yaml stable/jenkins`

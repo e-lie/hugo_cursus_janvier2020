@@ -1,15 +1,11 @@
 ---
-title: 'TP2 - Déployer des conteneurs'
+title: 'TP2 - Déployer une application multiconteneur'
 draft: false
 ---
 
 La première partie de ce TP va consister à créer des objets kubernetes pour déployer notre Stack monster_icon.
 
 Mais d'abord créons une application d'exemple Wordpress Mysql
-
-### Installer un Wordpress Mysql d'exemple
-
-[Suivez ce tutoriel](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/)
 
 ### Pods
 
@@ -23,28 +19,19 @@ Nous voudrions déployer notre stack monster stack. Nous allons commencer par cr
 - Complétez le nom en mettant `monster-pod` pour et `monster-icon` pour le conteneur (les `_` sont interdit dans les noms/hostnames)
 - Complétez le port en mettant le port de production de notre application (cf docker stack lancement par défaut du conteneur)
 - Vérifiez que l'application fonctionne bien en
-  - lançant `kc get pods` pour vérifier que le conteneur du pod tourne
-  - lançant `kc logs <pod>`
-  - forwardant le port de l'application avec `kc port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
-- Monitorez les processus avec `kc top pods`.
-
-#### Installer kubematic
-
-Kubematic est une interface graphique sympatique pour kubernetes.
-
-Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'éviter la configuration correcte d'une dashboard pour le moment. En plus est plus agréable à utiliser.
-
-Elle est très récente et ne dispose par de paquet ubuntu/debian. Vous pouvez l'installer en suivant [ce tutoriel](https://thenewstack.io/install-the-kubernetic-desktop-gui-on-ubuntu-linux-19-10/)
+  - lançant `kubectl get pods` pour vérifier que le conteneur du pod tourne
+  - lançant `kubectl logs <pod>`
+  - forwardant le port de l'application avec `kubectl port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
+- Monitorez les processus avec `kubectl top pods`.
 
 #### Ajoutons dnmonster ?
 
 Maintenant que nous savons créer un pod nous pouvons ajouter à l'intérieur notre service `dnmonster` de backend d'icone. Les deux services sont peu couplés mais cela ne semble pas a priori stupide de les déployer et scaler ensemble.
 
-
 - En vous référant au fichier docker stack du TP4 ou 5 Docker ajoutez le conteneur au pod monster-pod.
 - Appliquez la configuration avec `apply`
 - Quel est le problème ? => le pod est la plus petite unité de déploiement de k8s. Les conteneurs dans un pod sont toujours déployés ou détruit ensembles. En bref un pod est immutable. C'est un peu un problème si l'on veut déployer une nouvelle version de dnmonster indépendemment de monster_icon. Poursuivons malgré tout.
-- Détruisez le pod avec `kc delete ...` (-f ou nom du pod)
+- Détruisez le pod avec `kubectl delete ...` (-f ou nom du pod)
 
 - Ajoutez une variable d'environnement au conteneur dans le pod avec la syntaxe:
 
@@ -55,15 +42,15 @@ Maintenant que nous savons créer un pod nous pouvons ajouter à l'intérieur no
 ```
 
 - Changez le port pour 5000.
-- vérifiez avec `kc logs monster-pod monster-icon` que le programme est lancé en mode DEV. En DEV l'application est servie sur 0.0.0.0:5000 c'est à dire sur toute les interfaces. C'est important car nous voulons essayer d'y accéder depuis le pod dnmonster.
+- vérifiez avec `kubectl logs monster-pod monster-icon` que le programme est lancé en mode DEV. En DEV l'application est servie sur 0.0.0.0:5000 c'est à dire sur toute les interfaces. C'est important car nous voulons essayer d'y accéder depuis le pod dnmonster.
 - Appliquez les modifications.
 
 - Recréez le pod avec `apply`.
-- Lorsque `kc get pods | grep monster-pod` affiche `2/2` refaite le port-forward et chargez l'application.
+- Lorsque `kubectl get pods | grep monster-pod` affiche `2/2` refaite le port-forward et chargez l'application.
 
 L'icone n'apparait toujours pas.
 
-- pour debugger connectez vous au conteneur monster-icon dans le pod avec `kc exec -it monster-pod -c monster-icon -- bash`
+- pour debugger connectez vous au conteneur monster-icon dans le pod avec `kubectl exec -it monster-pod -c monster-icon -- bash`
   - lancez `wget http://dnmonster:8080` effectivement dnmonster n'est pas accessible car les deux conteneurs partage la même interface et la même IP.
   - deconnectez vous avec `exit` et connectez vous à `dnmonster`.
   - lancez `wget http://localhost:5000` : la page se télécharge => les différents processus du conteneur sont bien accessibles sur localhost.
@@ -197,8 +184,8 @@ Enfin est précisée la stratégie de mise à jour (rollout) des pod pour le dé
 #### Appliquer notre déploiement
 
 - Avec la commande `apply -f` appliquez notre fichier de déploiement.
-- Affichez les déploiement avec `kc get deploy -o wide`.
-- Affichez également les replicasets avec `kc get replicasets -o wide`.
+- Affichez les déploiement avec `kubectl get deploy -o wide`.
+- Affichez également les replicasets avec `kubectl get replicasets -o wide`.
 - Listez également les pods et faites describe sur l'un des pods monstericon. On peut constater que les annotation on bien été transmises à chaque pod de notre déploiement.
 
 ##### Correction du déploiement monstericon
@@ -280,7 +267,7 @@ Le type sera: `ClusterIP` pour dnmonster et redis et `LoadBalancer` pour monster
 
 Appliquez vos trois fichiers.
 
-- Listez les services avec `kc get services`.
+- Listez les services avec `kubectl get services`.
 - Récupérez le port de monstericon.
 - Visitez votre application en localhost sur ce port dans le navigateur.
 
@@ -302,9 +289,9 @@ resources:
     - redis-deployment.yaml
 ```
 
-- Essayez d'exécuter la kustomization avec `kc apply -k .` depuis le dossier `monster_stack`.
+- Essayez d'exécuter la kustomization avec `kubectl apply -k .` depuis le dossier `monster_stack`.
 
-### Ajoutons un load balanceur ingress exposer notre application sur le port standard.
+### Ajoutons un Ingress nginx rendre notre application web accessible
 
 Installons le controlleur ingress nginx avec `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`.
 
