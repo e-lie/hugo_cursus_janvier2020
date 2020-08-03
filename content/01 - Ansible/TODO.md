@@ -10,6 +10,8 @@ TODO: Répartir la biblio par section
 
 TODO: réparer la coloration yaml sur netflify (maj de hugo ?)
 
+TODO: mettre des liens vers la documention dans le cours.
+
 TODOOOO: faire un TP5 avec un peu tous les trucs avancés (à l'occasion d'une formation avancée et bien payée)
     - connection à une machine windows avec winRM et installation d'un truc?
     - installer un serveur AWX dans un cluster kubernetes
