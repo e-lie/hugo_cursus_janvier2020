@@ -188,14 +188,17 @@ ansible-inventory --inventory <inventory> --graph
 
 ### Intégration Ansible et AWS
 
-Utiliser le plugin d'inventaire AWS et les modules adaptés.
+Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les modules adaptés.
 
-Par exemple:
-- [https://docs.ansible.com/ansible/latest/modules/ec2_module.html](https://docs.ansible.com/ansible/latest/modules/ec2_module.html).
+- Module EC2: [https://docs.ansible.com/ansible/latest/modules/ec2_module.html](https://docs.ansible.com/ansible/latest/modules/ec2_module.html).
+- Plugin d'inventaire: [https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html](https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html).
 
 ### Intégration Ansible Nagios
 
-Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible.
+
+**Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
+
+**Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes.
 
 ### Intégration Ansible avec Openstack
 
