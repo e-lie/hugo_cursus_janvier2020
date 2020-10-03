@@ -1,7 +1,7 @@
 ---
 title: Linux et Bash
 weight: 2
-pre: "<i class='fas fa-linux'></i> - "
+pre: "<i class='fas fa-terminal'></i> - "
 chapter: true
 ---
 

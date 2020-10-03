@@ -48,8 +48,7 @@ Ex-ingénieur sécurité / DevOps
 
 # Des conteneurs
 
-.col-6[![](images/docker.png)]
-.col-5[
+![](images/docker.png)
 
 - ## La métaphore docker : "box it, ship it"
 
@@ -113,15 +112,13 @@ server {
 On compare souvent les conteneurs aux machines virtuelles. Mais ce sont de grosses simplifications parce qu'on en a un usage similaire : isoler des programmes dans des "contextes".
 Une chose essentielle à retenir sur la différence technique : **les conteneurs utilisent les mécanismes internes du \_kernel de l'OS **Linux**\_ tandis que les VM tentent de communiquer avec l'OS (quel qu'il soit) pour directement avoir accès au matériel de l'ordinateur.**
 
-.col-8[![](images/hyperv-vs-containers.png)]
-.col-4[
+![](images/hyperv-vs-containers.png)
 
 - **VM** : une abstraction complète pour simuler des machines
 
   - un processeur, mémoire, appels systèmes, carte réseau, carte graphique, etc.
 
 - **conteneur** : un découpage dans Linux pour séparer des ressources (accès à des dossiers spécifiques sur le disque, accès réseau).
-  ]
 
 Les deux technologies peuvent utiliser un système de quotas pour l'accès aux ressources matérielles (accès en lecture/écriture sur le disque, sollicitation de la carte réseau, du processeur)
 

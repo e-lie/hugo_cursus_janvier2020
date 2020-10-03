@@ -70,7 +70,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ---
 
-![](img/Xorg.png)
+![](../../images/Xorg.png)
 
 ---
 
@@ -93,7 +93,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ## Telecharger l'ISO
 
-![](img/download.png)
+![](../../images/download.png)
 
 ---
 
@@ -101,7 +101,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ## Vérifier l'intégrité / authenticité
 
-![](img/checksum.png)
+![](../../images/checksum.png)
 
 ---
 
@@ -125,7 +125,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ## Le BIOS
 
-![](img/bios.jpg)
+![](../../images/bios.jpg)
 
 ---
 
@@ -141,7 +141,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ---
 
-![](img/livedesktop.png)
+![](../../images/livedesktop.png)
 
 ---
 
@@ -149,7 +149,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ## Lancer l'installation
 
-![](img/install.png)
+![](../../images/install.png)
 
 ---
 
@@ -157,7 +157,7 @@ Qui s'occupe de toute la gestion des fenêtres (bordures, décoration, redimensi
 
 ## Lancer l'installation
 
-![](img/install2.png)
+![](../../images/install2.png)
 
 ---
 
@@ -173,7 +173,7 @@ Exemple :
 - Le reste en swap
   - le swap, c'est une extension "lente" de la RAM
 
-![](img/install3.png)
+![](../../images/install3.png)
 
 ---
 
@@ -200,7 +200,7 @@ Exemple :
 
 ## GRUB
 
-![](img/grub1.png)
+![](../../images/grub1.png)
 
 ---
 
@@ -208,7 +208,7 @@ Exemple :
 
 ## GRUB
 
-![](img/grub2.png)
+![](../../images/grub2.png)
 
 ---
 
@@ -216,7 +216,7 @@ Exemple :
 
 ## Résumé du boot complet (du Bios à l'interface de login)
 
-![](img/boot.png)
+![](../../images/boot.png)
 
 ---
 
@@ -249,7 +249,7 @@ Exemple :
 
 ## Login
 
-![](img/login.png)
+![](../../images/login.png)
 
 ---
 
@@ -257,7 +257,7 @@ Exemple :
 
 ## Le bureau
 
-![](img/desktop.png)
+![](../../images/desktop.png)
 
 --- -->
 
@@ -265,7 +265,7 @@ Exemple :
 
 ## Les points de montage
 
-![](img/mounpoints.png)
+![](../../images/mounpoints.png)
 
 ---
 
@@ -598,7 +598,7 @@ Basé sur les personnages de Toy Story
 
 # 2. Le gestionnaire de paquet
 
-![](img/debiantimeline.png)
+![](../../images/debiantimeline.png)
 
 ---
 
@@ -608,7 +608,7 @@ Basé sur les personnages de Toy Story
 
 https://packages.debian.org/search
 
-![](img/debianpackagesite.png)
+![](../../images/debianpackagesite.png)
 
 ---
 
@@ -676,7 +676,7 @@ tar -xvzf monarchive.tar.gz
 
 ## Gérer des archives
 
-![](img/xkcd_tar.png)
+![](../../images/xkcd_tar.png)
 
 ---
 
@@ -712,7 +712,7 @@ Tout ce qui permet la communication entre les machines (et les programmes)
 
 ---
 
-![](img/recap_network.png)
+![](../../images/recap_network.png)
 
 ---
 
@@ -1044,15 +1044,15 @@ ff02::2 ip6-allrouters
 
 ---
 
-![](img/recap_network.png)
+![](../../images/recap_network.png)
 
 ---
 
-![](img/recap_network2.png)
+![](../../images/recap_network2.png)
 
 ---
 
-![](img/recap_network3.png)
+![](../../images/recap_network3.png)
 
 ---
 
@@ -1070,11 +1070,11 @@ ff02::2 ip6-allrouters
 
 ---
 
-![](img/nat1.png)
+![](../../images/nat1.png)
 
 ---
 
-![](img/nat2.png)
+![](../../images/nat2.png)
 
 ---
 
@@ -1102,7 +1102,7 @@ La situation se complexifie avec Virtualbox :
 
 ---
 
-![](img/subnat.png)
+![](../../images/subnat.png)
 
 ---
 
@@ -1172,11 +1172,11 @@ Les mathématiques permettent de générer un couple de clef (A, B) :
 
 ---
 
-![](img/chiffrement_asym.png)
+![](../../images/chiffrement_asym.png)
 
 ---
 
-![](img/dechiffrement_asym.png)
+![](../../images/dechiffrement_asym.png)
 
 ---
 
@@ -1190,11 +1190,11 @@ Les mathématiques permettent de générer un couple de clef (A, B) :
 
 ---
 
-![](img/signature.png)
+![](../../images/signature.png)
 
 ---
 
-![](img/check_signature.png)
+![](../../images/check_signature.png)
 
 ---
 
@@ -1274,7 +1274,7 @@ Serveur (au sens logiciel)
 
 ## Serveurs : quel support matériel ?
 
-![](img/computer.png)
+![](../../images/computer.png)
 
 ---
 
@@ -1282,19 +1282,19 @@ Serveur (au sens logiciel)
 
 ## Serveurs : quel support matériel ?
 
-![](img/rpi.png)
+![](../../images/rpi.png)
 
 ---
 
 # 5. SSH et les serveurs
 
-![](img/klaoude.png)
+![](../../images/klaoude.png)
 
 ---
 
 ## ... Plot twist !
 
-![](img/thereisnocloud.jpg)
+![](../../images/thereisnocloud.jpg)
 
 ---
 
@@ -1304,7 +1304,7 @@ Serveur (au sens logiciel)
 
 VPS = une VM dans un datacenter
 
-![](img/vps.jpg)
+![](../../images/vps.jpg)
 
 ---
 
@@ -1314,19 +1314,19 @@ VPS = une VM dans un datacenter
 
 ... qui tourne quelque part sur une vraie machine
 
-![](img/server.jpg)
+![](../../images/server.jpg)
 
 ---
 
 # 5. SSH et les serveurs
 
-![](img/digitalocean.png)
+![](../../images/digitalocean.png)
 
 ---
 
 # 5. SSH et les serveurs
 
-![](img/scaleway.png)
+![](../../images/scaleway.png)
 
 ---
 
@@ -1795,13 +1795,13 @@ findtime = 86400   ; 1 day
 
 # 6 - Services et sécurité
 
-![](img/xkcd_password.jpg)
+![](../../images/xkcd_password.jpg)
 
 ---
 
 # 6 - Services et sécurité
 
-![](img/xkcd_security.png)
+![](../../images/xkcd_security.png)
 
 ---
 

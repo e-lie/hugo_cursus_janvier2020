@@ -156,7 +156,7 @@ Autres fichiers de profils : `~/.profile` et `/etc/bash_profile`
   - 0 : tout s'est bien passé
   - 1 (ou toute valeur différente de 0) : problème !
 
-![](img/commandbox.png)
+![](../../images/commandbox.png)
 
 ---
 
@@ -164,7 +164,7 @@ Autres fichiers de profils : `~/.profile` et `/etc/bash_profile`
 
 ## Entrées / sorties
 
-![](img/commandbox.png)
+![](../../images/commandbox.png)
 
 - **arguments** : donnés lors du lancement de la commande (ex: `/usr/` dans `ls /usr/`)
 - **stdin** : flux d'entrée (typ. viens du clavier)
@@ -231,7 +231,7 @@ Fichiers speciaux :
 - `/dev/null` : puit sans fond (trou noir)
 - `/dev/urandom` : generateur aleatoire (trou blanc)
 
-![](img/bottomlesspit.png)
+![](../../images/bottomlesspit.png)
 
 ---
 
@@ -284,7 +284,7 @@ que fait `cmd1 && cmd2 || cmd3`
 
 Exemple : `cat /etc/login.defs | head -n 3`
 
-![](img/pipe.png)
+![](../../images/pipe.png)
 
 - (Attention, par défaut `stderr` n'est pas affecté par les pipes !)
 

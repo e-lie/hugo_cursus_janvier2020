@@ -6,7 +6,7 @@ title: Administration avancée
 
 ---
 
-![](img/previously.jpg)
+![](../../images/previously.jpg)
 
 ---
 
@@ -30,35 +30,35 @@ title: Administration avancée
 
 ---
 
-![](img/1.png)
+![](../../images/1.png)
 
 ---
 
-![](img/2.png)
+![](../../images/2.png)
 
 ---
 
-![](img/3.png)
+![](../../images/3.png)
 
 ---
 
-![](img/4.png)
+![](../../images/4.png)
 
 ---
 
-![](img/5.png)
+![](../../images/5.png)
 
 ---
 
-![](img/6.png)
+![](../../images/6.png)
 
 ---
 
-![](img/7.png)
+![](../../images/7.png)
 
 ---
 
-![](img/8.png)
+![](../../images/8.png)
 
 ---
 
@@ -102,7 +102,7 @@ title: Administration avancée
 
 - Jusqu'ici : des pages statiques !
 
-![](img/8.png)
+![](../../images/8.png)
 
 ---
 
@@ -125,7 +125,7 @@ Comment créer des pages "dynamiques", par exemple :
 
 - Reverse-proxy (c.f. `proxy_pass`)
 
-![](img/proxypass.png)
+![](../../images/proxypass.png)
 
 ---
 
@@ -157,7 +157,7 @@ Comment créer des pages "dynamiques", par exemple :
 
 ---
 
-![](img/nextcloud.png)
+![](../../images/nextcloud.png)
 
 ---
 
@@ -165,7 +165,7 @@ Comment créer des pages "dynamiques", par exemple :
 
 ## Nextcloud
 
-![](img/nextcloud-logo.jpg)
+![](../../images/nextcloud-logo.jpg)
 
 ---
 
@@ -188,7 +188,7 @@ Comment créer des pages "dynamiques", par exemple :
 
 ## Nextcloud
 
-![](img/nextcloud-interface.png)
+![](../../images/nextcloud-interface.png)
 
 ---
 
@@ -261,7 +261,7 @@ Savoir lire des posts sur Stack Overflow et ses dérivés :
 
 ---
 
-![](img/toodamnhigh.png)
+![](../../images/toodamnhigh.png)
 
 ---
 
@@ -279,7 +279,7 @@ La conteneurisation permet :
 
 ---
 
-![](img/vm_vs_containers.png)
+![](../../images/vm_vs_containers.png)
 
 ---
 
@@ -296,7 +296,7 @@ La conteneurisation permet :
 
 ---
 
-![](img/lxc.png)
+![](../../images/lxc.png)
 
 ---
 
@@ -461,7 +461,7 @@ $ lxc snapshot <container> <nom_du_snapshot>
 
 ---
 
-![](img/lxc.png)
+![](../../images/lxc.png)
 
 ---
 
@@ -512,22 +512,22 @@ D'un point de vue pédagogique
 - Volonté de simplifier / automatiser
 - Script qui font ce qu'un adminsys aurait fait "à la main"
 
-![](img/dude_yunohost.jpg)
+![](../../images/dude_yunohost.jpg)
 
 ---
 
 # 3 - Introduction à YunoHost
 
-![](img/yunohost_logo.png)
+![](../../images/yunohost_logo.png)
 
-- ![](img/icon-debian.png) Basé sur Debian
-- ![](img/icon-tools.png) Administration en CLI ou via une gentille interface web
-- ![](img/icon-package.png) Installation d'applications en quelques clics
-- ![](img/icon-globe.png) ![](img/icon-lock.png) Multi-domaines et intégration HTTPS (Let's Encrypt)
-- ![](img/icon-users.png) ![](img/icon-door.png) Multi-utilisateurs avec portail "Single Sign On"
-- ![](img/icon-mail.png) ![](img/icon-messaging.png) Stack mail complète + messagerie instantannée XMPP
-- ![](img/icon-shield.png) Sécurité (fail2ban, firewall)
-- ![](img/icon-medic.png) Système de sauvegardes
+- ![](../../images/icon-debian.png) Basé sur Debian
+- ![](../../images/icon-tools.png) Administration en CLI ou via une gentille interface web
+- ![](../../images/icon-package.png) Installation d'applications en quelques clics
+- ![](../../images/icon-globe.png) ![](../../images/icon-lock.png) Multi-domaines et intégration HTTPS (Let's Encrypt)
+- ![](../../images/icon-users.png) ![](../../images/icon-door.png) Multi-utilisateurs avec portail "Single Sign On"
+- ![](../../images/icon-mail.png) ![](../../images/icon-messaging.png) Stack mail complète + messagerie instantannée XMPP
+- ![](../../images/icon-shield.png) Sécurité (fail2ban, firewall)
+- ![](../../images/icon-medic.png) Système de sauvegardes
 
 ---
 
@@ -549,7 +549,7 @@ D'un point de vue pédagogique
 
 ## Applications
 
-![](img/apps.png)
+![](../../images/apps.png)
 
 ---
 
@@ -581,7 +581,7 @@ ou bien : `yunohost app install zerobin`
 - Portail utilisateur avec "Single Sign On" <small>(`votre.domaine.tld/yunohost/sso`)</small>
 - Ils ont automatiquement une adresse mail (et un compte XMPP)
 
-![](img/home_panel.jpg)
+![](../../images/home_panel.jpg)
 
 ---
 
@@ -589,19 +589,19 @@ ou bien : `yunohost app install zerobin`
 
 ## Administration <small>(`votre.domaine.tld/yunohost/admin`)</small>
 
-![](img/admin.png)
+![](../../images/admin.png)
 
 ---
 
-![](img/ecosystem.png)
+![](../../images/ecosystem.png)
 
 ---
 
-![](img/yunohost.png)
+![](../../images/yunohost.png)
 
 ---
 
-![](img/portForwarding_fr.png)
+![](../../images/portForwarding_fr.png)
 
 ---
 
@@ -609,15 +609,15 @@ ou bien : `yunohost app install zerobin`
 
 ---
 
-![](img/aplause.gif)
+![](../../images/aplause.gif)
 
 ---
 
-![](img/fantastic.gif)
+![](../../images/fantastic.gif)
 
 ---
 
-![](img/tobecontinued.jpg)
+![](../../images/tobecontinued.jpg)
 
 ---
 
@@ -643,4 +643,4 @@ With great power comes great responsabilities
 
 ---
 
-![](img/thatsall.jpg)
+![](../../images/thatsall.jpg)

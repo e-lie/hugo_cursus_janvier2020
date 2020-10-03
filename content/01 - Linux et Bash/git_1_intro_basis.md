@@ -43,7 +43,7 @@ title: Introduction Python et Git
 
 ## 1. Suit **chaque modification** faite à des **fichiers textes** (souvent de code mais peut-être autre chose).
 
-![](img/git_diff.png)
+![](../../images/git_diff.png)
 
 ---
 
@@ -51,7 +51,7 @@ title: Introduction Python et Git
 
 ## 2. Permet de **stocker plusieurs version** des **même fichiers** et passer d'un version à l'autre.
 
-![](img/merge_3_versions.png)
+![](../../images/merge_3_versions.png)
 
 ---
 
@@ -59,7 +59,7 @@ title: Introduction Python et Git
 
 ## 3. Permet suivre **qui** a fait quelle modification, **partager les modifications** avec les autres, **régler les conflits**
 
-![](img/gitkraken.png)
+![](../../images/gitkraken.png)
 
 ---
 
@@ -150,14 +150,13 @@ vous êtes dans un dossier avec du code:
 
 #Git cycle des fichiers
 
-.col-6[![](img/commit_cycle.png)]
-.col-6[
-![](img/git_file_statuses.jpg)
+![](../../images/commit_cycle.png)
+
+![](../../images/git_file_statuses.jpg)
 </br>
 </br>`git rm fichier` pour désindexer.
 </br> Tracked = suivi
 </br> Staged = inclus (dans le prochain commit)
-]
 
 ---
 

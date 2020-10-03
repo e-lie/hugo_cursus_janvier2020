@@ -1,5 +1,5 @@
+---
 title: Introduction à Linux
-
 ---
 
 # Introduction à Linux
@@ -91,7 +91,7 @@ _Become a Command Line Padawan in five days!_
 
 ## 1970 : PDP-7
 
-![](img/pdp7.jpg)
+![](../../images/pdp7.jpg)
 
 ---
 
@@ -106,7 +106,7 @@ _Become a Command Line Padawan in five days!_
 - Ouvert (évidemment)
 - (Écrit en assembleur)
 
-![](img/ritchie_thompson_kernighan.png)
+![](../../images/ritchie_thompson_kernighan.png)
 
 ---
 
@@ -114,7 +114,7 @@ _Become a Command Line Padawan in five days!_
 
 ## 1970 : UNIX
 
-![](img/unixtree.png)
+![](../../images/unixtree.png)
 
 ---
 
@@ -126,7 +126,7 @@ _Become a Command Line Padawan in five days!_
 - Le C rends portable les programmes ;
 - Ils réécrivent une version d'UNIX en C, ce qui rends UNIX portable ;
 
-![](img/ritchie_thompson.jpg)
+![](../../images/ritchie_thompson.jpg)
 
 ---
 
@@ -145,7 +145,7 @@ _Become a Command Line Padawan in five days!_
 
 ## 1970~1985 : Les débuts d'Internet
 
-![](img/arpanet.png)
+![](../../images/arpanet.png)
 
 ---
 
@@ -187,9 +187,8 @@ _Become a Command Line Padawan in five days!_
   3. Liberte de redistribuer les modificiations
 - ... et le projet GNU : un ensemble de programmes libres
 
-![(img/stallman.jpg)
-![](img/gnu.png)
-]
+![(img/stallman.jpg)]
+![](../../images/gnu.png)
 
 ---
 
@@ -199,9 +198,8 @@ _Become a Command Line Padawan in five days!_
 
 - Linus Torvalds écrit Linux dans son garage
 
-![(img/torvalds.jpg)
-![](img/tux.png)
-]
+![(img/torvalds.jpg)]
+![](../../images/tux.png)
 
 ---
 
@@ -250,11 +248,10 @@ En très résumé :
 
 ## L'informatique contemporaine
 
-![](img/datacenter.jpg)
+![](../../images/datacenter.jpg)
 
-![(img/laptop.jpg)
-![](img/smartphone.jpg)
-]
+![](../../images/laptop.jpg)
+![](../../images/smartphone.jpg)
 
 ---
 
@@ -290,14 +287,14 @@ Un ensemble de programmes "packagés", préconfigurés, intégré pour un usage 
 
 ## Les distributions
 
-![](img/debian.png)
-![](img/ubuntu.png)
-![](img/mint.png)
-![](img/centos.png)
-![](img/arch.png)
-![](img/kali.png)
-![](img/android.jpg)
-![](img/yunohost.png)
+![](../../images/debian.png)
+![](../../images/ubuntu.png)
+![](../../images/mint.png)
+![](../../images/centos.png)
+![](../../images/arch.png)
+![](../../images/kali.png)
+![](../../images/android.jpg)
+![](../../images/yunohost.png)
 
 - **Debian** : réputé très stable, typiquement utilisé pour les serveurs
 - **Ubuntu, Mint** : grand public
@@ -333,7 +330,7 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ## Linux, les environnements (Gnome)
 
-![](img/gnome.jpg)
+![](../../images/gnome.jpg)
 
 ---
 
@@ -341,7 +338,7 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ## Linux, les environnements (KDE)
 
-![](img/kde.jpg)
+![](../../images/kde.jpg)
 
 ---
 
@@ -349,7 +346,7 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ## Linux, les environnements (Cinnamon)
 
-![](img/cinnamon.jpg)
+![](../../images/cinnamon.jpg)
 
 ---
 
@@ -357,7 +354,7 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ## Linux, les environnements (XFCE)
 
-![](img/xfce.jpg)
+![](../../images/xfce.jpg)
 
 ---
 
@@ -365,7 +362,7 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ## Linux, les environnements (Awesome)
 
-![](img/awesome.jpg)
+![](../../images/awesome.jpg)
 
 ---
 
@@ -397,7 +394,7 @@ Votre laptop doit être pour vous ce que le sabre laser est au Jedi
 
 ## Architecture d'un ordinateur
 
-![](img/computer.png)
+![](../../images/computer.png)
 
 ---
 
@@ -426,7 +423,7 @@ L'OS :
 - Décentralisé / distribué / "organique"
 - Intelligence à l'extérieur
 
-![](img/internet.jpg)
+![](../../images/internet.jpg)
 
 ---
 
@@ -482,7 +479,7 @@ Modele client / serveur
 
 ## Installer une machine virtuelle
 
-![](img/vbox1.png)
+![](../../images/vbox1.png)
 
 ---
 
@@ -490,7 +487,7 @@ Modele client / serveur
 
 ## Installer une machine virtuelle
 
-![](img/vbox2.png)
+![](../../images/vbox2.png)
 
 ---
 
@@ -500,7 +497,7 @@ Modele client / serveur
 
 Télécharger une Linux Mint préinstallée sur OSboxes.org
 
-![](img/osboxes_mint.png)
+![](../../images/osboxes_mint.png)
 
 ---
 
@@ -589,7 +586,7 @@ votre_login@machine:~$ █
 
 ---
 
-![](img/password-mistakes.png)
+![](../../images/password-mistakes.png)
 
 ---
 
@@ -822,7 +819,7 @@ alex@shadow:~$
 - Un disque peut être segmenté en "partitions"
 - Chaque partition héberge des données indépendantes des autres et sous un format / filesystem différent
 
-![](img/parts.png)
+![](../../images/parts.png)
 
 ---
 
@@ -936,7 +933,7 @@ coursLinux/
 
 ## Filesystem Hierarchy Standard
 
-![](img/filetree.png)
+![](../../images/filetree.png)
 
 ---
 
@@ -959,51 +956,51 @@ Un chemin relatif n'a de sens que par rapport à un dossier donné... mais est s
 
 ---
 
-![](img/relativepath_1_1.png)
+![](../../images/relativepath_1_1.png)
 
 ---
 
-![](img/relativepath_1_2.png)
+![](../../images/relativepath_1_2.png)
 
 ---
 
-![](img/relativepath_1_3.png)
+![](../../images/relativepath_1_3.png)
 
 ---
 
-![](img/relativepath_1_4.png)
+![](../../images/relativepath_1_4.png)
 
 ---
 
-![](img/relativepath_1_5.png)
+![](../../images/relativepath_1_5.png)
 
 ---
 
-![](img/relativepath_2_1.png)
+![](../../images/relativepath_2_1.png)
 
 ---
 
-![](img/relativepath_2_2.png)
+![](../../images/relativepath_2_2.png)
 
 ---
 
-![](img/relativepath_2_3.png)
+![](../../images/relativepath_2_3.png)
 
 ---
 
-![](img/relativepath_2_4.png)
+![](../../images/relativepath_2_4.png)
 
 ---
 
-![](img/relativepath_2_5.png)
+![](../../images/relativepath_2_5.png)
 
 ---
 
-![](img/relativepath_2_6.png)
+![](../../images/relativepath_2_6.png)
 
 ---
 
-![](img/relativepath_2_7.png)
+![](../../images/relativepath_2_7.png)
 
 ---
 
@@ -1139,7 +1136,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ## Les liens durs (hard link)
 
-![](img/hardlink.png)
+![](../../images/hardlink.png)
 
 - `ln <source> <destination>`
 - Le même fichier ... à plusieurs endroits !
@@ -1151,7 +1148,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ## Les liens symbolic (symlink)
 
-![](img/symlink.png)
+![](../../images/symlink.png)
 
 - `ln -s <cible> <nom_du_lien>`
 - Similaire à un "raccourci", le fichier n'est pas vraiment là .. mais comme si
@@ -1163,7 +1160,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ## Les liens symbolic (symlink)
 
-![](img/symlink.png)
+![](../../images/symlink.png)
 
 - Dans ce exemple, le lien a été créé avec
   - `ln -s ../../../conf/ynh.txt conf.json`
@@ -1176,7 +1173,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ## Les points de montage
 
-![](img/mounpoints.png)
+![](../../images/mounpoints.png)
 
 ---
 
@@ -1377,8 +1374,8 @@ alex:x:1000:1000:Zee Aleks:/home/alex:/bin/bash
 - **With great power comes great responsabilities**
   - Si un attaquant devient root, l'OS est entièrement compromis (à jamais)
 
-![](img/iamroot.jpg)
-![](img/heistheone.png)
+![](../../images/iamroot.jpg)
+![](../../images/heistheone.png)
 
 ---
 
@@ -1518,13 +1515,13 @@ $ ls -l coursLinux.html
 
 # 6. Permissions
 
-![](img/permissions.jpg)
+![](../../images/permissions.jpg)
 
 ---
 
 # 6. Permissions
 
-![](img/permissions2.png)
+![](../../images/permissions2.png)
 
 ---
 
@@ -1594,13 +1591,13 @@ chmod -R +x ./bin/           # Active le droit d'execution pour tout le monde et
 
 ## Représentation octale
 
-![](img/chmod_octal.png)
+![](../../images/chmod_octal.png)
 
 ---
 
 # 6. Permissions
 
-![](img/chmod_octal2.png)
+![](../../images/chmod_octal2.png)
 
 ---
 
@@ -1626,7 +1623,7 @@ chmod 444 coursLinux.html  # Fixe les permissions à r--r--r--
 
 ## Chown vs. chmod
 
-![](img/chown_chmod.png)
+![](../../images/chown_chmod.png)
 
 ---
 
@@ -1827,7 +1824,7 @@ pkill -9 java
 
 # 7. Processus
 
-![](img/dontsigkill.png)
+![](../../images/dontsigkill.png)
 
 ---
 

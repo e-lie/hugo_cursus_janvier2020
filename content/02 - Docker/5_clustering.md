@@ -96,10 +96,7 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 <!-- Remplacer image -->
 
-.col-6[<br>![](images/archi_swarm.png)]
-
-.col-1[<br>]
-.col-5[
+<br>![](images/archi_swarm.png)]
 
 - Un ensemble de nœuds de contrôle pour gérer les conteneurs
 - Un ensemble de nœuds worker pour faire tourner les conteneurs
@@ -251,11 +248,7 @@ networks:
 
 # Présentation de Kubernetes
 
-.col-6[![](images/kubernetes.png)]
-
-.col-1[<br>]
-
-.col-5[
+![](images/kubernetes.png)
 
 - Les **pods** kubernetes servent à grouper des conteneurs en unités d'application (microservices ou non) fortement couplées
 
@@ -263,8 +256,6 @@ networks:
 - Les **deployments** sont une abstraction pour scaler ou mettre à jours des groupes de **pods**.
 
 <!-- - Ces derniers tendent à se rapprocher d'une VM du point de vue de l'application. -->
-
-]
 
 ---
 

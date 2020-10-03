@@ -1,5 +1,4 @@
-
- # 0. Les origines de (GNU/)Linux
+# 0. Les origines de (GNU/)Linux
 
 ## (ou plus largement de l'informatique actuelle)
 
@@ -28,9 +27,10 @@
 - Ouvert (évidemment)
 - (Écrit en assembleur)
 
-![](img/ritchie_thompson_kernighan.png)
+![](../../images/ritchie_thompson_kernighan.png)
 
 Note:
+
 - standard : concevoir et décrire une interface universelle pour controler un ordinateur
 - multi: imaginez un ordi lent et peu de mémoire : faire plusieurs chose était pas quelque chose de normal : processus
 
@@ -40,10 +40,10 @@ Note:
 
 ## 1970 : UNIX
 
-
-![](img/unixtree.png)
+![](../../images/unixtree.png)
 
 Note:
+
 - la popularité d'UNIX et son ouverture initiale on mené à une prolifération de versions
 - ouvertes et fermés
 - universitaire ou orientée business (mais même interface)
@@ -58,10 +58,7 @@ Note:
 - Le C rend portable les programmes ;
 - Ils réécrivent une version d'UNIX en C, ce qui rends UNIX portable ;
 
-
-![](img/ritchie_thompson.jpg)
-
-
+![](../../images/ritchie_thompson.jpg)
 
 ---
 
@@ -70,8 +67,8 @@ Note:
 ## 1970~1985 : Les débuts d'Internet
 
 - Définition des protocoles IP et TCP
-    - Faire communiquer les machines entre elles
-    - Distribué / décentralisé : peut survivre à des attaques nucléaires
+  - Faire communiquer les machines entre elles
+  - Distribué / décentralisé : peut survivre à des attaques nucléaires
 - ARPANET ...
 
 ---
@@ -80,7 +77,7 @@ Note:
 
 ## 1970~1985 : Les débuts d'Internet
 
-![](img/arpanet.png)
+![](../../images/arpanet.png)
 
 ---
 
@@ -89,8 +86,8 @@ Note:
 ## 1970~1985 : Les débuts d'Internet
 
 - Définition des protocoles IP et TCP
-    - Faire communiquer les machines entre elles
-    - Distribué / décentralisé : peut survivre à des attaques nucléaires
+  - Faire communiquer les machines entre elles
+  - Distribué / décentralisé : peut survivre à des attaques nucléaires
 - ARPANET ...
 - ... puis le "vrai" Internet
 - Terminaux dans les grandes universités
@@ -105,10 +102,10 @@ Note:
 - Le logiciel devient un enjeu commercial avec des licences propriétaires
 - L'informatique devient un enjeu politique
 - La culture hacker se développe dans les universités
-    - Partage des connaisances
-    - Transparence, détournement techniques
-    - Contre les autorités centrales et la bureaucratie
-    - Un mouvement technique, artistique et politique
+  - Partage des connaisances
+  - Transparence, détournement techniques
+  - Contre les autorités centrales et la bureaucratie
+  - Un mouvement technique, artistique et politique
 
 ---
 
@@ -117,16 +114,14 @@ Note:
 ## 1980 : Culture hacker, logiciel libre
 
 - R. Stallman fonde le mouvement du logiciel libre et la FSF <small>(Free Software Foundation)</small>
-    1. Liberté d'utiliser du programme
-    2. Liberté d'étudier le fonctionnement du programme
-    3. Liberté de modifier le programme
-    4. Liberte de redistribuer les modificiations
+  1. Liberté d'utiliser du programme
+  2. Liberté d'étudier le fonctionnement du programme
+  3. Liberté de modifier le programme
+  4. Liberte de redistribuer les modificiations
 - ... et le projet GNU : un ensemble de programmes libres
 
-
-![](img/stallman.jpg)
-![](img/gnu.png)
-
+![](../../images/stallman.jpg)
+![](../../images/gnu.png)
 
 ---
 
@@ -136,10 +131,8 @@ Note:
 
 - Linus Torvalds écrit Linux dans son garage
 
-
-![](img/torvalds.jpg)
-![](img/tux.png)
-
+![](../../images/torvalds.jpg)
+![](../../images/tux.png)
 
 ---
 
@@ -147,14 +140,14 @@ Note:
 
 ## 1990 : Création de Linux
 
-*I'm doing a (free) operating system (**just a hobby, won't be big and professional like gnu**) for 386(486) AT clones. This has been brewing since april, and is starting to get ready. I'd like any feedback on things people like/dislike in minix, as my OS resembles it somewhat (same physical layout of the file-system (due to practical reasons) among other things).*
+_I'm doing a (free) operating system (**just a hobby, won't be big and professional like gnu**) for 386(486) AT clones. This has been brewing since april, and is starting to get ready. I'd like any feedback on things people like/dislike in minix, as my OS resembles it somewhat (same physical layout of the file-system (due to practical reasons) among other things)._
 
-*I've currently ported bash(1.08) and gcc(1.40), and things seem to work. This implies that I'll get something practical within a few months, and I'd like to know what features most people would want. Any suggestions are welcome, but I won't promise I'll implement them :-)*
+_I've currently ported bash(1.08) and gcc(1.40), and things seem to work. This implies that I'll get something practical within a few months, and I'd like to know what features most people would want. Any suggestions are welcome, but I won't promise I'll implement them :-)_
 
-*Linus (torvalds@kruuna.helsinki.fi)*
+_Linus (torvalds@kruuna.helsinki.fi)_
 
-*PS. [...] It is NOT portable [...] and it probably never will support anything other than AT-harddisks, as that's all I have :-(.
-— Linus Torvalds*
+_PS. [...] It is NOT portable [...] and it probably never will support anything other than AT-harddisks, as that's all I have :-(.
+— Linus Torvalds_
 
 ---
 
@@ -174,11 +167,10 @@ Note:
 
 # 0. Les origines de Linux
 
-
 ... L'informatique et Internet se démocratisent ...
 
-
 En très résumé :
+
 - Linux remporte le marché de l'infrastructure (routeur, serveurs, ..)
 - Windows remporte le marché des machines de bureau / gaming
 - Google remporte le marché des smartphones
@@ -189,14 +181,10 @@ En très résumé :
 
 ## L'informatique contemporaine
 
+![](../../images/datacenter.jpg)
 
-![](img/datacenter.jpg)
-
-
-
-![](img/laptop.jpg)
-![](img/smartphone.jpg)
-
+![](../../images/laptop.jpg)
+![](../../images/smartphone.jpg)
 
 ---
 
@@ -224,14 +212,14 @@ Un ensemble de programmes "packagés", préconfigurés, intégré pour un usage 
 
 ## Les distributions
 
-![](img/debian.png)
-![](img/ubuntu.png)
-![](img/mint.png)
-![](img/centos.png)
-![](img/arch.png)
-![](img/kali.png)
-![](img/android.jpg)
-![](img/yunohost.png)
+![](../../images/debian.png)
+![](../../images/ubuntu.png)
+![](../../images/mint.png)
+![](../../images/centos.png)
+![](../../images/arch.png)
+![](../../images/kali.png)
+![](../../images/android.jpg)
+![](../../images/yunohost.png)
 
 - **Debian** : réputé très stable, typiquement utilisé pour les serveurs
 - **Ubuntu, Mint** : grand public
@@ -255,13 +243,9 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ---
 
-
-
 # « Informatique »
 
 ---
-
-
 
 # L'ordinateur comme outil universel
 
@@ -273,9 +257,7 @@ Votre laptop doit être pour vous ce que le sabre laser est au Jedi
 
 ## Architecture d'un ordinateur
 
-
-![](img/computer.png)
-
+![](../../images/computer.png)
 
 ---
 
@@ -289,6 +271,7 @@ Operating System
 Hardware
 
 L'OS :
+
 - sais communiquer avec le hardware pour exploiter les ressources
 - créer des abstractions pour les programmes (e.g. fichiers)
 - partage le temps de calcul entre les programmes
@@ -303,9 +286,7 @@ L'OS :
 - Décentralisé / distribué / "organique"
 - Intelligence à l'extérieur
 
-
-![](img/internet.jpg)
-
+![](../../images/internet.jpg)
 
 ---
 
@@ -341,9 +322,7 @@ Autres protocoles : DNS, SSH, IRC, torrent, ...
 
 Modele client / serveur
 
->>>
-
-
+> > >
 
 # 2. Prendre en main sa machine et le terminal
 
@@ -409,7 +388,8 @@ votre_login@machine:~$ █
 ## Premières commandes
 
 Changez votre mot de passe :
-- Taper `passwd` puis *Entrée* puis suivez les instructions
+
+- Taper `passwd` puis _Entrée_ puis suivez les instructions
 
 ```
 votre_login@machine:~$ passwd
@@ -423,9 +403,7 @@ votre_login@machine:~$ █
 
 ---
 
-
-![](img/password-mistakes.png)
-
+![](../../images/password-mistakes.png)
 
 ---
 
@@ -433,13 +411,13 @@ votre_login@machine:~$ █
 
 ## Premières commandes
 
-- Taper `pwd` puis *Entrée* et observer
-- Taper `ls` puis *Entrée* et observer
-- Taper `cd /var` puis *Entrée* et observer
-- Taper `pwd` puis *Entrée* et observer
-- Taper `ls` puis *Entrée* et observer
-- Taper `ls -l` puis *Entrée* et observer
-- Taper `echo 'Je suis dans la matrice'` puis *Entrée* et observer
+- Taper `pwd` puis _Entrée_ et observer
+- Taper `ls` puis _Entrée_ et observer
+- Taper `cd /var` puis _Entrée_ et observer
+- Taper `pwd` puis _Entrée_ et observer
+- Taper `ls` puis _Entrée_ et observer
+- Taper `ls -l` puis _Entrée_ et observer
+- Taper `echo 'Je suis dans la matrice'` puis _Entrée_ et observer
 
 ---
 
@@ -454,9 +432,7 @@ votre_login@machine:~$ █
 - Certaines affichent des choses, d'autres changent des états
 - Vous pouvez ouvrir d'autres TTy / consoles avec Ctrl+Alt+F1, F2, F3, ..
 
->>>
-
-
+> > >
 
 # 3. La ligne de commande
 
@@ -504,7 +480,7 @@ dnsmasq -x /run/dnsmasq/dnsmasq.pid -u dnsmasq -7 /etc/dnsmasq.d,.dpkg-dist,.dpk
 
 ## `pwd` - Afficher le dossier courant
 
-*Print current working directory*
+_Print current working directory_
 
 ---
 
@@ -546,10 +522,10 @@ ls  *.py      # Liste tous les fichiers du repertoire courant qui se finissent p
 - Utiliser `ls` et `cd`, c'est comme naviguer avec un explorateur de fichier graphique !
 
 - Un bon Jedi est toujours être attentif à :
-    - où il est
-    - ce qu'il cherche à faire
-    - ce qu'il tape
-    - ce que la machine renvoie
+  - où il est
+  - ce qu'il cherche à faire
+  - ce qu'il tape
+  - ce que la machine renvoie
 
 ---
 
@@ -560,10 +536,11 @@ ls  *.py      # Liste tous les fichiers du repertoire courant qui se finissent p
 ```
 man nom_de_commande
 ```
+
 (navigation avec les fleches, `/mot` pour chercher un mot, `q` pour quitter)
 
-
 Ou :
+
 ```
 nom_de_comande --help
 ```
@@ -605,37 +582,25 @@ alex@shadow:~$
 
 ---
 
-
-
 ### Utilisez [Tab] !
 
 ---
-
-
 
 ## Utilisez [Tab] !
 
 ---
 
-
-
 # Utilisez [Tab] !
 
 ---
 
-
-
 # Utilisez [Tab] !
 
 ---
-
-
 
 # Utilisez autocomplete !
 
->>>
-
-
+> > >
 
 # 4. Le système de fichier
 
@@ -645,11 +610,11 @@ alex@shadow:~$
 
 ## Généralités
 
-- (En anglais : *filesystem*, abrégé *fs*)
+- (En anglais : _filesystem_, abrégé _fs_)
 - La façon dont sont organisés et référencé les fichiers
 - Une abstraction de la mémoire
 - Analogie : une bibliothèque avec seulement les pages des livres dans les étagères
-- Le *fs* connait le nom, la taille, l'emplacemenent des différents morceaux, la date de création, ...
+- Le _fs_ connait le nom, la taille, l'emplacemenent des différents morceaux, la date de création, ...
 
 ---
 
@@ -666,12 +631,12 @@ alex@shadow:~$
 
 ## Quelques systèmes de fichier classiques
 
-- *FAT16*, *FAT32* : disquettes, Windows 9x (~obsolète)
-- *NTFS* : système actuellement utilisé par Windows
+- _FAT16_, _FAT32_ : disquettes, Windows 9x (~obsolète)
+- _NTFS_ : système actuellement utilisé par Windows
 - **EXT3**, **EXT4** : système typiquement utilisé par Linux (Ubuntu, Mint, ...)
-- *HFS+* : système utilisé par MacOS
-- *TMPFS* : système de fichier pour gérer des fichiers temporaires (`/tmp/`)
-- *ZTFS*, *BRTFS*, *Tahoe-LAFS*, *FUSE*, *IPFS*, ...
+- _HFS+_ : système utilisé par MacOS
+- _TMPFS_ : système de fichier pour gérer des fichiers temporaires (`/tmp/`)
+- _ZTFS_, _BRTFS_, _Tahoe-LAFS_, _FUSE_, _IPFS_, ...
 
 ---
 
@@ -684,10 +649,9 @@ alex@shadow:~$
 - **fichiers ordinaires** (`-`) : données, configuration, ...
 - **répertoire** (directory, `d`) : gérer l'aborescence, ...
 - **spéciaux** :
-    - devices (`c`, `b`) (clavier, souris, disque, ...)
-    - sockets (`s`), named pipe (`p`) (communication entre programmes)
-    - links (`l`) ('alias' de fichiers, ~comme les raccourcis sous Windows)
-
+  - devices (`c`, `b`) (clavier, souris, disque, ...)
+  - sockets (`s`), named pipe (`p`) (communication entre programmes)
+  - links (`l`) ('alias' de fichiers, ~comme les raccourcis sous Windows)
 
 ---
 
@@ -696,12 +660,12 @@ alex@shadow:~$
 ## Un fichier
 
 - Un inode (numéro unique représentant le fichier)
-- *Des* noms (chemins d'accès)
-    - Un même fichier peut être à plusieurs endroits en meme temps (hard link)
+- _Des_ noms (chemins d'accès)
+  - Un même fichier peut être à plusieurs endroits en meme temps (hard link)
 - Des propriétés
-    - Taille
-    - Permissions
-    - Date de création, modification
+  - Taille
+  - Permissions
+  - Date de création, modification
 
 ---
 
@@ -762,9 +726,7 @@ coursLinux/
 
 ## Filesystem Hierarchy Standard
 
-
-![](img/filetree.png)
-
+![](../../images/filetree.png)
 
 ---
 
@@ -773,11 +735,13 @@ coursLinux/
 ## Designation des fichiers
 
 "Rappel" :
+
 - `.` : désigne le dossier actuel
 - `..` : désigne le dossier parent
 - `~` : désigne votre home
 
 Un chemin peut être :
+
 - Absolu : `/home/alex/dev/yunohost/script.sh`
 - Relatif : `../yunohost/script.sh` (depuis `/home/alex/dev/apps/`)
 
@@ -789,14 +753,14 @@ Un chemin relatif n'a de sens que par rapport à un dossier donné... mais est s
 
 ## Chemins relatifs
 
-+ d'exemples, tous équivalents (depuis `/home/alex/dev/apps/`)
+- d'exemples, tous équivalents (depuis `/home/alex/dev/apps/`)
 
-- `/home/alex/dev/yunohost/script.sh`
-- `~/dev/yunohost/script.sh`
-- `../yunohost/script.sh`
-- `./../yunohost/script.sh`
-- `./wordpress/../../yunohost/script.sh`
-- `../.././music/.././../barbara/.././alex/dev/ynh-dev/yunohost/script.sh`
+* `/home/alex/dev/yunohost/script.sh`
+* `~/dev/yunohost/script.sh`
+* `../yunohost/script.sh`
+* `./../yunohost/script.sh`
+* `./wordpress/../../yunohost/script.sh`
+* `../.././music/.././../barbara/.././alex/dev/ynh-dev/yunohost/script.sh`
 
 ---
 
@@ -823,9 +787,9 @@ wc -l /usr/share/doc/nano/nano.html      # 2005 lignes !
 
 - `head <fichier>`, `tail <fichier>` : affiche les quelques premières ou dernières ligne du fichier
 - `less <fichier>` : regarder le contenu d'un fichier de manière "interactive"
-   - ↑, ↓, ⇑, ⇓ pour se déplacer
-   - `/mot` pour chercher un mot
-   - `q` pour quitter
+  - ↑, ↓, ⇑, ⇓ pour se déplacer
+  - `/mot` pour chercher un mot
+  - `q` pour quitter
 
 ```bash
 tail -n 30 /usr/share/doc/nano/nano.html # Affiche les 30 dernieres lignes du fichier
@@ -840,9 +804,9 @@ less /usr/share/doc/nano/nano.html       # Regarder interactivement le fichier
 
 - `touch <fichier>` : créer un nouveau fichier, et/ou modifie sa date de modification
 - `nano <fichier>` : éditer un fichier dans la console
-    - [Ctrl]+X pour enregistrer+quitter
-    - [Ctrl]+W pour chercher
-    - [Alt]+Y pour activer la coloration syntaxique
+  - [Ctrl]+X pour enregistrer+quitter
+  - [Ctrl]+W pour chercher
+  - [Alt]+Y pour activer la coloration syntaxique
 
 (`nano` créera le fichier si besoin)
 
@@ -910,9 +874,7 @@ mv dev.bkp2 ~/trash/   # Déplace dev.bkp2 dans le dossier ~/trash/
 rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 ```
 
->>>
-
-
+> > >
 
 # 5. Utilisateurs et groupes
 
@@ -955,10 +917,10 @@ alex:x:1000:1000:Zee Aleks:/home/alex:/bin/bash
 - `uid=0`, `gid=0`
 - Dieu sur la machine
 - **With great power comes great responsabilities**
-    - Si un attaquant devient root, l'OS est entièrement compromis (à jamais)
+  - Si un attaquant devient root, l'OS est entièrement compromis (à jamais)
 
-![](img/iamroot.jpg)
-![](img/heistheone.png)
+![](../../images/iamroot.jpg)
+![](../../images/heistheone.png)
 
 ---
 
@@ -988,9 +950,8 @@ sudo su             # Ouvrir un shell root via sudo...
 ```
 
 - Suivant la commande demandée, le mot de passe n'est pas le même...
-   - su : mot de passe root
-   - sudo : mot de passe utilisateur
-
+  - su : mot de passe root
+  - sudo : mot de passe utilisateur
 
 ---
 
@@ -1003,6 +964,7 @@ sudo su             # Ouvrir un shell root via sudo...
 - Ils permettent ensuite de gérer d'accorder des permissions spécifiques
 
 Exemples :
+
 - `students`
 - `usb`
 - `power`
@@ -1035,11 +997,13 @@ $ md5sum coursLinux.html
 $ md5sum coursLinux.html
 d1bb5db7736dac454c878976994d6480
 ```
+
 ---
 
 # (Parenthèse sur le hashing)
 
 Hasher un fichier (ou une donnée) c'est la transformer en une chaîne :
+
 - de taille fixe
 - qui semble "aléatoire" et chaotique (mais déterministe !)
 - qui ne contient plus l'information initiale
@@ -1064,9 +1028,7 @@ addgroup <group>        # Ajouter un groupe
 adduser <user> <group>  # Ajouter un utilisateur à un groupe
 ```
 
->>>
-
-
+> > >
 
 # 6. Permissions
 
@@ -1077,12 +1039,12 @@ adduser <user> <group>  # Ajouter un utilisateur à un groupe
 ## Généralités
 
 - Chaque fichier a :
-    - un utilisateur proprietaire
-    - un groupe proprietaire
-    - des permissions associés
+  - un utilisateur proprietaire
+  - un groupe proprietaire
+  - des permissions associés
 - (`root` peut tout faire quoi qu'il arrive)
 - Système relativement minimaliste mais suffisant pour pas mal de chose
-    - (voir SELinux pour des mécanismes avancés)
+  - (voir SELinux pour des mécanismes avancés)
 
 ```
 $ ls -l coursLinux.html
@@ -1098,19 +1060,13 @@ $ ls -l coursLinux.html
 
 # 6. Permissions
 
-
-![](img/permissions.jpg)
-
+![](../../images/permissions.jpg)
 
 ---
 
 # 6. Permissions
 
-
-![](img/permissions2.png)
-
-
-
+![](../../images/permissions2.png)
 
 ---
 
@@ -1166,6 +1122,7 @@ chmod <changement> <cible>   # Change les permissions d'un fichier
 ```
 
 Exemples
+
 ```bash
 chmod u+w   coursLinux.html  # Donne le droit d'ecriture au proprio
 chmod g=r   coursLinux.html  # Remplace les permissions du groupe par "juste lecture"
@@ -1179,17 +1136,13 @@ chmod -R +x ./bin/           # Active le droit d'execution pour tout le monde et
 
 ## Représentation octale
 
-
-![](img/chmod_octal.png)
-
+![](../../images/chmod_octal.png)
 
 ---
 
 # 6. Permissions
 
-
-![](img/chmod_octal2.png)
-
+![](../../images/chmod_octal2.png)
 
 ---
 
@@ -1202,6 +1155,7 @@ chmod <permissions> <cible>
 ```
 
 Exemples
+
 ```bash
 chmod 700 coursLinux.html  # Fixe les permissions à rwx------
 chmod 644 coursLinux.html  # Fixe les permissions à rw-r--r--
@@ -1214,15 +1168,14 @@ chmod 444 coursLinux.html  # Fixe les permissions à r--r--r--
 
 ## Chown vs. chmod
 
-
-![](img/chown_chmod.png)
-
+![](../../images/chown_chmod.png)
 
 ---
 
 # 6. Permissions
 
 Lorsque l'on fait :
+
 ```bash
 $ /etc/passwd
 ```
@@ -1237,12 +1190,7 @@ Obtenir comme réponse
 
 ne signifie pas qu'on a pas les droits de lecture sur le fichier, mais bien que l'on a "juste" pas le droit de l'executer <small>(car ça n'a en fait pas de sens de chercher à l'executer)</small>
 
-
-
-
->>>
-
-
+> > >
 
 # 7. Processus
 
@@ -1252,13 +1200,14 @@ ne signifie pas qu'on a pas les droits de lecture sur le fichier, mais bien que 
 
 ## Généralités
 
-- Un processus est *une instance* d'un programme en cours d'éxécution
+- Un processus est _une instance_ d'un programme en cours d'éxécution
 - (Un même programme peut tourner plusieurs fois sous la forme de plusieurs processus)
 
 - Un processus utilise des ressources :
-    - code qui s'execute dans le CPU, ou en attente en cache/RAM
-    - données du processus en cache/RAM
-    - autres ressources (port, fichiers ouverts, ...)
+
+  - code qui s'execute dans le CPU, ou en attente en cache/RAM
+  - données du processus en cache/RAM
+  - autres ressources (port, fichiers ouverts, ...)
 
 - Un processus a des attributs (iidentifiant, proprio, priorité, ...)
 
@@ -1271,10 +1220,12 @@ ne signifie pas qu'on a pas les droits de lecture sur le fichier, mais bien que 
 La machine comprends seulement du code machine ("binaire").
 
 Un programme est donc soit :
+
 - compilé (par ex. un programme en C)
 - interprété par un autre programme, qui lui est compilé (par ex. un programme en python, interprété par l'interpreteur python)
 
 Rappel : UNIX est multi-tâche, multi-utilisateur
+
 - partage de temps, execution parallèle
 - coordonnées par le kernel
 
@@ -1337,6 +1288,7 @@ Exemple de `ps -ef --forest`
 ## Lister les processus et leurs attributs (2/2)
 
 Et aussi :
+
 ```bash
 top               # Liste les processus actif interactivement
   -> [shift]+M    #    trie en fonction de l'utilisation CPU
@@ -1351,11 +1303,11 @@ top               # Liste les processus actif interactivement
 ## Priorité des processus (1/2)
 
 - Il est possible de régler la priorité d'execution d'un processus
-- "Gentillesse" (*niceness*) entre -20 et 19
-    - -20 : priorité la plus élevée
-    - 19 : priorité la plus basse
+- "Gentillesse" (_niceness_) entre -20 et 19
+  - -20 : priorité la plus élevée
+  - 19 : priorité la plus basse
 - Seul les process du kernel peuvent être "méchant"
-    - niceness négative, et donc les + prioritaires
+  - niceness négative, et donc les + prioritaires
 
 ---
 
@@ -1369,6 +1321,7 @@ renice <modif> <PID>       # Modifier la priorité d'un process
 ```
 
 Exemples :
+
 ```bash
 # Lancer une création d'archive avec une priorité faible
 nice 5 tar -cvzf archive.tar.gz /home/
@@ -1416,9 +1369,7 @@ pkill -9 java
 
 # 7. Processus
 
-
-![](img/dontsigkill.png)
-
+![](../../images/dontsigkill.png)
 
 ---
 
@@ -1434,9 +1385,7 @@ pkill -9 java
 4. La commande lancée continue à s'executer
 5. On peut revenir dans la session plus tard avec `screen -r`
 
->>>
-
-
+> > >
 
 # 8. Personnaliser son environnement
 
@@ -1446,7 +1395,7 @@ pkill -9 java
 
 ## Variables d'envionnement
 
-Lorsque vous êtes dans un shell, il existe des *variables d'environnement* qui définissent certains comportements.
+Lorsque vous êtes dans un shell, il existe des _variables d'environnement_ qui définissent certains comportements.
 
 Par exemple, la variable 'HOME' contient `/home/padawan` et corresponds à l'endroit où `cd` retourne par défaut (si pas de dossier donné en argument)
 
@@ -1469,7 +1418,6 @@ Exemple :
 ```
 HOME=/tmp/
 ```
-
 
 ---
 
@@ -1550,4 +1498,4 @@ On peut connaître les alias existants avec juste `alias`
 - Par exemple, des alias à définir ou des variables à changer...
 - Pour appliquer les modifications, il faut faire `source ~/.bashrc`
 
-Autres fichiers de profils : `~/.profile` et `/etc/bash_profile` 
+Autres fichiers de profils : `~/.profile` et `/etc/bash_profile`
