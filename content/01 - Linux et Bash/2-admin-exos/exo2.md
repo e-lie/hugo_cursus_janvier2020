@@ -1,4 +1,7 @@
-# Administration Linux - feuille d'exercice n.2
+---
+title: Administration Linux - feuille d'exercice n.2
+draft: true
+---
 
 # 3 - Notions de réseau
 

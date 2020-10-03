@@ -1,4 +1,7 @@
-# Administration Linux - feuille d'exercice n.5
+---
+title: Administration Linux - correction exos n°5
+draft: true
+---
 
 ## 8 - Tâches automatiques avec `cron` et `at`
 
@@ -6,11 +9,9 @@
 
 ```html
 <html>
-
-Hello world
-<br>
-<img src="CHEMIN_IMAGE">
-
+  Hello world
+  <br />
+  <img src="CHEMIN_IMAGE" />
 </html>
 ```
 
@@ -36,13 +37,14 @@ Il suffit ensuite de trouver et télécharger 10 images de chatons nommées `kit
 
 ```html
 <html>
-This is the monitoring page !<br>
-<br>
-Today is DATE<br>
-The server is up since UP_SINCE <br>
-There is RAM_FREE RAM free out of RAM_TOTAL total RAM.<br>
-Here is a report of the recently banned IPs :<br>
-FAIL2BAN_REPORT
+  This is the monitoring page !<br />
+  <br />
+  Today is DATE<br />
+  The server is up since UP_SINCE
+  <br />
+  There is RAM_FREE RAM free out of RAM_TOTAL total RAM.<br />
+  Here is a report of the recently banned IPs :<br />
+  FAIL2BAN_REPORT
 </html>
 ```
 
@@ -69,6 +71,7 @@ cat monitoring_template.html \
 ```
 
 ce script peut être transformé en tâche Cron, par exemple avec cette syntaxe qui le lancera toutes les 10 minutes pendant les jours de travail :
+
 ```bash
   */10 *   *   *   1-5    bash /var/www/mywebsite/monitoring.sh
 ```
