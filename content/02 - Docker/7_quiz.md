@@ -1,14 +1,13 @@
 ---
-title: 'QCM Docker'
-visible: true
+title: "QCM Docker"
+draft: true
 ---
 
-##### Prénom : __________________________________
-##### Nom    : __________________________________
+<!-- ##### Prénom : ****************\_\_****************
 
+##### Nom : ****************\_\_**************** -->
 
 #### Entourez la bonne réponse.
-
 
 **Question 1**
 
@@ -20,7 +19,7 @@ Quelle est la principale différence entre une machine virtuelle (VM) et un cont
 
 **Question 2**
 
-En quoi Docker permet de faire de l'*Infrastructure as Code* ?
+En quoi Docker permet de faire de l'_Infrastructure as Code_ ?
 
 1. Comme Ansible, Docker se connecte en SSH à un Linux pour décrire des configurations.
 2. Docker permet avec les Dockerfiles et les fichiers Compose de décrire l'installation d'un logiciel et sa configuration.
@@ -30,7 +29,7 @@ En quoi Docker permet de faire de l'*Infrastructure as Code* ?
 Quels sont les principaux atouts de Docker ?
 
 1. Il permet de rendre compatible tous les logiciels avec le cloud (AWS, etc.) et facilite l'IoT.
-2. Il utilise le langage Go qui est de plus en plus populaire et accélère les logiciels qui l'utilise. 
+2. Il utilise le langage Go qui est de plus en plus populaire et accélère les logiciels qui l'utilise.
 3. Il permet d'uniformiser les déploiements logiciels, il est léger en ressources, et facilite la construction d'application distribuées.
 
 **Question 4**
@@ -57,12 +56,11 @@ Comment configurer de préférence un conteneur à sa création (lancement avec 
 
 **Question 7**
 
-Un *Compose file* ou fichier Compose permet :
+Un _Compose file_ ou fichier Compose permet :
 
 1. D'installer Docker facilement sur des VPS et de contrôler un cluster.
 2. D'alléger les images et de détecter les failles de sécurité dans le packaging d'une application.
 3. De décrire une application multiconteneurs, sa configuration réseau et son stockage.
-
 
 **Question 8**
 

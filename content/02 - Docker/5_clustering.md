@@ -1,15 +1,5 @@
 ---
-title: Conteneurs Docker
----
-
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
-
----
-
-# Orchestration et clustering
-
+title: Orchestration et clustering
 ---
 
 # Docker Machine

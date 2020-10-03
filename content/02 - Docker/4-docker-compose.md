@@ -1,5 +1,5 @@
 ---
-title: "Docker 4 - Créer une application multiconteneur"
+title: "Créer une application multiconteneur"
 visible: true
 ---
 

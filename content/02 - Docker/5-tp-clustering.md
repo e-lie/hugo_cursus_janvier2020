@@ -1,4 +1,6 @@
-## TP : Orchestration avec Docker Swarm
+---
+title: TP - Orchestration et clustering
+---
 
 - Cloner l'application exemple ici : [https://gitlab.com/e-lie/getstarted_docker.git](https://gitlab.com/e-lie/getstarted_docker.git)
 - En suivant le [guide Docker de découverte de Swarm à partir de la partie 4](https://docs.docker.com/get-started/part4/), créez un fichier docker-compose qui package l'application exemple avec un container redis joignable via le hostname `redis` et le port 6379.

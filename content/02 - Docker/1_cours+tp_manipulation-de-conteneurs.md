@@ -1,15 +1,5 @@
 ---
-title: Conteneurs Docker
----
-
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
-
----
-
-# Installation et prise en main
-
+title: Manipulation des conteneurs
 ---
 
 # Terminologie et concepts fondamentaux

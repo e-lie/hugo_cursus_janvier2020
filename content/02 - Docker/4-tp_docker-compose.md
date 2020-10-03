@@ -1,16 +1,15 @@
 ---
-title: 'Docker 4 - Créer une application multiconteneur'
+title: "TP - Créer une application multiconteneur"
 visible: true
 ---
-
 
 ## Articuler deux images avec Docker compose
 
 - Vérifiez que docker-compose est bien installé avec `sudo apt-get install docker-compose`.
 - A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
-  
+
 ```yml
-version: '2'
+version: "2"
 services:
   identidock:
     build: .
@@ -23,6 +22,7 @@ services:
 ```
 
 - Plusieurs remarques :
+
   - la première ligne déclare le conteneur de notre application
   - les lignes suivantes permettent de décrire comment lancer notre conteneur
   - `build: .` d'abord l'image d'origine de notre conteneur est le résultat de la construction du répertoire courant
@@ -36,10 +36,10 @@ services:
 - Visitez la page web.
 - Essayez de modifier l'application et de recharger la page web. Voilà comment, grâce à un volume on peut développer sans reconstruire l'image à chaque fois !
 
-- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose ***(attention aux indentations !)*** :
+- Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
 
 ```yml
-version: '2'
+version: "2"
 services:
   identidock:
     build: .
@@ -59,11 +59,10 @@ services:
 
 Cette fois plutôt de construire l'image, nous indiquons simplement comment la récupérer sur le Docker Hub. Nous ajoutons également un lien qui indique à Docker de configurer le réseau convenablement.
 
-
 - Ajoutons également un conteneur redis, la base de données qui sert à mettre en cache les images et à ne pas les recalculer à chaque fois :
 
 ```yml
-version: '2'
+version: "2"
 services:
   identidock:
     build: .
@@ -84,7 +83,7 @@ services:
     image: redis:3.0
 ```
 
-- Et un deuxième lien `- redis`  ***(attention aux indentations !)***.
+- Et un deuxième lien `- redis` **_(attention aux indentations !)_**.
 
 - Créez un deuxième fichier compose `docker-compose.prod.yml` pour lancer l'application en configuration de production.
 
@@ -92,20 +91,17 @@ services:
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`. Ainsi que [la documentation du langage (DSL) des Compose files](https://docs.docker.com/compose/compose-file/).
 
-
-
 ## TP 2 : Déployons du nginx et des journaux distribués avec la stack ELK
 
 On se propose ici d'essayer de déployer plusieurs conteneurs nginx.
 
 - A partir de cette [stack d'exemple](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512) trouvez comment installer `filebeat` pour récupérer les logs de nginx et les envoyer à un Elasticsearch (décrire sur papier comment faire avant).
-  
 - Ajoutez un Kibana pour explorer nos logs qui sont dans Elasticsearch.
-
 
 ---
 
 <!-- TODO: wave-ify code -->
+
 ```yaml
 version: "3"
 
@@ -152,8 +148,6 @@ services:
     networks:
       - logging-network
 
-
-
   # httpd:
   #   image: httpd:latest
   #   depends_on:
@@ -174,7 +168,7 @@ networks:
 ```
 
 ```yaml
-version: '2.2'
+version: "2.2"
 services:
   es01:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
@@ -245,9 +239,8 @@ networks:
   elastic:
     driver: bridge
 ```
+
 ---
-  
 
 <!-- Pour les gens en avance :
  Enfin, créez un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers)  (à partir du tag git `v0.18`) avec MySQL et Elasticsearch. Puis, centralisez les logs grâce à des tags filebeat -->
-

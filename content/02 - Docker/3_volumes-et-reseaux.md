@@ -1,11 +1,5 @@
 ---
-title: Conteneurs Docker
----
-
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
-
+title: Volumes et réseaux
 ---
 
 # Volumes et réseau

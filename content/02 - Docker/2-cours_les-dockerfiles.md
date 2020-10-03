@@ -1,15 +1,5 @@
 ---
-title: Conteneurs Docker
----
-
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
-
----
-
-# Images et conteneurs
-
+title: Images et conteneurs
 ---
 
 # Créer une image en utilisant un Dockerfile

@@ -1,8 +1,6 @@
 ---
-title: Conteneurs Docker
+title: Introduction à Docker
 ---
-
-# Conteneurs Docker
 
 ## _Modularisez et maîtrisez vos applications_
 
