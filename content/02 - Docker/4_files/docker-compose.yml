@@ -1,0 +1,10 @@
+version: '2'
+services:
+  identidock:
+    build: .
+    ports:
+      - "9090:9090"
+    environment:
+      ENV: DEV
+    volumes:
+      - ./app:/app

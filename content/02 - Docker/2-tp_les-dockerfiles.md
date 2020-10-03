@@ -1,25 +1,22 @@
 ---
 title: Conteneurs Docker
-class: animation-fade
-layout: true
 ---
 
 # TP time!
 
-
-
 ## I – Découverte d'une application web flask
 
 - Récupérez d’abord une application Flask exemple en la clonant sur le Bureau :
+
 ```bash
 git clone https://github.com/miguelgrinberg/microblog/
 ```
+
 - Déplacez-vous dans le dossier `microblog`
 
 - Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2`
-   
 - Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran.
-   
+
 <!-- - Pour la tester d’abord en local (sans conteneur) nous avons besoin des outils python. Vérifions s'ils sont installés :
     `sudo apt install python-pip python-dev build-essential` -->
 
@@ -34,9 +31,9 @@ git clone https://github.com/miguelgrinberg/microblog/
 <!-- - Maintenant nous pouvons tester l’application en local avec la commande : `flask run` -->
 
 <!-- - Visitez l’application dans le navigateur à l’adresse indiquée. -->
-    
+
 - Observons le code dans VSCode. Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ?
- 
+
 - Changez le prénom Miguel par le vôtre dans l’application.
 <!-- - Relancez l'app flask et testez la modification en rechargeant la page. -->
 
@@ -48,16 +45,14 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 
 - Dans le dossier du projet ajoutez un fichier nommé `Dockerfile`
 
--  Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre conteneur de base est le conteneur officiel Ubuntu.
-   
+- Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre conteneur de base est le conteneur officiel Ubuntu.
 - Nous pouvons déjà contruire un conteneur à partir de ce modèle Ubuntu vide :
-   `docker build -t microblog .`
+  `docker build -t microblog .`
 
 - Une fois la construction terminée lancez le conteneur.
-   
--  Le conteneur s’arrête immédiatement. En effet il ne contient aucune commande bloquante et nous n'avons précisé aucune commande au lancement. Pour pouvoir observer le conteneur convenablement il fautdrait faire tourner quelque chose à l’intérieur. Ajoutez à la  fin du fichier la ligne :
-   `CMD ["/bin/sleep", "3600"]`
-   Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
+- Le conteneur s’arrête immédiatement. En effet il ne contient aucune commande bloquante et nous n'avons précisé aucune commande au lancement. Pour pouvoir observer le conteneur convenablement il fautdrait faire tourner quelque chose à l’intérieur. Ajoutez à la fin du fichier la ligne :
+  `CMD ["/bin/sleep", "3600"]`
+  Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
 
 - Reconstruisez le conteneur et relancez-le
 
@@ -68,18 +63,19 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
 
 - Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour isoler une application. Il faut maintenant ajouter notre application flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
-    - `RUN apt-get update -y`
-    - `RUN apt-get install -y python-pip python-dev build-essential`
+
+  - `RUN apt-get update -y`
+  - `RUN apt-get install -y python-pip python-dev build-essential`
 
 - Reconstruisez votre conteneur. Si tout se passe bien, poursuivez.
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
-    - `RUN pip install flask`
-    - `ENV FLASK_APP microblog.py`
-
+  - `RUN pip install flask`
+  - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
+
 ```Dockerfile
 COPY . /app
 WORKDIR /app
@@ -95,7 +91,7 @@ flask run -h 0.0.0.0
 ```
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile :
-  
+
 ```Dockerfile
 RUN chmod +x boot.sh
 ENTRYPOINT ["./boot.sh"]
@@ -131,12 +127,13 @@ ENTRYPOINT ["./boot.sh"]
 <!-- - Le shell par défaut de Docker est `SHELL ["/bin/sh", "-c"]`. Cependant ce shell a certains comportement inhabituels et la commande de construction **n'échoue pas forcément** si une commande s'est mal passée. Dans une optique d'intégration continue, pour rendre la modification ultérieure de l'image plus sûre ajoutez au début (en dessous des `LABEL`) `SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]`.
 
 - Pour autant, le shell bash est non standard sur docker. Pour ne pas perturber les utilisateurs de l'image qui voudraient lancer des commande il peut être intéressant de rebasculer sur `sh` à la fin de la construction. Ajoutez à l'avant dernière ligne: `SHELL ["/bin/sh", "-c"]` -->
-  
+
 - Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
   - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
   - Il s'agit d'une arborescence.
 
 <!-- - Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive` -->
+
 - Trouvez la commande pour pousser l'image `microblog` sur le Docker Hub. Créez un compte le cas échéant.
 
 - Affichez la liste des images présentes dans votre Docker Engine.
@@ -147,16 +144,13 @@ ENTRYPOINT ["./boot.sh"]
 
 <!-- - Committez les modifications de votre dépôt avec `git` (faire le commit en local est suffisant). -->
 
-
-
-- **Facultatif :** Vous pouvez aussi tentez de configurer votre propre registry dans un conteneur et poussez l'image dessus. 
-
+- **Facultatif :** Vous pouvez aussi tentez de configurer votre propre registry dans un conteneur et poussez l'image dessus.
 
 ## Une application Flask qui se connecte à `redis`
 
-- Démarrez un nouveau projet dans VSCode (créez un dossier appelé `identidock` et chargez-le avec la fonction *Add folder to workspace*)
+- Démarrez un nouveau projet dans VSCode (créez un dossier appelé `identidock` et chargez-le avec la fonction _Add folder to workspace_)
 - Dans un sous-dossier `app`, ajoutez une petite application python en créant ce fichier `identidock.py` :
-  
+
 ```python
 from flask import Flask, Response, request
 import requests
@@ -207,10 +201,7 @@ if __name__ == '__main__':
 
 ```
 
-
-
 - `uWSGI` est un serveur python de production très adapté pour servir notre serveur intégré Flask, nous allons l'utiliser.
-
 
 - Dockerisons maintenant cette nouvelle application avec le Dockerfile suivant :
 
@@ -224,7 +215,7 @@ RUN pip install Flask uWSGI requests redis
 WORKDIR /app
 COPY app/identidock.py /app
 
-EXPOSE 9090 9191 
+EXPOSE 9090 9191
 USER uwsgi
 CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
 "--callable", "app", "--stats", "0.0.0.0:9191"]
@@ -257,9 +248,7 @@ fi
 
 - Ajoutez une instruction pour copier le script de boot, le rendre exécutable, puis remplacez l'instruction `CMD` pour lancer le script de boot à la place.
 
-
 - Lançons le conteneur, puis le conteneur redis dont l'app a besoin.
-
 
 <!-- ## Faire parler la vache
 - Changez de répertoire et créez un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`. Indice : utilisez la commande `ENTRYPOINT`.

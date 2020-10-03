@@ -1,16 +1,15 @@
 ---
-title: 'QCM Docker'
+title: "QCM Docker"
 draft: true
 ---
 
-#### Pour répondre au questionnaire:
+<!-- #### Pour répondre au questionnaire: -->
 
-- Rédigez un email à eliegavoty at free.fr
-- Objet: `QCM Docker Janvier2020 <votre_prénom> <votre_nom>`
+<!-- - Objet: `QCM Docker Janvier2020 <votre_prénom> <votre_nom>`
 - Copier collez le texte des questions ci-dessous dans le mail
-- Ajoutez un `V` ou un `X` ou autre devant la ou les réponses que vous pensez être valides
-- Pour ce QCM il y a une seule bonne réponse par question
+- Ajoutez un `V` ou un `X` ou autre devant la ou les réponses que vous pensez être valides -->
 
+- Pour ce QCM il y a une seule bonne réponse par question
 
 **Question 1**
 
@@ -33,7 +32,7 @@ En quoi Docker permet de faire de l'infrastructure as code ?
 Quel sont les principaux atouts de Docker
 
 1. Il permet de rendre compatible tous les logiciels avec le cloud (aws etc.) et facilite l'IOT.
-1. Il utilise le langage go qui est de plus en plus populaire et accélère les logiciels qui l'utilise. 
+1. Il utilise le langage go qui est de plus en plus populaire et accélère les logiciels qui l'utilise.
 1. Il permet d'uniformiser les déploiement logiciels, il est léger en ressources, et facilite la construction d'application distribuées.
 
 **Question 4**
@@ -68,14 +67,13 @@ Un compose file permet :
 1. Alléger les images et détecter les failles de sécurités dans le packaging d'une application.
 1. De décrire une application multiconteneurs et sa configuration réseau et stockage.
 
-
-**Question 8**
+<!-- **Question 8**
 
 La philosophie de Docker à la différence d'Ansible est basé sur :
 
 1. L'immutabilité c'est à dire le fait de jeter et recréer un conteneur pour le changer plutôt que d'aller modifier l'intérieur.
 1. L'idempotence c'est à dire la possibilité de répéter les modifications sans casser la configuration.
-1. Le cloud c'est à dire la vente de plateforme et de logiciel "as a service".
+1. Le cloud c'est à dire la vente de plateforme et de logiciel "as a service". -->
 
 **Question 9**
 

@@ -1,16 +1,12 @@
 ---
 title: Conteneurs Docker
-class: animation-fade
-layout: true
 ---
-
 
 # Conteneurs Docker
-## *Modularisez et maîtrisez vos applications*
+
+## _Modularisez et maîtrisez vos applications_
 
 ---
-
-class: impact
 
 # Installation et prise en main
 
@@ -73,7 +69,7 @@ Choisir une édition :
 ---
  -->
 
-<!-- 
+<!--
 # L'environnement de développement
 
 
@@ -85,39 +81,38 @@ Choisir une édition :
 
 - VirtualBox pour lancer des VM
 
-- Vagrant pour piloter VirtualBox simplement depuis un fichier et en ligne de commande 
+- Vagrant pour piloter VirtualBox simplement depuis un fichier et en ligne de commande
 
 ---
 
 -->
 
-
 # Installer Docker sur Windows ou MacOS
 
 Docker est basé sur le noyau Linux :
-- En **production** il fonctionne nécessairement sur un **Linux** (virtualisé ou *bare metal*)
+
+- En **production** il fonctionne nécessairement sur un **Linux** (virtualisé ou _bare metal_)
 - Pour **développer et déployer**, il marche parfaitement sur **MacOS** et **Windows** mais avec une méthode de **virtualisation** :
   - virtualisation optimisée via un hyperviseur
   - ou virtualisation avec logiciel de virtualisation "classique" comme VMWare ou VirtualBox.
 
 ---
 
-
 # Installer Docker sur Windows
 
 Trois possibilités :
 
-- Solution *legacy* : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
+- Solution _legacy_ : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
   - Change légèrement le workflow par rapport à la version Linux native
   - Marche sur les "vieux" Windows (sans hyperviseur)
   - Utilise une VM Linux avec bash
-  
----
 
+---
 
 # Installer Docker sur Windows
 
 Trois possibilités:
+
 - Solution Windows : on utilise **Docker Desktop for Windows**:
   - Fonctionne avec Hyper-V (l'hyperviseur optimisé de Windows)
   - Casse VirtualBox/VMWare (incompatible avec la virtualisation logicielle)
@@ -125,10 +120,10 @@ Trois possibilités:
 
 ---
 
-
 # Installer Docker sur Windows
 
 Trois possibilités:
+
 - Solution Linux : on utilise **Docker Engine** dans une VM Linux
   - Utilise une VM Linux avec bash
   - Workflow identique à celui d'un serveur Linux
@@ -139,44 +134,41 @@ On va utiliser ça :)
 ---
 
 # Installer Docker sous MacOS
-- Solution *legacy* avec VM possible
+
+- Solution _legacy_ avec VM possible
 - Solution standard : on utilise **Docker Desktop for MacOS** (fonctionne avec la bibliothèque HyperKit qui fait de l'hypervision)
 
 ---
-
 
 # Installer Docker sur Linux
 
 Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau du système natif.
 
-- On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version est souvent trop ancienne (à part sous Arch Linux)
---
+- ## On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version est souvent trop ancienne (à part sous Arch Linux)
 
-- Sur **Ubuntu** ou **CentOS** la méthode conseillée est d'utiliser les paquets fournis dans le dépôt officiel Docker (vous pouvez avoir des surprises avec la version *snap* d'Ubuntu).
+- Sur **Ubuntu** ou **CentOS** la méthode conseillée est d'utiliser les paquets fournis dans le dépôt officiel Docker (vous pouvez avoir des surprises avec la version _snap_ d'Ubuntu).
   - Il faut pour cela ajouter le dépôt et les signatures du répertoire de packages Docker.
   - Documentation Ubuntu : https://docs.docker.com/install/linux/docker-ce/ubuntu/
-
 
 ---
 
 # Allons-y, installons Docker !
 
-
 ## Importez une machine Linux
 
 - Récupérez une machine virtualbox ubuntu (18.04)
 
-- *(facultatif)* Configurez-la avec 6 Go de RAM et 2 processeurs
-  
+- _(facultatif)_ Configurez-la avec 6 Go de RAM et 2 processeurs
 - Démarrez la machine
-  
+
 <!-- - Faites les mises à jour via le Terminal (`apt update` et `apt upgrade`) -->
 
-- Installez VSCode avec la commande suivante : 
+- Installez VSCode avec la commande suivante :
+
 ```bash
 sudo snap install --classic code
 ```
-  
+
 - En ligne de commande installez `htop`
 
 ## Installer Docker sur Ubuntu
@@ -186,12 +178,14 @@ sudo snap install --classic code
 - Vérifiez l'installation en lançant `sudo docker run hello-world`. Cela devrait afficher les étapes effectuées pour afficher ce message.
 
 - Il manque les droits à l'utilisateur pour exécuter docker.
+
   - Le daemon tourne toujours en `root`
   - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
   - Ajoutez-le au groupe avec la commande `usermod -aG <groupe> <user>` (en remplaçant `<groupe>` et `<user>` par ce qu'il faut)
   - déconnectez-vous de votre session **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)** puis reconnectez-vous pour que la modification sur vos droits utilisateur prenne effet
 
-- Pour vous faciliter la vie, ajoutez le plugin *autocomplete* pour Docker et Docker Compose à `bash` en copiant  les commandes suivantes :
+- Pour vous faciliter la vie, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
+
 ```bash
 sudo apt update
 sudo apt install bash-completion curl
@@ -199,6 +193,7 @@ sudo mkdir /etc/bash_completion.d/
 sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh
 sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 ```
+
 Vous pouvez désormais appuyer sur la touche <TAB> pour utiliser l'autocomplétion quand vous écrivez des commandes Docker
 
 - Relancez la session en quittant le terminal et en en relançant un
@@ -236,7 +231,7 @@ docker image ls
 
 ---
 
-# Commandes Docker 
+# Commandes Docker
 
 Docker fonctionne avec des sous-commandes et propose de grandes quantités d'options pour chaque commande.
 
@@ -250,17 +245,17 @@ docker image --help
 
 # Créer et lancer un conteneur
 
-- Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
---
+- ## Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
+
 ```bash
 docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 ```
+
 > créé et lance le conteneur
 
-**L'ordre des arguments est important !**
---
-- Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`
---
+## **L'ordre des arguments est important !**
+
+- ## Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`
 - On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom**, de **port** ou de **volumes**.
 
 ---
@@ -268,11 +263,11 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 # Options docker run
 
 - Les options facultatives indiquées ici sont très courantes.
-  - `-d` permet* de lancer le conteneur en mode **daemon** ou **détaché** et libérer le terminal
-  - `-p` permet de mapper un *port réseau* entre l'intérieur et l'extérieur du conteneur, typiquement lorsqu'on veut accéder à l'application depuis l'hôte.
-  - `-v` permet de monter un *volume* partagé entre l'hôte et le conteneur.
-  - `--rm` (comme *remove*) permet de supprimer le conteneur dès qu'il s'arrête.
-  - `-it` permet de lancer une commande en mode *interactif* (un terminal comme `bash`).
+  - `-d` permet\* de lancer le conteneur en mode **daemon** ou **détaché** et libérer le terminal
+  - `-p` permet de mapper un _port réseau_ entre l'intérieur et l'extérieur du conteneur, typiquement lorsqu'on veut accéder à l'application depuis l'hôte.
+  - `-v` permet de monter un _volume_ partagé entre l'hôte et le conteneur.
+  - `--rm` (comme _remove_) permet de supprimer le conteneur dès qu'il s'arrête.
+  - `-it` permet de lancer une commande en mode _interactif_ (un terminal comme `bash`).
   - `-a` (ou `--attach`) permet de se connecter à l'entrée-sortie du processus dans le container.
 
 ---
@@ -299,7 +294,6 @@ docker run debian echo 'attendre 10s' && sleep 10 # s'arrête après 10s
 
 `docker run` créé un nouveau conteneur à chaque fois.
 
-
 ```bash
 docker stop <nom_ou_id_conteneur> # ne détruit pas le conteneur
 docker start <nom_ou_id_conteneur> # le conteneur a déjà été créé
@@ -310,14 +304,11 @@ docker start --attach <nom_ou_id_conteneur> # lance le conteneur et s'attache à
 
 # Isolation des conteneurs
 
-- Les conteneurs sont plus que des processus, ce sont des boîtes isolées grâce aux **namespaces** et **cgroups**
---
+- ## Les conteneurs sont plus que des processus, ce sont des boîtes isolées grâce aux **namespaces** et **cgroups**
 
-- Depuis l'intérieur d'un conteneur, on a l'impression d'être dans un Linux autonome.
---
+- ## Depuis l'intérieur d'un conteneur, on a l'impression d'être dans un Linux autonome.
 
-- Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID normaux mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les *user namespaces*.
---
+- ## Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID normaux mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les _user namespaces_.
 
 <!-- - Malgré l'isolation il est possible d'exploiter des failles de configuration pour s'échapper d'un conteneur
 - => il faut faire attention à ne pas lancer les applications en `root` à l'intérieur des conteneurs Docker et/ou à utiliser les *user namespaces* -->
@@ -343,13 +334,12 @@ Commandes utiles :
 Mentalité :
 ![](images/changingThings.jpg)
 
-
-
 ## Manipuler un conteneur
 
 A l'aide du cours et de `--help`, et en notant sur une feuille ou dans un fichier texte les commandes utilisées :
 
 <!-- - Lancez simplement un conteneur Debian en mode *attached*. Que se passe-t-il ? -->
+
 - Lancez un conteneur Debian (`docker run` puis les arguments nécessaires, cf. l'aide `--help`) en mode détaché avec la commande `echo "Debian container"`. Rien n'apparaît. En effet en mode détaché la sortie standard n'est pas connecté au terminal.
 - Affichez la liste des conteneurs tournants et arrêtés.
 - Lancez `docker logs` avec le nom ou l'id du conteneur. Vous devriez voir le résultat de la commande `echo` précédente.
@@ -365,31 +355,19 @@ A l'aide du cours et de `--help`, et en notant sur une feuille ou dans un fichie
 - Dans un nouveau terminal lancez `docker inspect <conteneur_debian>` (en rempaçant par le nom de votre conteneur Debian). Cette commande fournit plein d'informations utiles mais difficiles à lire.
 - Lancez-la à nouveau avec `| grep IPAddress` à la fin. Vous récupérez alors l'adresse du conteneur dans le réseau virtuel Docker.
 
-
 ---
-
-
-
-
-
-
 
 # Le processus de build Docker
 
+- ## Un image Docker ressemble un peu à une appliance VM car il s'agit d'un linux "freezé" dans un état.
 
-- Un image Docker ressemble un peu à une appliance VM car il s'agit d'un linux "freezé" dans un état.
---
+- ## En réalité c'est assez différent : il s'agit uniquement d'un système de fichier (par couches ou _layers_) et d'un manifeste JSON (des méta-données).
 
-- En réalité c'est assez différent : il s'agit uniquement d'un système de fichier (par couches ou *layers*) et d'un manifeste JSON (des méta-données).
---
-
-- Les images sont créés en empilant de nouvelles couches sur une image existante grâce à un système de fichiers qui fait du *union mount*.
-
+- Les images sont créés en empilant de nouvelles couches sur une image existante grâce à un système de fichiers qui fait du _union mount_.
 
 --
 
-- Chaque nouveau build génère une nouvelle image dans le répertoire des images (/var/lib/docker/images) (attention ça peut vite prendre énormément de place)
---
+- ## Chaque nouveau build génère une nouvelle image dans le répertoire des images (/var/lib/docker/images) (attention ça peut vite prendre énormément de place)
 
 - On construit les images à partir d'un fichier `Dockerfile` en décrivant procéduralement (étape par étape) la construction.
 
@@ -408,6 +386,7 @@ CMD ['sleep 1000']
 ```
 
 - La commande pour construire l'image est :
+
 ```
 docker build [-t tag] [-f dockerfile] <build_context>
 ```
@@ -415,7 +394,6 @@ docker build [-t tag] [-f dockerfile] <build_context>
 - généralement pour construire une image on se place directement dans le dossier avec le `Dockerfile` et les élements de contexte nécessaire (programme, config, etc)
 
 - exemple : `docker build -t mondebian .`
-
 
 ---
 
@@ -425,8 +403,7 @@ Une des forces de Docker vient de la distribution d'images :
 
 --
 
-- pas besoin de dépendances, on récupère une boîte autonome
---
+- ## pas besoin de dépendances, on récupère une boîte autonome
 
 - pas besoin de multiples versions en fonction des OS
 
@@ -438,17 +415,13 @@ Il s'agit d'un répertoire public et souvent gratuit d'images (officielles ou no
 
 ---
 
-# Docker Hub: 
+# Docker Hub:
 
-- On peut y chercher et trouver presque n'importe quel logiciel au format d'image Docker.
---
+- ## On peut y chercher et trouver presque n'importe quel logiciel au format d'image Docker.
 
-- Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
---
+- ## Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
 
-
-- Puis utiliser `docker run <id_image>:<version>`
---
+- ## Puis utiliser `docker run <id_image>:<version>`
 
 - On peut aussi juste télécharger l'image : `docker pull <image>`
 
@@ -458,17 +431,13 @@ On peut également y créer un compte gratuit pour pousser et distribuer ses pro
 
 ---
 
-
-
-
 ## Chercher sur Docker Hub
 
 - Visitez [hub.docker.com](https://hub.docker.com)
 - Cherchez l'image de Wordpress et téléchargez la dernière version (`pull`).
-- Lancez Wordpress et tentez d'y accéder via `localhost:80`. Quel est le problème ? *Facultatif :* Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
+- Lancez Wordpress et tentez d'y accéder via `localhost:80`. Quel est le problème ? _Facultatif :_ Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
   <!-- - *(facultatif)* Pour ouvrir le port a posteriori sur un conteneur existant, utilisez `docker commit` comme indiqué [sur ce post StackOverflow](https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container/26622041#26622041). -->
 - Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local (regarder dans la doc officielle ou dans les cours la syntaxe de l'option qui permet de configurer les ports). Notez que lorsque l'image est déjà téléchargée le lancement d'un conteneur est quasi instantané.
-
 
 <!-- ### MYSQL et les variables d'environnement
 
@@ -488,6 +457,7 @@ Depuis Ubuntu:
 docker volume create portainer_data
 docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 ```
+
 - Naviguez sur `localhost:9000`. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?

@@ -1,7 +1,5 @@
 ---
 title: Conteneurs Docker
-class: animation-fade
-layout: true
 ---
 
 class: middle
@@ -46,11 +44,11 @@ Ex-ingénieur sécurité / DevOps
 
 # Introduction
 
-## .center[![](images/Moby-logo.png)]
+## ![](images/Moby-logo.png)
 
 # Des conteneurs
 
-.col-6[.center[![](images/docker.png)]]
+.col-6[![](images/docker.png)]
 .col-5[
 
 - ## La métaphore docker : "box it, ship it"
@@ -115,7 +113,7 @@ server {
 On compare souvent les conteneurs aux machines virtuelles. Mais ce sont de grosses simplifications parce qu'on en a un usage similaire : isoler des programmes dans des "contextes".
 Une chose essentielle à retenir sur la différence technique : **les conteneurs utilisent les mécanismes internes du \_kernel de l'OS **Linux**\_ tandis que les VM tentent de communiquer avec l'OS (quel qu'il soit) pour directement avoir accès au matériel de l'ordinateur.**
 
-.col-8[.center[![](images/hyperv-vs-containers.png)]]
+.col-8[![](images/hyperv-vs-containers.png)]
 .col-4[
 
 - **VM** : une abstraction complète pour simuler des machines
@@ -420,6 +418,5 @@ Assez différent de l'administration système sur mesure (= méthode de résolut
 - **RKT** : un autre container engine développé par **container linux** avec une architecture un peu différente. permet de faire tourner des images docker
 
 - **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour Docker et rkt depuis 2016.
-
 
 ---
