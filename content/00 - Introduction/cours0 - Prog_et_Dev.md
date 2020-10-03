@@ -1,15 +1,7 @@
-title: Introduction au DevOps
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
 ---
-
-# {{title}}
+title: Introduction au DevOps
+draft: true
+---
 
 ## _La programmation et le développement _
 

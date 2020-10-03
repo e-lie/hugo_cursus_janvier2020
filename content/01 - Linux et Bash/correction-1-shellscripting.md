@@ -1,19 +1,24 @@
+---
+draft: true
+---
+
 # Feuille d'exercices n.2
 
 ### 8. Personnaliser son environnement
 
-- 8.1 : Un exemple de personnalisation de PS1 est : 
+- 8.1 : Un exemple de personnalisation de PS1 est :
 
 ```bash
 PS1="[\033[01;32m\u on \h\033[0m:\033[01;34m\w\033[0m] \n> "
 ```
 
 - 8.2 : Ajouter la ligne précédente en bas de `~/.bashrc` à l'aide de nano puis recharger avec `source ~/.bashrc`
-- 8.3 : Même chose que 8.2 mais en rajoutant une ligne comme : 
+- 8.3 : Même chose que 8.2 mais en rajoutant une ligne comme :
 
 ```bash
 echo "May the source be with you
 ```
+
 - 8.4 : Ouvrir `/root/.bashrc` avec nano (et possiblement sudo) puis rajouter une ligne pour modifier le PS1, comme :
 
 ```bash
@@ -34,9 +39,9 @@ PS1="[\033[01;31m\u on \h\033[0m:\033[01;34m\w\033[0m] \n> "
 - 9.2 : `ls /usr/bin/ > files.tmplist` puis `less files.tmplist`
 - 9.3 : (depuis votre home) `mkdir ./dev; mkdir ./dev/bash; echo "Je fais du bash !" > ./dev/bash/intro`
 - 9.4 : `ls /undossier >/dev/null 2>&1 && echo "J'ai le droit !" || echo "J'ai pas le droit !" `
-- 9.5 : Mettre des calculs comme `6*7` ligne par ligne dans un fichier comme `calc.txt` puis lancer `bc < calc.txt`. On peut aussi faire `bc <<< "6*7"` 
+- 9.5 : Mettre des calculs comme `6*7` ligne par ligne dans un fichier comme `calc.txt` puis lancer `bc < calc.txt`. On peut aussi faire `bc <<< "6*7"`
 - 9.6 : `curl -L fr.wikipedia.org > wikipedia.html >/dev/null 2>&1 || echo "ça n'a pas marché !"`
-- 9.7 : 
+- 9.7 :
 
 ```bash
 touch /tmp/chat
@@ -75,7 +80,7 @@ groups | grep -q sudo && echo "oui!" || echo "non :'("
 - 9.16 : Les lignes vides correspondent à `^$` (début de ligne suivi de fin de ligne) donc : `cat /etc/login.defs | grep -v "^$"` Pour enlever également les commentaires, on utilise un "ou" dans grep (`\|`), ce qui donne : `cat /etc/login.defs | grep -v "^$\|^#"`
 - 9.17 : Similaire à la question 9.14 : `who | grep -q r2d2 && echo "R2d2 est là !" || echo "Mais que fais r2d2 ?!"`
 - 9.18 : `ps -ef | grep -v "UID" | awk '{print $1}' | sort | uniq -c`
-- 9.19 : `cat loginattempts.log  | awk '{print $9}' | sort | uniq -c | sort -n`
+- 9.19 : `cat loginattempts.log | awk '{print $9}' | sort | uniq -c | sort -n`
 - 9.20 : Il s'agit d'un exercice un peu avancé avec plusieurs solutions possibles (qui ne sont pas trop robuste, mais peuvent dépanner). En voici une qui envoie les adresses des images dans un fichier `img.list` :
 
 ```bash
@@ -155,7 +160,7 @@ AGE=$(bc <<< "2018 - $ANNEE")
 echo "Tu as $AGE ans !"
 ```
 
-- 10.7 : Un exemple de solution est le script suivant (il est aussi possible de résoudre ce probleme plus facilement  lisiblement avec des "vraies" conditions) 
+- 10.7 : Un exemple de solution est le script suivant (il est aussi possible de résoudre ce probleme plus facilement lisiblement avec des "vraies" conditions)
 
 ```bash
 #!/bin/bash
@@ -346,7 +351,7 @@ function main()
 
     if [[ "$ISSUE" == "false" ]]
     then
-        success "L'utilisateur ne fait pas n'importe quoi :)" 
+        success "L'utilisateur ne fait pas n'importe quoi :)"
     else
         error "L'utilisateur a dépassé les limites !"
     fi

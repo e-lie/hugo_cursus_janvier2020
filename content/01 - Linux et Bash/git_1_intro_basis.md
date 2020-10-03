@@ -1,12 +1,5 @@
-title: Introduction Python et Git
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
+---
+title: Introduction Git
 ---
 
 # Git - première partie

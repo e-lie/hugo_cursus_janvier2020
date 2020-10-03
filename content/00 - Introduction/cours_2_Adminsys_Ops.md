@@ -1,13 +1,10 @@
-title: Introduction au DevOps
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
 ---
+title: Introduction au DevOps
+class: animation-fade
+draft: true
+---
+
+class: impact
 
 # {{title}}
 
@@ -76,7 +73,7 @@ il faut aussi **réparer les catastrophes**
 
 - ## Faire des _Rollback_ = rétablir la version précédente qui marchait
 
-- Etc. Et tout ça de temps en temps la nuit :D et stressé
+- Etc. Et tout ça généralement la nuit :D et stressé
 
 ---
 
@@ -100,11 +97,13 @@ La difficulté principale pour les Obs c'est qu'un système informatique est:
 
 - ## Les **évènements** qui se passe sur la machines sont **instantanés** et **invisibles**
 
-- ## L'**état actuel** de la machine n'est **pas ou peu explicite** (combien d'utilisateur, machine pas connectée au réseau par exemple.)
+- ## L'**état actuel** de la machine n'est **pas explicite** (combien d'utilisateur, machine pas connectée au réseau par exemple.)
 
 - Les **interractions entre des problèmes** peu graves peuvent entrainer des erreurs critiques en cascades.
 
 ---
+
+class: impact
 
 # Opérations = culture de la **prudence**
 
@@ -135,5 +134,11 @@ La difficulté principale pour les Obs c'est qu'un système informatique est:
 - ## Les Ops veulent pas déployer de nouvelles versions **trop souvent** car ça fait plein de boulot et ils prennent des risques (bugs / incompatilibités)
 
 - Quand c'est **mal organisé** ou qu'on va **trop vite** il y a des **catastrophes** possibles
+
+---
+
+class: impact
+
+# TP partie II
 
 ---

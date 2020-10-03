@@ -1,3 +1,7 @@
+---
+title: Rappels Linux
+---
+
 # 0. Les origines de (GNU/)Linux
 
 ## (ou plus largement de l'informatique actuelle)

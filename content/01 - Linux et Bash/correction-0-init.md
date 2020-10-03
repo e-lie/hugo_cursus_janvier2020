@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Correction des exercices
 
 ### 6. Permissions
@@ -20,7 +24,7 @@
 
 - 7.1 : Faire `sleep 30` puis Ctrl+Z et `bg` pour mettre la commande en arrière plan. Constater que vous pouvez de nouveau taper des commandes. Faire `jobs` dans les secondes qui suivent et constater que la commande est toujours 'Running'. Appuyer sur 'Entrée' régulièrement pendant les secondes qui suivent jusqu'à ce que 'Done' s'affiche.
 - 7.2 : Faire `sleep 30` puis Ctrl+Z et `bg` pour mettre la commande en arrière plan. Constatez que vous pouvez de nouveau taper des commandes. Avant que la commande ne se termine (au bout des 30 secondes), faire `fg` pour récupérer la main sur le `sleep` puis faites Ctrl+C.
-- 7.3 : Faire `sleep 30 &` et constater que vous pouvez taper des commandes. Noter aussi que la console a affiché le PID du programme correspondant au `sleep`. Utiliser ce PID pour tuer le programme avec `kill <PID>`. 
+- 7.3 : Faire `sleep 30 &` et constater que vous pouvez taper des commandes. Noter aussi que la console a affiché le PID du programme correspondant au `sleep`. Utiliser ce PID pour tuer le programme avec `kill <PID>`.
 - 7.4 : Lancer `sleep 700000` (par exemple) puis faire `ps -ef` dans un autre terminal et constater que le processus est bien listé (vous pouvez aussi utiliser 'top' et les fleches)
 - 7.5 : Dans le `ps -ef` utiliser précédemment, vous pouvez trouver le PPID (parent PID) à côté du PID. Vous pouvez regarder dans le reste de la liste pour checher le programme correspondant à ce PPID (apriori il s'apelle 'bash').
 - 7.6 - Connaissant le PID du parent, utiliser `kill <PID>` ou `kill -9 <PID>` pour tuer le shell. Vous devriez constater que la session est détruite.
@@ -34,18 +38,19 @@
 
 ### 8. Personnaliser son environnement
 
-- 8.1 : Un exemple de personnalisation de PS1 est : 
+- 8.1 : Un exemple de personnalisation de PS1 est :
 
 ```bash
 PS1="[\033[01;32m\u on \h\033[0m:\033[01;34m\w\033[0m] \n> "
 ```
 
 - 8.2 : Ajouter la ligne précédente en bas de `~/.bashrc` à l'aide de nano puis recharger avec `source ~/.bashrc`
-- 8.3 : Même chose que 8.2 mais en rajoutant une ligne comme : 
+- 8.3 : Même chose que 8.2 mais en rajoutant une ligne comme :
 
 ```bash
 echo "May the source be with you
 ```
+
 - 8.4 : Ouvrir `/root/.bashrc` avec nano (et possiblement sudo) puis rajouter une ligne pour modifier le PS1, comme :
 
 ```bash
@@ -59,4 +64,3 @@ PS1="[\033[01;31m\u on \h\033[0m:\033[01;34m\w\033[0m] \n> "
 - 8.7 : `alias r2d2="sudo su r2d2"` puis tester de taper `r2d2`.
 - 8.8 : Se renseigner sur Internet ;P (question un peu 'extra')
 - 8.9 : `alias ls="echo 'Pas envie'"`
-

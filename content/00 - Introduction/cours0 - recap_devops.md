@@ -1,12 +1,6 @@
+---
 title: Introduction au DevOps
-
-<!-- This slide will serve as the base layout for all your slides -->
-<!--
-.bottom-bar[
-  {{title}}
-]
--->
-
+draft: true
 ---
 
 # _La culture et la pratique du DevOps_

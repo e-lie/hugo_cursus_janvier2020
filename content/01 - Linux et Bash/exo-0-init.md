@@ -1,12 +1,16 @@
+---
+draft: true
+---
+
 # Feuille d'exercices
 
 ### 0. Création de la machine
 
 - Installer Virtualbox
 - Créer une machine virtuelle
-   - choisissez comme type Linux / Other-Linux (64 bit)
-   - 2048 Mo de RAM devraient suffir
-   - au moment de spécifier le disque dur virtuel, utiliser l'image OS Boxes Linux Mint (fichier VDI)
+  - choisissez comme type Linux / Other-Linux (64 bit)
+  - 2048 Mo de RAM devraient suffir
+  - au moment de spécifier le disque dur virtuel, utiliser l'image OS Boxes Linux Mint (fichier VDI)
 - Démarrer la machine
 
 ### 1. Démarrer et se logguer
@@ -14,22 +18,21 @@
 - Observer le démarrage de la machine
 - Au lieu de se connecter depuis l'interface graphique, utiliser l'interface tty (faire Ctrl+Alt+F2 ou F3, F4, ...)
 - Se logger depuis le tty
-   - login: osboxes.org
-   - password: osboxes.org
-   - (attention, il se peut que le clavier soit configuré en qwerty, on pourra y remédier sous l'interface graphique)
+  - login: osboxes.org
+  - password: osboxes.org
+  - (attention, il se peut que le clavier soit configuré en qwerty, on pourra y remédier sous l'interface graphique)
 
 ### 2. Premier contact avec la ligne de commande commandes
 
-- Changer le mot de passe en tapant `passwd` puis *Entrée* et suivre les instructions
-- Taper `pwd` puis *Entrée* et observer
-- Taper `ls` puis *Entrée* et observer
-- Taper `cd /var` puis *Entrée* et observer
-- Taper `pwd` puis *Entrée* et observer
-- Taper `ls` puis *Entrée* et observer
-- Taper `ls -l` puis *Entrée* et observer
-- Taper `echo 'Je suis dans la matrice'` puis *Entrée* et observer
+- Changer le mot de passe en tapant `passwd` puis _Entrée_ et suivre les instructions
+- Taper `pwd` puis _Entrée_ et observer
+- Taper `ls` puis _Entrée_ et observer
+- Taper `cd /var` puis _Entrée_ et observer
+- Taper `pwd` puis _Entrée_ et observer
+- Taper `ls` puis _Entrée_ et observer
+- Taper `ls -l` puis _Entrée_ et observer
+- Taper `echo 'Je suis dans la matrice'` puis _Entrée_ et observer
 
- 
 ### 3. La ligne de commande
 
 - 3.1 - Rendez-vous dans `/usr/bin` et listez le contenu du dossier
@@ -44,7 +47,7 @@
 - 3.10 - Se renseigner sur ce que fait la commande `free`, et interpreter la sortie de `free -h`
 - 3.11 - Se renseigner sur ce que fait la commande `ping` et interpreter la sortie de `ping 8.8.8.8`
 
-### 4. Le système de fichier 
+### 4. Le système de fichier
 
 - 4.1 - En utilisant `mkdir` et `touch`, créez dans votre répertoire personnel l'arborescence suivante :
 
@@ -64,11 +67,11 @@ documents/
 
 - 4.3 - Vérifiez que le contenu de ces fichiers a bien été modifié avec `cat`.
 - 4.4 - Affichez le contenu du fichier `/etc/os-release`
-- 4.4 - Aller dans `~/documents/notes_a_propos_des_commandes` puis, *en utilisant uniquement des chemins relatifs* et en vous aidant de la touche [Tab], déplacez-vous successivement vers :
-    - `~/documents/img`
-    - `/usr/share/doc/`
-    - `~/.nano`
-    - `~/documents/img`
+- 4.4 - Aller dans `~/documents/notes_a_propos_des_commandes` puis, _en utilisant uniquement des chemins relatifs_ et en vous aidant de la touche [Tab], déplacez-vous successivement vers :
+  - `~/documents/img`
+  - `/usr/share/doc/`
+  - `~/.nano`
+  - `~/documents/img`
 - 4.5 - Affichez le contenu de `/etc/motd` et `/etc/login.defs`
 - 4.6 - En utilisant `less`, checher `LOGIN_TIMEOUT` dans le fichier `/etc/login.defs`. Même chose, mais cette fois en utilisant `nano`.
 - 4.7 - Combien de ligne fait le fichier `/etc/login.defs` ?
@@ -138,5 +141,3 @@ documents/
 - 8.7 - Créer un alias `r2d2` qui permet d'ouvrir un shell en tant que `r2d2` avec `sudo` et `su`.
 - 8.8 - Se renseigner sur `LS_COLORS` et personnaliser cette variable.
 - 8.9 - En utilisant `echo`, comment faire pour faire en sorte que la commande 'ls' retourne systématiquement 'J'ai pas envie' au lieu de son comportement normal ?
-
-
