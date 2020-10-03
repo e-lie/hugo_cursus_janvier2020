@@ -1,5 +1,5 @@
 ---
-title: 'Docker Administration'
+title: "Docker"
 pre: "<i class='fab fa-docker'></i> - "
 weight: 3
 chapter: true

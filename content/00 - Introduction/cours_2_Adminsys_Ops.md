@@ -1,10 +1,8 @@
 ---
 title: Introduction au DevOps
-class: animation-fade
+
 draft: true
 ---
-
-class: impact
 
 # {{title}}
 
@@ -103,8 +101,6 @@ La difficulté principale pour les Obs c'est qu'un système informatique est:
 
 ---
 
-class: impact
-
 # Opérations = culture de la **prudence**
 
 ---
@@ -136,8 +132,6 @@ class: impact
 - Quand c'est **mal organisé** ou qu'on va **trop vite** il y a des **catastrophes** possibles
 
 ---
-
-class: impact
 
 # TP partie II
 

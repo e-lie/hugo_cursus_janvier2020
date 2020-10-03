@@ -19,7 +19,7 @@ Deux concepts centraux :
 - Une **image** : un modèle pour créer un conteneur.
 - Un **conteneur** : l'instance qui tourne sur la machine.
 
-![](images/docker-components.png)
+![](../../images/docker-components.png)
 
 Autres concepts primordiaux :
 
@@ -33,7 +33,7 @@ Autres concepts primordiaux :
 
 ## Daemon - Client - images - registry
 
-![](images/archi1.png)
+![](../../images/archi1.png)
 
 ---
 
@@ -216,7 +216,7 @@ docker ps -a # affiche  également les conteneurs arrêtés
 
 # Les images et conteneurs
 
-![](images/docker-cycle.jpg)
+![](../../images/docker-cycle.jpg)
 **Docker** possède à la fois un module pour lancer les applications (runtime) et un **outil de build** d'application.
 
 - Une image est le **résultat** d'un build :
@@ -332,7 +332,7 @@ docker exec -it <conteneur> /bin/bash
 Commandes utiles :
 
 Mentalité :
-![](images/changingThings.jpg)
+![](../../images/changingThings.jpg)
 
 ## Manipuler un conteneur
 

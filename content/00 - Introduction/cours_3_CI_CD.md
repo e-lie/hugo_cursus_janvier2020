@@ -1,11 +1,9 @@
 ---
 title: Automatisation DevOps
-class: animation-fade
+
 layout: true
 draft: true
 ---
-
-class: impact
 
 # {{title}}
 
@@ -204,8 +202,6 @@ ansible_become_password=el4stic%
   - _file_, _apt_, _systemd_
 
 ---
-
-class: impact
 
 # TP !
 

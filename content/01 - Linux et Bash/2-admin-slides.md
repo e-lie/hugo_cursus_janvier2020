@@ -2,8 +2,6 @@
 title: Administration Linux
 ---
 
-<!-- class: impact -->
-
 # Administration Linux
 
 ---
@@ -41,8 +39,6 @@ title: Administration Linux
 8. Automatiser avec `at` et les cron jobs
 
 ---
-
-<!-- class: impact -->
 
 <!-- # 1. Installer une distribution
 

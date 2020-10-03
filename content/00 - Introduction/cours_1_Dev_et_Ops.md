@@ -1,11 +1,7 @@
 ---
 title: Introduction au DevOps
-class: animation-fade
-layout: true
 draft: true
 ---
-
-class: impact
 
 # {{title}}
 
@@ -161,7 +157,5 @@ Il faut toujours des gens pour s'occuper des machines.
 ## ... Pour que le cours de conclusion soit pas trop abstraite
 
 ---
-
-class: impact
 
 # TP partie I)

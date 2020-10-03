@@ -1,7 +1,7 @@
 ---
 draft: true
 title: Introduction au DevOps
-class: animation-fade
+
 layout: true
 ---
 
@@ -58,8 +58,6 @@ layout: true
 - Comment fait-on ?
 
 ---
-
-class: impact
 
 # Le DevOps, un ensemble de solutions **humaines** et **techniques** liées
 
@@ -132,8 +130,7 @@ Il s'agit de mettre en quelques sortes les logiciels dans des boîtes :
 
 - Les conteneurs non modifiables permettent de savoir exactement l'état de ce qu'on exécute sur l'ordinateur
 
-=> Le risque de bug diminue énormément : **fiabilisation**
---
+## => Le risque de bug diminue énormément : **fiabilisation**
 
 - L'agrandissement d'un infrastructure logiciel est beaucoup pour facile lorsqu'on a des boîtes autonomes qu'on peut multiplier.
 

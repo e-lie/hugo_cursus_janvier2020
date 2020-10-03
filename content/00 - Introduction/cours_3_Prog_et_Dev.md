@@ -1,19 +1,15 @@
 ---
 draft: true
 title: Introduction au DevOps
-class: animation-fade
+
 layout: true
 ---
-
-class: impact
 
 # {{title}}
 
 ## _La programmation et le développement _
 
 ---
-
-class: impact
 
 # Programmer
 
@@ -129,8 +125,6 @@ On n'accumule pas de retard et on réagit vite à la demande. Pour ça il faut q
 
 ---
 
-class: impact
-
 # Bilan : faire des cycles court et chercher la vélocité
 
 ---
@@ -150,8 +144,6 @@ class: impact
 On voit bien que l'état d'esprit du développement et des opérations sont incompatibles voire intrinsèquement opposés.
 
 ---
-
-class: impact
 
 # TP partie III
 
