@@ -5,18 +5,15 @@ weight: 3
 
 ## A propos de moi
 
-Élie Gavoty
+Hadrien Pélissier
 
-- Developpeur backend et DevOps (Sewan Group / Yunohost)
-- Formateur DevOps, Linux, Python
-- Philosophie de la technique
+- Ingénieur sécurité / DevOps / développeur
+- Formateur DevOps et sécurité
 
 ## A propos de vous
 
 - Attentes ?
-- Début du cursus : 
-  - Est-ce que ça vous plait ?
-  - Quels modules avez vous déjà fait ?
+- "Profil"
 
 ## Le mouvement DevOps
 
@@ -32,20 +29,21 @@ Il y a de nombreuses versions de ce que qui caractérise le DevOps mais pour ré
 
 Du côté humain:
 
-  - Application des process de management agile aux opérations et la gestion des infrastructures (pour les synchroniser avec le développement).
-  - Remplacement des procédés d'opérations humaines complexes et spécifiques par des opérations automatiques et mieux standardisées.
-  - Réconciliation de deux cultures divergentes (Dev et Ops) rapprochant en pratique les deux métiers du développeur et de l'administrateur système.
+- Application des process de management agile aux opérations et la gestion des infrastructures (pour les synchroniser avec le développement).
+- Remplacement des procédés d'opérations humaines complexes et spécifiques par des opérations automatiques et mieux standardisées.
+- Réconciliation de deux cultures divergentes (Dev et Ops) rapprochant en pratique les deux métiers du développeur et de l'administrateur système.
 
 Du côté technique:
 
-  - L'intégration et le déploiement continus des logiciels/produits.
-  - L'infrastructure as code: gestion sous forme de code de l'état des infrastructures d'une façon le plus possible déclarative.
-  - Les conteneurs (Docker surtout mais aussi Rkt et LXC/LXD): plus léger que la virtualisation = permet d'isoler chaque service dans son "OS" virtuel sans dupliquer le noyau.
-  - Le cloud (Infra as a service, Plateforme as a Service, Software as a service) permet de fluidifier l'informatique en alignant chaque niveau d'abstraction d'une pile logicielle avec sa structuration économique sous forme de service.
+- L'intégration et le déploiement continus des logiciels/produits.
+- L'infrastructure as code: gestion sous forme de code de l'état des infrastructures d'une façon le plus possible déclarative.
+- Les conteneurs (Docker surtout mais aussi Rkt et LXC/LXD): plus léger que la virtualisation = permet d'isoler chaque service dans son "OS" virtuel sans dupliquer le noyau.
+- Le cloud (Infra as a service, Plateforme as a Service, Software as a service) permet de fluidifier l'informatique en alignant chaque niveau d'abstraction d'une pile logicielle avec sa structuration économique sous forme de service.
 
 ### L'agilité en informatique
 
 - Traditionnellement la qualité logicielle provient :
+
   - d'une conception détaillée en amont = création d'un spécification détaillée
   - d'un contrôle de qualité humain avant chaque livraison logicielle basé sur une processus = vérification du logiciel par rapport à la spécification
 
@@ -134,7 +132,7 @@ Exemple: Amazon Web Services, DigitalOcean, Azure etc
 
 - Plateforme as a Service (PaaS): on commande directement un environnement PHP ou NodeJS pour notre application
 
-Exemple: heroku, netlify, 
+Exemple: heroku, netlify,
 
 - Software as a service (SaaS): des services web à la demande pour des utilisateurs finaux
 
@@ -161,19 +159,21 @@ Il s'agit comme son nom l'indique de gérer les infrastructures en tant que code
 Le problème identifié que cherche a résoudre l'IaC est un écheveau de difficulées pratiques rencontrée dans l'administration système traditionnelle:
 
 1. Connaissance limité de l'état courant d'un système lorsqu'on fait de l'**administration ad-hoc** (manuelle avec des commandes unix/dos).
-  - Dérive progressive de l'état des systèmes et difficultés à documenter leur états.
-  - Fiabilité limitée et risques peu maîtrisés lors de certaines opérations transversales (si d'autres méchanismes de fiabilisation n'ont pas été mis en place).
-  - Problème de communication dans les grandes équipes car l'information est détenue implicitement par quelques personnes.
+
+- Dérive progressive de l'état des systèmes et difficultés à documenter leur états.
+- Fiabilité limitée et risques peu maîtrisés lors de certaines opérations transversales (si d'autres méchanismes de fiabilisation n'ont pas été mis en place).
+- Problème de communication dans les grandes équipes car l'information est détenue implicitement par quelques personnes.
 
 2. Faible reproductibilité des systèmes et donc difficultée/lenteur du passage à l'échelle (horizontal scaling).
-  - Multiplier les serveurs identiques est difficile si leur état est le résultat d'un processus manuel partiellement documenté.
-  - Difficulté à reproduire/simuler l'état précis de l'infrastructure de production dans les contextes de tests logiciels.
+
+- Multiplier les serveurs identiques est difficile si leur état est le résultat d'un processus manuel partiellement documenté.
+- Difficulté à reproduire/simuler l'état précis de l'infrastructure de production dans les contextes de tests logiciels.
 
 3. Difficultés du travail collaboratif dans de grandes équipes avec plusieurs culture (Dev vs Ops) lorsque les rythmes et les modes de travail diffèrent
-  - L'IaC permet de tout gérer avec git et des commits.
-  - L'IaC permet aux Ops qui ne le faisait pas de se mettre au code et aux développeur de se confronter plus facilement.
-  - L'IaC permet d'accélérer la transformation des infrastructures pour l'aligner sur la livraison logicielle quotidienne (idéalement ;) )
 
+- L'IaC permet de tout gérer avec git et des commits.
+- L'IaC permet aux Ops qui ne le faisait pas de se mettre au code et aux développeur de se confronter plus facilement.
+- L'IaC permet d'accélérer la transformation des infrastructures pour l'aligner sur la livraison logicielle quotidienne (idéalement ;) )
 
 ## Notre programme
 
@@ -181,4 +181,3 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 - Ansible : couteau suisse de l'infra as code
 - Kubernetes : infrastructure de conteneurs (iac et cloud)
 - Jenkins : CI/CD pour intégrer ensemble le dev et les opérations
-

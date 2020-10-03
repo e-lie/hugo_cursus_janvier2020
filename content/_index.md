@@ -1,5 +1,3 @@
 ---
-title: Cursus DevOps Janvier 2020 
+title: Cursus Docker Octobre 2020
 ---
-
-# Bonne année !

@@ -1,6 +1,6 @@
 ---
-title: 'TP5 - Docker Swarm et cloud'
-draft: false
+title: "TP5 - Docker Swarm et cloud"
+draft: true
 ---
 
 ## Docker, Ansible, Terraform : combiner et comparer différents outils d'Infrastructure as Code (IaC)
@@ -12,8 +12,8 @@ L'objectif de ce TP est double:
 
 ## Orchestrons une application dockerisée avec les services et stacks docker
 
-
 ### Tester et pousser l'application
+
 Nous allons repartir de la correction du TP4 sur Docker compose et l'intégrer à un déploiement d'IaC.
 
 - Récupérer le projet de base [https://github.com/e-lie/cursus_janvier2020_docker_tp5_base](https://github.com/e-lie/cursus_janvier2020_docker_tp5_base)
@@ -46,7 +46,7 @@ En mode swarm, docker ne gère plus les conteneurs un par un mais sour forme de 
 De la même façon qu'on utilise docker compose pour décrire un déploiement de développement multiconteneur, Docker Swarm propose le concept de **stack** qui consiste en la description en YAML d'un ensemble de services répliqués et déployés d'un certaine façon. En simplifié un fichier de stack docker est simplement un docker-compose file, en version 3 avec une section `deploy` pour chaque service du type:
 
 ```yml
-version: '3'
+version: "3"
 services:
   monster_icon:
     image: tecpi/monster_icon:0.1
@@ -121,14 +121,13 @@ TERRAFORM  |        |                       |  |                     |   |      
                                             v  +------------------------------------------------------------------------+
 ```
 
-
 ### Prérequis : Digitalocean token et clé SSH
 
 - Pour louer les machines dans le cloud pour ce TP vous aurez besoin d'un compte digitalocean : celui du formateur ici mais vous pouvez facilement utiliser le votre. Il faut récupérer les éléments suivant pour utiliser le compte de cloud du formateur:
-    - un token d'API digitalocean fourni pour la formation. Cela permet de commander des machines auprès de ce provider.
-    - une clé SSH (pré ajoutée au compte de cloud et automatiquement provisionnée dans les VPS):
-      - Une clé "fingerprint" de clé ssh
-      - La paire de clé ssh (un fichier clé privée du type `id_xxx` et clé publique `id_xxx.pub`) sont directement dans le dépôt du TP.
+  - un token d'API digitalocean fourni pour la formation. Cela permet de commander des machines auprès de ce provider.
+  - une clé SSH (pré ajoutée au compte de cloud et automatiquement provisionnée dans les VPS):
+    - Une clé "fingerprint" de clé ssh
+    - La paire de clé ssh (un fichier clé privée du type `id_xxx` et clé publique `id_xxx.pub`) sont directement dans le dépôt du TP.
 
 <!-- - Récupérez sur git la paire clé ssh adaptée: [https://github.com/e-lie/id_ssh_shared.git](https://github.com/e-lie/id_ssh_shared.git). Utilisez "clone or download" > "Download as ZIP". Puis décompressez l'archive.
 - mettez la paire de clé `id_ssh_shared` et `id_ssh_shared.pub` dans le dossier `~/.ssh/`. La passphrase de cette clé est `trucmuch42`.
@@ -139,7 +138,6 @@ TERRAFORM  |        |                       |  |                     |   |      
 
 - Copiez votre clé ssh (à créer sur nécessaire): `cat ~/.ssh/id_ed25519.pub`
 - Aller sur digital ocean dans la section `account` en haut à droite puis `security` et ajoutez un nouvelle clé ssh. Notez sa fingerprint dans le fichier précédent. -->
-
 
 ## Installer terraform et le provider ansible
 
@@ -212,6 +210,7 @@ Mais pour cela nous devons connaître les groupes utililisés pour le role ansib
 ### Lancer le provisionning des VPS
 
 - Maintenant que ces deux fichiers sont complétés (quoi créer et comment s'identifier auprès du provider) nous pouvons lancer la création de nos VPS:
+
   - `terraform init` permet à terraform de télécharger les "driver" nécessaire pour s'interfacer avec notre provider. Cette commande crée un dossier .terraform
   - `terraform plan` est facultative et permet de calculer et récapituler les créations modifications de ressources à partir de la description de `main.tf`
   - `terraform apply` permet de déclencher la création des ressources.
@@ -222,7 +221,7 @@ Maintenant que nous avons des machines dans le cloud nous devons fournir leurs I
 
 ## Terraform dynamic inventory
 
-- Le meilleur inventaire dynamique pour terraform est [https://github.com/nbering/terraform-provider-ansible/](https://github.com/nbering/terraform-inventory/). 
+- Le meilleur inventaire dynamique pour terraform est [https://github.com/nbering/terraform-provider-ansible/](https://github.com/nbering/terraform-inventory/).
 
 Une bonne intégration entre Ansible et Terraform permet de décrire précisément les liens entre resource terraform et hote ansible ainsi que les groupes de machines ansible. Pour cela notre provider ansible propose de dupliquer les ressources terraform dans pour créer explicitement les hotes ansible à partir des données dynamiques de terraform.
 
@@ -253,11 +252,12 @@ cd ../ansible
 - Listez les noeuds swarm avec `docker node ls`
 - récupérez la stack portainer du projet avec `wget https://raw.githubusercontent.com/e-lie/cursus_janvier2020_docker_tp5_base/cursusjanvier2020-docker-tp5/swarm_stacks/portainer_stack.yml`.
 - déployez la stack avec `docker stack deploy -c portainer_stack.yml portainerstack`.
-- Visitez `<ip>:9000` -> portainer est disponible depuis n'importe quel noeud également alors que nous l'avons installé sur le manager. 
+- Visitez `<ip>:9000` -> portainer est disponible depuis n'importe quel noeud également alors que nous l'avons installé sur le manager.
 
 Nous allons maintenant déployer la stack monster avec un playbook ansible
 
 - Ouvrez le fichier `ansible/playbook/deploy_monsterstack.yml`
+
   - Explorez la doc du module ansible `docker_stack`.
   - Lancez ce playbook.
 
@@ -292,8 +292,6 @@ Si tout va bien votre cluster devrait être complètement réinstallé avec une 
 
 Vous trouverez la correction de ce TP dans le dépôt [https://github.com/e-lie/cursus_janvier2020_docker_tp5_correction.git](https://github.com/e-lie/cursus_janvier2020_docker_tp5_correction.git).
 
-## NE PAS OUBLIER DE DETRUIRE LES VPS 
+## NE PAS OUBLIER DE DETRUIRE LES VPS
 
 Pour ne pas payer des serveurs inutiles il faut absolument penser à détruire les droplets avec `terraform destroy` ou `./cluster destroy_infra`. Puis vérifions dans Digital Ocean qu'il n'y a plus de droplets.
-
-

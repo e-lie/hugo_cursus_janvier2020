@@ -1,6 +1,6 @@
-baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
+baseURL = "https://cours.hadrienpelissier.fr/"
 languageCode = "fr-FR"
-title = "Cursus DevOps Janvier 2020"
+title = "Docker - Octobre 2020"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
@@ -10,7 +10,7 @@ theme = "hugo-theme-learn"
 home = [ "HTML", "RSS", "JSON" ]
 
 [params]
-editURL = "https://github.com/e-lie/hugo_cursus_janvier2020"
+editURL = "https://github.com/ketsapiwiq/hp_cursus_octobre2020"
 
 
 # [menu.shortcuts]
