@@ -1,5 +1,5 @@
 ---
-title: Introduction DevOps longue
+title: Introduction DevOps
 weight: 3
 draft: true
 ---
