@@ -48,6 +48,7 @@ draft: false
 - Accéder à ses containers dans Minecraft : https://github.com/docker/dockercraft
   <!-- https://jpetazzo.github.io/2017/01/20/docker-logging-gelf/ -->
 - Doc officielle sur la sécurité dans Docker : https://docs.docker.com/engine/security/
+- Documentation sur le système de filesystem overlay de Docker : https://docs.docker.com/storage/storagedriver/overlayfs-driver/
 - Tutoriels officiels sur la sécurité dans Docker : https://github.com/docker/labs/tree/master/security
 - Vidéo sur les bonnes pratiques dans Docker : https://noti.st/aurelievache/PrttUh
 - Vidéo "Containers, VMs... Comment ces technologies fonctionnent et comment les différencier ?" (Quentin Adam) https://www.youtube.com/watch?v=wG4_JQXvZIc

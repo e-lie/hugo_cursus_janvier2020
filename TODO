@@ -5,12 +5,12 @@
 => mon search cards pas CRUD, plutot le flask machin non ?
 - expliquer comment on stocke les images et les conteneurs et les volumes cocnrètement
 - s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
-- ouvrir sur k8s ou elk ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
+- ouvrir sur k8s ou elk ou gitlab CI selon leur intérêt.
+Ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
 - partie sur git qd même ? important car infra as code, ouverture sur CI ? laisser les avancés plancher sur une CI gitlab ? vu qu'ils sont un peu ce profil
 - QCM ARGH
 - faire faire du git à ceux qui sont trop en avance ?
 - podman / buildah ?
-- HEALTHCHECK
 - upload sur un registry
 
 - Au début demo avec scaleway hop je mets un docker, hop un codimd et un nginx et boum. 

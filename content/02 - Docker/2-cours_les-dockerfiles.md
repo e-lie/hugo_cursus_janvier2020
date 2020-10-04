@@ -126,6 +126,9 @@ docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_constru
 
 - On parle d'**Union Filesystem** car chaque couche (de fichiers) écrase la précédente.
 
+![](../../images/overlay_constructs.jpg)
+![](../../iimages/OverlayFS_Image.png)
+
 <!-- In order to understand the relationship between images and containers, we need to explain a key piece of technology that enables Docker—the UFS (sometimes simply called a union mount). Union file systems allow multiple file systems to be overlaid, appearing to the user as a single filesytem. Folders may contain files from multiple filesystems, but if two files have the exact same path, the last mounted file will hide any previous files. Docker supports several different UFS implentations, including AUFS, Overlay, devicemapper, BTRFS, and ZFS. Which implementation is used is system dependent and can be checked by running docker info where it is listed under “Storage Driver.” It is possible to change the filesystem, but this is only recom‐ mended if you know what you are doing and are aware of the advantages and disad‐ vantages.
 Docker images are made up of multiple layers. Each of these layers is a read-only fil‐ eystem. A layer is created for each instruction in a Dockerfile and sits on top of the previous layers. When an image is turned into a container (from a docker run or docker create command), the Docker engine takes the image and adds a read-write filesystem on top (as well as initializing various settings such as the IP address, name, ID, and resource limits). -->
 
@@ -138,6 +141,8 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 - ## Au lancement d'un container, le Docker Engine rajoute une nouvelle couche de filesystem "normal" read/write par dessus la pile des couches de l'image.
 
 - `docker diff <container>` permet d'observer les changements apportés au conteneur depuis le lancement.
+
+![](../../iimages/overlay.jpeg)
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "TP - Créer une application multiconteneur"
-visible: true
+draft: false
 weight: 45
 ---
 
@@ -105,9 +105,9 @@ Créons un fichier Docker Compose pour faire fonctionner [l'application Flask fi
 
 Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
 
-<!-- ### Si vous êtes en avance : ajouter ELK et centraliser les logs
+### Si vous êtes en avance : ajouter ELK et centraliser les logs
 
-Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
+Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
 
 Tentons de centraliser les logs de
 de ces services dans ELK.
@@ -150,6 +150,6 @@ services:
 networks:
   logging-network:
     driver: bridge
-``` -->
+```
 
 ---
