@@ -3,8 +3,7 @@ title: Bibliographie
 draft: false
 ---
 
-
-## Ansible
+<!-- ## Ansible
 
 - Jeff Geerling - Ansible for DevOps - Leanpub
 
@@ -14,7 +13,7 @@ draft: false
 
 ##### Cheatsheet
 
-- [https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide)
+- [https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide) -->
 
 ## Docker
 
@@ -40,20 +39,21 @@ draft: false
 
 - [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
 
-## Jenkins
+<!-- ## Jenkins
 
 - Leszko2017 - Continuous Delivery with Docker and Jenkins - Packt
 - Le wiki Jenkins
 
 ## Terraform
 
-- Brikman2019 - Terraform Up&Running - O Reilly
+- Brikman2019 - Terraform Up&Running - O Reilly -->
+
+<!-- ## Linux -->
 
 ## DevOps
 
 - Krief2019 - Learning DevOps - The complete guide (Azure Devops, Jenkins, kubernetes, terraform, ansible, security)
 - The DevOps Handbook
-
 
 ### Sécurité et DevOps
 

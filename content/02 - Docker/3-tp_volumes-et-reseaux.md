@@ -1,5 +1,6 @@
 ---
 title: TP - Volumes et réseaux
+weight: 35
 ---
 
 Pour expérimenter avec le réseau, nous allons lancer une petite application nodejs d'exemple (moby-counter) qui fonctionne avec une queue redis (comme une base de données mais pour stocker des paires clé/valeur simples).

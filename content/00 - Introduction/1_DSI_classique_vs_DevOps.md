@@ -1,6 +1,9 @@
 ---
-title: Introduction au DevOps
-draft: true
+draft: false
+title: Introduction DevOps courte
+# title: DSI classique vs. DevOps
+
+layout: true
 ---
 
 # _La culture et la pratique du DevOps_
@@ -10,8 +13,6 @@ draft: true
 # DevOps : définition
 
 "Le DevOps est **un mouvement** qui s'attaque au conflit existant structurellement entre le développement de logiciels et les opérations. Ce conflit résulte d'objectifs et de motivations divergents. Le DevOps améliore la collaboration entre les départements du développement et des opérations et rationalise l'ensemble de l'organisation. (Citation de Hütterman2012 - Devops for developers)"
-
----
 
 # Le problème de la DSI traditionnelle
 
@@ -25,7 +26,7 @@ draft: true
   department wants to avoid making changes to the software to ensure
   stable conditions for the production systems.
 
-(Hüttermann2012)"
+(Hüttermann 2012)"
 
 ---
 
@@ -59,9 +60,7 @@ draft: true
 
 ---
 
-# Le DevOps est
-
-## un ensemble de solutions **humaines** et **techniques** liées
+# Le DevOps, un ensemble de solutions **humaines** et **techniques** liées
 
 ---
 
@@ -147,8 +146,6 @@ Du coup on peut agrandir sans effort l'infrastructure de production pour délivr
 
 C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
----
-
 # Renforcer la collaboration
 
 ## Équipes transversales
@@ -178,16 +175,5 @@ Vous pouvez retenir :
 Il faut être polyvalent : bien connaître l'administration système Linux mais aussi un peu la programmation et le développement.
 
 Il faut connaître les nouvelles bonnes pratiques et les nouveaux outils cités précédemment.
-
----
-
-# Les prochain module
-
-- Nous allons regarder quelques technologies typiques du devops qui servent à automatiser les déploiements
-  - Ansible
-  - Docker
-  - Puppet
-  - Jenkins
-  - Elasticsearch
 
 ---

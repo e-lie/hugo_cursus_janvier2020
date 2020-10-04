@@ -1,7 +1,7 @@
 ---
-title: Introduction DevOps
+title: Introduction DevOps longue
 weight: 3
-draft: true
+draft: false
 ---
 
 ## A propos de moi
@@ -175,10 +175,3 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 - L'IaC permet de tout gérer avec git et des commits.
 - L'IaC permet aux Ops qui ne le faisait pas de se mettre au code et aux développeur de se confronter plus facilement.
 - L'IaC permet d'accélérer la transformation des infrastructures pour l'aligner sur la livraison logicielle quotidienne (idéalement ;) )
-
-## Notre programme
-
-- Docker : les conteneurs et l'infra as code
-- Ansible : couteau suisse de l'infra as code
-- Kubernetes : infrastructure de conteneurs (iac et cloud)
-- Jenkins : CI/CD pour intégrer ensemble le dev et les opérations

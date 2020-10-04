@@ -1,5 +1,6 @@
 ---
 title: Shell Scripting
+draft: false
 ---
 
 # Bash Scripting
@@ -8,7 +9,7 @@ title: Shell Scripting
 
 ---
 
-# Plan
+<!-- # Plan
 
 ## 8. Personnaliser son environnement
 
@@ -24,7 +25,7 @@ title: Shell Scripting
 - 10.2 interactivité
 - 10.3 les conditions
 - 10.4 les fonctions
-- 10.5 les boucles
+- 10.5 les boucles -->
 
 ---
 
@@ -62,7 +63,7 @@ HOME=/tmp/
 
 ---
 
-# 8. Personnaliser son environnement
+<!-- # 8. Personnaliser son environnement -->
 
 ## Lister les variables d'envionnement
 
@@ -79,9 +80,9 @@ TERM=rxvt-unicode-256color
 
 ---
 
-# 8. Personnaliser son environnement
+<!-- # 8. Personnaliser son environnement -->
 
-## Personnaliser l'invite de commande
+<!-- ## Personnaliser l'invite de commande
 
 - La variable `PS1` décrit l'apparence de l'invite de commande !
 - Généralement, `PS1` vaut : `\u@\h:\w$`
@@ -108,7 +109,7 @@ echo -e "\[\033[7m\]Ceci est surligné\[\033[0m\]"
 echo -e "\[\033[31;7m\]Ceci est surligné en rouge\[\033[0m\]"
 ```
 
----
+--- -->
 
 # 8. Personnaliser son environnement
 
@@ -276,7 +277,7 @@ que fait `cmd1 && cmd2 || cmd3`
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Pipes ! (1/3)
 
@@ -290,7 +291,7 @@ Exemple : `cat /etc/login.defs | head -n 3`
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Pipes ! (2/3)
 
@@ -302,7 +303,7 @@ Lorsqu'on utilise des pipes, c'est generalement pour enchaîner des opérations 
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Pipes ! (3/3)
 
@@ -314,7 +315,7 @@ Precisions techniques
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Boîte à outils : tee
 
@@ -327,7 +328,7 @@ openssl speed | tee -a tests.log      # Affiche et ajoute la sortie de openssl �
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Boîte à outils : grep (1/3)
 
@@ -348,7 +349,7 @@ LOGIN_TIMEOUT		60
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Boîte à outils : grep (2/3)
 
@@ -370,7 +371,7 @@ $ ps -ef | grep "alex\|r2d2"
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
 ## Boîte à outils : grep (3/3)
 
@@ -389,7 +390,7 @@ root      6222  6218  0 Oct02 pts/15   00:00:00 bash
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils
 
 ## Boîte à outils : tr
 
@@ -403,13 +404,13 @@ ID manjaro
 
 $ echo "coucou" | tr 'a-q' 'A-Q'
 COuCOu
-```
+``` -->
 
 ---
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils -->
 
-## Boîte à outils : awk
+<!-- ## Boîte à outils : awk
 
 `awk` est un processeur de texte assez puissant ...
 
@@ -431,9 +432,9 @@ r2d2 11:27
 - L'option `-F` permet de specifier un autre délimiteur
   - par ex. `cat /etc/passwd | awk -F: '{print $3}'`
 
----
+--- -->
 
-# 9.2 Pipes et boîte à outils
+<!-- # 9.2 Pipes et boîte à outils
 
 ## Boîte à outils : sort
 
@@ -460,10 +461,11 @@ ps -ef | sort -k2 -n  # Trie les processus par PID (2eme col., chiffres)
 ```bash
 who | awk '{print $1}' | sort | uniq                   # Affiche la liste des users loggués
 who | awk '{print $1}' | sort | uniq -c                # Compte le nombre de shell par user loggué
-```
+``` -->
 
 ---
 
+<!--
 # 9.2 Pipes et boîte à outils
 
 ## Boîte à outils : sed
@@ -476,11 +478,11 @@ Exemple :
 
 ```bash
 ls -l | sed 's/alex/padawan/g' # Remplace toutes les occurences de alex par padawan
-```
+``` -->
 
 ---
 
-# 9.3 Pipes et boîte à outils
+<!-- # 9.3 Pipes et boîte à outils
 
 ## Boîte à outils : find
 
@@ -496,7 +498,7 @@ find /etc -name "*.service"
 find /var/log -mmin 5
 ```
 
----
+--- -->
 
 # 10. Bash scripts
 
@@ -589,9 +591,9 @@ Première façon : avec l'interpreteur `bash`
 
 ---
 
-# 10.0 Écrire / executer
+# 10.0 Écrire / exécuter
 
-## Executer un script (2/3)
+## Exécuter un script (2/3)
 
 Deuxième façon : avec `source`
 
@@ -602,9 +604,9 @@ Deuxième façon : avec `source`
 
 ---
 
-# 10.0 Écrire / executer
+# 10.0 Écrire / exécuter
 
-## Executer un script (3/3)
+## Exécuter un script (3/3)
 
 Troisième façon : en donnant les permissions d'execution à votre script
 
@@ -622,7 +624,7 @@ chmod +x script.sh   # À faire la première fois seulement
 
 ## Parenthèse sur la variable `PATH` (1/2)
 
-La variable d'environnement `PATH` défini où aller chercher les programmes
+La variable d'environnement `PATH` définit où aller chercher les programmes
 
 ```bash
 $ echo $PATH
@@ -705,13 +707,13 @@ $ HOME="/home/alex"
 $ HOME="/var/log"
 ```
 
-... sauf si définie comme `readonly` !
+<!-- ... sauf si définie comme `readonly` !
 
 ```bash
 $ readonly PI="2"           # ... oopsie !
 $ PI="3.14"
 -bash: PI: readonly variable
-```
+``` -->
 
 ---
 
@@ -786,7 +788,7 @@ $ ls -l "$FICHIER"
 
 ---
 
-# 10.1 Les variables
+<!-- # 10.1 Les variables
 
 ## Notes diverses (3/5)
 
@@ -837,7 +839,7 @@ $ echo "Mon home est \$HOME"
 Mon home est $HOME
 ```
 
----
+--- -->
 
 # 10. Bash scripts
 
@@ -848,7 +850,7 @@ Mon home est $HOME
 # 10.2 Paramétrabilité / interactivité
 
 - Le comportement d'un script peut être paramétré via des options ou des données en argument
-- On peut également créer de l'interactivité, c'est à dire demander des informations à l'utilisateur pendant que l'execution du programme
+- On peut également créer de l'interactivité, c'est à dire demander des informations à l'utilisateur pendant l'exécution du programme
 
 ---
 
@@ -898,7 +900,7 @@ echo "OK, bonjour $NAME !"
 
 ---
 
-# 10. Bash scripts
+<!-- # 10. Bash scripts
 
 ### 10.3 Les conditions
 
@@ -1321,4 +1323,4 @@ do
    echo "Waiting ..."
    sleep 1
 done
-```
+``` -->

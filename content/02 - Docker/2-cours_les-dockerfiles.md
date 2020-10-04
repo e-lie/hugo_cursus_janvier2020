@@ -1,5 +1,6 @@
 ---
 title: Images et conteneurs
+weight: 20
 ---
 
 # Créer une image en utilisant un Dockerfile

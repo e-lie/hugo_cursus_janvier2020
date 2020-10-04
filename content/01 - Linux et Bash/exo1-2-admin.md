@@ -1,12 +1,12 @@
 ---
 title: Administration Linux - feuille d'exercice n.1
-draft: true
+draft: false
 ---
 
 # 1 - Installer Linux
 
 - 1.1 - Rendez vous sur le site de Linux Mint. Choisissez un environnement graphique et télécharger l'ISO correspondante. (Si vous souhaitez utiliser KDE, il vous faudra aller chercher la version 18.3)
-- 1.2 - (Optionnel, mais recommandé) Pendant que l'image télécharge, trouvez le programme `sha256sum.exe`. Cherchez comment ouvrir une console sous Windows et comment lancer ce programme pour calculer des hash. Une fois le téléchargement de l'ISO terminé, vérifier l'intégrité de l'image téléchargée avec ce programme.
+<!-- - 1.2 - (Optionnel, mais recommandé) Pendant que l'image télécharge, trouvez le programme `sha256sum.exe`. Cherchez comment ouvrir une console sous Windows et comment lancer ce programme pour calculer des hash. Une fois le téléchargement de l'ISO terminé, vérifier l'intégrité de l'image téléchargée avec ce programme. -->
 - 1.3 - Créer une nouvelle machine virtuelle en suivant les instructions :
   - de type Linux, avec comme version "Other Linux (64-bit)" ("Ubuntu (64-bit)" devrait fonctionner également) ;
   - 2048 Mo de RAM semble raisonnable ;
@@ -16,23 +16,24 @@ draft: true
 - 1.6 - Lancer l'installation de Linux Mint
   - choisir sa langue et son clavier
   - accepter l'installation des logiciels tiers
-  - lors du choix du type de partitionnement, **cliquer sur "Autre chose"**
-  - créer une nouvelle table de partition, puis partitionner à l'aide du "+" l'espace de la manière suivante :
+  - lors du choix du type de partitionnement, **prendre toute la partition**
+  <!-- - créer une nouvelle table de partition, puis partitionner à l'aide du "+" l'espace de la manière suivante :
     - 300 Mo pour `/boot` en ext4
     - 14 Go pour `/` en ext4
     - 5 Go pour `/home` en ext4
-    - le reste (~700 Mo) en swap
+    - le reste (~700 Mo) en swap -->
   - choisissez le fuseau horaire, puis un nom d'utilisateur, de machine, et un mot de passe.
   - lancez l'installation et prenez une pause, buvez un café, ou regardez la vidéo youtube "The UNIX operating system" et laissez Brian Kernighan vous parler de l'élégance des pipes !
-- 1.7 - Redémarrez la machine et logguez-vous. Mettez-vous à l'aise et prenez vos marques dans votre nouvel environnement :
-  - choisissez un nouveau fond d'écran, naviguez dans les fichiers, testez le menu démarrer
-  - choisissez un thème de couleur pour le terminal (Edition > Preferences > Couleurs)
-  - personnalisez votre PS1 et vos alias
+- 1.7 - Redémarrez la machine et logguez-vous.
+  <!-- Mettez-vous à l'aise et prenez vos marques dans votre nouvel environnement :
+    - choisissez un nouveau fond d'écran, naviguez dans les fichiers, testez le menu démarrer
+    - choisissez un thème de couleur pour le terminal (Edition > Preferences > Couleurs)
+    - personnalisez votre PS1 et vos alias -->
   - testez le copier-coller dans la console. Vous pouvez utiliser clic droit puis "Copier" et "Coller", ou bien Ctrl+Shift+C et Ctrl+Shift+V, ou bien sélectionner du texte et utiliser le clic du milieu de la souris.
-  - tapez quelques commandes et tentez de maîtriser des raccourcis comme Ctrl+R, Ctrl+A/E, Ctrl+U/K
-  - (éventuellement, testez et configurer l'éditeur de texte graphique "xed")
-- 1.8 - Vérifiez avec `df -h`, `lsblk -f` et `mount` que le partitionnement et les points de montage correspondent à ce que vous avez fait.
-- 1.9 - Au bureau, un collègue vous informe que vous aurez besoin d'une partition de type NTFS sur votre disque, pour pouvoir communiquer avec un OS de type Microsoft. Vous décidez alors d'ajuster le partitionnement de votre disque.
+      <!-- - tapez quelques commandes et tentez de maîtriser des raccourcis comme Ctrl+R, Ctrl+A/E, Ctrl+U/K -->
+      <!-- - (éventuellement, testez et configurer l'éditeur de texte graphique "xed") -->
+    <!-- - 1.8 - Vérifiez avec `df -h`, `lsblk -f` et `mount` que le partitionnement et les points de montage correspondent à ce que vous avez fait. -->
+    <!-- - 1.9 - Au bureau, un collègue vous informe que vous aurez besoin d'une partition de type NTFS sur votre disque, pour pouvoir communiquer avec un OS de type Microsoft. Vous décidez alors d'ajuster le partitionnement de votre disque.
   - Relancez votre machine, de nouveau avec l'ISO dans le lecteur CD virtuel
   - Depuis la live CD, lancez le programme "Gparted"
   - Redimensionnez la partition correspondant à /home pour la réduire de 1 Go
@@ -42,13 +43,13 @@ draft: true
 - De retour sur votre bureau, :
   - Vérifier qu'une nouvelle partition ntfs est effectivement présente via `lsblk -f`
   - Créez un dossier `windows` dans `/media/` puis montez manuellement la nouvelle partition sur `/media/windows`. (Vérifiez le résultat avec `lsblk` et `df -h`)
-- 1.10 - Rendez ce montage automatique en modifiant `/etc/fstab` et en redémarrant le système. (Vérifiez le résultat avec `lsblk` et `df -h`)
+- 1.10 - Rendez ce montage automatique en modifiant `/etc/fstab` et en redémarrant le système. (Vérifiez le résultat avec `lsblk` et `df -h`) -->
 
-### Exercices avancés
+<!-- ### Exercices avancés
 
 - Inspectez l'arbre des processus avec `ps -ef --forest` et identifiez le serveur graphique `Xorg`
 - Si vous avez une clef USB, trouvez de quoi flasher l'ISO depuis Windows (par exemple, Etcher ou Unetbootin) puis tentez de démarrer votre machine physique sur la live USB (n'installez pas Linux Mint sur la machine physique !!)
-- De retour dans la machine virtuelle, arrangez-vous pour affichez GRUB pendant le démarrage puis appuyez sur "e" pour modifier les instructions de démarrage. À la fin de la commande "linux", ajoutez `init=/bin/bash` puis poursuivez le démarrage. Que se passe-t-il ?
+- De retour dans la machine virtuelle, arrangez-vous pour affichez GRUB pendant le démarrage puis appuyez sur "e" pour modifier les instructions de démarrage. À la fin de la commande "linux", ajoutez `init=/bin/bash` puis poursuivez le démarrage. Que se passe-t-il ? -->
 
 # 2 - Le gestionnaire de paquet (et les archives)
 
@@ -87,8 +88,8 @@ draft: true
 - 1.25 - En reprenant le `.deb` du programme `nyancat` de la question 1.14, utilisez `ar` et `tar` pour décompresser le `.deb` jusqu'à trouver le fichier de controle debian, ainsi que l'executable contenu dans le paquet.
 - 1.26 - Trouvez un ou des fichiers `.gz` dans `/var/log` (ou ailleurs ?) et cherchez comment combiner `cat` et `gzip` pour lire le contenu de ce fichier sans créer de nouveau fichier.
 
-### Exercices avancés
+<!-- ### Exercices avancés
 
 - Investiguez les options de `apt-rdepends` et du programme `dot` pour générer un rendu en PNG du graphe de dépendance de `firefox`.
 - Trouvez où télécharger le `.deb` du paquet `nyancat` depuis `ftp.debian.org`
-- (Très avancé) Renseignez-vous sur `equivs` et créez un package virtuel `lolstuff` qui dépend de `sl`, `lolcat` et `nyancat`
+- (Très avancé) Renseignez-vous sur `equivs` et créez un package virtuel `lolstuff` qui dépend de `sl`, `lolcat` et `nyancat` -->

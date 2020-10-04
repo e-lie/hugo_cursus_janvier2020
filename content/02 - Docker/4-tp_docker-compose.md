@@ -1,6 +1,7 @@
 ---
 title: "TP - Créer une application multiconteneur"
 visible: true
+weight: 45
 ---
 
 ## Articuler deux images avec Docker compose

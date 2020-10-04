@@ -1,13 +1,9 @@
 ---
-title: Introduction au DevOps
 draft: true
+title: Introduction au DevOps
 ---
 
 ## _La programmation et le développement _
-
----
-
-# Programmer
 
 ---
 

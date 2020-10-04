@@ -1,0 +1,14 @@
+- ajouter intro sur le devops d'Elie
+- parler de permissions et de sudo
+- planifier vitesse rapide si les gens savent de vitesse plus lente
+- parler de gitpod ? de CI gitlab ? de git ?
+- REFAIRE TP SUR REDIS ET VOLUMES AVEC AUTRE CHOSE + plus explicite pour le réseau
+=> mon search cards pas CRUD, plutot le flask machin non ?
+- abandonner le gatsby wave et faire des putain de slides et/ou un markdown à défiler
+- expliquer comment on stocke les images et les conteneurs et les volumes cocnrètement
+- s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
+- ouvrir sur k8s ou elk ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
+- partie sur git qd même ? important car infra as code, ouverture sur CI ? laisser les avancés plancher sur une CI gitlab ? vu qu'ils sont un peu ce profil
+- QCM ARGH
+- faire faire du git à ceux qui sont trop en avance ?
+- podman / buildah ?

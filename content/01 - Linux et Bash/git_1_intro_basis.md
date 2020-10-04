@@ -1,5 +1,6 @@
 ---
-title: Introduction Git
+title: Introduction à git
+weight: 100
 ---
 
 # Git - première partie
@@ -121,6 +122,8 @@ vous êtes dans un dossier avec du code:
 - `git init` créé un dépôt dans ce dossier
 - `git add` permet de suivre certains fichier
 - `git commit` permet valider vos modifications pour créer ce qu'on appelle un **commit** c'est-à-dire une étape validée du code.
+- `git push` envoie vos commits dans la branche distante
+- `git pull` récupère des commits depuis la branche distante
 - `git status` et `git log` permettent de suivre l'état du dépôt et la liste des commits.
 
 ---
@@ -129,7 +132,7 @@ vous êtes dans un dossier avec du code:
 
 ## **to commit** signifier **s'engager**
 
-- **Idéalement**, lorsque vous faite un commit, le code devrait être dans un état à peu près **cohérent**.
+- **Idéalement**, lorsque vous faites un commit, le code devrait être dans un état à peu près **cohérent**.
 
 ## Toujours mettre un **message** de commit
 

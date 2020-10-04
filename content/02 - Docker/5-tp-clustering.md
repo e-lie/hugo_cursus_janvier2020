@@ -1,5 +1,6 @@
 ---
 title: TP - Orchestration et clustering
+weight: 55
 ---
 
 - Cloner l'application exemple ici : [https://gitlab.com/e-lie/getstarted_docker.git](https://gitlab.com/e-lie/getstarted_docker.git)

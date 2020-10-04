@@ -1,11 +1,12 @@
 ---
 title: Scripting Bash - Feuille d'exercices
-draft: false
+draft: true
+weight: 51
 ---
 
 # Scripting Bash - Feuille d'exercices
 
-### 8. Personnaliser son environnement
+<!-- ### 8. Personnaliser son environnement
 
 - 8.1 - Personnaliser l'apparence de votre invite de commande (syntaxe, couleurs) en modifiant la variable PS1.
 - 8.2 - Ajouter la personnalisation de l'invite à votre `.bashrc` et propagez ces changements sur vos shells ouverts.
@@ -15,7 +16,7 @@ draft: false
 - 8.6 - Créer des alias `suls` et `sucat` qui permettent de lister les fichiers d'un dossier, ou d'afficher le contenu d'un fichier en activant automatiquement `sudo`. Tester ces alias en tapant `suls /root` et `sucat /etc/shadow` en tant que padawan.
 - 8.7 - Créer un alias `r2d2` qui permet d'ouvrir un shell en tant que `r2d2` avec `sudo` et `su`.
 - 8.8 - (Avancé) Se renseigner sur `LS_COLORS` et personnaliser cette variable.
-- 8.9 - En utilisant `echo`, comment faire pour faire en sorte que la commande 'ls' retourne systématiquement 'J'ai pas envie' au lieu de son comportement normal ?
+- 8.9 - En utilisant `echo`, comment faire pour faire en sorte que la commande 'ls' retourne systématiquement 'J'ai pas envie' au lieu de son comportement normal ? -->
 
 ## 9 partie 1 - redirections et assemblages
 
@@ -23,17 +24,17 @@ draft: false
 - 9.2 - Dans un tty, inspecter la liste des fichier de `/usr/bin` avec `ls` n'est pas pratique, car la sortie est trop longue et il n'est pas possible de scroller vers le haut. Pour contourner le probleme, enregistrez la sortie dans un fichier puis lisez-là avec `less`.
 - 9.3 - En **une seule ligne de commande** (qui pourra comporter plusieurs sous-commandes) : créer un dossier `dev` dans votre répertoire personnel, puis créer un sous-dossier `bash`, et dedans un fichier `intro` qui contient "Je fais du bash, c'est stylé !"
 - 9.4 - Écrire **une seule ligne de commande** qui attendra 15 secondes sans rien faire (à l'aide de `sleep`) et affichera "J'ai terminé!" si et seulement si la commande sleep s'est terminée correctement. Testez et validez le comportement en laissant `sleep` finir, et dans un autre cas en annulant la commande prématurément à l'aide de Ctrl+C.
-- 9.5 - Écrire **une seule ligne de commande** qui affichera (uniquement) "J'ai le droit" ou "J'ai pas le droit" si il vous est possible de lister le contenu du dossier `/root` à l'aide de `ls`. (Testez et validez le comportement en faisant l'expérience avec d'autres dossiers)
-- 9.6 - `bc` est un utilitaire permettant de faire de petit calculs. Testez `bc` en mode interactif pour faire quelques additions (Ctrl+D pour quitter). Mettez maintenant une suite de calcul dans un fichier, que vous injecterez directement dans `bc`. Enfin, faites des calculs similaire mais en injectant directement une chaine dans `bc`.
+  <!-- - 9.5 - Écrire **une seule ligne de commande** qui affichera (uniquement) "J'ai le droit" ou "J'ai pas le droit" si il vous est possible de lister le contenu du dossier `/root` à l'aide de `ls`. (Testez et validez le comportement en faisant l'expérience avec d'autres dossiers) -->
+  <!-- - 9.6 - `bc` est un utilitaire permettant de faire de petit calculs. Testez `bc` en mode interactif pour faire quelques additions (Ctrl+D pour quitter). Mettez maintenant une suite de calcul dans un fichier, que vous injecterez directement dans `bc`. Enfin, faites des calculs similaire mais en injectant directement une chaine dans `bc`. -->
 - 9.7 - `curl` est un utilitaire qui permet de telecharger et le code source d'une page (par exemple, fr.wikipedia.org) dans la console.
   - Comment pouvez-vous faire pour sauvegarder cette page dans un fichier ?
-  - Retentez l'expérience avec une adresse qui n'existe pas, et modifiez votre commande pour supprimer les erreurs mais afficher tout de même "Ca n'a pas marché" dans le cas où vous tentez de télécharger une page qui n'existe pas...
-- 9.8 - (Avancé) Créez un fichier `/tmp/chat` dans lequel padawan et r2d2 peuvent tous les deux écrire. Renseignez-vous sur l'option `-f` de la commande `tail` puis :
+    <!-- - Retentez l'expérience avec une adresse qui n'existe pas, et modifiez votre commande pour supprimer les erreurs mais afficher tout de même "Ca n'a pas marché" dans le cas où vous tentez de télécharger une page qui n'existe pas... -->
+    <!-- - 9.8 - (Avancé) Créez un fichier `/tmp/chat` dans lequel padawan et r2d2 peuvent tous les deux écrire. Renseignez-vous sur l'option `-f` de la commande `tail` puis :
   - Lancez `tail -f /tmp/chat` en tâche de fond dans deux terminaux (l'un de padawan, l'autre de r2d2) ;
   - À l'aide de redirections, envoyez des messages dans le fichier `/tmp/chat` et observez les deux terminaux ;
-  - Améliorez le système en créant un alias `say` qui affiche un message préfixé de votre nom d'utilisateur (ex: [r2d2] beep boop).
+  - Améliorez le système en créant un alias `say` qui affiche un message préfixé de votre nom d'utilisateur (ex: [r2d2] beep boop). -->
 
-## 9 partie 2 - pipes et boîte à outils
+<!-- ## 9 partie 2 - pipes et boîte à outils
 
 - 9.9 - Si ce n'est pas deja le cas, ajoutez un alias pour activer automatiquement `--color=auto` chaque fois que la commande `grep` est utilisée. Essayez quelque manipulation avec `grep` pour confirmer que les occurences trouvées sont bien mises en valeur.
 - 9.10 - Lister les lignes de `/etc/passwd` qui correspondent aux utilisateurs ayant `/bin/bash` comme shell de login
@@ -46,9 +47,9 @@ draft: false
 - 9.17 - Écrivez une ligne de commande qui affiche "Oui" ou "Non" si r2d2 est actuellement connecté. On pourra pour ce faire utiliser (entre autre chose) le fait que `grep` a un code de retour, et eventuellement l'option `-q`.
 - 9.18 - À l'aide de `ps`, `sort` et `uniq` générer un bilan du nombre de processus actuellement en cours par utilisateur
 - 9.19 - À l'aide de `sort` et `uniq`, analysez le fichier `loginattemps.log`, et produisez un résumé du nombre de tentative de connections par ip
-- 9.20 - (Avancé) Construisez une ligne de commande qui récupère les adresses des images présentes dans le code du site `yolowag.team`. Vous aurez possiblement besoin de `curl`, `grep`, `tr` et `awk` (eventuellement de `sed`).
+- 9.20 - (Avancé) Construisez une ligne de commande qui récupère les adresses des images présentes dans le code du site `yolowag.team`. Vous aurez possiblement besoin de `curl`, `grep`, `tr` et `awk` (eventuellement de `sed`). -->
 
-## 10 partie 1 - les variables
+<!-- ## 10 partie 1 - les variables
 
 - 10.1 - Créez-vous un répertoire de travail (par exemple : `~/dev/bash`) dans lequel vous créerez vos scripts. Écrivez un premier script `hello.sh` qui affiche "Hello world !" et "How are you today ?" et executez-le.
 - 10.2 - En reprenant les codes couleurs étudiés en partie 8, définissez des variables de couleur comme `PURPLE` qui vaut `\033[35m`. Modifier le code de la question 10.1 pour affichez "How are you today ?" avec les couleurs de l'arc-en-ciel ! (Rappel : si il y a des couleurs, `echo` doit être appelé avec l'option `-e`)
@@ -61,9 +62,9 @@ Il y a actuellement 4 utilisateurs différents loggués
 Il reste 262Mo de RAM disponible sur un total de 5.5G
 ```
 
-- 10.4 - Relancer le script avec `bash -x votrescript.sh` et analyser ce qui s'affiche : cette commande est utile pour débugger ce qu'il se passe dans un script !
+- 10.4 - Relancer le script avec `bash -x votrescript.sh` et analyser ce qui s'affiche : cette commande est utile pour débugger ce qu'il se passe dans un script ! -->
 
-## 10 partie 2 - paramétrabilité, interactivité
+<!-- ## 10 partie 2 - paramétrabilité, interactivité
 
 - 10.5 - Écrivez un script `test_args.sh` qui affiche le nom du script, le nombre d'argument donnés, ainsi que le premier et deuxième argument.
 - 10.6 - Écrivez un script `add.sh` qui prends deux nombre en argument en affiche le résultat de leur addition.
@@ -123,4 +124,4 @@ Il reste 262Mo de RAM disponible sur un total de 5.5G
   - vous pouvez choisir un nombre aléatoirement avec la variable spéciale `$RANDOM`,
   - mettre en place un fichier `template.html` qui contient le code de votre page web mais où le chemin de l'image est un mot clef comme `CHEMIN_IMAGE`. Votre script pourra alors utiliser `sed` pour généner `index.html` en remplacant `CHEMIN_IMAGE` par le vrai chemin.
 - 11.5 - Une fois votre script validé, ajouter un job cron qui lancera ce script toutes les minutes pour choisir une nouvelle image aléatoirement
-- 11.6 - Même principe, mais cette fois créez une page `monitor.html` qui contiendra des informations régulièrement mises à jour (e.g. toutes les quelques minutes) à propos du serveur : RAM utilisée / disponible, uptime, processus les plus gourmands, l'heure qu'il est, et un rapport des IPs récemment bannies par fail2ban ...
+- 11.6 - Même principe, mais cette fois créez une page `monitor.html` qui contiendra des informations régulièrement mises à jour (e.g. toutes les quelques minutes) à propos du serveur : RAM utilisée / disponible, uptime, processus les plus gourmands, l'heure qu'il est, et un rapport des IPs récemment bannies par fail2ban ... -->

@@ -1,5 +1,6 @@
 ---
 title: Administration avancée
+draft: true
 ---
 
 # Administration Linux avancée

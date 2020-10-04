@@ -1,5 +1,6 @@
 ---
 title: Administration Linux
+draft: false
 ---
 
 # Administration Linux
@@ -257,7 +258,7 @@ Exemple :
 
 --- -->
 
-# 1. Installer une distribution
+<!-- # 1. Installer une distribution
 
 ## Les points de montage
 
@@ -403,7 +404,7 @@ sda             8:0    0 29.8G  0 disk
 └─sda2          8:2    0 28.8G  0 part  /
 ```
 
----
+--- -->
 
 # 2. Le gestionnaire de paquet
 
@@ -465,7 +466,6 @@ Sous Windows
 
 # 2. Le gestionnaire de paquet
 
-.center[
 _One package to rule them all_
 
 _One package to find them_
@@ -475,7 +475,6 @@ _One package to download them all_
 _and on the system bind them_
 
 _In the land of GNU/Debian where the penguin lie_
-]
 
 ---
 
@@ -519,7 +518,7 @@ Format `.deb`
 
 ---
 
-# 2. Le gestionnaire de paquet
+<!-- # 2. Le gestionnaire de paquet
 
 ## Mais qu'est-ce que c'est, un paquet ?
 
@@ -531,7 +530,7 @@ Un programme, et des fichiers (dossier `debian/`) qui décrivent le paquet :
 - `rules` : des trucs techniques pour compiler le paquet
 - `postinst`, `prerm`, ... : des scripts à lancer quand le paquet est installé, désinstallé, ...
 
----
+--- -->
 
 # 2. Le gestionnaire de paquet
 
@@ -577,7 +576,7 @@ Les versions tournent tous les ~2 ans environ
 
 ---
 
-# 2. Le gestionnaire de paquet
+<!-- # 2. Le gestionnaire de paquet
 
 ## Les versions de Debian
 
@@ -590,8 +589,8 @@ Basé sur les personnages de Toy Story
 - 11, `bullseye`
 - 12, `bookworm`
 
----
-
+--- -->
+<!--
 # 2. Le gestionnaire de paquet
 
 ![](../../images/debiantimeline.png)
@@ -616,7 +615,7 @@ https://packages.debian.org/search
 - Fournissent des paquets venant de `testing` en `stable`
 - À utiliser avec prudence
 
----
+--- -->
 
 # 2. Le gestionnaire de paquet
 
@@ -1102,7 +1101,7 @@ La situation se complexifie avec Virtualbox :
 
 ---
 
-# 4. Notions de cryptographie
+<!-- # 4. Notions de cryptographie
 
 ---
 
@@ -1233,7 +1232,7 @@ Vous faites confiance à Microsoft et Google (!?), qui certifient avoir vérifi�
 - Le certificat HTTPS contient une signature qui a été produite avec l'une des clefs de ces tiers de confiance
 - Vous pouvez ainsi faire confiance "par délégation"
 
----
+--- -->
 
 # 5. Se connecter et gérer un serveur avec SSH
 
@@ -1586,7 +1585,7 @@ AllowGroups root ssh
 
 - (plus ou moins subjectif !..)
 - Changer le port 22 en quelque chose d'autre (2222, 2323, 2200, ...)
-- Desactiver le login root en ssh
+- Désactiver le login root en ssh
 - Utiliser exclusivement des clefs
 
 ---
@@ -1941,7 +1940,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successfu
 
 ---
 
-# 8. Automatiser avec `at` et les cron jobs
+<!-- # 8. Automatiser avec `at` et les cron jobs
 
 ---
 
@@ -2061,7 +2060,7 @@ job 6 at Thu Oct 11 20:22:00 2018
 - Dedans, on specifie aussi l'utilisateur utilisé pour lancer le script :
 
 ```
- # M  H  D M W   User    Command --->
+ # M  H  D M W   User    Command ---
  */30 *  * * * feed2toot feed2toot -c /etc/feed2toot/feed2toot.ini
 ```
 
@@ -2074,4 +2073,4 @@ job 6 at Thu Oct 11 20:22:00 2018
 - Ils contiennent directement des scripts qui seront executés automatiquement à certains intervalles
 - Attention
   - le nom des fichiers dedans ne doit pas avoir d'extensions ...
-  - .. et doit être executable (+x)
+  - .. et doit être executable (+x) -->
