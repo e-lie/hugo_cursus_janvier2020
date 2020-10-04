@@ -76,32 +76,27 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
-
 ## La préhistoire de l'informatique
 
-- ~1940 : Ordinateurs electromecaniques, premiers ordinateurs programmables
+- ~1940 : Ordinateurs électromécaniques, premiers ordinateurs programmables
 - ~1950 : Transistors
 - ~1960 : Circuits intégrés
 
 ...Expansion de l'informatique...
 
----
+<!-- ---
 
-# 0. Les origines de Linux
 
 ## 1970 : PDP-7
 
-![](../../images/pdp7.jpg)
+![](../../images/pdp7.jpg) -->
 
 ---
-
-# 0. Les origines de Linux
 
 ## 1970 : UNIX
 
 - Définition d'un 'standard' pour les OS
-- Un multi-utilisateur, multi-tâche
+- Multi-utilisateur, multi-tâche
 - Design modulaire, simple, élégant, efficace
 - Adopté par les universités américaines
 - Ouvert (évidemment)
@@ -111,15 +106,11 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
-
 ## 1970 : UNIX
 
 ![](../../images/unixtree.png)
 
 ---
-
-# 0. Les origines de Linux
 
 ## 1975 : Le langage C
 
@@ -129,9 +120,8 @@ weight: 1
 
 ![](../../images/ritchie_thompson.jpg)
 
----
+<!--
 
-# 0. Les origines de Linux
 
 ## 1970~1985 : Les débuts d'Internet
 
@@ -142,7 +132,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1970~1985 : Les débuts d'Internet
 
@@ -150,7 +139,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1970~1985 : Les débuts d'Internet
 
@@ -164,7 +152,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1980 : Culture hacker, logiciel libre
 
@@ -178,7 +165,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1980 : Culture hacker, logiciel libre
 
@@ -193,7 +179,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1990 : Création de Linux
 
@@ -204,7 +189,6 @@ weight: 1
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1990 : Création de Linux
 
@@ -219,9 +203,19 @@ _PS. [...] It is NOT portable [...] and it probably never will support anything 
 
 ---
 
-# 0. Les origines de Linux
 
 ## 1990 : Et en fait, Linux se développe...
+
+- Linus Torvalds met Linux sous licence GPL
+- Support des processeurs Intel
+- Système (kernel + programmes) libre et ouvert
+- Compatibles avec de nombreux standard (POSIX, SystemV, BSD)
+- Intègre des outils de développement (e.g. compilateurs C)
+- Excellent support de TCP/IP
+- Création de Debian en 1993
+-->
+
+## 1990 : Linux se développe...
 
 - Linus Torvalds met Linux sous licence GPL
 - Support des processeurs Intel
@@ -233,8 +227,6 @@ _PS. [...] It is NOT portable [...] and it probably never will support anything 
 
 ---
 
-# 0. Les origines de Linux
-
 ... L'informatique et Internet se démocratisent ...
 
 En très résumé :
@@ -245,7 +237,7 @@ En très résumé :
 
 ---
 
-# 0. Les origines de Linux
+---
 
 ## L'informatique contemporaine
 
@@ -256,7 +248,7 @@ En très résumé :
 
 ---
 
-# 0. Les origines de Linux
+<!-->
 
 ## Linux aujourd'hui
 
@@ -267,8 +259,6 @@ En très résumé :
 - Pratiques de sécurités beaucoup plus saines et claires que Microsoft
 
 ---
-
-# 0. Les origines de Linux
 
 ## Les distributions
 
@@ -283,8 +273,6 @@ Un ensemble de programmes "packagés", préconfigurés, intégré pour un usage 
 - Des objectifs / une philosophie
 
 ---
-
-# 0. Les origines de Linux
 
 ## Les distributions
 
@@ -307,15 +295,11 @@ Un ensemble de programmes "packagés", préconfigurés, intégré pour un usage 
 
 ---
 
-# 0. Les origines de Linux
-
 ## Les distributions
 
 Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine, Devuan, elementaryOS, ...
 
 ---
-
-# 0. Les origines de Linux
 
 ## Linux, les environnement
 
@@ -327,15 +311,11 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ---
 
-# 0. Les origines de Linux
-
 ## Linux, les environnements (Gnome)
 
 ![](../../images/gnome.jpg)
 
 ---
-
-# 0. Les origines de Linux
 
 ## Linux, les environnements (KDE)
 
@@ -343,23 +323,17 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ---
 
-# 0. Les origines de Linux
-
 ## Linux, les environnements (Cinnamon)
 
 ![](../../images/cinnamon.jpg)
 
 ---
 
-# 0. Les origines de Linux
-
 ## Linux, les environnements (XFCE)
 
 ![](../../images/xfce.jpg)
 
 ---
-
-# 0. Les origines de Linux
 
 ## Linux, les environnements (Awesome)
 
@@ -376,6 +350,8 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 - Profite de la stabilité de Debian et de l'accessibilité d'Ubuntu
 
 ---
+
+-->
 
 # 1. Rappels sur l'informatique
 

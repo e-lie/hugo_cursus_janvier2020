@@ -155,7 +155,3 @@ vous êtes dans un dossier avec du code:
 </br> Staged = inclus (dans le prochain commit)
 
 ---
-
-# Premier TP
-
----

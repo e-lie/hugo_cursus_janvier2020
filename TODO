@@ -24,3 +24,6 @@ Ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
 En gros a la fin ils on un ynh cheap et avec ci pour les plus avances. 
 - Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément, plutôt en jour 1 même. 
 piquer des trucs du tuto de fergus ?
+- dire que la ref docker est cool à checker car elle change tout le temps
+- dire que docker compose wordpress tout fait là https://hub.docker.com/_/wordpress ou là https://docs.docker.com/compose/wordpress/
+- same with nextcloud https://hub.docker.com/_/nextcloud or here https://github.com/nextcloud/docker

@@ -46,7 +46,7 @@ Télécharger une Ubuntu 18.04 préinstallée sur OSboxes.org
 - Créer une nouvelle machine virtuelle
   - De type Linux / Ubuntu (64 bit)
   - 2048 Mo de RAM devraient suffir
-  - Au moment de choisir le disque dur : fournir le fichier VDI de OSboxes / Linux Mint
+  - Au moment de choisir le disque dur : fournir le fichier VDI de OSboxes / Ubuntu
 - Démarrer la machine et observer les étapes de démarrage
 
 ---

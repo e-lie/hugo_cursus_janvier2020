@@ -135,3 +135,5 @@ docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.
 - Listez les images
 - Supprimez une image
 - Que fait la commande `docker image prune -a` ?
+
+- En utilisant la commande `docker save`, utilisez `tar` pour décompresser une image Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans l'image.
