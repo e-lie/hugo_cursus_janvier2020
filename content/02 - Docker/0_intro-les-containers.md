@@ -1,6 +1,6 @@
 ---
 title: Introduction à Docker
-weight: 0
+weight: 1
 ---
 
 ## _Modularisez et maîtrisez vos applications_
