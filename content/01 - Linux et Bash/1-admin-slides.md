@@ -1537,7 +1537,7 @@ $ scp bob@dismorphia.info:/home/alex/.bashrc ./
 
 ---
 
-# 6 - Services et sécurité basique d'un serveur
+<!-- # 6 - Services et sécurité basique d'un serveur
 
 ---
 
@@ -1937,7 +1937,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successfu
 2018/10/10 09:06:44 [error] 28638#28638: *851331 open() "/usr/share/nginx/html/.well-known/assetlinks.json" failed (2: No such file or directory), client: 66.22.66.33, server: dismorphia.info, request: "GET /.well-known/assetlinks.json HTTP/1.1", host: "dismorphia.info"
 ```
 
-(ACHTUNG : quand on débugge, toujours comparer l'heure actuelle du serveur à l'heure des erreurs pour vérifier quand elles ont eu lieu !)
+(ACHTUNG : quand on débugge, toujours comparer l'heure actuelle du serveur à l'heure des erreurs pour vérifier quand elles ont eu lieu !) -->
 
 ---
 

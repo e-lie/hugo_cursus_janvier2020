@@ -3,7 +3,7 @@ title: Introduction à Linux
 weight: 1
 ---
 
-# Introduction à Linux
+<!-- # Introduction à Linux -->
 
 <!-- _Become a Command Line padawan in one day!_ -->
 
@@ -124,8 +124,8 @@ weight: 1
 ## 1975 : Le langage C
 
 - D. Ritchie et K. Thompson définissent un nouveau langage : le C ;
-- Le C rends portable les programmes ;
-- Ils réécrivent une version d'UNIX en C, ce qui rends UNIX portable ;
+- Le C rend portable les programmes ;
+- Ils réécrivent une version d'UNIX en C, ce qui rend UNIX portable ;
 
 ![](../../images/ritchie_thompson.jpg)
 
@@ -188,7 +188,7 @@ weight: 1
   3. Liberte de redistribuer les modificiations
 - ... et le projet GNU : un ensemble de programmes libres
 
-![(img/stallman.jpg)]
+![](../../images/stallman.jpg)
 ![](../../images/gnu.png)
 
 ---
@@ -199,7 +199,7 @@ weight: 1
 
 - Linus Torvalds écrit Linux dans son garage
 
-![(img/torvalds.jpg)]
+![](../../images/torvalds.jpg)
 ![](../../images/tux.png)
 
 ---
@@ -385,9 +385,9 @@ Et bien d'autres : Gentoo, LinuxFromScratch, Fedora, OpenSuse, Slackware, Alpine
 
 ---
 
-# L'ordinateur comme outil universel
+<!-- # L'ordinateur comme outil universel
 
-Votre laptop doit être pour vous ce que le sabre laser est au Jedi
+Votre laptop doit être pour vous ce que le sabre laser est au Jedi -->
 
 ---
 
@@ -458,171 +458,15 @@ Autres protocoles : DNS, SSH, IRC, torrent, ...
 - IP
 - Cables
 
-Modele client / serveur
+Modèle client / serveur
 
 ---
 
-# 2. Prendre en main sa machine et le terminal
-
 ---
 
-# 2. Prendre en main sa machine et le terminal
-
-## Installer une machine virtuelle
-
-- Un ordinateur "simulé" dans un ordinateur
-  - VirtualBox est un logiciel permettant ce genre de chose
-- Parti pris : Linux Mint avec Cinnamon
+# 2. La ligne de commande
 
 ---
-
-# 2. Prendre en main sa machine et le terminal
-
-## Installer une machine virtuelle
-
-![](../../images/vbox1.png)
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Installer une machine virtuelle
-
-![](../../images/vbox2.png)
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Installer une machine virtuelle
-
-Télécharger une Linux Mint préinstallée sur OSboxes.org
-
-![](../../images/osboxes_mint.png)
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Installer une machine virtuelle
-
-- Installer Virtualbox
-- Créer une nouvelle machine virtuelle
-  - De type Linux / Other-linux (64 bit)
-  - 2048 Mo de RAM devraient suffir
-  - Au moment de choisir le disque dur : fournir le fichier VDI de OSboxes / Linux Mint
-- Démarrer la machine et observer les étapes de démarrage
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Se connecter
-
-Pour cette première connexion, nous allons passer par un tty plutôt que par le login graphique.
-
-Pour ce faire, appuyer sur Ctrl+Alt+F2 (ou F3, F4, ...)
-
-```
-Debian Stretch <nom_de_machine> tty0
-
-<nom_de_machine> login: █
-```
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Se connecter
-
-Pour cette première connexion, nous allons passer par un tty plutôt que par le login graphique.
-
-Pour ce faire, appuyer sur Ctrl+Alt+F2 (ou F3, F4, ...)
-
-```
-Debian Stretch <nom_de_machine> tty0
-
-<nom_de_machine> login: votre_login
-Password: █        # <<<< le mot de passe ne s'affiche pas du tout quand on le tape !
-```
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Se connecter
-
-Pour cette première connexion, nous allons passer par un tty plutôt que par le login graphique.
-
-Pour ce faire, appuyer sur Ctrl+Alt+F2 (ou F3, F4, ...)
-
-```
-Debian Stretch <nom_de_machine> tty0
-
-<nom_de_machine> login: votre_login
-Password:
-Last login: Wed 19 Sep 16:23:42 on tty2
-votre_login@machine:~$ █
-```
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Premières commandes
-
-Changez votre mot de passe :
-
-- Taper `passwd` puis _Entrée_ puis suivez les instructions
-
-```
-votre_login@machine:~$ passwd
-Changing password for votre_login.
-(current) UNIX password:
-Enter new UNIX password:
-Retype new UNIX password:
-passwd: password updated successfully
-votre_login@machine:~$ █
-```
-
----
-
-![](../../images/password-mistakes.png)
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Premières commandes
-
-- Taper `pwd` puis _Entrée_ et observer
-- Taper `ls` puis _Entrée_ et observer
-- Taper `cd /var` puis _Entrée_ et observer
-- Taper `pwd` puis _Entrée_ et observer
-- Taper `ls` puis _Entrée_ et observer
-- Taper `ls -l` puis _Entrée_ et observer
-- Taper `echo 'Je suis dans la matrice'` puis _Entrée_ et observer
-
----
-
-# 2. Prendre en main sa machine et le terminal
-
-## Discussion
-
-- Nous nous sommes connecté à une machine
-- Nous avons eu accès à un terminal
-- Le terminal permet de taper des commandes pour interagir "directement" avec l'OS
-- Des commandes comme dans "passer commande"
-- Certaines affichent des choses, d'autres changent des états
-- Vous pouvez ouvrir d'autres TTy / consoles avec Ctrl+Alt+F1, F2, F3, ..
-
----
-
-# 3. La ligne de commande
-
----
-
-# 3. La ligne de commande
 
 ## Structure d'une commande
 
@@ -635,8 +479,6 @@ votre_login@machine:~$ █
 ```
 
 ---
-
-# 3. La ligne de commande
 
 ## Exemples
 
@@ -654,21 +496,15 @@ dnsmasq -x /run/dnsmasq/dnsmasq.pid -u dnsmasq -7 /etc/dnsmasq.d,.dpkg-dist,.dpk
 
 ---
 
-# 3. La ligne de commande
-
 ## `passwd` - Changer son password
 
 ---
-
-# 3. La ligne de commande
 
 ## `pwd` - Afficher le dossier courant
 
 _Print current working directory_
 
 ---
-
-# 3. La ligne de commande
 
 ## `cd` - Naviguer dans les dossiers
 
@@ -682,8 +518,6 @@ cd -              # Retourne dans le dossier où on était juste avant
 N.B : On ne peut pas faire `cd /un/fichier` ! Ça n'a pas de sens !
 
 ---
-
-# 3. La ligne de commande
 
 ## `ls` - Liste les fichiers d'un dossier
 
@@ -701,8 +535,6 @@ ls  *.py      # Liste tous les fichiers du repertoire courant qui se finissent p
 
 ---
 
-# 3. La ligne de commande
-
 - Utiliser `ls` et `cd`, c'est comme naviguer avec un explorateur de fichier graphique !
 
 - Un bon Jedi est toujours être attentif à :
@@ -713,8 +545,6 @@ ls  *.py      # Liste tous les fichiers du repertoire courant qui se finissent p
 
 ---
 
-# 3. La ligne de commande
-
 ## Nettoyer son terminal
 
 - `clean` efface tout ce qui est affiché dans le terminal
@@ -723,8 +553,6 @@ ls  *.py      # Liste tous les fichiers du repertoire courant qui se finissent p
 - (`logout` est similaire à `exit`)
 
 ---
-
-# 3. La ligne de commande
 
 ## Obtenir de l'aide sur des commandes
 
@@ -742,8 +570,6 @@ nom_de_comande --help
 
 ---
 
-# 3. La ligne de commande
-
 ## Annuler / arrêter une commande en cours d'execution
 
 - Si une commande prends trop longtemps, il est possible de l'annuler avec [Ctrl]+C
@@ -759,8 +585,6 @@ alex@shadow:~$
 - (N.B. : [Ctrl]+C / [Ctrl]+V ne fais pas copier/coller dans la console !)
 
 ---
-
-# 3. La ligne de commande
 
 ## Raccourcis et astuces de ninja
 
@@ -797,11 +621,11 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+<!-- # Le système de fichier
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Généralités
 
@@ -813,7 +637,7 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Partitionnement d'un disque
 
@@ -824,7 +648,7 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Quelques systèmes de fichier classiques
 
@@ -835,9 +659,9 @@ alex@shadow:~$
 - _TMPFS_ : système de fichier pour gérer des fichiers temporaires (`/tmp/`)
 - _ZTFS_, _BRTFS_, _Tahoe-LAFS_, _FUSE_, _IPFS_, ...
 
----
+--- -->
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Sous UNIX / Linux
 
@@ -852,7 +676,7 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Un fichier
 
@@ -866,7 +690,7 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Nommage des fichiers
 
@@ -878,7 +702,7 @@ alex@shadow:~$
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Arborescence de fichier
 
@@ -900,7 +724,7 @@ coursLinux/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Filesystem Hierarchy Standard
 
@@ -919,7 +743,7 @@ coursLinux/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Répertoires personnels
 
@@ -930,7 +754,7 @@ coursLinux/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Filesystem Hierarchy Standard
 
@@ -938,7 +762,7 @@ coursLinux/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Designation des fichiers
 
@@ -1005,7 +829,7 @@ Un chemin relatif n'a de sens que par rapport à un dossier donné... mais est s
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Chemins relatifs
 
@@ -1020,7 +844,7 @@ Un chemin relatif n'a de sens que par rapport à un dossier donné... mais est s
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des fichiers (1/4)
 
@@ -1037,7 +861,7 @@ wc -l /usr/share/doc/nano/nano.html      # 2005 lignes !
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des fichiers (2/4)
 
@@ -1054,7 +878,7 @@ less /usr/share/doc/nano/nano.html       # Regarder interactivement le fichier
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des fichiers (3/4)
 
@@ -1069,7 +893,7 @@ less /usr/share/doc/nano/nano.html       # Regarder interactivement le fichier
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des fichiers (4/4)
 
@@ -1089,7 +913,7 @@ mv linux.html ~/archives/      # Déplace linux.html dans ~/archives/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des dossiers (1/3)
 
@@ -1098,7 +922,7 @@ mv linux.html ~/archives/      # Déplace linux.html dans ~/archives/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des dossiers (2/3)
 
@@ -1115,7 +939,7 @@ cp -r ~/dev /tmp/     # Créé une copie de dev/ et son contenu dans /tmp/
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Manipuler des dossiers (3/3)
 
@@ -1133,7 +957,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les liens durs (hard link)
 
@@ -1145,9 +969,9 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
-## Les liens symbolic (symlink)
+## Les liens symboliques (symlink)
 
 ![](../../images/symlink.png)
 
@@ -1157,7 +981,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les liens symbolic (symlink)
 
@@ -1170,7 +994,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ---
 
-# 4. Le système de fichier
+<!-- # Le système de fichier
 
 ## Les points de montage
 
@@ -1178,7 +1002,7 @@ rm -r ~/trash          # Supprime tout le dossier ~/trash et son contenu
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Notation des patitions
 
@@ -1194,7 +1018,7 @@ Les disques partitions sous Linux sont généralement dénommées :
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Outil pour lister les disques, gérer les partions
 
@@ -1214,7 +1038,7 @@ $ fdisk /dev/sda
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Outil pour lister les disques, gérer les partions
 
@@ -1222,7 +1046,7 @@ $ fdisk /dev/sda
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage
 
@@ -1236,7 +1060,7 @@ Une partition ou n'importe quel "bidule de stockage" peut être "monté" dans le
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage
 
@@ -1251,7 +1075,7 @@ $ ls /media/usbkey
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage
 
@@ -1263,7 +1087,7 @@ $ umount /media/usbkey
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage : `/etc/fstab`
 
@@ -1279,7 +1103,7 @@ UUID=[id tres long] /home/       ext4    defaults        0       2
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage : outils
 
@@ -1295,7 +1119,7 @@ $ mount
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage : outils
 
@@ -1316,7 +1140,7 @@ tmpfs           567M   16K  567M   1% /run/user/1000
 
 ---
 
-# 4. Le système de fichier
+# Le système de fichier
 
 ## Les points de montage : outils
 
@@ -1332,11 +1156,12 @@ sda             8:0    0 29.8G  0 disk
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ---
+--- -->
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Généralités
 
@@ -1344,9 +1169,7 @@ sda             8:0    0 29.8G  0 disk
 - possède des fichiers, peut en créer, modifier, naviguer, ...
 - peut lancer des commandes / des processus
 
----
-
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Répertoire des utilisateurs
 
@@ -1366,7 +1189,7 @@ alex:x:1000:1000:Zee Aleks:/home/alex:/bin/bash
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## root
 
@@ -1380,7 +1203,7 @@ alex:x:1000:1000:Zee Aleks:/home/alex:/bin/bash
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Passer root (ou changer d'utilisateur)
 
@@ -1392,7 +1215,7 @@ exit        # Quitter un shell
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Sudo
 
@@ -1411,7 +1234,7 @@ sudo su             # Ouvrir un shell root via sudo...
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Les groupes
 
@@ -1427,7 +1250,7 @@ Exemples :
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Mot de passe
 
@@ -1468,7 +1291,7 @@ Bref : une empreinte caractérisant une information de manière très précise
 
 ---
 
-# 5. Utilisateurs et groupes
+# Utilisateurs et groupes
 
 ## Commandes utiles
 
@@ -1486,11 +1309,11 @@ usermod -a -G <group> <user>  # Ajouter un utilisateur à un groupe
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Généralités
 
@@ -1514,19 +1337,19 @@ $ ls -l coursLinux.html
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ![](../../images/permissions.jpg)
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ![](../../images/permissions2.png)
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Permissions des **fichiers**
 
@@ -1536,7 +1359,7 @@ $ ls -l coursLinux.html
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Permissions des **dossiers**
 
@@ -1548,7 +1371,7 @@ $ ls -l coursLinux.html
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Gérer les propriétaires
 
@@ -1569,7 +1392,7 @@ chown -R barbara /home/alex/dev/      # Change le proprio récursivement !
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Gérer les permissions
 
@@ -1588,7 +1411,7 @@ chmod -R +x ./bin/           # Active le droit d'execution pour tout le monde et
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Représentation octale
 
@@ -1596,13 +1419,13 @@ chmod -R +x ./bin/           # Active le droit d'execution pour tout le monde et
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ![](../../images/chmod_octal2.png)
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Gérer les permissions .. en octal !
 
@@ -1620,7 +1443,7 @@ chmod 444 coursLinux.html  # Fixe les permissions à r--r--r--
 
 ---
 
-# 6. Permissions
+# Permissions
 
 ## Chown vs. chmod
 
@@ -1628,7 +1451,7 @@ chmod 444 coursLinux.html  # Fixe les permissions à r--r--r--
 
 ---
 
-# 6. Permissions
+# Permissions
 
 Lorsque l'on fait :
 
@@ -1648,11 +1471,11 @@ ne signifie pas qu'on a pas les droits de lecture sur le fichier, mais bien que 
 
 ---
 
-# 7. Processus
+# Processus
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Généralités
 
@@ -1669,7 +1492,7 @@ ne signifie pas qu'on a pas les droits de lecture sur le fichier, mais bien que 
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Execution (1/2)
 
@@ -1687,7 +1510,7 @@ Rappel : UNIX est multi-tâche, multi-utilisateur
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Execution (2/2)
 
@@ -1701,7 +1524,7 @@ En mode interactif, on peut interragir directement avec le processus pendant qu'
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Attributs
 
@@ -1714,7 +1537,7 @@ En mode interactif, on peut interragir directement avec le processus pendant qu'
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Lister les processus et leurs attributs (1/2)
 
@@ -1739,7 +1562,7 @@ Exemple de `ps -ef --forest`
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Lister les processus et leurs attributs (2/2)
 
@@ -1754,7 +1577,7 @@ top               # Liste les processus actif interactivement
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Priorité des processus (1/2)
 
@@ -1767,7 +1590,7 @@ top               # Liste les processus actif interactivement
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Priorité des processus (2/2)
 
@@ -1787,7 +1610,7 @@ renice +10 9182
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Gérer les processus interactif
 
@@ -1801,7 +1624,7 @@ jobs                  # Lister les commandes en cours d'execution
 
 ---
 
-# 7. Processus
+# Processus
 
 ## Tuer des processus
 
@@ -1823,13 +1646,13 @@ pkill -9 java
 
 ---
 
-# 7. Processus
+<!-- # Processus
 
 ![](../../images/dontsigkill.png)
 
----
+--- -->
 
-# 7. Processus
+<!-- # Processus
 
 ## `screen`
 
@@ -1839,4 +1662,4 @@ pkill -9 java
 2. On lance ce que l'on veut dedans
 3. On peut sortir de la session avec `<Ctrl>+A` puis `D`.
 4. La commande lancée continue à s'executer
-5. On peut revenir dans la session plus tard avec `screen -r`
+5. On peut revenir dans la session plus tard avec `screen -r` -->

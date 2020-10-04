@@ -1,5 +1,5 @@
 ---
-title: Préparation de la VM de travail
+title: Préparation et démo
 weight: 10
 draft: no
 ---
@@ -19,8 +19,6 @@ draft: no
 ## ![](../../images/Moby-logo.png)
 
 # Des conteneurs
-
-![](../../images/docker.png)
 
 - ## La métaphore docker : "box it, ship it"
 
@@ -89,19 +87,3 @@ server {
     <!-- Structurer en écrivant quelques titres -->
 
 ---
-
-## Importez une machine Linux
-
-- Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
-- Configurez-la avec 8Go de RAM si possible
-- Démarrez la machine
-- Faites les mises à jour (`sudo apt update` et `sudo apt upgrade`)
-
-## Installer quelques logiciels
-
-- Installez VSCode avec le gestionnaire de paquet `snap install code --classic`
-- En ligne de commande (`apt`) installez `git`, `htop`, `ncdu`
-
-## Explorer Ubuntu Bionic (18.04) : Démo
-
-## Explorer l'éditeur VSCode : Démo

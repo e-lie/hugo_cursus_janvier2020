@@ -15,32 +15,41 @@ weight: 15
 - 1.4 - Utilisez l'ISO téléchargée en tant que CD Rom virtuel que vous insérez dans la machine virtuelle. Pour ce faire : dans Configuration, Stockage, cliquer sur le CD rom (vide) puis, sur l'icone de CD rom toute à droite, et choisir l'ISO téléchargée.
 - 1.5 - Démarrer la machine : Linux Mint est censé se lancer (utiliser le mode de compatibilité sinon)
 - 1.6 - Lancer l'installation de Linux Mint
+
   - choisir sa langue et son clavier
   - accepter l'installation des logiciels tiers
   - lors du choix du type de partitionnement, **prendre toute la partition**
+
   <!-- - créer une nouvelle table de partition, puis partitionner à l'aide du "+" l'espace de la manière suivante :
-    - 300 Mo pour `/boot` en ext4
-    - 14 Go pour `/` en ext4
-    - 5 Go pour `/home` en ext4
-    - le reste (~700 Mo) en swap -->
+      - 300 Mo pour `/boot` en ext4
+      - 14 Go pour `/` en ext4
+      - 5 Go pour `/home` en ext4
+      - le reste (~700 Mo) en swap -->
+
   - choisissez le fuseau horaire, puis un nom d'utilisateur, de machine, et un mot de passe.
   - lancez l'installation et prenez une pause, buvez un café, ou regardez la vidéo youtube "The UNIX operating system" et laissez Brian Kernighan vous parler de l'élégance des pipes !
+
 - 1.7 - Redémarrez la machine et logguez-vous.
+
   <!-- Mettez-vous à l'aise et prenez vos marques dans votre nouvel environnement :
     - choisissez un nouveau fond d'écran, naviguez dans les fichiers, testez le menu démarrer
     - choisissez un thème de couleur pour le terminal (Edition > Preferences > Couleurs)
     - personnalisez votre PS1 et vos alias -->
+
   - testez le copier-coller dans la console. Vous pouvez utiliser clic droit puis "Copier" et "Coller", ou bien Ctrl+Shift+C et Ctrl+Shift+V, ou bien sélectionner du texte et utiliser le clic du milieu de la souris.
-      <!-- - tapez quelques commandes et tentez de maîtriser des raccourcis comme Ctrl+R, Ctrl+A/E, Ctrl+U/K -->
-      <!-- - (éventuellement, testez et configurer l'éditeur de texte graphique "xed") -->
-    <!-- - 1.8 - Vérifiez avec `df -h`, `lsblk -f` et `mount` que le partitionnement et les points de montage correspondent à ce que vous avez fait. -->
-    <!-- - 1.9 - Au bureau, un collègue vous informe que vous aurez besoin d'une partition de type NTFS sur votre disque, pour pouvoir communiquer avec un OS de type Microsoft. Vous décidez alors d'ajuster le partitionnement de votre disque.
+
+<!-- - tapez quelques commandes et tentez de maîtriser des raccourcis comme Ctrl+R, Ctrl+A/E, Ctrl+U/K -->
+<!-- - (éventuellement, testez et configurer l'éditeur de texte graphique "xed") -->
+<!-- - 1.8 - Vérifiez avec `df -h`, `lsblk -f` et `mount` que le partitionnement et les points de montage correspondent à ce que vous avez fait. -->
+<!-- - 1.9 - Au bureau, un collègue vous informe que vous aurez besoin d'une partition de type NTFS sur votre disque, pour pouvoir communiquer avec un OS de type Microsoft. Vous décidez alors d'ajuster le partitionnement de votre disque.
+
   - Relancez votre machine, de nouveau avec l'ISO dans le lecteur CD virtuel
   - Depuis la live CD, lancez le programme "Gparted"
   - Redimensionnez la partition correspondant à /home pour la réduire de 1 Go
   - Créez une nouvelle partition de type ntfs prenant le 1 Go maintenant libre
   - Validez les changements
   - Redémarrez le système
+
 - De retour sur votre bureau, :
   - Vérifier qu'une nouvelle partition ntfs est effectivement présente via `lsblk -f`
   - Créez un dossier `windows` dans `/media/` puis montez manuellement la nouvelle partition sur `/media/windows`. (Vérifiez le résultat avec `lsblk` et `df -h`)
