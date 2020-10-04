@@ -1,10 +1,11 @@
 ---
 title: Introduction à Linux
+weight: 1
 ---
 
 # Introduction à Linux
 
-_Become a Command Line Padawan in five days!_
+_Become a Command Line padawan in one day!_
 
 ---
 

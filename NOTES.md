@@ -161,28 +161,11 @@ Les faire participer au planning de formation dans la limite du possible
 
 # TODO
 
+- add healthcheck app: https://github.com/docker-training/healthcheck
+
 - Réviser réseau NAT de Docker
 - test rootless docker : https://docs.docker.com/engine/security/rootless/#prerequiresites
 - REFAIRE TOUT LE QUIZ
-
-# Ressources
-
-- DONNER ACCES A UNE PAGE RESSOURCES ou simplement awesome-docker
-  https://docs.docker.com/engine/security/security/
-  https://github.com/veggiemonk/awesome-docker
-  https://github.com/jesseduffield/lazydocker
-  https://github.com/rancher/convoy
-  https://github.com/docker/dockercraft
-  https://jpetazzo.github.io/2017/01/20/docker-logging-gelf/
-  https://github.com/docker/labs/tree/master/security
-  https://github.com/docker-training/healthcheck
-  Ajouter plus + doc officielle + vidéos youtube sympa et ouverture kubernetes
-
-https://noti.st/aurelievache/PrttUh
-
-- Containers, VMs... Comment ces technologies fonctionnent et comment les différencier? (Quentin Adam) https://www.youtube.com/watch?v=wG4_JQXvZIc
-
-https://github.com/bitnami/minideb
 
 - Distroless pour **sécurité** : https://github.com/GoogleContainerTools/distroless
 

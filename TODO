@@ -1,10 +1,8 @@
-- ajouter intro sur le devops d'Elie
 - parler de permissions et de sudo
 - planifier vitesse rapide si les gens savent de vitesse plus lente
-- parler de gitpod ? de CI gitlab ? de git ?
+- parler de CI gitlab ? de git ? de gitpod ? 
 - REFAIRE TP SUR REDIS ET VOLUMES AVEC AUTRE CHOSE + plus explicite pour le réseau
 => mon search cards pas CRUD, plutot le flask machin non ?
-- abandonner le gatsby wave et faire des putain de slides et/ou un markdown à défiler
 - expliquer comment on stocke les images et les conteneurs et les volumes cocnrètement
 - s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
 - ouvrir sur k8s ou elk ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
@@ -12,3 +10,12 @@
 - QCM ARGH
 - faire faire du git à ceux qui sont trop en avance ?
 - podman / buildah ?
+
+- Au début demo avec scaleway hop je mets un docker, hop un codimd et un nginx et boum. 
+Souligner que'intérêt est de déployer facilement. Du coup faire faire déployer d'abord la flask app puis elk et flask avec elk puis WordPress, nextcloud, codimd, MediaWiki ou dokuwiki voire même gitlab (non) ou al or sun serveur mine craft pour rire. En gros a la fin ils on un ynh cheap et avec ci pour les plus avances. 
+ Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément, plutôt en jour 1 même. 
+Leur donner 6 vm scaleway, leur faire foutre poetainer dessus puis nginx avec auth http. Ajouter swarm et hop c'est redondant. Autre vm avec swarm et pouf c'est resilient la. Leur demander de générer une clé ssh et me l'envoyer la clé publique par mail ou alors le servir avec nginx. 
+Pour rappels linxu explorer justement bien le réseau avec le ssh dans scaleway, et les k ter face spour comprendre les interfaces docker. Pour comprendre, les volumes parler des permissions pour comprendre le chroot. 
+Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, avec du overlayfs. 
+Pour le to volume et réseau faire l'app flask avec le mysql. Si marche pas garder redis mais dire qu'il y a du cache et que ça soulingen l'importance et les limite du stateless vs stateful. Fsite fzire un script pour migrer du stateful redis Moby counter? 
+piquer des trucs du tuto de fergus ?

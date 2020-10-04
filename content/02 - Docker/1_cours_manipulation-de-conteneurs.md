@@ -143,68 +143,6 @@ Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau
 
 ---
 
-# Allons-y, installons Docker !
-
-## Importez une machine Linux
-
-- Récupérez une machine virtualbox ubuntu (18.04)
-
-- _(facultatif)_ Configurez-la avec 6 Go de RAM et 2 processeurs
-- Démarrez la machine
-
-<!-- - Faites les mises à jour via le Terminal (`apt update` et `apt upgrade`) -->
-
-- Installez VSCode avec la commande suivante :
-
-```bash
-sudo snap install --classic code
-```
-
-- En ligne de commande installez `htop`
-
-## Installer Docker sur Ubuntu
-
-- Suivez la [documentation Docker pour installer Docker sur Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-
-- Vérifiez l'installation en lançant `sudo docker run hello-world`. Cela devrait afficher les étapes effectuées pour afficher ce message.
-
-- Il manque les droits à l'utilisateur pour exécuter docker.
-
-  - Le daemon tourne toujours en `root`
-  - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
-  - Ajoutez-le au groupe avec la commande `usermod -aG <groupe> <user>` (en remplaçant `<groupe>` et `<user>` par ce qu'il faut)
-  - déconnectez-vous de votre session **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)** puis reconnectez-vous pour que la modification sur vos droits utilisateur prenne effet
-
-- Pour vous faciliter la vie, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
-
-```bash
-sudo apt update
-sudo apt install bash-completion curl
-sudo mkdir /etc/bash_completion.d/
-sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh
-sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
-```
-
-Vous pouvez désormais appuyer sur la touche <TAB> pour utiliser l'autocomplétion quand vous écrivez des commandes Docker
-
-- Relancez la session en quittant le terminal et en en relançant un
-
-- Faites un snapshot de la VM Ubuntu avec VirtualBox
-
----
-
-# Pour vérifier l'installation
-
-- Les commandes de base pour connaître l'état de Docker sont :
-
-```bash
-docker info  # affiche plein d'information sur l'engine avec lequel vous êtes en contact
-docker ps    # affiche les conteneurs en train de tourner
-docker ps -a # affiche  également les conteneurs arrêtés
-```
-
----
-
 # Les images et conteneurs
 
 ![](../../images/docker-cycle.jpg)
@@ -315,5 +253,33 @@ docker start --attach <nom_ou_id_conteneur> # lance le conteneur et s'attache à
 ```
 docker exec -it <conteneur> /bin/bash
 ```
+
+---
+
+# Docker Hub : télécharger des images
+
+Une des forces de Docker vient de la distribution d'images :
+
+- ## pas besoin de dépendances, on récupère une boîte autonome
+
+- pas besoin de multiples versions en fonction des OS
+
+Dans ce contexte un élément qui a fait le succès de Docker est le Docker Hub : [hub.docker.com](https://hub.docker.com)
+
+Il s'agit d'un répertoire public et souvent gratuit d'images (officielles ou non) pour des milliers d'applications pré-configurées.
+
+---
+
+# Docker Hub:
+
+- ## On peut y chercher et trouver presque n'importe quel logiciel au format d'image Docker.
+
+- ## Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
+
+- ## Puis utiliser `docker run <id_image>:<version>`
+
+- On peut aussi juste télécharger l'image : `docker pull <image>`
+
+On peut également y créer un compte gratuit pour pousser et distribuer ses propres images, ou installer son propre serveur de distribution d'images privé ou public, appelé **registry**.
 
 ---

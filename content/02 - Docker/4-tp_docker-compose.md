@@ -6,7 +6,7 @@ weight: 45
 
 ## Articuler deux images avec Docker compose
 
-- Vérifiez que docker-compose est bien installé avec `sudo apt-get install docker-compose`.
+- Installez docker-compose avec `sudo apt install docker-compose`.
 - A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
 
 ```yml
@@ -243,5 +243,5 @@ networks:
 
 ---
 
-<!-- Pour les gens en avance :
- Enfin, créez un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers)  (à partir du tag git `v0.18`) avec MySQL et Elasticsearch. Puis, centralisez les logs grâce à des tags filebeat -->
+Pour les gens en avance :
+Enfin, créez un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à partir du tag git `v0.18`) avec MySQL et Elasticsearch. Puis, centralisez les logs grâce à des tags filebeat

@@ -70,8 +70,6 @@ docker volume create --driver local \
     monVolume
 ```
 
---
-
 ---
 
 # Plugins de volumes

@@ -260,12 +260,12 @@ Le but est de la faire fonctionner dans un conteneur à partir de commandes de t
 
 <!-- Faites que l'image soit la plus légère possible en utilisant l'image de base `alpine`. Attention, alpine possède des commandes légèrement différentes (`apk add` pour installer) et la plupart des programmes nes ont pas installés par défaut. -->
 
-<!-- ## La version plus complexe avec MySQL
+## La version plus complexe avec MySQL
 
-*Facultatif : si vous êtes en avance*
+_Facultatif : si vous êtes en avance_
 
 - Basculez sur la version plus complexe : `git checkout v0.18`
-- Suivez le [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour packager cette version plus complexe avec un MySQL (à partir du paragraphe *Using Third-Party "Containerized" Services"*, mais en **s'arrêtant avant la partie finale sur Elasticsearch**), et adaptez/simplifiez si besoin. -->
+- Suivez le [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour packager cette version plus complexe avec un MySQL (à partir du paragraphe _Using Third-Party "Containerized" Services"_, mais en **s'arrêtant avant la partie finale sur Elasticsearch**), et adaptez/simplifiez si besoin.
 
 <!-- ## Toujours plus loin : avec une base de données Elasticsearch
 

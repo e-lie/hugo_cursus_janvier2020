@@ -29,11 +29,9 @@ Ex-ingénieur sécurité / DevOps
 
 # Un peu de logistique
 
-- ## Les slides de présentation et les TD sont disponibles à l'adresse https://hadrienpelissier.fr/docker
+- ## Les slides de présentation et les TD sont disponibles à l'adresse https://cours.hadrienpelissier.fr
 
 - Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
-
---
 
 - Nous allons prendre des notes en commun sur un pad interactif CodiMD et par là faire une rapide démo de Docker.
 
@@ -61,16 +59,18 @@ Ex-ingénieur sécurité / DevOps
 1. Je cherche comment déployer mon logiciel "CodiMD" avec Docker ~~sur Google~~ [dans la documentation officielle de mon logiciel](https://hackmd.io/c/codimd-documentation/%2Fs%2Fcodimd-docker-deployment).
 2. Je trouve le fichier "docker-compose.yml". _Docker-Compose permet de déployer plusieurs conteneurs et de les faire interagir ensemble (nous reviendrons dessus en détail au chapitre 4)_
 3. Je le télécharge et je le place dans mon dossier de travail. J'ouvre un terminal à cet emplacement.
-4. _Ici, on devrait étudier le fichier pour l'adapter et, par exemple, changer les mots de passe par défaut dans la configuration._
-5. Je fais `docker-compose up` et j'attends que Codi-MD et sa base de données postgresql associée soient lancées. Le logiciel indique après un peu de temps être bien configuré et disponible à l'adresse `0.0.0.0:3000`.
-6. Je vais chercher mon IP publique, vous pouvez désormais joindre ce pad pour toute la classe.
+4. _Ici, on devrait étudier le fichier pour l'adapter et, surtout, changer les mots de passe par défaut dans la configuration._
+5. Je vais chercher mon IP publique avec `curl ip.yunohost.org`
+6. Je fais `docker-compose up` et j'attends que Codi-MD et sa base de données postgresql associée soient lancées. Le logiciel indique après un peu de temps être bien configuré et disponible à l'adresse `0.0.0.0:3000`.
+7. Vous pouvez désormais joindre ce pad sur son adresse IP publique (et sur le port `3000`).
+8. Zut, on ne peut pas éditer le pad sans faire de compte. En regardant la documentation, il faut changer la variable d'environnement `CMD_ALLOW_ANONYMOUS` à `true`. J'édite mon fichier `docker-compose.yml`.
 
 ---
 
 7. Mais... attendez, l'adresse de pad est incompréhensible !
-8. Ce qui aiderait serait de pouvoir rediriger mon IP vers le pad de la classe.
+8. Ce qui aiderait serait de pouvoir rediriger mon IP vers le pad du cours.
 9. Docker va me permettre de déployer un serveur nginx juste pour ça rapidement.
-10. Ecrivons une configuration nginx simple qui redirige vers notre pad et plaçons-la dans `/tmp/config-nginx/default.conf` :
+10. Ecrivons une configuration nginx simple qui redirige vers notre pad et plaçons-la dans `/nginx.conf` :
 
 ```nginx
 server {
@@ -94,7 +94,7 @@ server {
 } ``` -->
 
 11. Lançons un conteneur Docker nginx se basant sur ma configuration :
-    `docker run -p 80:80 -d -v /tmp/config-nginx:/etc/nginx/conf.d --name nginx-pad-proxy nginx`
+    `docker run -p 80:80 -d -v /nginx.conf:/etc/nginx/conf.d/default.conf --name nginx-pad-proxy nginx`
     <!-- With network: `docker run -p 80:80 -d --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d --name nginx-pad-proxy nginx` -->
      <!-- Test config and network: `docker run --rm --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d nginx nginx -t` -->
 12. Rien qu'en tapant mon IP (nous n'avons pas configuré le DNS), on devrait être redirigé·e sur le super pad !
@@ -119,11 +119,9 @@ Une chose essentielle à retenir sur la différence technique : **les conteneurs
 
 Les deux technologies peuvent utiliser un système de quotas pour l'accès aux ressources matérielles (accès en lecture/écriture sur le disque, sollicitation de la carte réseau, du processeur)
 
---
-
 Si l'on cherche la définition d'un conteneur :
 
-### **C'est un groupe de _process_ associé à un ensemble de permissions**.
+**C'est un groupe de _processus_ associé à un ensemble de permissions**.
 
 L'imaginer comme une "boîte" est donc une allégorie un peu trompeuse, car ce n'est pas de la virtualisation (= isolation au niveau matériel).
 
@@ -159,10 +157,9 @@ Les conteneurs mettent en œuvre un vieux concept d'isolation des processus perm
   - on parle aussi de **contextes**
 - `jail` était une façon de _compléter_ `chroot`, pour FreeBSD.
 - Pour Linux, ce concept est repris via la mise en place de **namespaces Linux**
+
   - Les _namespaces_ sont inventés en 2002
   - popularisés lors de l'inclusion des 6 types de _namespaces_ dans le **noyau Linux** (3.8) en **2013**
-
-### Les _namespaces_ (espaces de noms)
 
 - Les conteneurs ne sont finalement que **plein de fonctionnalités Linux saucissonnées ensemble de façon cohérente**.
 - Les _namespaces_ correspondent à autant de types de **compartiments** nécessaires dans l'architecture Linux pour isoler des processus.
@@ -313,8 +310,6 @@ Docker modifie beaucoup la **"logistique"** applicative.
 
 - **rapproche le monde du développement** des **opérations** (tout le monde utilise la même technologie)
 
---
-
 - Permet l'adoption plus large de la logique DevOps (notamment le concept _d'infrastructure as code_)
 
 ---
@@ -330,8 +325,6 @@ Docker modifie beaucoup la **"logistique"** applicative.
 ---
 
 ## Réancrer les programmes dans la **réalité de leur utilisation**
-
---
 
 "Machines ain't smart. You are!"
 Comment dire correctement aux machines quoi faire ?

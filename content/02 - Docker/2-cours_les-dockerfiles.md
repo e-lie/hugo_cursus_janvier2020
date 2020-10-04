@@ -11,6 +11,42 @@ weight: 20
 
 - ## Une des fonctionnalités principales de Docker est de pouvoir facilement construire des images à partir d'un simple fichier texte : **le Dockerfile**.
 
+# Le processus de build Docker
+
+- Un image Docker ressemble un peu à une appliance VM car il s'agit d'un linux "freezé" dans un état.
+
+- En réalité c'est assez différent : il s'agit uniquement d'un système de fichier (par couches ou _layers_) et d'un manifeste JSON (des méta-données).
+
+- Les images sont créés en empilant de nouvelles couches sur une image existante grâce à un système de fichiers qui fait du _union mount_.
+
+---
+
+- Chaque nouveau build génère une nouvelle image dans le répertoire des images (/var/lib/docker/images) (attention ça peut vite prendre énormément de place)
+
+- On construit les images à partir d'un fichier `Dockerfile` en décrivant procéduralement (étape par étape) la construction.
+
+### Exemple de Dockerfile :
+
+```Dockerfile
+FROM debian:latest
+
+RUN apt update && apt install htop
+
+CMD ['sleep 1000']
+```
+
+- La commande pour construire l'image est :
+
+```
+docker build [-t tag] [-f dockerfile] <build_context>
+```
+
+- généralement pour construire une image on se place directement dans le dossier avec le `Dockerfile` et les élements de contexte nécessaire (programme, config, etc)
+
+- exemple : `docker build -t mondebian .`
+
+---
+
 - Le **Dockerfile** est un fichier procédural qui permet de décrire l'installation d'un logiciel (la configuration d'un container) en enchaînant des instructions Dockerfile (en MAJUSCULE).
 
 - Exemple:
@@ -46,8 +82,6 @@ ENTRYPOINT["/usr/games/cowsay"]
 CMD ["echo 'Conteneur démarré'"]
 ```
 
---
-
 ## Instruction ENTRYPOINT
 
 - Précise le programme de base avec lequel sera lancé la commande
@@ -76,8 +110,6 @@ ENTRYPOINT ["/usr/bin/python3"]
 docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_construction>
 ```
 
---
-
 - ## Lors de la construction, Docker télécharge l'image de base. On constate plusieurs téléchargements en parallèle.
 
 - ## Il lance ensuite la séquence des instructions du Dockerfile.
@@ -93,8 +125,6 @@ docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_constru
 - ## Docker construit les images comme une série de "couches" de fichiers successives.
 
 - On parle d'**Union Filesystem** car chaque couche (de fichiers) écrase la précédente.
-
---
 
 <!-- In order to understand the relationship between images and containers, we need to explain a key piece of technology that enables Docker—the UFS (sometimes simply called a union mount). Union file systems allow multiple file systems to be overlaid, appearing to the user as a single filesytem. Folders may contain files from multiple filesystems, but if two files have the exact same path, the last mounted file will hide any previous files. Docker supports several different UFS implentations, including AUFS, Overlay, devicemapper, BTRFS, and ZFS. Which implementation is used is system dependent and can be checked by running docker info where it is listed under “Storage Driver.” It is possible to change the filesystem, but this is only recom‐ mended if you know what you are doing and are aware of the advantages and disad‐ vantages.
 Docker images are made up of multiple layers. Each of these layers is a read-only fil‐ eystem. A layer is created for each instruction in a Dockerfile and sits on top of the previous layers. When an image is turned into a container (from a docker run or docker create command), the Docker engine takes the image and adds a read-write filesystem on top (as well as initializing various settings such as the IP address, name, ID, and resource limits). -->
@@ -167,11 +197,7 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 
 - L'intérêt ensuite est que l'image est disponible préconfigurée pour construire ou mettre à jour une infrastructure, ou lancer plusieurs instances (plusieurs containers) à partir de cette image.
 
---
-
 - C'est grâce à cette fonctionnalité que Docker peu être considéré comme un outil d'_infrastructure as code_.
-
---
 
 - On peut également prendre une sorte de snapshot du conteneur (de son système de fichiers, pas des processus en train de tourner) sous forme d'image avec `docker commit <image>` et `docker push`.
 

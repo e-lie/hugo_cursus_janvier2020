@@ -200,8 +200,6 @@ networks:
 - Donc on va dupliquer chaque partie de notre service et mettre les différentes instances derrière un load balancer.
 - Le load balancer va vérifier pour chaque backend s'il est disponible (**healthcheck**) avant de rediriger le trafic.
 
---
-
 - Répartition géographique : en fonction de la provenance des requêtes on va rediriger vers un datacenter adapté (+ ou - proche)
 
 ---

@@ -5,8 +5,6 @@ layout: true
 draft: true
 ---
 
-# {{title}}
-
 ## _Cloud et infrastructure as Code_
 
 ---
@@ -95,8 +93,6 @@ ansible_become_password=el4stic%
 
 # A quoi ça ressemble un playbook
 
-.col-8[.col-10[
-
 ```yaml
 ---
 - hosts: serveur_web
@@ -117,11 +113,7 @@ ansible_become_password=el4stic%
         state: "reloaded"
 ```
 
-]]
-
 ## Quatre parties (ou plus)
-
---
 
 - ## `hosts:` sur quelle machine on applique la configuration
 
