@@ -5,19 +5,11 @@ weight: 1
 
 ## _Modularisez et maîtrisez vos applications_
 
-![](../../images/Docker-Logo-White-RGB_Horizontal.png)
-
----
+[](../../images/Moby-logo.png)
 
 ---
 
 # Introduction
-
-## ![](../../images/Moby-logo.png)
-
-# Des conteneurs
-
-![](../../images/docker.png)
 
 - ## La métaphore docker : "box it, ship it"
 
