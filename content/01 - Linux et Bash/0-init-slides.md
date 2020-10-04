@@ -5,7 +5,7 @@ weight: 1
 
 # Introduction à Linux
 
-_Become a Command Line padawan in one day!_
+<!-- _Become a Command Line padawan in one day!_ -->
 
 ---
 

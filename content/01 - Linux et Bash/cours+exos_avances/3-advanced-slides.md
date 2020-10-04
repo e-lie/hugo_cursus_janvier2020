@@ -21,7 +21,7 @@ draft: true
 - Gérer des services
 - Notions de sécurité
 - Installer un serveur web
-- Automatiser des tâches avec des jobs Cron
+<!-- - Automatiser des tâches avec des jobs Cron -->
 
 ---
 

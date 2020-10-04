@@ -10,6 +10,7 @@
 - QCM ARGH
 - faire faire du git à ceux qui sont trop en avance ?
 - podman / buildah ?
+- HEALTHCHECK
 
 - Au début demo avec scaleway hop je mets un docker, hop un codimd et un nginx et boum. 
 Souligner que'intérêt est de déployer facilement. Du coup faire faire déployer d'abord la flask app puis elk et flask avec elk puis WordPress, nextcloud, codimd, MediaWiki ou dokuwiki voire même gitlab (non) ou al or sun serveur mine craft pour rire. En gros a la fin ils on un ynh cheap et avec ci pour les plus avances. 

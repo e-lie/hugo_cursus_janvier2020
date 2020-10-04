@@ -45,7 +45,7 @@ Host nom_de_votre_machine
 
 ### Exercices avancés
 
-<!-- - Installez MobaXterm sous Windows et essayez de vous connecter à votre serveur avec cet outil. -->
+- Installez MobaXterm sous Windows et essayez de vous connecter à votre serveur avec cet outil.
 
 - Utilisez `sshfs` pour monter le home de votre utilisateur dans un dossier de votre répertoire personnel.
 - Utilisez `ssh -D` pour créer un tunnel avec votre serveur, et configurez Firefox pour utiliser ce tunnel pour se connecter à Internet. Confirmez que les changements fonctionnent en vérifiant quelle semble être votre IP globale depuis Firefox.
