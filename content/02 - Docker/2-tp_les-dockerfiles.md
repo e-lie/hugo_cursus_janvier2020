@@ -63,7 +63,7 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 
 - Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
 
-- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour isoler une application. Il faut maintenant ajouter notre application flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
+- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
   - `RUN apt-get update -y`
   - `RUN apt-get install -y python-pip python-dev build-essential`
@@ -145,7 +145,8 @@ ENTRYPOINT ["./boot.sh"]
 
 <!-- - Committez les modifications de votre dépôt avec `git` (faire le commit en local est suffisant). -->
 
-- **Facultatif :** Vous pouvez aussi tentez de configurer votre propre registry dans un conteneur et poussez l'image dessus.
+- _(Facultatif)_ En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
+- Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
 
 ## Une application Flask qui se connecte à `redis`
 

@@ -102,7 +102,8 @@ A l'aide du cours et de `--help`, et en notant sur une feuille ou dans un fichie
 
 - Visitez [hub.docker.com](https://hub.docker.com)
 - Cherchez l'image de Wordpress et téléchargez la dernière version (`pull`).
-- Lancez Wordpress et tentez d'y accéder via `localhost:80`. Quel est le problème ? _Facultatif :_ Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
+- Lancez un conteneur Wordpress et tentez d'y accéder via `localhost:80`. Quel est le problème ?
+- Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
   <!-- - *(facultatif)* Pour ouvrir le port a posteriori sur un conteneur existant, utilisez `docker commit` comme indiqué [sur ce post StackOverflow](https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container/26622041#26622041). -->
 - Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local (regarder dans la doc officielle ou dans les cours la syntaxe de l'option qui permet de configurer les ports). Notez que lorsque l'image est déjà téléchargée le lancement d'un conteneur est quasi instantané.
 

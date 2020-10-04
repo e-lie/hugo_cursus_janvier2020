@@ -8,14 +8,14 @@ weight: 16
 
 ### IP locale, globale, pings
 
-- 3.1 - Dans votre VM, identifiez les interfaces réseaux, leur nom, leur adresse MAC, et leur adresse IP locale à l'aide de `ip a`. (Eventuellement, comparez avec votre ancienne machine sous Stretch). Tapez également `ip route` et identifiez l'adresse IP de passerelle / gateway utilisée (cela correspond à la route "default")
+- 3.1 - Dans votre VM, identifiez les interfaces réseaux, leur nom, leur adresse MAC, et leur adresse IP locale à l'aide de `ip a`. Tapez également `ip route` et identifiez l'adresse IP de passerelle / gateway utilisée (cela correspond à la route "default")
 - 3.2 - Ouvrir une invite de commande _Windows_ (Menu Démarrer, puis taper 'cmd'), utilisez `ipconfig` pour identifiez votre adresse IP locale et l'adresse IP de la passerelle.
 - 3.3 - Dessinez un schéma de votre compréhension de l'agencement et des relations entre ces différentes entités (internet, le routeur du centre de formation, votre machine Windows, vos VMs)
 - 3.4 - Faites plusieurs tests de "ping" entre toutes ces différentes machines :
   - Testez de pinguer les VM entres elles
   - Testez de pinguer l'hôte Windows depuis une VM, et vice-versa
-  - Testez de pinger la gateway des VM depuis les VM ... et depuis Windows
-  - Testez de pinger la gateway de l'hôte Windows depuis Windows ... et depuis les VM
+  - Testez de pinger la gateway des VM depuis la VM ... et depuis Windows
+  - Testez de pinger la gateway de l'hôte Windows depuis Windows ... et depuis la VM
 - 3.5 - Essayez de pinguer les machines de vos voisins. Demandez-leur leur IP : êtes-vous capable de pinguer leur machine Windows ? Leur machines virtuelles ? Tentez de lister les IPs présentent sur le réseau local en tapant `arp -a` dans une invite de commande sur l'hôte Windows.
 - 3.6 - Récupérez votre IP globale depuis Windows et depuis votre machine virtuelle, via `whatsmyip.com` ou `ip.yunohost.org`. Comparez avec votre voisin. Comparez avec votre smartphone.
 - 3.7 - Dans la configuration de votre machine virtuelle, passez l'interface réseau en mode 'Bridge' (ou 'Pont') plutôt que NAT. Désactivez ensuite la connection filaire pour forcer la VM à se reconnecter au réseau. Quelle est la nouvelle adresse IP ? Refaites quelques-un des tests précédents. Tentez de scanner les IP du réseau avec `sudo arp-scan --localnet`. Êtes-vous capable de pinguer les machines de vos voisins ?
@@ -25,7 +25,7 @@ weight: 16
 ### TCP, ports et protocoles
 
 - 3.10 - Utilisez `lsof -i` pour lister les connexions actives. Arrivez-vous à identifier à quoi elle correspondent ?
-- 3.11 - Testez avec `nc -zv <adresse> <port>` si certains ports sont ouverts pour la machine 89.234.141.68. Par exemple, tester les ports 22, 53, 80, 443 et 6667.
+- 3.11 - Testez avec `nc -zv <adresse> <port>` si certains ports sont ouverts pour une IP de votre choix. Par exemple, tester les ports 22, 53, 80, 443 et 6667.
 - 3.12 - Dans une console, lancez `telnet yoloswag.team 80` puis dans le sous-shell ainsi ouvert, tapez "`GET /`". Que voyez-vous apparaître ? Qu'avez-vous fait ?
 - 3.13 - (~Avancé) Installez le paquet `wireshark`. Lancez cet outil en root et lancer une analyse de traffic. Vous voyez ensuite défiler les différent paquet. Ajouter un filtre pour montrer seulement le protocole HTTP. Pendant que l'analyse tourne, connectez-vous à un site en HTTP (pas HTTPS !) comme yoloswag.team, et regardez les paquets trouvés par `wireshark`. Êtes-vous capable de trouver le code source de la page en analysant ces paquets ?
 
