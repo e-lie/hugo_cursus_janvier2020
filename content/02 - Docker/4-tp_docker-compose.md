@@ -4,7 +4,7 @@ visible: true
 weight: 45
 ---
 
-## Articuler deux images avec Docker compose
+## TP 1 : Articuler deux images avec Docker compose
 
 - Installez docker-compose avec `sudo apt install docker-compose`.
 - A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
@@ -92,14 +92,25 @@ services:
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`. Ainsi que [la documentation du langage (DSL) des Compose files](https://docs.docker.com/compose/compose-file/).
 
-## TP 2 : Déployons du nginx et des journaux distribués avec la stack ELK
+## TP 2 : Déployons plusieurs services avec Docker-Compose et Traefik
 
-On se propose ici d'essayer de déployer plusieurs conteneurs nginx.
+<!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
-- A partir de cette [stack d'exemple](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512) trouvez comment installer `filebeat` pour récupérer les logs de nginx et les envoyer à un Elasticsearch (décrire sur papier comment faire avant).
-- Ajoutez un Kibana pour explorer nos logs qui sont dans Elasticsearch.
+<!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
 
----
+On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services.
+Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à partir du tag git `v0.18`) avec MySQL.
+
+### Si vous êtes en avance
+
+Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
+
+<!-- ### Si vous êtes en avance : ajouter ELK et centraliser les logs
+
+Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
+
+Tentons de centraliser les logs de
+de ces services dans ELK.
 
 ```yaml
 version: "3"
@@ -112,17 +123,6 @@ services:
       - xpack.security.enabled=false
     networks:
       - logging-network
-
-  # logstash:
-  #   image: docker.elastic.co/logstash/logstash:7.5.0
-  #   depends_on:
-  #     - elasticsearch
-  #   ports:
-  #     - 12201:12201/udp
-  #   volumes:
-  #     - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-  #   networks:
-  #     - logging-network
 
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.5.0
@@ -147,99 +147,9 @@ services:
     networks:
       - logging-network
 
-  # httpd:
-  #   image: httpd:latest
-  #   depends_on:
-  #     - logstash
-  #   ports:
-  #     - 80:80
-  #   logging:
-  #     driver: gelf
-  #     options:
-  #       # Use udp://host.docker.internal:12201 when you are using Docker Desktop for Mac
-  #       # docs: https://docs.docker.com/docker-for-mac/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
-  #       # issue: https://github.com/lvthillo/docker-elk/issues/1
-  #       gelf-address: "udp://localhost:12201"
-
 networks:
   logging-network:
     driver: bridge
-```
-
-```yaml
-version: "2.2"
-services:
-  es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-    container_name: es01
-    environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      # - discovery.seed_hosts=es02,es03
-      # - cluster.initial_master_nodes=es01,es02,es03
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - elastic
-  # es02:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-  #   container_name: es02
-  #   environment:
-  #     - node.name=es02
-  #     - cluster.name=es-docker-cluster
-  #     - discovery.seed_hosts=es01,es03
-  #     - cluster.initial_master_nodes=es01,es02,es03
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - data02:/usr/share/elasticsearch/data
-  #   networks:
-  #     - elastic
-  # es03:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-  #   container_name: es03
-  #   environment:
-  #     - node.name=es03
-  #     - cluster.name=es-docker-cluster
-  #     - discovery.seed_hosts=es01,es02
-  #     - cluster.initial_master_nodes=es01,es02,es03
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   volumes:
-  #     - data03:/usr/share/elasticsearch/data
-  #   networks:
-  #     - elastic
-
-volumes:
-  data01:
-    driver: local
-  # data02:
-  #   driver: local
-  # data03:
-  #   driver: local
-
-networks:
-  elastic:
-    driver: bridge
-```
+``` -->
 
 ---
-
-Pour les gens en avance :
-Enfin, créez un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à partir du tag git `v0.18`) avec MySQL et Elasticsearch. Puis, centralisez les logs grâce à des tags filebeat

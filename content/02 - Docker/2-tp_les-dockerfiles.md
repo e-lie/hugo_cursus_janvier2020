@@ -110,13 +110,13 @@ ENTRYPOINT ["./boot.sh"]
 
 <!-- - Changez le contenu du fichier `requirements.txt` puis relancez le build. -->
 
-- Changez le contenu d'un des fichier python de l'application et relancez le build.
+- Changez le contenu d'un des fichiers python de l'application et relancez le build.
 
 - Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le Docker Engine
 
-- Pour optimiser, rassemblez les commandes `RUN` liées à apt-get en une seule commande avec `&&` et sur plusieurs lignes avec `\`.
+<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à apt-get en une seule commande avec `&&` et sur plusieurs lignes avec `\`. -->
 
-- Re-testez votre image.
+<!-- - Re-testez votre image. -->
 
 <!-- - Finalement, avons nous besoin d'un **virtualenv** à l'intérieur d'un **conteneur Docker** ? C'est redondant : le conteneur isole déjà les dépendances d'une seule application.
   - modifier le Dockerfile pour installer les dépendances directement dans l'OS du conteneur (sur une seule ligne). -->
@@ -261,7 +261,60 @@ Le but est de la faire fonctionner dans un conteneur à partir de commandes de t
 
 <!-- Faites que l'image soit la plus légère possible en utilisant l'image de base `alpine`. Attention, alpine possède des commandes légèrement différentes (`apk add` pour installer) et la plupart des programmes nes ont pas installés par défaut. -->
 
-## La version plus complexe avec MySQL
+## L'instruction HEALTHCHECK
+
+`HEALTHCHECK` permet de vérifier si l'app contenue dans un conteneur est en bonne santé.
+
+- Dans un nouveau répertoire, créez un fichier `Dockerfile` dont le contenu est le suivant :
+
+```Dockerfile
+FROM ubuntu:16.04
+
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get -y install python-pip curl
+RUN pip install flask==0.10.1
+
+ADD /app.py /app/app.py
+WORKDIR /app
+
+HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
+
+CMD python app.py
+```
+
+- Créez aussi un fichier `app.py` avec ce contenu :
+
+```python
+from flask import Flask
+
+healthy = True
+
+app = Flask(__name__)
+
+@app.route('/health')
+def health():
+    global healthy
+
+    if healthy:
+        return 'OK', 200
+    else:
+        return 'NOT OK', 500
+
+@app.route('/kill')
+def kill():
+    global healthy
+    healthy = False
+    return 'You have killed your app.', 200
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
+```
+
+- Observez bien le code Python et la ligne `HEALTHCHECK` du `Dockerfile` puis lancez l'app. A l'aide de `docker ps`, relevez où Docker indique la santé de votre app.
+- Visitez l'URL `/kill` de votre app dans un navigateur. Refaites `docker ps`. Que s'est-il passé ?
+
+## Une version du microblog plus complexe avec MySQL
 
 _Facultatif : si vous êtes en avance_
 
