@@ -9,6 +9,21 @@ weight: 0
 
 ---
 
+---
+
+# Introduction
+
+## ![](../../images/Moby-logo.png)
+
+# Des conteneurs
+
+![](../../images/docker.png)
+
+- ## La métaphore docker : "box it, ship it"
+
+- Une abstraction qui ouvre de nouvelles possibilités pour la manipulation logicielle.
+- Permet de standardiser et de contrôler la livraison et le déploiement.
+
 # Retour sur les technologies de virtualisation
 
 On compare souvent les conteneurs aux machines virtuelles. Mais ce sont de grosses simplifications parce qu'on en a un usage similaire : isoler des programmes dans des "contextes".
@@ -216,70 +231,6 @@ Docker modifie beaucoup la **"logistique"** applicative.
 - **rapproche le monde du développement** des **opérations** (tout le monde utilise la même technologie)
 
 - Permet l'adoption plus large de la logique DevOps (notamment le concept _d'infrastructure as code_)
-
----
-
-# Le DevOps
-
-## À propos du mot DevOps
-
-- Un profil ? Un hybride de dev et d'ops...
-- Une méthode ? Infra-as-Code, _continuous integration and delivery_ (CI/CD), conteneurisation
-- Une façon de virer des adminsys...
-
----
-
-## Réancrer les programmes dans la **réalité de leur utilisation**
-
-"Machines ain't smart. You are!"
-Comment dire correctement aux machines quoi faire ?
-
----
-
-# Infrastructure As Code
-
-Un mouvement d'informatique lié au DevOps et au cloud :
-
-- Rapprocher la production logicielle et la gestion de l'infrastructure
-  - Rapprocher la configuration de dev et de production (+ staging)
-  - Assumer le côté imprévisible de l'informatique en ayant une approche expérimentale
-  - Aller vers de l'intégration et du déploiement continu et automatisé.
-
----
-
-# Infrastructure As Code
-
-Une façon de définir une infrastructure dans un fichier descriptif et ainsi de créer dynamiquement des services.
-
-- Du code qui décrit **l'état désiré** d'un système.
-- Arrêtons de faire de l'admin-sys ad-hoc !
-
-## Avantages :
-
-- **Descriptif** : on peut lire facilement l'**état actuel** de l'infra
-- Git ! Gérer les versions de l'infrastructure et collaborer facilement comme avec du code.
-- Tester les instrastructure pour éviter les régressions/bugs
-- Facilite l'intégration et le déploiement continus
-  = vélocité
-  = versions testées puis mises en prod' progressivement et automatiquement dans le _cycle DevOps_
-- Pas de surprise = possibilité d'agrandir les clusters sans souci !
-  - On peut multiplier les machines (une machine ou 100 machines identiques c'est pareil).
-
-Assez différent de l'administration système sur mesure (= méthode de résolution plus ou moins rigoureuse à chaque nouveau bug)
-
----
-
-# Infrastructure As Code
-
-## Concepts proches
-
-- Infrastructure as a Service (commercial et logiciel)
-
-  - Amazon Web Services, Azure, Google Cloud, DigitalOcean
-  - = des VM ou des serveurs dédiés
-
-- Plateform as a Service - Heroku, cluster Kubernetes
-  Avec une offre d'hébergement de conteneurs, on parle la plupart du temps de Platform as a Service.
 
 ---
 

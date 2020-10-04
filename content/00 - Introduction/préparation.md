@@ -10,7 +10,7 @@ draft: no
 
 - Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
 
-- Nous allons prendre des notes en commun sur un pad interactif CodiMD et par là faire une rapide démo de Docker.
+- Nous allons prendre des notes en commun sur un pad interactif CodiMD et par là faire une rapide démo de Docker et Docker-Compose.
 
 ---
 
@@ -26,8 +26,6 @@ draft: no
 
 - Une abstraction qui ouvre de nouvelles possibilités pour la manipulation logicielle.
 - Permet de standardiser et de contrôler la livraison et le déploiement.
-
-]
 
 ---
 
@@ -85,7 +83,9 @@ server {
      <!-- Test config and network: `docker run --rm --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d nginx nginx -t` -->
 12. Rien qu'en tapant mon IP (nous n'avons pas configuré le DNS), on devrait être redirigé·e sur le super pad !
 
-13. Posez-y vos questions, et annotez toutes les astuces et conseils qui vous ont aidé ou aideraient les autres.
+13. Je rajoute rapidement un domaine grâce au service [netlib.re](https://netlib.re)
+
+14. Posez-y vos questions, et annotez toutes les astuces et conseils qui vous ont aidés ou aideraient les autres.
     <!-- Structurer en écrivant quelques titres -->
 
 ---
@@ -93,9 +93,9 @@ server {
 ## Importez une machine Linux
 
 - Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
-- Configurez la avec 8Go de RAM et 3 processeurs
+- Configurez-la avec 8Go de RAM si possible
 - Démarrez la machine
-- Faites le mises à jours (`sudo apt update` et `sudo apt upgrade`)
+- Faites les mises à jour (`sudo apt update` et `sudo apt upgrade`)
 
 ## Installer quelques logiciels
 
