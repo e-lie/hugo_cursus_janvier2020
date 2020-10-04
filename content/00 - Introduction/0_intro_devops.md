@@ -27,7 +27,7 @@ Hadrien Pélissier
 
 # DevOps : définition
 
-"Le DevOps est **un mouvement** qui s'attaque au conflit existant structurellement entre le développement de logiciels et les opérations. Ce conflit résulte d'objectifs et de motivations divergents. Le DevOps améliore la collaboration entre les départements du développement et des opérations et rationalise l'ensemble de l'organisation. (Citation de Hütterman2012 - Devops for developers)"
+"Le DevOps est **un mouvement** qui s'attaque au conflit existant structurellement entre le développement de logiciels et les opérations. Ce conflit résulte d'objectifs et de motivations divergents. Le DevOps améliore la collaboration entre les départements du développement et des opérations et rationalise l'ensemble de l'organisation. (Citation de Hütterman 2012 - Devops for developers)"
 
 # Le problème de la DSI traditionnelle
 
@@ -51,7 +51,7 @@ Hadrien Pélissier
   Infrastructure : How infra-gile are you ? à la conférence Agile 2008
   à Toronto et a publié un article portant un nom similaire. -->
 
-- Patrick Debois a inventé le terme DevOps en 2009 pour créer une série de conférences sur la rapidité des infrastructures.
+- Terme DevOps inventé en 2009 par Patrick Debois, un Canadien, à propos d'une série de conférences sur la rapidité des infrastructures.
 
 ---
 
@@ -59,7 +59,7 @@ Hadrien Pélissier
 
 - Du côté des directions d'entreprise on **valorise souvent** la **rapidité** pour la compétitivité.
 
-## => **La lenteur des opérations est un problème**.
+=> **La lenteur des opérations est un problème**
 
 - En même temps il faut maintenir la **qualité du service** sinon les clients s'en vont.
 
@@ -146,7 +146,7 @@ Il s'agit de mettre en quelques sortes les logiciels dans des boîtes :
 
 - Les conteneurs non modifiables permettent de savoir exactement l'état de ce qu'on exécute sur l'ordinateur
 
-## => Le risque de bug diminue énormément : **fiabilisation**
+> Le risque de bug diminue énormément : **fiabilisation**
 
 - L'agrandissement d'un infrastructure logiciel est beaucoup pour facile lorsqu'on a des boîtes autonomes qu'on peut multiplier.
 
