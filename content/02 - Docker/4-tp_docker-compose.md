@@ -101,8 +101,6 @@ On se propose ici d'essayer de déployer plusieurs conteneurs nginx.
 
 ---
 
-<!-- TODO: wave-ify code -->
-
 ```yaml
 version: "3"
 

@@ -1,6 +1,6 @@
 ---
 title: Administration Linux - feuille d'exercice n.4
-draft: false
+draft: true
 weight: 18
 ---
 
