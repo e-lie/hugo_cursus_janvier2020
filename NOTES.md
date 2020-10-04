@@ -10,11 +10,6 @@ Docker : (Hadrien)
 
 # Slides
 
-- Slides plus sexy : + d'illustrations et d'exemples pour la partie VM vs. container, lire plus dessus aussi
-- CodeWave ? En tout cas faire ajout un par un dockerfile / docker-compose
-- Faire faire certaines démos des slides ensemble ?
-- Mettre moins de phrases longues dans les slides
-- Segmenter cours 0 entre conteneurs / devops / docker : mettre devops avant ?
 - Dire que images OCI que c'est un gzipped filesystem basically + metadata
 - Ajouter dockercoins en td swarm + imgur.schmilblick
 

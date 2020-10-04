@@ -6,7 +6,7 @@ draft: no
 
 # Un peu de logistique
 
-- ## Les slides de présentation et les TD sont disponibles à l'adresse https://cours.hadrienpelissier.fr
+- **Les slides de présentation et les TD sont disponibles à l'adresse https://cours.hadrienpelissier.fr**
 
 - Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
 

@@ -11,12 +11,16 @@
 - faire faire du git à ceux qui sont trop en avance ?
 - podman / buildah ?
 - HEALTHCHECK
+- upload sur un registry
 
 - Au début demo avec scaleway hop je mets un docker, hop un codimd et un nginx et boum. 
-Souligner que'intérêt est de déployer facilement. Du coup faire faire déployer d'abord la flask app puis elk et flask avec elk puis WordPress, nextcloud, codimd, MediaWiki ou dokuwiki voire même gitlab (non) ou al or sun serveur mine craft pour rire. En gros a la fin ils on un ynh cheap et avec ci pour les plus avances. 
- Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément, plutôt en jour 1 même. 
-Leur donner 6 vm scaleway, leur faire foutre poetainer dessus puis nginx avec auth http. Ajouter swarm et hop c'est redondant. Autre vm avec swarm et pouf c'est resilient la. Leur demander de générer une clé ssh et me l'envoyer la clé publique par mail ou alors le servir avec nginx. 
-Pour rappels linxu explorer justement bien le réseau avec le ssh dans scaleway, et les k ter face spour comprendre les interfaces docker. Pour comprendre, les volumes parler des permissions pour comprendre le chroot. 
-Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, avec du overlayfs. 
-Pour le to volume et réseau faire l'app flask avec le mysql. Si marche pas garder redis mais dire qu'il y a du cache et que ça soulingen l'importance et les limite du stateless vs stateful. Fsite fzire un script pour migrer du stateful redis Moby counter? 
+- Souligner que'intérêt est de déployer facilement.
+- Pour rappels linux, explorer justement bien le réseau avec le ssh dans scaleway, et les k ter face spour comprendre les interfaces docker. Pour comprendre, les volumes parler des permissions pour comprendre le chroot. 
+- Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, avec du overlayfs. 
+- Pour le to volume et réseau faire l'app flask avec le mysql. Si marche pas garder redis mais dire qu'il y a du cache et que ça soulingen l'importance et les limite du stateless vs stateful. Fsite fzire un script pour migrer du stateful redis Moby counter? 
+- Leur demander de générer une clé ssh et me l'envoyer la clé publique par mail ou alors le servir avec nginx et me donner leur IP. 
+- Leur donner 6 vm scaleway, leur faire foutre portainer dessus (commande ssh de la socket ? ou socat ?) puis protéger avec nginx (ou traefik) avec auth http. Ajouter swarm et hop c'est redondant. Autre vm avec swarm et pouf c'est resilient la.
+- Du coup faire faire déployer d'abord la flask app puis elk et flask avec elk puis WordPress, nextcloud, codimd, MediaWiki ou dokuwiki.
+En gros a la fin ils on un ynh cheap et avec ci pour les plus avances. 
+- Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément, plutôt en jour 1 même. 
 piquer des trucs du tuto de fergus ?

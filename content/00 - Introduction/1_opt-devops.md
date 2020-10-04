@@ -1,20 +1,8 @@
 ---
-title: Introduction DevOps
+title: Introduction DevOps (suite)
 weight: 3
-draft: true
+draft: false
 ---
-
-## A propos de moi
-
-Hadrien Pélissier
-
-- Ingénieur sécurité / DevOps / développeur
-- Formateur DevOps et sécurité
-
-## A propos de vous
-
-- Attentes ?
-- "Profil"
 
 ## Le mouvement DevOps
 

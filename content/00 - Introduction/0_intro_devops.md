@@ -3,10 +3,25 @@ draft: false
 title: Introduction au DevOps
 # title: DSI classique vs. DevOps
 
-layout: true
+weight: 1
 ---
 
 # _La culture et la pratique du DevOps_
+
+---
+
+## A propos de moi
+
+Hadrien Pélissier
+
+- Ingénieur sécurité / DevOps / développeur Python et Elixir
+- Formateur DevOps et sécurité informatique
+
+## A propos de vous
+
+- "Profil" : votre environnement technique initial
+- Besoins : ce que vous aimeriez faire, avez besoin de savoir faire
+- Attentes de cette formation
 
 ---
 
@@ -32,17 +47,17 @@ layout: true
 
 # Histoire : l'origine du mouvement
 
-- Patrick Debois a animé une session intitulée "Agile Operations and
+<!-- - Patrick Debois a animé une session intitulée "Agile Operations and
   Infrastructure : How infra-gile are you ? à la conférence Agile 2008
-  à Toronto et a publié un article portant un nom similaire.
+  à Toronto et a publié un article portant un nom similaire. -->
 
-- Il a ensuite inventé le terme DevOps en 2009 pour créer une série de conférences sur la vélocité des infrastructure.
+- Patrick Debois a inventé le terme DevOps en 2009 pour créer une série de conférences sur la rapidité des infrastructures.
 
 ---
 
 # Arbitrage DevOps
 
-- Du côté des directions d'entreprise on **valorise souvent** la **vélocité** pour la compétitivité.
+- Du côté des directions d'entreprise on **valorise souvent** la **rapidité** pour la compétitivité.
 
 ## => **La lenteur des opérations est un problème**.
 
@@ -93,7 +108,7 @@ Comment ?
 
 - Des tests systématiques et automatisés pour ne pas se reposer sur la vérification humaine.
 
-- Un déploiement progressif en parallèle (Blue Green) pour pouvoir automatiser le Rollback et être serein.
+- Un déploiement progressif en parallèle (Blue/Green) pour pouvoir automatiser le Rollback et être serein.
 
 - A chaque étape le code passe dans un **Pipeline** de validation automatique.
 
@@ -105,7 +120,7 @@ Comment ?
 
 - Plutôt que d'appliquer des commandes puis d'oublier si on les a appliqué, On **décrit** le système d'exploitation (l'état du linux) dans un fichier et on utilise un système qui applique cette configuration explicite à tout moment.
 
-- Permet aux Ops/adminsys de travailler comme des développeurs (avec une usine logicielle et ses outils)
+- Permet aux Ops/AdminSys de travailler comme des développeurs (avec une usine logicielle et ses outils)
 
 ---
 
@@ -150,11 +165,11 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 ## Équipes transversales
 
-## Dans le cadre d'un produit logiciel, les administrateurs systèmes sont rassemblées avec le développement et le chef produit : tout le monde fait les réunions ensemble pour se parler et se comprendre.
+Dans le cadre d'un produit logiciel, les administrateurs systèmes sont rassemblées avec le développement et le chef produit : tout le monde fait les réunions ensemble pour se parler et se comprendre.
 
 ## Culture de la polyvalence
 
-- ## Les développeurs peuvent plus facilement créer un environnement réaliste pour jouer avec et comprendre comment fonctionne l'infrastructure de production (ils progressent dans l'administration système et la compréhension des enjeux opérationnels).
+- Les développeurs peuvent plus facilement créer un environnement réaliste pour jouer avec et comprendre comment fonctionne l'infrastructure de production (ils progressent dans l'administration système et la compréhension des enjeux opérationnels).
 
 - Les adminsys apprennent à programmer leurs opérations de façon puissante il deviennent donc plus proche de la logique des développeurs. (grace à l'Infrastructure as Code)
 
@@ -162,11 +177,11 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 # Le profil DevOps
 
-Par abus de langage on dit un ou une DevOps pour parler d'un métier spécifique dans une entreprise. Moronnei je dis que je suis DevOps sur mon CV par exemple.
+Par abus de langage on dit un ou une DevOps pour parler d'un métier spécifique dans une entreprise. Je dis que je suis DevOps sur mon CV par exemple.
 
 Vous pouvez retenir :
 
-## Un DevOps c'est un **Administrateur Système agile** qui **programme ses outils**.
+## Un DevOps c'est un **Administrateur Système** qui **programme ses outils**.
 
 ---
 
