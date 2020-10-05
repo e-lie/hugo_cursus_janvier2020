@@ -177,17 +177,29 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 docker run -d --name wp --port 8080:80 wordpress
 ```
 
-<!-- ### MYSQL et les variables d'environnement
+### MYSQL et les variables d'environnement
 
 Depuis Ubuntu:
 
 - Cherchez le conteneur `mysql` version 5.7.
 - Lancez-le.
-- Utilisez une variable d'environnement pour préciser que le mot de passe doit être vide (trouver la documentation).
+
+```
+docker run --name mysql -d mysql:5.7
+```
+
+- Utilisez une variable d'environnement pour préciser que le mot de passe doit être vide (trouver la documentation sur le Docker Hub).
+
 - Mappez mysql sur le port 6666 (`-p`).
-- Installez `mariadb` sur Ubuntu et connectez vous à votre conteneur en ligne de commande.
-  - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
-  - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte -->
+- Installez `mariadb-client` (ou `mariadb`) sur Ubuntu et connectez-vous à votre conteneur en ligne de commande.
+
+```bash
+sudo apt install mariadb-client
+mysql --user=root --host=127.0.0.1 --port=6666
+```
+
+- regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
+- utilisez `--help` sur la commande mysql pour choisir le port et l'hôte
 
 - Lancer une instance de Portainer :
 
@@ -199,7 +211,13 @@ docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.
 - Naviguez sur `localhost:9000`. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
-- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : `$()`)
+
+- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : il faut placer une commande qui liste les conteneurs arrêtés entre les parenthèses de "`$()`")
+
+```
+docker rm $(docker ps -aq -f status=exited)
+```
+
 - S'il y a encore des conteneurs qui tournent (`docker ps`), supprimez un des conteneurs restants en utilisant l'autocomplétion et l'option adéquate
 
 - Listez les images
@@ -208,4 +226,4 @@ docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.
 
 - En utilisant la commande `docker save`, utilisez `tar` pour décompresser une image Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans l'image.
 
-- Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface.
+<!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->

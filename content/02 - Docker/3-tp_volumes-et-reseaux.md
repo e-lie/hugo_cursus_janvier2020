@@ -10,11 +10,15 @@ Récupérons les images depuis Docker Hub:
 - `docker image pull redis:alpine`
 - `docker image pull russmckendrick/moby-counter`
 
+- Lancez la commande `ip a > /tmp/interfaces_avant.txt` pour lister vos interfaces réseau et les écrire dans le fichier
+
 Pour connecter les deux applications créons un réseau manuellement:
 
 - `docker network create moby-network`
 
-Puis lancons les deux applications en utilisant notre réseau
+Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip a > /tmp/interfaces_apres.txt` et comparez (`diff /tmp/interfaces_avant.txt /tmp/interfaces_apres.txt`). Qu'est-ce qui a changé ?
+
+Maintenant, lançons les deux applications en utilisant notre réseau :
 
 - `docker run -d --name redis --network <réseau> redis:alpine`
 - `docker run -d --name moby-counter --network <réseau> -p 80:80 russmckendrick/moby-counter`
