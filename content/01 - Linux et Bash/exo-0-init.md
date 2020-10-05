@@ -98,7 +98,7 @@ documents/
 - 5.7 - Ouvrir plusieurs tty et se logger avec différents utilisateurs, puis observer ce que `who` retourne
 - 5.8 - Vérifiez que les infos de `r2d2` sont bien dans `/etc/passwd` et `/etc/shadow`
 - 5.9 - Que se passe-t-il si vous définissez `/bin/false` comme shell par défaut pour `r2d2` ?
-- 5.10 - En inspectant le contenu de `/etc/sudoers`, pouvez-vous donnez le droit à `r2d2` d'utiliser `sudo` ?
+<!-- - 5.10 - En inspectant le contenu de `/etc/sudoers`, pouvez-vous donnez le droit à `r2d2` d'utiliser `sudo` ? -->
 
 ### 6. Permissions
 
