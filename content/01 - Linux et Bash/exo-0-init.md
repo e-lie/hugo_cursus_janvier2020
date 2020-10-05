@@ -1,6 +1,7 @@
 ---
-draft: true
+draft: false
 weight: 5
+title: Intro Linux - feuille d'exercice n.0
 ---
 
 # Feuille d'exercices

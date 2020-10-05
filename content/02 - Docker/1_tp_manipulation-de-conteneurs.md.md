@@ -189,7 +189,7 @@ Depuis Ubuntu:
   - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
   - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte -->
 
-- Installer Portainer :
+- Lancer une instance de Portainer :
 
 ```bash
 docker volume create portainer_data
@@ -207,3 +207,5 @@ docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.
 - Que fait la commande `docker image prune -a` ?
 
 - En utilisant la commande `docker save`, utilisez `tar` pour décompresser une image Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans l'image.
+
+- Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface.
