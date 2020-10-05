@@ -85,7 +85,7 @@ documents/
 - 4.13 - Supprimez tout le dossier `~/bkp/` récursivement
 - 4.14 - Tentez de supprimer `/etc/passwd` (en tant que `padawan` !)
 - 4.15 - Inspectez les sorties de `df -h` et `lsblk`
-- 4.16 - Tentez de redimensionner une partition à l'aide de `gparted`
+<!-- - 4.16 - Tentez de redimensionner une partition à l'aide de `gparted` -->
 
 ### 5. Utilisateurs et groupes
 
