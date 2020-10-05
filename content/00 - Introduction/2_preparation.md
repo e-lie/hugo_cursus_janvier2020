@@ -6,8 +6,10 @@ weight: 20
 ## Importez une machine Linux
 
 - Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
-- Configurez-la avec 8Go de RAM si possible
+- Configurez-la avec 7Go de RAM si possible
+- Le login est `osboxes` et le mot de passe `osboxes.org`
 - Démarrez la machine
+<!-- - Pour mettre la VM en Azerty : -->
 - Faites les mises à jour (`sudo apt update` et `sudo apt upgrade`)
 
 ## Installer quelques logiciels

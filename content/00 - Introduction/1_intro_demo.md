@@ -1,5 +1,5 @@
 ---
-title: Préparation et démo
+title: Démo
 weight: 10
 draft: no
 ---
