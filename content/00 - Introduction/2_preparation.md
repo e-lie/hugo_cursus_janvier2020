@@ -1,3 +1,8 @@
+---
+title: Préparation
+weight: 20
+---
+
 ## Importez une machine Linux
 
 - Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
