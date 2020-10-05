@@ -126,8 +126,8 @@ documents/
 - 7.6 - Connaissant le PID de ce shell, tenter de tuer le shell gentillement (ou brutalement si il résiste)
 - 7.7 - Identifiez avec `top` le processus consommant en ce moment le plus de CPU, et celui consommant le plus de mémoire
 - 7.8 - Lancer la commande `openssl speed -multi 4` - puis refaite le test
-- 7.9 - Tout en laissant `openssl speed -multi 4` s'executer, lancer la commande `ls /bin/` avec la priorité la plus faible possible. Que se passe-t-il ?
-- 7.10 - Réduisez drastiquement "à chaud" la priorité de la commande `openssl speed -multi 4` en train de s'executer. Si vous relancer `ls /bin/` toujours avec la priorité la plus basse, comment la situation évolue-t-elle ?
+<!-- - 7.9 - Tout en laissant `openssl speed -multi 4` s'executer, lancer la commande `ls /bin/` avec la priorité la plus faible possible. Que se passe-t-il ?
+- 7.10 - Réduisez drastiquement "à chaud" la priorité de la commande `openssl speed -multi 4` en train de s'executer. Si vous relancer `ls /bin/` toujours avec la priorité la plus basse, comment la situation évolue-t-elle ? -->
 - 7.11 - Comment pouvez-vous tuer d'un seul coup tous les processus `openssl` ?
 - 7.12 - Lancez une session screen puis une commande longue dans cette session, comme par exemple `sleep 30`. Détachez la session puis ré-attachez-la depuis un autre tty.
 - 7.13 - Dans une autre console, identifiez via `ps` le PID de la session screen et tentez de tuer ce processus.
