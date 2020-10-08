@@ -7,7 +7,7 @@ weight: 25
 
 ## I – Découverte d'une application web flask
 
-- Récupérez d’abord une application Flask exemple en la clonant sur le Bureau :
+- Récupérez d’abord une application Flask exemple en la clonant ou en l'ouvrant avec Gitpod :
 
 ```bash
 git clone https://github.com/miguelgrinberg/microblog/
@@ -16,7 +16,7 @@ git clone https://github.com/miguelgrinberg/microblog/
 - Déplacez-vous dans le dossier `microblog`
 
 - Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2`
-- Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran.
+<!-- - Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran. -->
 
 <!-- - Pour la tester d’abord en local (sans conteneur) nous avons besoin des outils python. Vérifions s'ils sont installés :
     `sudo apt install python-pip python-dev build-essential` -->

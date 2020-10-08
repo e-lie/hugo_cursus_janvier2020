@@ -11,14 +11,14 @@ weight: 15
 
 # Premier TD : on installe Docker et on joue avec
 
-## Importez une machine Linux
+<!-- ## Solution 1 : importez une machine Linux
 
 - Récupérez une machine virtualbox ubuntu (18.04)
 
 - _(facultatif)_ Configurez-la avec 6 Go de RAM et 2 processeurs
 - Démarrez la machine
 
-<!-- - Faites les mises à jour via le Terminal (`apt update` et `apt upgrade`) -->
+- Faites les mises à jour via le Terminal (`apt update` et `apt upgrade`)
 
 - Installez VSCode avec la commande suivante :
 
@@ -26,22 +26,30 @@ weight: 15
 sudo snap install --classic code
 ```
 
-- En ligne de commande installez `htop`
+-->
 
-## Installer Docker sur Ubuntu
+## Installer Docker sur la VM Ubuntu dans Scaleway
 
-- Suivez la [documentation Docker pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+- Accédez à votre VM via l'interface Scaleway
 
-- Vérifiez l'installation en lançant `sudo docker info`.
+- Vérifiez l'installation de Docker en lançant `sudo docker info`. Si Docker n'est pas installé, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
-- Lancez `sudo docker run hello-world`. Bien lire le message renvoyé. Que s'est-il passé ?
+- Lancez `sudo docker run hello-world`. Bien lire le message renvoyé (le traduire sur [Deepl](https://www.deepl.com/translator) si nécessaire). Que s'est-il passé ?
 
 - Il manque les droits à l'utilisateur pour exécuter docker sans passer par `sudo`.
 
   - Le daemon tourne toujours en `root`
   - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
   - Ajoutez-le au groupe avec la commande `usermod -aG <groupe> <user>` (en remplaçant `<groupe>` et `<user>` par ce qu'il faut)
-  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, déconnectez-vous de votre session **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)** puis reconnectez-vous pour que la modification sur les groupes prenne effet.
+  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, déconnectez-vous de votre session puis reconnectez-vous pour que la modification sur les groupes prenne effet.
+
+  <!-- **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)**  -->
+
+<!-- - Relancez la session de terminal (en quittant le terminal puis en le relançant)
+
+- Faites un snapshot de la VM Ubuntu avec VirtualBox -->
+
+### Autocomplétion
 
 - Pour vous faciliter la vie, ajoutez le plugin _autocomplete_ pour Docker et Docker Compose à `bash` en copiant les commandes suivantes :
 
@@ -54,10 +62,6 @@ sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/com
 ```
 
 **Important:** Vous pouvez désormais appuyer sur la touche <TAB> pour utiliser l'autocomplétion quand vous écrivez des commandes Docker
-
-- Relancez la session de terminal (en quittant le terminal puis en le relançant)
-
-- Faites un snapshot de la VM Ubuntu avec VirtualBox
 
 ---
 
@@ -169,8 +173,9 @@ docker run wordpress
 
 Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouvert.
 
-- Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
+<!-- - Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?). -->
   <!-- - *(facultatif)* Pour ouvrir le port a posteriori sur un conteneur existant, utilisez `docker commit` comme indiqué [sur ce post StackOverflow](https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container/26622041#26622041). -->
+
 - Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local.
 
 ```
@@ -201,6 +206,8 @@ mysql --user=root --host=127.0.0.1 --port=6666
 - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
 - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte
 
+### Portainer
+
 - Lancer une instance de Portainer :
 
 ```bash
@@ -208,11 +215,11 @@ docker volume create portainer_data
 docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 ```
 
-- Naviguez sur `localhost:9000`. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
+- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
 
-- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : il faut placer une commande qui liste les conteneurs arrêtés entre les parenthèses de "`$()`")
+- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : en Bash, une commande entre les parenthèses de "`$()`" est exécutée avant et utilisée comme chaîne de caractère dans la commande principale)
 
 ```
 docker rm $(docker ps -aq -f status=exited)
@@ -227,3 +234,23 @@ docker rm $(docker ps -aq -f status=exited)
 - En utilisant la commande `docker save`, utilisez `tar` pour décompresser une image Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans l'image.
 
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
+
+## Utiliser Gitpod
+
+- Se créer un compte sur [github.com](https://github.com)
+
+- Créer un dépôt vide (vous pouvez l'appeler `tp_docker` par exemple) et l'ouvrir avec Gitpod
+
+- Dans Gitpod, lancer la commande suivante pour installer Docker (`brew` est un gestionnaire de packet créé initialement pour MacOS et qui ne nécessite pas de droits `sudo`) :
+  `brew install docker`
+
+- Dans Gitpod, copiez-collez la clé privée fournie dans le dossier de partage dans un fichier appelé `ssh.private`, puis (après avoir retrouvé l'IP publique de votre VM Scaleway) lancez le tunnel SSH qui nous permettra d'accéder à notre dæmon Docker comme ceci :
+
+```
+export DOCKER_IP="INSEREZ_VOTRE_IP_ICI"
+ssh -nNT -L localhost:23750:var/run/docker.sock $DOCKER_IP -N -l root -i ssh.private &
+export DOCKER_HOST="localhost:23750"
+
+```
+
+- Vérifiez en faisant `docker info` et `docker ps` que vous avez bien accès à la même installation de Docker.

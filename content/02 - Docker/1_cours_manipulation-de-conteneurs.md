@@ -135,7 +135,7 @@ On va utiliser ça :)
 
 Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau du système natif.
 
-- ## On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version est souvent trop ancienne (à part sous Arch Linux)
+- On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version est souvent trop ancienne (à part sous Arch Linux)
 
 - Sur **Ubuntu** ou **CentOS** la méthode conseillée est d'utiliser les paquets fournis dans le dépôt officiel Docker (vous pouvez avoir des surprises avec la version _snap_ d'Ubuntu).
   - Il faut pour cela ajouter le dépôt et les signatures du répertoire de packages Docker.
@@ -174,7 +174,7 @@ docker image --help
 
 # Créer et lancer un conteneur
 
-- ## Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
+- Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
 
 ```bash
 docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
@@ -184,7 +184,7 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 
 ## **L'ordre des arguments est important !**
 
-- ## Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`
+- **Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`**
 - On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom**, de **port** ou de **volumes**.
 
 ---
@@ -233,11 +233,11 @@ docker start --attach <nom_ou_id_conteneur> # lance le conteneur et s'attache à
 
 # Isolation des conteneurs
 
-- ## Les conteneurs sont plus que des processus, ce sont des boîtes isolées grâce aux **namespaces** et **cgroups**
+- Les conteneurs sont plus que des processus, ce sont des boîtes isolées grâce aux **namespaces** et **cgroups**
 
-- ## Depuis l'intérieur d'un conteneur, on a l'impression d'être dans un Linux autonome.
+- Depuis l'intérieur d'un conteneur, on a l'impression d'être dans un Linux autonome.
 
-- ## Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID normaux mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les _user namespaces_.
+- Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID normaux mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les _user namespaces_.
 
 <!-- - Malgré l'isolation il est possible d'exploiter des failles de configuration pour s'échapper d'un conteneur
 - => il faut faire attention à ne pas lancer les applications en `root` à l'intérieur des conteneurs Docker et/ou à utiliser les *user namespaces* -->
@@ -260,7 +260,7 @@ docker exec -it <conteneur> /bin/bash
 
 Une des forces de Docker vient de la distribution d'images :
 
-- ## pas besoin de dépendances, on récupère une boîte autonome
+- pas besoin de dépendances, on récupère une boîte autonome
 
 - pas besoin de multiples versions en fonction des OS
 
@@ -272,11 +272,11 @@ Il s'agit d'un répertoire public et souvent gratuit d'images (officielles ou no
 
 # Docker Hub:
 
-- ## On peut y chercher et trouver presque n'importe quel logiciel au format d'image Docker.
+- On peut y chercher et trouver presque n'importe quel logiciel au format d'image Docker.
 
-- ## Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
+- Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
 
-- ## Puis utiliser `docker run <id_image>:<version>`
+- Puis utiliser `docker run <id_image>:<version>`
 
 - On peut aussi juste télécharger l'image : `docker pull <image>`
 

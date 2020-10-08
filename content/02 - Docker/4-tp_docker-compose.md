@@ -6,7 +6,23 @@ weight: 45
 
 ## TP 1 : Articuler deux images avec Docker compose
 
+### Dans une VM
+
 - Installez docker-compose avec `sudo apt install docker-compose`.
+
+### Avec Gitpod
+
+<!-- `brew update` (si ça reste bloqué plus de 5min, arrêtez avec Ctrl+C)
+`brew install docker-compose`
+Si la dernière commande ne marche pas, installez `docker-compose` de la façon suivante : -->
+
+```bash
+mkdir bin
+curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o bin/docker-compose
+chmod +x bin/docker-compose
+export PATH="./bin:$PATH"
+```
+
 - A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
 
 ```yml

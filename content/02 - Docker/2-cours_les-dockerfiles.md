@@ -5,11 +5,9 @@ weight: 20
 
 # Créer une image en utilisant un Dockerfile
 
-<!-- A faire avec CodeWave ? -->
+- Jusqu'ici nous avons utilisé des images toutes prêtes.
 
-- ## Jusqu'ici nous avons utilisé des images toutes prêtes.
-
-- ## Une des fonctionnalités principales de Docker est de pouvoir facilement construire des images à partir d'un simple fichier texte : **le Dockerfile**.
+- Une des fonctionnalités principales de Docker est de pouvoir facilement construire des images à partir d'un simple fichier texte : **le Dockerfile**.
 
 # Le processus de build Docker
 
@@ -110,9 +108,9 @@ ENTRYPOINT ["/usr/bin/python3"]
 docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_construction>
 ```
 
-- ## Lors de la construction, Docker télécharge l'image de base. On constate plusieurs téléchargements en parallèle.
+- Lors de la construction, Docker télécharge l'image de base. On constate plusieurs téléchargements en parallèle.
 
-- ## Il lance ensuite la séquence des instructions du Dockerfile.
+- Il lance ensuite la séquence des instructions du Dockerfile.
 
 - Observez l'historique de construction de l'image avec `docker image history <image>`
 
@@ -122,7 +120,7 @@ docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_constru
 
 # Les layers et la mise en cache
 
-- ## Docker construit les images comme une série de "couches" de fichiers successives.
+- **Docker construit les images comme une série de "couches" de fichiers successives.**
 
 - On parle d'**Union Filesystem** car chaque couche (de fichiers) écrase la précédente.
 
@@ -132,13 +130,13 @@ docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_constru
 <!-- In order to understand the relationship between images and containers, we need to explain a key piece of technology that enables Docker—the UFS (sometimes simply called a union mount). Union file systems allow multiple file systems to be overlaid, appearing to the user as a single filesytem. Folders may contain files from multiple filesystems, but if two files have the exact same path, the last mounted file will hide any previous files. Docker supports several different UFS implentations, including AUFS, Overlay, devicemapper, BTRFS, and ZFS. Which implementation is used is system dependent and can be checked by running docker info where it is listed under “Storage Driver.” It is possible to change the filesystem, but this is only recom‐ mended if you know what you are doing and are aware of the advantages and disad‐ vantages.
 Docker images are made up of multiple layers. Each of these layers is a read-only fil‐ eystem. A layer is created for each instruction in a Dockerfile and sits on top of the previous layers. When an image is turned into a container (from a docker run or docker create command), the Docker engine takes the image and adds a read-write filesystem on top (as well as initializing various settings such as the IP address, name, ID, and resource limits). -->
 
-- ## Chaque couche correspond à une instruction du Dockerfile.
+- Chaque couche correspond à une instruction du Dockerfile.
 
-- ## `docker image history <conteneur>` permet d'afficher les layers, leur date de construction et taille respectives.
+- `docker image history <conteneur>` permet d'afficher les layers, leur date de construction et taille respectives.
 
-- ## Ce principe est au coeur de l'**immutabilité** des images Docker.
+- Ce principe est au coeur de l'**immutabilité** des images Docker.
 
-- ## Au lancement d'un container, le Docker Engine rajoute une nouvelle couche de filesystem "normal" read/write par dessus la pile des couches de l'image.
+- Au lancement d'un container, le Docker Engine rajoute une nouvelle couche de filesystem "normal" read/write par dessus la pile des couches de l'image.
 
 - `docker diff <container>` permet d'observer les changements apportés au conteneur depuis le lancement.
 
@@ -168,7 +166,7 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
   - Une image `ubuntu` complète pèse déjà presque une soixantaine de mégaoctets.
   - mais une image trop rudimentaire (`busybox`) est difficile à débugger et peu bloquer pour certaines tâches à cause de binaires ou de bibliothèques logicielles qui manquent (compilation par exemple).
   - Souvent on utilise des images de base construites à partir de `alpine` qui est un bon compromis (6 mégaoctets seulement et un gestionnaire de paquets `apk`).
-  - ## Par exemple `python3` est fourni en version `python:alpine` (99 Mo), `python:3-slim` (179 Mo) et `python:latest` (918 Mo).
+  - Par exemple `python3` est fourni en version `python:alpine` (99 Mo), `python:3-slim` (179 Mo) et `python:latest` (918 Mo).
 
 - Limiter le nombre de commandes de modification du conteneur :
   - `RUN`, `ADD` et toute commande impliquant une modification du système de fichier du conteneur va créer un nouveau layer dans l'image.
@@ -193,16 +191,16 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 
 # Créer des conteneurs personnalisés
 
-- ## Il n'est pas nécessaire de partir d'une image Linux vierge pour construire un conteneur.
+- Il n'est pas nécessaire de partir d'une image Linux vierge pour construire un conteneur.
 
-- ## On peut utiliser la directive `FROM` avec n'importe quelle image.
+- On peut utiliser la directive `FROM` avec n'importe quelle image.
 
 - De nombreuses applications peuvent être configurées en étendant une image officielle
-- ## _Exemple : une image Wordpress déjà adaptée à des besoins spécifiques._
+- _Exemple : une image Wordpress déjà adaptée à des besoins spécifiques._
 
 - L'intérêt ensuite est que l'image est disponible préconfigurée pour construire ou mettre à jour une infrastructure, ou lancer plusieurs instances (plusieurs containers) à partir de cette image.
 
-- C'est grâce à cette fonctionnalité que Docker peu être considéré comme un outil d'_infrastructure as code_.
+- C'est grâce à cette fonctionnalité que Docker peut être considéré comme un outil d'_infrastructure as code_.
 
 - On peut également prendre une sorte de snapshot du conteneur (de son système de fichiers, pas des processus en train de tourner) sous forme d'image avec `docker commit <image>` et `docker push`.
 
