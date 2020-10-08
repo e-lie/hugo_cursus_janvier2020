@@ -174,6 +174,8 @@ docker image --help
 
 # Créer et lancer un conteneur
 
+![](../../images/ops-basics-isolation.svg)
+
 - Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
 
 ```bash
@@ -283,3 +285,8 @@ Il s'agit d'un répertoire public et souvent gratuit d'images (officielles ou no
 On peut également y créer un compte gratuit pour pousser et distribuer ses propres images, ou installer son propre serveur de distribution d'images privé ou public, appelé **registry**.
 
 ---
+
+# En résumé
+
+![](../../images/docker-architecture.png)
+![](../../images/docker-components.png)

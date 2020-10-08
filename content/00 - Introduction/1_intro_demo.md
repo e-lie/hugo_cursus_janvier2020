@@ -16,7 +16,7 @@ draft: no
 
 # Introduction
 
-## ![](../../images/Moby-logo.png)
+![](../../images/Moby-logo.png)
 
 # Des conteneurs
 

@@ -3,18 +3,14 @@ title: Volumes et réseaux
 weight: 30
 ---
 
-# Volumes et réseau
-
----
-
 ## Cycle de vie d'un conteneur
 
-- ## Un conteneur a un cycle de vie très court: il doit pouvoir être créé et supprimé rapidement même en contexte de production.
+- Un conteneur a un cycle de vie très court: il doit pouvoir être créé et supprimé rapidement même en contexte de production.
 
 Conséquences :
 
 - On ne peut pas garder les données persistantes dans le conteneur.
-- ## On a besoin de méchanismes d'autoconfiguration, en particuler réseau car les IP des différents conteneur changent tout le temps.
+- On a besoin de mécanismes d'autoconfiguration, en particuler réseau car les IP des différents conteneur changent tout le temps.
 
 Solutions :
 
@@ -55,13 +51,13 @@ ls /tmp/data/
 
 # Partager des données avec un volume
 
-- ## Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
+- Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
 
-- ## Pour lancer un conteneur avec les volumes d'un autre conteneur déjà montés on peut utiliser `--volumes-from <container>`
+- Pour lancer un conteneur avec les volumes d'un autre conteneur déjà montés on peut utiliser `--volumes-from <container>`
 
-- ## On peut aussi créer le volume à l'avance et l'attacher après coup à un conteneur.
+- On peut aussi créer le volume à l'avance et l'attacher après coup à un conteneur.
 
-- ## Par défaut le driver de volume est `local` c'est-à-dire qu'un dossier est créé sur le disque de l'hôte.
+- Par défaut le driver de volume est `local` c'est-à-dire qu'un dossier est créé sur le disque de l'hôte.
 
 ```bash
 docker volume create --driver local \
@@ -82,7 +78,7 @@ Exemples:
 - NFS (protocole NFS)
 - BeeGFS (système de fichier distribué générique)
 - Amazon EBS (vendor specific)
-- ## etc.
+- etc.
 
 ```bash
 docker volume create -d vieux/sshfs -o sshcmd=<sshcmd> -o allow_other sshvolume

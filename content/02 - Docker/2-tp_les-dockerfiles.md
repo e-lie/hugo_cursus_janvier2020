@@ -1,5 +1,5 @@
 ---
-title: TP - images et conteneurs
+title: TP - Images et conteneurs
 weight: 25
 ---
 
@@ -289,9 +289,7 @@ fi
 
 - Changez le contenu du fichier `requirements.txt` (ajoutez une ligne commentée pour que docker dectecte un changement) puis relancez le build. Observez la construction. Que remarque-t-on ?
 
-```
-La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon la construction utilise le cache.
-```
+La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon, la construction utilise le cache.
 
 - Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
 
@@ -304,7 +302,7 @@ La construction reprend depuis la dernière étape modifiée (l'ajout de require
 
 - Pour ajouter les fichiers de l'application en une seule commande nous allons utiliser `ADD . .` et utiliser un fichier `.dockerignore` (à créer à la racine) pour lister les fichier à ignorer lors de la copie.
 
-`.dockerignore`
+Fichier `.dockerignore` :
 
 ```
 logs

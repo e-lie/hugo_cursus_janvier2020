@@ -32,3 +32,9 @@ piquer des trucs du tuto de fergus ?
 
 - remplacer dans tp3 par un truc avec microblog et un volume sur sqlite file (app/app.db ou app.db) puis mysql puis docker-compose avec elasticsearch (en insistant sur le fait que c'est intenable à la main et là l'utilité de dockercompose)
 - ajouter les "expand"
+
+à check : ops-images-dockerfile.svg
+ops-basics-isolation.svg
+
+
+- tester redis et dire pour le cache rdb

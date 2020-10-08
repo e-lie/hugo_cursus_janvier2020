@@ -4,22 +4,6 @@ visible: true
 weight: 40
 ---
 
----
-
-title: Conteneurs Docker
-
----
-
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
-
----
-
-# Docker Compose
-
----
-
 # Docker Compose
 
 - Nous avons pu constater que lancer plusieurs conteneurs liés avec leur mapping réseau et les volumes liés implique des commandes assez lourdes. Cela devient ingérable si l'on a beaucoup d'applications microservice avec des réseaux et des volumes spécifiques.
