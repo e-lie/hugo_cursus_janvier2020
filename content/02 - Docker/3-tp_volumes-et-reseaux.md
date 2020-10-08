@@ -6,14 +6,14 @@ weight: 35
 <!--
 #TODO
 # change network name to moby-network and add a schematics for clarity
-# Add explanation on redis functionning (in RAM db => create a dump.rdb file only used when restarted)
+# Add explanation on redis functionning (in RAM db => create a dump.rdb file only used when restarted) : https://redis.io/topics/persistence
 # Redis need to restart to update from file stored in volume.
 # Add points to recreate moby and redis at the start of second part.
 -->
 
 ## Portainer
 
-- Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec docker.
+- Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec Docker.
 
 ```bash
 docker run --detach --name portainer \
@@ -219,9 +219,13 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 **_Généralement, il faut faire beaucoup plus attention au prune de volumes (données à perdre) qu'au `prune` de conteneurs (rien à perdre car immutable et en général dans le registry)._**
 
-### Facultatif : lancez l'application `microblog` (v. 0.18) du TP précédent en la mettant dans le même réseau qu'un conteneur `mysql``
+### Facultatif : `microblog` avec MySQL
 
-### Facultatif : étudiez [le code de l'application `microblog` du TP précédent](https://github.com/miguelgrinberg/microblog/blob/master/config.py) puis modifiez le Dockerfile de l'application `microblog` du TP précédent pour stocker la base de données SQLite sur un volume nommé
+Lancez l'application `microblog` (v. 0.18) du TP précédent en la mettant dans le même réseau qu'un conteneur `mysql``
+
+### Facultatif : ajouter une instruction `VOLUME` à `microblog`
+
+étudiez [le code de l'application `microblog` du TP précédent](https://github.com/miguelgrinberg/microblog/blob/master/config.py) puis modifiez le Dockerfile de l'application `microblog` du TP précédent pour stocker la base de données SQLite sur un volume nommé
 
 {{% expand "Indice :" %}}
 La ligne qui nous intéresse est la suivante :
