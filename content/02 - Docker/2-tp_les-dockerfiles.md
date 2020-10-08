@@ -106,40 +106,36 @@ ENTRYPOINT ["./boot.sh"]
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse localhost:5001
 
-## Observons et optimisons l'image
-
-<!-- - Changez le contenu du fichier `requirements.txt` puis relancez le build. -->
-
-- Changez le contenu d'un des fichiers python de l'application et relancez le build.
-
-- Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le Docker Engine
-
-<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à apt-get en une seule commande avec `&&` et sur plusieurs lignes avec `\`. -->
-
-<!-- - Re-testez votre image. -->
-
-<!-- - Finalement, avons nous besoin d'un **virtualenv** à l'intérieur d'un **conteneur Docker** ? C'est redondant : le conteneur isole déjà les dépendances d'une seule application.
-  - modifier le Dockerfile pour installer les dépendances directement dans l'OS du conteneur (sur une seule ligne). -->
-
-- Ajoutez après le `FROM` du `Dockerfile` une commande `LABEL maintainer=<votre_nom>`
-
-- Ajoutez une commande `LABEL version=<votre_version>`
-
-<!-- - Le shell par défaut de Docker est `SHELL ["/bin/sh", "-c"]`. Cependant ce shell a certains comportement inhabituels et la commande de construction **n'échoue pas forcément** si une commande s'est mal passée. Dans une optique d'intégration continue, pour rendre la modification ultérieure de l'image plus sûre ajoutez au début (en dessous des `LABEL`) `SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]`.
-
-- Pour autant, le shell bash est non standard sur docker. Pour ne pas perturber les utilisateurs de l'image qui voudraient lancer des commande il peut être intéressant de rebasculer sur `sh` à la fin de la construction. Ajoutez à l'avant dernière ligne: `SHELL ["/bin/sh", "-c"]` -->
+## Explorer une image
 
 - Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
+
   - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
   - Il s'agit d'une arborescence.
 
-<!-- - Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive` -->
+- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
 
-- Trouvez la commande pour pousser l'image `microblog` sur le Docker Hub. Créez un compte le cas échéant.
+- Vous pouvez aussi utiliser la commande `docker save`, et utiliser `tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
+
+- Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
+
+<!-- ```bash
+docker login
+docker tag microblog:latest <your-docker-registry-account>/microblog:latest
+docker push <your-docker-registry-account>/microblog:latest
+``` -->
 
 - Affichez la liste des images présentes dans votre Docker Engine.
 
-- Inspectez la dernière image que vous venez de créez.
+<!-- ```
+docker image ls
+``` -->
+
+- Inspectez la dernière image que vous venez de créez (`docker image --help` pour trouver la commande)
+
+<!-- ```
+docker image inspect <num_image>
+``` -->
 
 - Observez l'historique de construction de l'image avec `docker image history <image>`
 
@@ -148,7 +144,113 @@ ENTRYPOINT ["./boot.sh"]
 - _(Facultatif)_ En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
 - Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
 
-## Une application Flask qui se connecte à `redis`
+## L'instruction HEALTHCHECK
+
+`HEALTHCHECK` permet de vérifier si l'app contenue dans un conteneur est en bonne santé.
+
+- Dans un nouveau dossier ou répertoire, créez un fichier `Dockerfile` dont le contenu est le suivant :
+
+```Dockerfile
+FROM ubuntu:16.04
+
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get -y install python-pip curl
+RUN pip install flask==0.10.1
+
+ADD /app.py /app/app.py
+WORKDIR /app
+
+HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
+
+CMD python app.py
+```
+
+- Créez aussi un fichier `app.py` avec ce contenu :
+
+```python
+from flask import Flask
+
+healthy = True
+
+app = Flask(__name__)
+
+@app.route('/health')
+def health():
+    global healthy
+
+    if healthy:
+        return 'OK', 200
+    else:
+        return 'NOT OK', 500
+
+@app.route('/kill')
+def kill():
+    global healthy
+    healthy = False
+    return 'You have killed your app.', 200
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
+```
+
+- Observez bien le code Python et la ligne `HEALTHCHECK` du `Dockerfile` puis lancez l'app. A l'aide de `docker ps`, relevez où Docker indique la santé de votre app.
+- Visitez l'URL `/kill` de votre app dans un navigateur. Refaites `docker ps`. Que s'est-il passé ?
+
+- _(Facultatif)_ Rajoutez une instruction `HEALTHCHECK` au `Dockerfile` de notre app microblog.
+
+## La version plus complexe de `microblog`
+
+- Committez les modifications de votre dépôt.
+
+```
+git add -A
+git commit -m Dockerfile_simple
+```
+
+- basculez avec Git au code de la version plus complexe : `git checkout v0.18`
+<!-- - installez les libraries python (listées dans requirements.txt): `pip install -r requirements.txt` -->
+- Suivez le [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour packager la version v0.18 de l'app, plus complexe, et qui doit fonctionner avec un autre conteneur servant la base de données `mysql`. Nous verrons comment au TP suivant.
+
+- La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP.
+
+- `Dockerfile correction` :
+
+```Dockerfile
+FROM python:3.7-buster
+
+RUN useradd microblog
+
+WORKDIR /home/microblog
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+RUN pip install gunicorn pymysql
+
+COPY app app
+COPY migrations migrations
+COPY microblog.py config.py boot.sh ./
+RUN chmod a+x boot.sh
+
+ENV FLASK_APP microblog.py
+
+RUN chown -R microblog:microblog ./
+USER microblog
+
+EXPOSE 5000
+CMD ["/bin/bash", "./boot.sh"]
+```
+
+- `boot.sh`
+
+```bash
+#!/bin/sh
+flask db upgrade
+flask translate compile
+exec gunicorn -b :5000 --access-logfile - --error-logfile - microblog:app
+```
+
+<!-- ## Une application Flask qui se connecte à `redis`
 
 - Démarrez un nouveau projet dans VSCode (créez un dossier appelé `identidock` et chargez-le avec la fonction _Add folder to workspace_)
 - Dans un sous-dossier `app`, ajoutez une petite application python en créant ce fichier `identidock.py` :
@@ -210,7 +312,7 @@ if __name__ == '__main__':
 ```Dockerfile
 FROM python:3.7
 
-#Ajouter tout le contexte
+# Ajouter tout le contexte
 ADD . .
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 RUN pip install Flask uWSGI requests redis
@@ -225,8 +327,9 @@ CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
 
 - Observons le code du Dockerfile ensemble s'il n'est pas clair pour vous. Juste avant de lancer l'application, nous avons changé d'utilisateur avec l'instruction `USER`, pourquoi ?.
 
-- Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
+- Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur. -->
 
+<!--
 ## Faire varier la configuration en fonction de l'environnement
 
 Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
@@ -250,7 +353,7 @@ fi
 
 - Ajoutez une instruction pour copier le script de boot, le rendre exécutable, puis remplacez l'instruction `CMD` pour lancer le script de boot à la place.
 
-- Lançons le conteneur, puis le conteneur redis dont l'app a besoin.
+- Lançons le conteneur, puis le conteneur redis dont l'app a besoin. -->
 
 <!-- ## Faire parler la vache
 - Changez de répertoire et créez un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`. Indice : utilisez la commande `ENTRYPOINT`.
@@ -260,67 +363,3 @@ Le but est de la faire fonctionner dans un conteneur à partir de commandes de t
 - `docker run cowsay Bonjour !` -->
 
 <!-- Faites que l'image soit la plus légère possible en utilisant l'image de base `alpine`. Attention, alpine possède des commandes légèrement différentes (`apk add` pour installer) et la plupart des programmes nes ont pas installés par défaut. -->
-
-## L'instruction HEALTHCHECK
-
-`HEALTHCHECK` permet de vérifier si l'app contenue dans un conteneur est en bonne santé.
-
-- Dans un nouveau répertoire, créez un fichier `Dockerfile` dont le contenu est le suivant :
-
-```Dockerfile
-FROM ubuntu:16.04
-
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install python-pip curl
-RUN pip install flask==0.10.1
-
-ADD /app.py /app/app.py
-WORKDIR /app
-
-HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
-
-CMD python app.py
-```
-
-- Créez aussi un fichier `app.py` avec ce contenu :
-
-```python
-from flask import Flask
-
-healthy = True
-
-app = Flask(__name__)
-
-@app.route('/health')
-def health():
-    global healthy
-
-    if healthy:
-        return 'OK', 200
-    else:
-        return 'NOT OK', 500
-
-@app.route('/kill')
-def kill():
-    global healthy
-    healthy = False
-    return 'You have killed your app.', 200
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0")
-```
-
-- Observez bien le code Python et la ligne `HEALTHCHECK` du `Dockerfile` puis lancez l'app. A l'aide de `docker ps`, relevez où Docker indique la santé de votre app.
-- Visitez l'URL `/kill` de votre app dans un navigateur. Refaites `docker ps`. Que s'est-il passé ?
-
-## Une version du microblog plus complexe avec MySQL
-
-_Facultatif : si vous êtes en avance_
-
-- Basculez sur la version plus complexe : `git checkout v0.18`
-- Suivez le [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour packager cette version plus complexe avec un MySQL (à partir du paragraphe _Using Third-Party "Containerized" Services"_, mais en **s'arrêtant avant la partie finale sur Elasticsearch**), et adaptez/simplifiez si besoin.
-
-<!-- ## Toujours plus loin : avec une base de données Elasticsearch
-
-- **Facultatif :** suivez la fin du [tutoriel de Miguel Grinberg sur l'application Flask](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour configurer Elasticsearch. -->

@@ -231,7 +231,7 @@ docker rm $(docker ps -aq -f status=exited)
 - Supprimez une image
 - Que fait la commande `docker image prune -a` ?
 
-- En utilisant la commande `docker save`, utilisez `tar` pour décompresser une image Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans l'image.
+- En utilisant la commande `docker export`, utilisez `tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
 
@@ -244,13 +244,21 @@ docker rm $(docker ps -aq -f status=exited)
 - Dans Gitpod, lancer la commande suivante pour installer Docker (`brew` est un gestionnaire de packet créé initialement pour MacOS et qui ne nécessite pas de droits `sudo`) :
   `brew install docker`
 
-- Dans Gitpod, copiez-collez la clé privée fournie dans le dossier de partage dans un fichier appelé `ssh.private`, puis (après avoir retrouvé l'IP publique de votre VM Scaleway) lancez le tunnel SSH qui nous permettra d'accéder à notre dæmon Docker comme ceci :
+- Dans Gitpod, copiez-collez la clé privée fournie dans le dossier de partage dans un fichier appelé `ssh.private`, changez ses permissions avec :
+  `chmod go-rwx ssh.private`
+
+- Puis (après avoir retrouvé l'IP publique de votre VM Scaleway) lancez le tunnel SSH qui nous permettra d'accéder à notre dæmon Docker comme ceci :
 
 ```
-export DOCKER_IP="INSEREZ_VOTRE_IP_ICI"
-ssh -nNT -L localhost:23750:var/run/docker.sock $DOCKER_IP -N -l root -i ssh.private &
-export DOCKER_HOST="localhost:23750"
+export DOCKER_IP=INSEREZ_VOTRE_IP_ICI
+ssh -nNT -L localhost:23750:var/run/docker.sock $DOCKER_IP -N -l root -i ssh.private
+```
+
+Puis dans un autre terminal :
+
+```
+export DOCKER_HOST=localhost:23750
 
 ```
 
-- Vérifiez en faisant `docker info` et `docker ps` que vous avez bien accès à la même installation de Docker.
+- Vérifiez en faisant `docker info` et `docker ps` que vous avez bien accès à la même installation de Docker que sur votre VM Scaleway.
