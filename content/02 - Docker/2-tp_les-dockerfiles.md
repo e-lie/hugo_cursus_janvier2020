@@ -15,7 +15,10 @@ git clone https://github.com/miguelgrinberg/microblog/
 
 - Déplacez-vous dans le dossier `microblog`
 
+<!-- - Nous allons activer une version non dockerisée de l’application grâce à git : `git checkout v0.18` -->
+
 - Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2`
+
 <!-- - Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran. -->
 
 <!-- - Pour la tester d’abord en local (sans conteneur) nous avons besoin des outils python. Vérifions s'ils sont installés :
@@ -73,6 +76,7 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
   - `RUN pip install flask`
+  <!-- - `RUN pip install -r requirements.txt` -->
   - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
@@ -106,16 +110,7 @@ ENTRYPOINT ["./boot.sh"]
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse localhost:5001
 
-## Explorer une image
-
-- Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
-
-  - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
-  - Il s'agit d'une arborescence.
-
-- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
-
-- Vous pouvez aussi utiliser la commande `docker save`, et utiliser `tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
+## Docker Hub
 
 - Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
 
@@ -124,6 +119,8 @@ docker login
 docker tag microblog:latest <your-docker-registry-account>/microblog:latest
 docker push <your-docker-registry-account>/microblog:latest
 ``` -->
+
+## Décortiquer une image
 
 - Affichez la liste des images présentes dans votre Docker Engine.
 
@@ -141,8 +138,14 @@ docker image inspect <num_image>
 
 <!-- - Committez les modifications de votre dépôt avec `git` (faire le commit en local est suffisant). -->
 
-- _(Facultatif)_ En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
-- Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
+- Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
+
+  - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
+  - Il s'agit d'une arborescence.
+
+- Vous pouvez aussi utiliser la commande `docker save votre_image -o image.tar`, et utiliser `tar -C image_decompressee/ -xvf image.tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
+
+- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
 
 ## L'instruction HEALTHCHECK
 
@@ -201,20 +204,20 @@ if __name__ == "__main__":
 
 ## La version plus complexe de `microblog`
 
-- Committez les modifications de votre dépôt.
+- Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
 
 ```
-git add -A
-git commit -m Dockerfile_simple
+git add Dockerfile boot.sh
+git commit -m "Dockerfile simple"
 ```
 
-- basculez avec Git au code de la version plus complexe : `git checkout v0.18`
-<!-- - installez les libraries python (listées dans requirements.txt): `pip install -r requirements.txt` -->
-- Suivez le [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) pour packager la version v0.18 de l'app, plus complexe, et qui doit fonctionner avec un autre conteneur servant la base de données `mysql`. Nous verrons comment au TP suivant.
+<!-- - basculez au code de la version plus complexe avec Git : `git checkout v0.18` -->
 
-- La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP.
+- La fin du [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) indique que la version v0.18 de l'app peut fonctionner avec un autre conteneur servant de base de données `mysql`. Nous verrons comment au TP suivant sur les volumes et le réseau.
 
-- `Dockerfile correction` :
+<!-- _(La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP)_ -->
+
+- Voici à quoi doit ressembler ce `Dockerfile` plus complexe :
 
 ```Dockerfile
 FROM python:3.7-buster
@@ -249,6 +252,124 @@ flask db upgrade
 flask translate compile
 exec gunicorn -b :5000 --access-logfile - --error-logfile - microblog:app
 ```
+
+- Poussez l'image microblog sur le Docker Hub comme indiqué dans le tutoriel.
+
+```bash
+docker login
+docker tag microblog:latest <your-docker-registry-account>/microblog:latest
+docker push <your-docker-registry-account>/microblog:lates
+```
+
+## _Facultatif :_ Faire varier la configuration en fonction de l'environnement
+
+Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
+Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
+
+- A partir de ce script bash `boot.sh` d'exemple, adaptez le votre pour adapter le lancement de l'application au contexte :
+
+```bash
+#!/bin/bash
+set -e
+if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
+    echo "Running Development Server"
+    exec python "/app/app_name.py"
+else
+    echo "Running Production Server"
+    exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
+fi
+```
+
+- Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
+
+- Construisez l'image avec `build`, puis lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
+  Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
+
+## _Facultatif :_ Observons et optimisons l'image `microblog`
+
+- Changez le contenu du fichier `requirements.txt` (ajoutez une ligne commentée pour que docker dectecte un changement) puis relancez le build. Observez la construction. Que remarque-t-on ?
+
+```
+La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon la construction utilise le cache.
+```
+
+- Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
+
+- Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le docker engine
+
+- Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`.
+- Faites de même pour les `RUN` avec `chown/chmod`
+
+- Retestez votre image.
+
+- Pour ajouter les fichiers de l'application en une seule commande nous allons utiliser `ADD . .` et utiliser un fichier `.dockerignore` (à créer à la racine) pour lister les fichier à ignorer lors de la copie.
+
+`.dockerignore`
+
+```
+logs
+venv
+.gitignore
+app.db
+babel.cfg
+Dockerfile
+LICENSE
+Procfile
+README.md
+tests.py
+Vagrantfile
+```
+
+- Modifier le Dockerfile pour installer les dépendances sur une seule ligne.
+
+- Ajoutez au début du `Dockerfile` une commande `LABEL maintainer=<votre_nom>`
+
+- Ajoutez une commande `LABEL version=<votre_version>`
+
+- Le shell par défaut de Docker est `SHELL ["/bin/sh", "-c"]`. Cependant ce shell a certains comportement inhabituels et la commande de construction **n'échoue pas forcément** si une commande s'est mal passée. Dans une optique d'intégration continue, pour rendre la modification ultérieure de l'image plus sûre ajoutez au début (en dessous des `LABEL`) `SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]`.
+
+- Cependant le shell bash est non standard sur docker. Pour ne pas perturber les utilisateurs de l'image qui voudrait lancer des commande il peut être intéressant de rebasculer sur `sh` à la fin de la construction. Ajoutez à l'avant dernière ligne: `SHELL ["/bin/sh", "-c"]`
+
+- `Dockerfile` optimisé :
+
+```Dockerfile
+FROM python:3.7-buster
+
+LABEL maintainer="Hadrien"
+LABEL version="1.0"
+
+# shell plus restrictif pour ne pas avoir d'erreurs silencieuse
+SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
+
+# Ne pas lancer les app en root dans docker
+RUN useradd microblog
+WORKDIR /home/microblog
+
+#Ajouter tout le contexte sauf le contenu de .dockerignore
+ADD . .
+
+# Installer les déps python, pas besoin de venv car docker
+RUN pip install -r requirements.txt && \
+    pip install gunicorn pymysql
+RUN chmod a+x boot.sh && \
+    chown -R microblog:microblog ./
+
+# Déclarer la config de l'app
+ENV FLASK_APP microblog.py
+EXPOSE 5000
+
+# Changer d'user pour lancer l'app
+USER microblog
+
+# Remettre le shell standard pour ne pas surprendre les utilisateur de l'image
+SHELL ["/bin/sh", "-c"]
+CMD ["/bin/bash", "./boot.sh"]
+```
+
+## _Facultatif:_ un Registry privé
+
+- _(Facultatif)_ En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
+- Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
 
 <!-- ## Une application Flask qui se connecte à `redis`
 
@@ -328,32 +449,6 @@ CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
 - Observons le code du Dockerfile ensemble s'il n'est pas clair pour vous. Juste avant de lancer l'application, nous avons changé d'utilisateur avec l'instruction `USER`, pourquoi ?.
 
 - Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur. -->
-
-<!--
-## Faire varier la configuration en fonction de l'environnement
-
-Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
-Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
-
-- Créons à la racine du projet (pas dans `app`) un script bash `boot.sh` pour adapter le lancement de l'application au contexte :
-
-```bash
-#!/bin/bash
-set -e
-if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
-    echo "Running Development Server"
-    exec python "/app/identidock.py"
-else
-    echo "Running Production Server"
-    exec uwsgi --http 0.0.0.0:9090 --wsgi-file /app/identidock.py --callable app --stats 0.0.0.0:9191
-fi
-```
-
-- Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
-
-- Ajoutez une instruction pour copier le script de boot, le rendre exécutable, puis remplacez l'instruction `CMD` pour lancer le script de boot à la place.
-
-- Lançons le conteneur, puis le conteneur redis dont l'app a besoin. -->
 
 <!-- ## Faire parler la vache
 - Changez de répertoire et créez un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`. Indice : utilisez la commande `ENTRYPOINT`.

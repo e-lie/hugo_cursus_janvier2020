@@ -231,7 +231,7 @@ docker rm $(docker ps -aq -f status=exited)
 - Supprimez une image
 - Que fait la commande `docker image prune -a` ?
 
-- En utilisant la commande `docker export`, utilisez `tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
+- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
 

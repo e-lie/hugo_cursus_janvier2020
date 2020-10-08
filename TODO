@@ -27,3 +27,8 @@ piquer des trucs du tuto de fergus ?
 - dire que la ref docker est cool à checker car elle change tout le temps
 - dire que docker compose wordpress tout fait là https://hub.docker.com/_/wordpress ou là https://docs.docker.com/compose/wordpress/
 - same with nextcloud https://hub.docker.com/_/nextcloud or here https://github.com/nextcloud/docker
+
+- ajout d'exemple du build multi image
+
+- remplacer dans tp3 par un truc avec microblog et un volume sur sqlite file (app/app.db ou app.db) puis mysql puis docker-compose avec elasticsearch (en insistant sur le fait que c'est intenable à la main et là l'utilité de dockercompose)
+- ajouter les "expand"
