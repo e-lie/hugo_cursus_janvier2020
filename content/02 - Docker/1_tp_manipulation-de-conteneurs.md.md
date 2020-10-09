@@ -186,6 +186,24 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 docker run -d --name wp --port 8080:80 wordpress
 ```
 
+## Explorer une image
+
+- Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
+
+- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : en Bash, une commande entre les parenthèses de "`$()`" est exécutée avant et utilisée comme chaîne de caractère dans la commande principale)
+
+```
+docker rm $(docker ps -aq -f status=exited)
+```
+
+- S'il y a encore des conteneurs qui tournent (`docker ps`), supprimez un des conteneurs restants en utilisant l'autocomplétion et l'option adéquate
+
+- Listez les images
+- Supprimez une image
+- Que fait la commande `docker image prune -a` ?
+
+- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
+
 ### MYSQL et les variables d'environnement
 
 Depuis Ubuntu:
@@ -209,22 +227,6 @@ mysql --user=root --host=127.0.0.1 --port=6666
 
 - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
 - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte
-
-- Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
-
-- Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : en Bash, une commande entre les parenthèses de "`$()`" est exécutée avant et utilisée comme chaîne de caractère dans la commande principale)
-
-```
-docker rm $(docker ps -aq -f status=exited)
-```
-
-- S'il y a encore des conteneurs qui tournent (`docker ps`), supprimez un des conteneurs restants en utilisant l'autocomplétion et l'option adéquate
-
-- Listez les images
-- Supprimez une image
-- Que fait la commande `docker image prune -a` ?
-
-- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
 ### Portainer
 
