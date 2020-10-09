@@ -233,9 +233,14 @@ docker rm $(docker ps -aq -f status=exited)
 
 - En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
+
+## Installer Docker pour Windows
+- À l'aide des instructions du site officiel, téléchargez et installez Docker pour Windows. 
+- après avoir vérifié que Docker fonctionnait avec `docker info` dans une invite de commande Windows, installez Visual Studio Code. Ensemble, explorons son interface. . 
+
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
 
-## Utiliser Gitpod
+## _Facultatif :_ explorer Gitpod
 
 - Se créer un compte sur [github.com](https://github.com)
 
