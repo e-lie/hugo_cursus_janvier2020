@@ -152,7 +152,7 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 
 - `docker diff <container>` permet d'observer les changements apportés au conteneur depuis le lancement.
 
-![](../../images/overlay.jpeg)
+<!-- ![](../../images/overlay.jpeg) -->
 
 ---
 
