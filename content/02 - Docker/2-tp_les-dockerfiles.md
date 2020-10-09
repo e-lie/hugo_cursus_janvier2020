@@ -69,13 +69,14 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
   - `RUN apt-get update -y`
-  - `RUN apt-get install -y python-pip python-dev build-essential`
+  - `RUN apt-get install -y python3-pip`
+  <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
 - Reconstruisez votre conteneur. Si tout se passe bien, poursuivez.
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
-  - `RUN pip install flask`
+  - `RUN pip3 install flask`
   <!-- - `RUN pip install -r requirements.txt` -->
   - `ENV FLASK_APP microblog.py`
 
