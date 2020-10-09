@@ -203,7 +203,7 @@ if __name__ == "__main__":
 
 - _(Facultatif)_ Rajoutez une instruction `HEALTHCHECK` au `Dockerfile` de notre app microblog.
 
-## La version plus complexe de `microblog`
+## _Facultatif :_ La version plus complexe de `microblog`
 
 - Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
 
