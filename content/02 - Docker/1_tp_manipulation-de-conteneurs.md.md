@@ -87,10 +87,14 @@ Avec l'aide du support et de `--help`, et en notant sur une feuille ou dans un f
 
 - Lancez simplement un conteneur Debian en mode _attached_. Que se passe-t-il ?
 
-```
+{{% expand "Résultat :" %}}
+
+```bash
 docker run debian
 => Il ne se passe rien car comme debian ne contient pas d'application bloquante le conteneur s'arrête
 ```
+
+{{% /expand %}}
 
 - Lancez un conteneur Debian (`docker run` puis les arguments nécessaires, cf. l'aide `--help`) en mode détaché avec la commande `echo "Debian container"`. Rien n'apparaît. En effet en mode détaché la sortie standard n'est pas connectée au terminal.
 
@@ -144,7 +148,7 @@ Le nom d'un conteneur doit être unique (à ne pas confondre avec le nom de l'im
 
 - Créez un conteneur avec le nom `debian2`
 
-```
+```bash
 docker run debian -d --name debian2 sleep 500
 ```
 
@@ -161,13 +165,13 @@ docker run debian -d --name debian2 sleep 500
 - Visitez [hub.docker.com](https://hub.docker.com)
 - Cherchez l'image de Wordpress et téléchargez la dernière version (`pull`).
 
-```
+```bash
 docker pull wordpress
 ```
 
 - Lancez un conteneur Wordpress. Notez que lorsque l'image est déjà téléchargée le lancement d'un conteneur est quasi instantané.
 
-```
+```bash
 docker run wordpress
 ```
 
@@ -178,7 +182,7 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 
 - Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local.
 
-```
+```bash
 docker run -d --name wp --port 8080:80 wordpress
 ```
 
@@ -189,7 +193,7 @@ Depuis Ubuntu:
 - Cherchez le conteneur `mysql` version 5.7.
 - Lancez-le.
 
-```
+```bash
 docker run --name mysql -d mysql:5.7
 ```
 
@@ -205,17 +209,6 @@ mysql --user=root --host=127.0.0.1 --port=6666
 
 - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
 - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte
-
-### Portainer
-
-- Lancer une instance de Portainer :
-
-```bash
-docker volume create portainer_data
-docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
-```
-
-- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
 
@@ -233,10 +226,21 @@ docker rm $(docker ps -aq -f status=exited)
 
 - En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
+### Portainer
 
-## Installer Docker pour Windows
-- À l'aide des instructions du site officiel, téléchargez et installez Docker pour Windows. 
-- après avoir vérifié que Docker fonctionnait avec `docker info` dans une invite de commande Windows, installez Visual Studio Code. Ensemble, explorons son interface. . 
+- Lancer une instance de Portainer :
+
+```bash
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```
+
+- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
+
+## Installer Docker Desktop for Windows
+
+- À l'aide des [instructions du site officiel](https://docs.docker.com/docker-for-windows/install/), téléchargez et installez Docker Desktop for Windows.
+- après avoir vérifié que Docker fonctionnait avec `docker info` dans une invite de commande Windows, installez Visual Studio Code. Ensemble, explorons son interface. .
 
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
 

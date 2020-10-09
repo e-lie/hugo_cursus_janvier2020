@@ -8,7 +8,6 @@ weight: 35
 # change network name to moby-network and add a schematics for clarity
 # Add explanation on redis functionning (in RAM db => create a dump.rdb file only used when restarted) : https://redis.io/topics/persistence
 # Redis need to restart to update from file stored in volume.
-# Add points to recreate moby and redis at the start of second part.
 -->
 
 ## Portainer
@@ -20,7 +19,7 @@ docker run --detach --name portainer \
     -p 9000:9000 \
     -v portainer_data:/data \
     -v /var/run/docker.sock:/var/run/docker.sock
-    portainer/portainer
+    portainer/portainer-ce
 ```
 
 - Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
@@ -67,7 +66,7 @@ Explorons un peu notre réseau Docker.
 
 - Exécutez (`docker exec`) la commande `ping -c 3 redis` à l'intérieur de notre conteneur applicatif (`moby-counter` donc). Quelle est l'adresse IP affichée ?
 
-```
+```bash
 docker exec moby-counter ping -c3 redis
 ```
 
