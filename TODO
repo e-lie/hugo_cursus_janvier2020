@@ -50,3 +50,4 @@ TESTS connexions :
 - guacamole VNC ?
 - demander ouverture du SSH ou de VNC pour la salle
 
+- tp2 modifier pour pas boot.sh la premiere fois

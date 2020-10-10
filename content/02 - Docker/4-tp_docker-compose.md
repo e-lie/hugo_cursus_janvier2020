@@ -23,6 +23,8 @@ chmod +x bin/docker-compose
 export PATH="./bin:$PATH"
 ```
 
+### `identidock`
+
 - A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
 
 ```yml
@@ -108,25 +110,29 @@ services:
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`. Ainsi que [la documentation du langage (DSL) des Compose files](https://docs.docker.com/compose/compose-file/).
 
-## TP 2 : Déployons plusieurs services avec Docker-Compose et Traefik
+## Le Docker Compose de `microblog`
 
 <!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
-<!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
+On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog.
 
-On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services.
+<!-- Nous allons ensuite installer le reverse proxy Traefik pour accéder à ces services. -->
+
+<!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
+
 Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à partir du tag git `v0.18`) avec MySQL.
 
-### Si vous êtes en avance
+## Plein de services
 
-Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
+Ensuite, assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
 
-### Si vous êtes en avance : ajouter ELK et centraliser les logs
+### _Avancé_ : utiliser Traefik pour le routage
 
-Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
+Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votre `docker-compose.yml` précédent, installer le reverse proxy Traefik pour accéder à ces services. Explorer le dashboard Traefik.
 
-Tentons de centraliser les logs de
-de ces services dans ELK.
+## Une stack Elastic
+
+Testez la stack suivante puis ajoutez un nœud Elastic. A l'aide de la documentation, vérifiez que ce nouveau nœud communique bien avec le premier.
 
 ```yaml
 version: "3"
@@ -167,5 +173,12 @@ networks:
   logging-network:
     driver: bridge
 ```
+
+### _Avancé_ : ajouter ELK et centraliser les logs
+
+Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
+
+Tentons de centraliser les logs de
+de ces services dans ELK.
 
 ---
