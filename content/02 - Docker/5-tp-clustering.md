@@ -3,12 +3,22 @@ title: TP - Orchestration et clustering
 weight: 55
 ---
 
-- Cloner l'application exemple ici : [https://gitlab.com/e-lie/getstarted_docker.git](https://gitlab.com/e-lie/getstarted_docker.git)
-- En suivant le [guide Docker de découverte de Swarm à partir de la partie 4](https://docs.docker.com/get-started/part4/), créez un fichier docker-compose qui package l'application exemple avec un container redis joignable via le hostname `redis` et le port 6379.
+<!-- - Cloner l'application exemple ici : [https://gitlab.com/e-lie/getstarted_docker.git](https://gitlab.com/e-lie/getstarted_docker.git) -->
+
+## Introduction à Swarm
+
+- Cloner l'application `example-voting-app` ici : [https://github.com/dockersamples/example-voting-app](https://github.com/dockersamples/example-voting-app)
+- En suivant le [guide Docker de découverte de Swarm à partir de la partie 4](https://docs.docker.com/get-started/part4/), créez un fichier docker-compose qui package l'application exemple avec un container `redis` joignable via le hostname `redis` et le port 6379.
 - Une fois le tutoriel terminé, scalez la stack en ajoutant des _replicas_.
-- Trouvez comment promouvoir (promote) un worker en manager
-- Puis déchoir (demote) le manager pour le sortir du cluster (drain) : `docker node update --availability drain <node-name>`
+- Trouvez comment promouvoir (_promote_) un worker en manager
+- Puis déchoir (_demote_) le manager pour le sortir du cluster (drain) : `docker node update --availability drain <node-name>`
 - Comment ne pas exposer les ports de tous nos hôtes à tout l'internet ?
+- Avec Portainer, explorer le cluster. Faire de même avec [docker-swarm-visualizer](https://github.com/dockersamples/docker-swarm-visualizer).
+
+## Autres exercices
+
+- Prenez une stack Docker Compose du TP 4 et scalez-la (3 _replicas_) avec Swarm.
+- En vous groupant par 2 ou 3, créez un cluster de 2 ou 3 machines avec Docker Swarm.
 
 <!--
 ## Installons Portainer
@@ -29,6 +39,6 @@ docker service create \
 - Inspectez le service portainer avec l'option --pretty
 - Ouvrez la page avec `firefox http://$(docker-machine ip <machine_manager>):9000` -->
 
-# Installer un loadbalancer HAProxy
+<!-- # Installer un loadbalancer HAProxy
 
-- [https://github.com/docker/dockercloud-haproxy/tree/master](https://github.com/docker/dockercloud-haproxy/tree/master)
+- [https://github.com/docker/dockercloud-haproxy/tree/master](https://github.com/docker/dockercloud-haproxy/tree/master) -->

@@ -51,3 +51,6 @@ TESTS connexions :
 - demander ouverture du SSH ou de VNC pour la salle
 
 - tp2 modifier pour pas boot.sh la premiere fois
+- tp4 links désuets ? et quid du depends_on ?
+- TP6 trouver meilleur exemple de stack !!!
+- TESTER example-voting-app

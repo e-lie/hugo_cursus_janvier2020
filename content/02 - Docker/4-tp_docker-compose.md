@@ -8,7 +8,7 @@ weight: 45
 
 ### Dans une VM
 
-- Si ce n'est pas déjà fait, installez Docker par la méthode officielle accélérée et moins sécurisée avec `curl -fsSL https://get.docker.com -o get-docker.sh;sudo sh get-docker.sh`. Pourquoi est-ce moins sécurisé ?
+- Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ?
 - Installez VSCode avec la commande `sudo snap install --classic code`
 - Installez docker-compose avec `sudo apt install docker-compose`.
 
@@ -25,9 +25,88 @@ chmod +x bin/docker-compose
 export PATH="./bin:$PATH"
 ``` -->
 
-### `identidock`
+### `identidock` : une application Flask qui se connecte à `redis`
 
-- A la racine de notre projet précédent `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
+- Démarrez un nouveau projet dans VSCode (créez un dossier appelé `identidock` et chargez-le avec la fonction _Add folder to workspace_)
+- Dans un sous-dossier `app`, ajoutez une petite application python en créant ce fichier `identidock.py` :
+
+```python
+from flask import Flask, Response, request
+import requests
+import hashlib
+import redis
+
+app = Flask(__name__)
+cache = redis.StrictRedis(host='redis', port=6379, db=0)
+salt = "UNIQUE_SALT"
+default_name = 'Joe Bloggs'
+
+@app.route('/', methods=['GET', 'POST'])
+def mainpage():
+
+    name = default_name
+    if request.method == 'POST':
+        name = request.form['name']
+
+    salted_name = salt + name
+    name_hash = hashlib.sha256(salted_name.encode()).hexdigest()
+    header = '<html><head><title>Identidock</title></head><body>'
+    body = '''<form method="POST">
+                Hello <input type="text" name="name" value="{0}">
+                <input type="submit" value="submit">
+                </form>
+                <p>You look like a:
+                <img src="/monster/{1}"/>
+            '''.format(name, name_hash)
+    footer = '</body></html>'
+    return header + body + footer
+
+
+@app.route('/monster/<name>')
+def get_identicon(name):
+
+    image = cache.get(name)
+
+    if image is None:
+        print ("Cache miss", flush=True)
+        r = requests.get('http://dnmonster:8080/monster/' + name + '?size=80')
+        image = r.content
+    cache.set(name, image)
+
+    return Response(image, mimetype='image/png')
+
+if __name__ == '__main__':
+  app.run(debug=True, host='0.0.0.0', port=9090)
+
+```
+
+- `uWSGI` est un serveur python de production très adapté pour servir notre serveur intégré Flask, nous allons l'utiliser.
+
+- Dockerisons maintenant cette nouvelle application avec le Dockerfile suivant :
+
+```Dockerfile
+FROM python:3.7
+
+# Ajouter tout le contexte
+ADD . .
+RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
+RUN pip install Flask uWSGI requests redis
+WORKDIR /app
+COPY app/identidock.py /app
+
+EXPOSE 9090 9191
+USER uwsgi
+CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
+"--callable", "app", "--stats", "0.0.0.0:9191"]
+```
+
+- Observons le code du Dockerfile ensemble s'il n'est pas clair pour vous. Juste avant de lancer l'application, nous avons changé d'utilisateur avec l'instruction `USER`, pourquoi ?.
+
+- Construire l'application, pour l'instant avec `docker build`, la lancer et vérifier avec `docker exec`, `whoami` et `id` l'utilisateur avec lequel tourne le conteneur.
+
+#### Le fichier Docker Compose
+
+- A la racine de notre projet `identidock` (à côté du Dockerfile), créez un fichier déclaration de notre application `docker-compose.yml` avec à l'intérieur:
 
 ```yml
 version: "2"
@@ -80,7 +159,7 @@ services:
 
 Cette fois plutôt de construire l'image, nous indiquons simplement comment la récupérer sur le Docker Hub. Nous ajoutons également un lien qui indique à Docker de configurer le réseau convenablement.
 
-- Ajoutons également un conteneur redis, la base de données qui sert à mettre en cache les images et à ne pas les recalculer à chaque fois :
+- Ajoutons également un conteneur `redis`, la base de données qui sert à mettre en cache les images et à ne pas les recalculer à chaque fois :
 
 ```yml
 version: "2"
@@ -116,15 +195,15 @@ services:
 
 <!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
-On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog.
-
 <!-- Nous allons ensuite installer le reverse proxy Traefik pour accéder à ces services. -->
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
 
-Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à partir du tag git `v0.18`) avec MySQL.
+Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git`) avec MySQL.
 
-## Plein de services
+### Plein d'autres services
+
+On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog.
 
 Ensuite, assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
 
@@ -134,7 +213,7 @@ Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votr
 
 ## Une stack Elastic
 
-Testez la stack suivante puis ajoutez un nœud Elastic. A l'aide de la documentation, vérifiez que ce nouveau nœud communique bien avec le premier.
+Testez la stack suivante puis ajoutez un nœud Elastic. A l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
 
 ```yaml
 version: "3"
@@ -176,7 +255,12 @@ networks:
     driver: bridge
 ```
 
-### _Avancé_ : ajouter ELK et centraliser les logs
+### _Avancé_ : ajouter une stack ELK à `microblog`
+
+Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
+Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`.
+
+### _Avancé_ : centraliser les logs de microblog sur ELK
 
 Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
 
