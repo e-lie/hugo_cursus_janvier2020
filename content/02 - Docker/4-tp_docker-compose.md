@@ -4,24 +4,26 @@ draft: false
 weight: 45
 ---
 
-## TP 1 : Articuler deux images avec Docker compose
+## Articuler deux images avec Docker compose
 
 ### Dans une VM
 
+- Si ce n'est pas déjà fait, installez Docker par la méthode officielle accélérée et moins sécurisée avec `curl -fsSL https://get.docker.com -o get-docker.sh;sudo sh get-docker.sh`. Pourquoi est-ce moins sécurisé ?
+- Installez VSCode avec la commande `sudo snap install --classic code`
 - Installez docker-compose avec `sudo apt install docker-compose`.
 
-### Avec Gitpod
+<!-- ### Avec Gitpod
 
-<!-- `brew update` (si ça reste bloqué plus de 5min, arrêtez avec Ctrl+C)
+`brew update` (si ça reste bloqué plus de 5min, arrêtez avec Ctrl+C)
 `brew install docker-compose`
-Si la dernière commande ne marche pas, installez `docker-compose` de la façon suivante : -->
+Si la dernière commande ne marche pas, installez `docker-compose` de la façon suivante :
 
-```bash
+````bash
 mkdir bin
 curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o bin/docker-compose
 chmod +x bin/docker-compose
 export PATH="./bin:$PATH"
-```
+``` -->
 
 ### `identidock`
 
