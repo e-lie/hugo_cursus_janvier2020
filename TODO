@@ -60,3 +60,8 @@ TESTS connexions :
 - Virer ou renforcer slide qui parlait de microservices.
 - Ajouter un memo de ce qui est déprécié ou non entre docker compose v2 et v3. Check pour depends_on : Version 3 no longer supports the condition form of depends_on.
 - donner texto les commandes pour fix le docker compose de voting_app ou commit sur mon repo et changer les refs
+
++WordPress config a la main  et extraire fichier d econf puis avec vars env en tp3 volume et réseau ?
+ Virzr optio  link docker
+ slides sur containers Windows 
+ - acheter livrets containers julia et verif droits images utilisées / refaire schémas

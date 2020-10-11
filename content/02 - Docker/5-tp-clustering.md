@@ -65,15 +65,14 @@ Hmm, ce serait [ce satané _commit_](https://github.com/dockersamples/example-vo
 {{% /expand %}}
 
 {{% expand "Indice 4 :" %}}
-Ce commentaire semble contenir la clé du mystère au chocolat
-https://github.com/dockersamples/example-voting-app/issues/162#issuecomment-609521466
+Ce commentaire semble contenir la clé du mystère au chocolat : <https://github.com/dockersamples/example-voting-app/issues/162#issuecomment-609521466>
 
 {{% /expand %}}
 
 {{% expand "Solution / explications :" %}}
-Quelqu'un a abandonné le dépôt Docker Hub lié à cette app et la personne qui y a accès est injoignable ! C'est un très bon exemple de la réalité de l'écosystème Docker, et du fait qu'il faut se méfier des images créées par d'autres. Heureusement, il suffit juste de :
+Quelqu'un a abandonné le dépôt Docker Hub lié à cette app et la personne qui y a accès est injoignable ! C'est un très bon exemple de la réalité de l'écosystème Docker, et du fait qu'il faut se méfier des images créées par d'autres. Heureusement, il suffit juste :
 
-- _rebuild_ les différentes images à partir de leur Dockerfile,
+- de _rebuild_ les différentes images à partir de leur Dockerfile,
 - puis d'éditer votre fichier Docker Compose (`docker-stack.yml`) pour qu'il se base sur l'image que vous venez de reconstruire.
 
 {{% /expand %}}
