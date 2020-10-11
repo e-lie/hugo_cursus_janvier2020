@@ -54,3 +54,6 @@ TESTS connexions :
 - tp4 links désuets ? et quid du depends_on ?
 - TP6 trouver meilleur exemple de stack !!!
 - TESTER example-voting-app
+- sur le réseau rajouter une slide sur les drivers réseau et les possibilités des drivers réseau (plutôt K8s quand avancé) : VXLAN ou encapsulation IPIP (IP in IP), Cilium avec eBPF
+- rajouter dans slides + TP sur dockerfile des explications et exemples et manips sur VOLUME et sur EXPOSE.
+- Inverser TP Dockerfile et TP Volume + réseau
