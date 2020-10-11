@@ -9,7 +9,7 @@ weight: 55
 
 - Cloner l'application `example-voting-app` ici : [https://github.com/dockersamples/example-voting-app](https://github.com/dockersamples/example-voting-app)
 
-- Lire le schéma d'architecture de l'app `example-voting-app` sur Github. A noter que les deux services de front-ends et le back-end existent en deux versions d'image : Python et .NET. Ces deux versions peuvent être déployées de manière interchangeable et ne modifient pas le fonctionnement de l'application multi-conteneur. C'est une démonstration de l'utilité du paradigme de la conteneurisation et de l'architecture dite "micro-service".
+- Lire le schéma d'architecture de l'app `example-voting-app` sur Github. A noter que certains des services existent en deux versions d'image : Java et .NET, et que tous les services possèdent des images pour conteneurs Windows ou Linux. Ces versions peuvent être déployées de manière interchangeable et ne modifient pas le fonctionnement de l'application multi-conteneur. C'est une démonstration de l'utilité du paradigme de la conteneurisation et de l'architecture dite _"micro-service"_.
 
 - Lire attentivement les fichiers `docker-compose.yml`, `docker-compose-simple.yml`, `docker-stack-simple.yml` et `docker-stack.yml`. Ce sont tous des fichiers Docker Compose classiques avec différentes options liées à un déploiement via Swarm. Quelles options semblent spécifiques à Docker Swarm ? Ces options permettent de configurer des fonctionnalités d'**orchestration**.
 
@@ -33,7 +33,7 @@ weight: 55
 
 ## Clustering
 
-- En vous groupant par 2 ou 3 et avec l'aide des instructions notées lors de l'étape `docker swarm init`, créer un cluster de 2 ou 3 machines avec Docker Swarm (vous aurez sans doute à modifier l'IP externe par rapport aux instructions). Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm.
+- Soit en vous groupant par 2 ou 3, soit en créant un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), créer un cluster de 2 ou 3 machines avec Docker Swarm (vous aurez sans doute à modifier l'IP externe par rapport aux instructions notées lors de l'étape `docker swarm init`). Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm.
 
 - Déchoir et promouvoir l'un de vos nœuds de `manager` à `worker` et vice-versa.
 
