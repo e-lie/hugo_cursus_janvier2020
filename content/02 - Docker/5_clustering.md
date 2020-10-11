@@ -10,9 +10,9 @@ weight: 50
 - Il est capable de créer des serveurs Docker "à la volée"
 
   - chez différents fournisseurs de cloud
-  - ## en local avec VirtualBox pour tester son application en mode production et/ou distribué.
+  - en local avec VirtualBox pour tester son application en mode production et/ou distribué.
 
-- ## L'intérêt de `docker-machine` est d'être **parfaitement intégré** dans l'outil de CLI Docker.
+- L'intérêt de `docker-machine` est d'être **parfaitement intégré** dans l'outil de CLI Docker.
 
 - Il sert également de base pour créer un Swarm Docker et distribuer les conteneurs entre plusieurs hôtes.
 
@@ -20,9 +20,9 @@ weight: 50
 
 ## Docker Machine
 
-- ## Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
+- Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
 
-- ## Il permet également de changer le contexte de la ligne de commande Docker pour basculer sur l'un ou l'autre serveur avec les variables d'environnement adéquates.
+- Il permet également de changer le contexte de la ligne de commande Docker pour basculer sur l'un ou l'autre serveur avec les variables d'environnement adéquates.
 
 - Il permet également de se connecter à une machine en ssh en une simple commande.
 
@@ -141,16 +141,16 @@ networks:
 
 # Service discovery
 
-- ## Par défaut les applications ne sont pas informées du contexte dans lequel elles tournent
+- Par défaut les applications ne sont pas informées du contexte dans lequel elles tournent
 
 - La configuration doit être opérée de l'extérieur de l'application
 
   - par exemple avec des fichiers de configuration
-  - ## ou des variables d'environnement
+  - ou des variables d'environnement
 
-- ## La mise en place d'un système de **découverte de services** permet de rendre les applications plus autonomes dans leur (auto)configuration.
+- La mise en place d'un système de **découverte de services** permet de rendre les applications plus autonomes dans leur (auto)configuration.
 
-- ## Elles vont pouvoir récupérer des informations sur leur contexte (dev ou prod, us ou fr ?)
+- Elles vont pouvoir récupérer des informations sur leur contexte (dev ou prod, us ou fr ?)
 
 - Ce type d'automatisation de l'intérieur permet de limiter la complexité du déploiement.
 
@@ -158,13 +158,13 @@ networks:
 
 # Service Discovery
 
-- ## Concrètement un système de découverte de service est un serveur qui est au courant automatiquement :
+- Concrètement un système de découverte de service est un serveur qui est au courant automatiquement :
 
-  - ## de chaque conteneur lancé
+  - de chaque conteneur lancé
 
-  - ## du contexte dans lequel il a été lancé.
+  - du contexte dans lequel il a été lancé.
 
-- ## Ensuite il suffit aux applications de pouvoir interroger ce serveur pour s'autoconfigurer.
+- Ensuite il suffit aux applications de pouvoir interroger ce serveur pour s'autoconfigurer.
 
 - Utiliser un outil dédié permet d'éviter de s'enfermer.
 
@@ -184,11 +184,11 @@ networks:
 
 # Répartition de charge (load balancing)
 
-- ## Un load balancer : une sorte d'**"aiguillage" de trafic réseau**, typiquement HTTP(S) ou TCP.
+- Un load balancer : une sorte d'**"aiguillage" de trafic réseau**, typiquement HTTP(S) ou TCP.
 
-- ## Un aiguillage **intelligent** qui se renseigne sur plusieurs critères avant de choisir la direction.
+- Un aiguillage **intelligent** qui se renseigne sur plusieurs critères avant de choisir la direction.
 
-- ## Cas d'usage :
+- Cas d'usage :
 
   - Éviter la surcharge : les requêtes sont réparties sur différents backends pour éviter de les saturer.
 
@@ -206,9 +206,9 @@ networks:
 
 # Le loadbalancing de Swarm est automatique
 
-- ## Loadbalancer intégré : Ingress
+- Loadbalancer intégré : Ingress
 
-- ## Permet de router automatiquement le trafic d'un service vers les nœuds qui l'hébergent et sont disponibles.
+- Permet de router automatiquement le trafic d'un service vers les nœuds qui l'hébergent et sont disponibles.
 
 - Pour héberger une production il suffit de rajouter un loadbalancer externe qui pointe vers un certain nombre de nœuds du cluster et le trafic sera routé automatiquement à partir de l'un des nœuds.
 
