@@ -58,3 +58,5 @@ TESTS connexions :
 - rajouter dans slides + TP sur dockerfile des explications et exemples et manips sur VOLUME et sur EXPOSE.
 - Inverser TP Dockerfile et TP Volume + réseau
 - Virer ou renforcer slide qui parlait de microservices.
+- Ajouter un memo de ce qui est déprécié ou non entre docker compose v2 et v3. Check pour depends_on : Version 3 no longer supports the condition form of depends_on.
+- donner texto les commandes pour fix le docker compose de voting_app ou commit sur mon repo et changer les refs
