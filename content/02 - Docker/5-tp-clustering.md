@@ -31,6 +31,10 @@ weight: 55
 - Puis déchoir (_demote_) le manager pour le sortir du cluster (drain) : `docker node update --availability drain <node-name>`
 <!-- - Comment ne pas exposer les ports de tous nos hôtes à tout l'internet ? -->
 
+### Introduction à Kubernetes
+
+Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver les équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.
+
 ## Clustering
 
 - En créant un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), créer un cluster de 3 machines avec Docker Swarm. Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm. Vous pouvez aussi vous grouper par 2 ou 3 pour créer un cluster à partir de vos VM respectives (vous aurez sans doute à modifier l'IP externe par rapport aux instructions notées lors de l'étape `docker swarm init`).
@@ -57,7 +61,7 @@ Première étape, regarder les logs !
 {{% /expand %}}
 
 {{% expand "Indice 2 :" %}}
-Deuxième étape, vérifier sur le dépôt GitHub officiel de l'app si quelqu'un a déjà répertorié ce bug : https://github.com/dockersamples/example-voting-app/issues/
+Deuxième étape, vérifier sur le dépôt GitHub officiel de l'app si quelqu'un a déjà répertorié ce bug : <https://github.com/dockersamples/example-voting-app/issues/>
 {{% /expand %}}
 
 {{% expand "Indice 3 :" %}}
