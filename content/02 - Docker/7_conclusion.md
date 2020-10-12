@@ -14,7 +14,6 @@ weight: 70
 - **un conteneur privilégié est _root_ sur la machine !**
 - des _cgroups_ correct : `ulimit -a`
 - exemple de durcissement conseillé : [modifier la config par défaut des user namespaces](https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-  
 
 <!-- Exemple de renforcement :
 ```bash
@@ -36,7 +35,6 @@ htop
 
 - Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
 
-
 ### Gérer les logs des conteneurs
 
 Avec Elasticsearch, Filebeat et Kibana… grâce aux labels sur les conteneurs Docker
@@ -47,17 +45,25 @@ Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
 
 ### Configurer le réseau de façon plus complexe avec des plugins réseau
 
--  Réseaux "overlay": IP in IP, VXLAN…
+- Réseaux "overlay": IP in IP, VXLAN…
 - …mais on a rapidement besoin de plugins exclusifs à Kubernetes : [Calico](https://github.com/projectcalico/calico), [Flannel](https://github.com/coreos/flannel/), Canal (Calico + Flannel), [Cilium](https://github.com/cilium/cilium) (qui utilise eBPF)
 
----
+### Configurer de la CI/CD
+
+- La nature facile à déployer des conteneurs et l'intégration du principe d'Infrastructure-as-Code les rend indispensable dans de la CI/CD (intégration continue et déploiement continu).
+- Les principaux outils de CI sont Gitlab, Jenkins, Github Actions, Travis CI…
+  - Gitlab propose par défaut des runners préconfigurés qui utilisent des conteneurs Docker et tournent en général dans un cluster Kubernetes.
+  - Gitlab propose aussi un registry d'images Docker, privé ou public, par projet.
+- Les tests à l'intérieur des conteneurs peuvent aussi être faits de façon plus poussée, avec par exemple Ansible comme source de healthcheck ou comme suite pour les tests.
 
 <!--
+
 # Monitorer des conteneurs
 
 Avec Portainer
 
 --- -->
+
 <!--
 # Tests sur des conteneurs
 
