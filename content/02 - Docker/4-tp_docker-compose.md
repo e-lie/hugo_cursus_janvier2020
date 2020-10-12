@@ -257,13 +257,13 @@ networks:
 
 Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git`) avec MySQL.
 
-### Plein d'autres services
+## Plein d'autres services
 
-On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud et le microblog.
+On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré.
 
-Ensuite, assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés**.
+Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à Internet).
 
-### _Avancé_ : utiliser Traefik pour le routage
+### _Facultatif / Avancé_ : utiliser Traefik pour le routage
 
 Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votre `docker-compose.yml` précédent, installer le reverse proxy Traefik pour accéder à ces services. Explorer le dashboard Traefik.
 
@@ -311,22 +311,23 @@ networks:
     driver: bridge
 ```
 
-### _Avancé_ : ajouter une stack ELK à `microblog`
+### _Facultatif_ : ajouter une stack ELK à `microblog`
 
 Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
 Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`.
 
-### _Avancé_ : centraliser les logs de microblog sur ELK
+### _Facultatif / avancé_ : centraliser les logs de microblog sur ELK
 
 Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
 
 Tentons de centraliser les logs de
 de ces services dans ELK.
 
+### Un `docker-compose.prod.yml` pour `identicon`
 
-## Faire varier la configuration en fonction de l'environnement
+#### Faire varier la configuration en fonction de l'environnement
 
-Finalement le serveur de développement flask est bien pratique pour debugger en situation de développement bien que pas adapté à la production.
+Finalement le serveur de développement flask est bien pratique pour debugger en situation de développement, mais il n'est pas adapté à la production.
 Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'imperatif DevOps de rapprochement du dév et de la production.
 
 - Créons un script bash `boot.sh` pour adapter le lancement de l'application au contexte:
@@ -375,9 +376,9 @@ Conclusions:
 - On peut faire des images multicontextes qui s'adaptent au contexte.
 - Les variables d'environnement sont souvent utilisée pour configurer les conteneurs au moment de leur lancement. (plus dynamique qu'un fichier de configuration)
 
-### Un `docker-compose.prod.yml` pour Identicon
+#### Un `docker-compose.prod.yml` pour `identicon`
 
-- Créez un deuxième fichier compose `docker-compose.prod.yml` (à compléter) pour lancer l'application en configuration de production.
+- Créez un deuxième fichier Compose `docker-compose.prod.yml` (à compléter) pour lancer l'application `identicon` en configuration de production. Que doit-on penser à adapter ?
 
 {{% expand "Solution `docker-compose.prod.yml` :" %}}
 

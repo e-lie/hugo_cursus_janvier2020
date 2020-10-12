@@ -3,9 +3,10 @@ title: Orchestration et clustering
 weight: 50
 ---
 
+
 # Docker Machine
 
-## C'est l'outil de gestion d'hôtes Docker.
+## C'est l'outil de gestion d'hôtes Docker
 
 - Il est capable de créer des serveurs Docker "à la volée"
 
@@ -18,8 +19,6 @@ weight: 50
 
 ---
 
-## Docker Machine
-
 - Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
 
 - Il permet également de changer le contexte de la ligne de commande Docker pour basculer sur l'un ou l'autre serveur avec les variables d'environnement adéquates.
@@ -28,7 +27,6 @@ weight: 50
 
 ---
 
-## Docker Machine
 
 Exemple :
 
@@ -58,9 +56,6 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 - A partir d'une certaine échelle, il n'est plus question de gérer les serveurs et leurs conteneurs à la main.
 
 ---
-
-# L'orchestration
-
 L'orchestration consiste à automatiser la création et la répartition des conteneurs à travers un cluster de serveurs. Cela peut permettre de :
 
 - déployer de nouvelles versions d'une application progressivement.
@@ -69,7 +64,7 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 ---
 
-# Qu'est-ce que Docker Swarm ?
+# Docker Swarm
 
 - Swarm est l'**outil de clustering et d'orchestration natif** de Docker (développé par Docker Inc.).
 
@@ -98,7 +93,7 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 ---
 
-# Consensus entre managers Swarm
+## Consensus entre managers Swarm
 
 - L'algorithme Raft : http://thesecretlivesofdata.com/raft/
   ![](../../images/raft-algorithm.gif)
@@ -139,7 +134,7 @@ networks:
 
 ---
 
-# Service discovery
+## Service discovery
 
 - Par défaut les applications ne sont pas informées du contexte dans lequel elles tournent
 
@@ -150,27 +145,24 @@ networks:
 
 - La mise en place d'un système de **découverte de services** permet de rendre les applications plus autonomes dans leur (auto)configuration.
 
-- Elles vont pouvoir récupérer des informations sur leur contexte (dev ou prod, us ou fr ?)
+- Elles vont pouvoir récupérer des informations sur leur contexte (`dev` ou `prod`, USA ou Europe ?)
 
 - Ce type d'automatisation de l'intérieur permet de limiter la complexité du déploiement.
 
----
-
-# Service Discovery
 
 - Concrètement un système de découverte de service est un serveur qui est au courant automatiquement :
 
   - de chaque conteneur lancé
 
-  - du contexte dans lequel il a été lancé.
+  - du contexte dans lequel il a été lancé
 
 - Ensuite il suffit aux applications de pouvoir interroger ce serveur pour s'autoconfigurer.
 
-- Utiliser un outil dédié permet d'éviter de s'enfermer.
+- Utiliser un outil dédié permet d'éviter de s'enfermer dans une seule solution.
 
 ---
 
-# Service Discovery - Solutions
+## Service Discovery - Solutions
 
 - Le DNS du réseau overlay de Docker Swarm avec des stacks permet une forme extrêmement simple et implicite de service discovery. En résumé, votre application microservice docker compose est automatiquement distribuée.
 
@@ -182,7 +174,7 @@ networks:
 
 ---
 
-# Répartition de charge (load balancing)
+## Répartition de charge (load balancing)
 
 - Un load balancer : une sorte d'**"aiguillage" de trafic réseau**, typiquement HTTP(S) ou TCP.
 
@@ -192,9 +184,6 @@ networks:
 
   - Éviter la surcharge : les requêtes sont réparties sur différents backends pour éviter de les saturer.
 
----
-
-# Répartition de charge (load balancing) (suite)
 
 - Haute disponibilité : on veut que notre service soit toujours disponible, même en cas de panne (partielle) ou de maintenance.
 - Donc on va dupliquer chaque partie de notre service et mettre les différentes instances derrière un load balancer.
@@ -204,7 +193,7 @@ networks:
 
 ---
 
-# Le loadbalancing de Swarm est automatique
+## Le loadbalancing de Swarm est automatique
 
 - Loadbalancer intégré : Ingress
 
@@ -214,24 +203,21 @@ networks:
 
 ---
 
-# Solutions de loadbalancing externe
+## Solutions de loadbalancing externe
 
 - **HAProxy** : Le plus répandu en loadbalancing
-- **Træfik** : Simple à configurer
-- **NGINX** : Serveur web générique mais a depuis quelques années des fonctions puissantes de loadbalancing et TCP forwarding.
+- **Træfik** : Simple à configurer et fait pour l'écosystème Docker
+- **NGINX** : Serveur web générique mais a depuis quelques années des fonctions puissantes de loadbalancing et de TCP forwarding.
 
 ---
 
-# Gérer les données sensibles dans Swarm avec les secrets Docker
+## Gérer les données sensibles dans Swarm avec les secrets Docker
 
 - `echo "This is a secret" | docker secret create my_secret_data`
 
 - `docker service create --name monservice --secret my_secret_data redis:alpine`
   => monte le contenu secret dans `/var/run/my_secret_data`
 
----
-
----
 
 ---
 
@@ -248,7 +234,7 @@ networks:
 
 ---
 
-# Présentation de Kubernetes
+## Présentation de Kubernetes
 
 - Une autre solution très à la mode depuis 4 ans. Un buzz word du DevOps en France :)
 
@@ -262,22 +248,22 @@ networks:
 
 ---
 
-# Comparaison Swarm et Kubernetes
+## Comparaison Swarm et Kubernetes
 
-- Swarm plus intégré avec la CLI et le workflow docker.
+- Swarm plus intégré avec la CLI et le workflow Docker.
 - Swarm est plus fluide, moins structurant mais moins automatique que Kubernetes.
 - Swarm groupe les containers entre eux par **stack** mais c'est un groupement assez léger à l'aide d'un serveur DNS.
-- Kubernetes au contraire crée des **pods** avec une meilleure cohésion qui sont toujours déployés ensembles
-  - Kubernetes à une meilleure fault tolerance que Swarm
-  - un service Swarm est un seul conteneur répliqué, un service Kubernetes est un groupes de conteneurs (pod) répliqué, plus proche des Docker Stacks.
+- Kubernetes au contraire crée des **pods** avec une meilleure cohésion qui sont toujours déployés ensemble
+  - Kubernetes a une meilleure fault tolerance que Swarm
+  - attention au contre-sens : un service Swarm est un seul conteneur répliqué, un service Kubernetes est un groupe de conteneurs (pod) répliqué, plus proche des Docker Stacks.
 
 ---
 
-# Comparaison Swarm et Kubernetes
+## Comparaison Swarm et Kubernetes
 
 - Kubernetes a plus d'outils intégrés. Il s'agit plus d'un écosystème qui couvre un large panel de cas d'usage.
 - Swarm a un mauvais monitoring et le stockage distribué n'est pas intégré de façon standard.
-- Swarm est beaucoup plus simple à mettre en oeuvre et plus rapide à migrer qu'une stack Kubernetes.
+- Swarm est beaucoup plus simple à mettre en œuvre qu'une stack Kubernetes.
 - Swarm serait donc mieux pour les clusters moyen et Kubernetes pour les très gros
 
 ---

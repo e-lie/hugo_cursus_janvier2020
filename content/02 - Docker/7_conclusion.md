@@ -3,25 +3,20 @@ title: Conclusion
 weight: 70
 ---
 
-# Conteneurs Docker
-
-## _Modularisez et maîtrisez vos applications_
+<!-- # Docker en production -->
 
 ---
 
-# Docker en production
+## Bonnes pratiques et outils
 
----
-
-# Bonnes pratiques et outils
-
-## Sécurité / durcissement
+### Sécurité / durcissement
 
 - **un conteneur privilégié est _root_ sur la machine !**
 - des _cgroups_ correct : `ulimit -a`
-- les user namespaces :
-  https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
+- exemple de durcissement conseillé : [modifier la config par défaut des user namespaces](https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
+  
 
+<!-- Exemple de renforcement :
 ```bash
 vim /etc/docker/daemon.json
 adduser docker-userns -s /bin/false
@@ -31,28 +26,29 @@ cat /etc/passwd
 docker run -d -it alpine sh
 docker ps
 htop
-```
+``` -->
 
----
+- le benchmark Docker : <https://github.com/docker/docker-bench-security/>
 
-# Bonnes pratiques et outils
+- [Clair](https://github.com/quay/clair) : l'analyse statique d'images Docker
 
-<!-- A enrichir ! -->
+## Aller plus loin
 
-## Sécurité
+- Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
 
-- le benchmark Docker
 
-  - https://github.com/docker/docker-bench-security/
-  - Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
+### Gérer les logs des conteneurs
 
-- Clair : l'analyse statique d'images Docker
+Avec Elasticsearch, Filebeat et Kibana… grâce aux labels sur les conteneurs Docker
 
----
+### Gérer le reverse proxy
 
-# Gérer les logs des conteneurs
+Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
 
-Avec Elasticsearch, Logstash, Filebeat et Kibana
+### Configurer le réseau de façon plus complexe avec des plugins réseau
+
+-  Réseaux "overlay": IP in IP, VXLAN…
+- …mais on a rapidement besoin de plugins exclusifs à Kubernetes : [Calico](https://github.com/projectcalico/calico), [Flannel](https://github.com/coreos/flannel/), Canal (Calico + Flannel), [Cilium](https://github.com/cilium/cilium) (qui utilise eBPF)
 
 ---
 

@@ -105,14 +105,21 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - `run` fait tourner un conteneur pour exécuter une commande unique. Cela aura aussi pour effet de faire tourner tout conteneur lié, à moins que l'argument --no-deps ne soit donné.
 
-- De façon générale la sortie des logs est colorée et agrégée pour les conteneurs gérés par Compose.
+- `logs` affiche les logs. De façon générale la sortie des logs est colorée et agrégée pour les conteneurs gérés par Compose.
 - `stop` arrête les conteneurs sans les enlever.
 
 - `rm` enlève les contenants à l'arrêt. N'oubliez pas d'utiliser l'argument `-v` pour supprimer tous les volumes gérés par Docker.
 
 ---
 
-# Visualisation des applications microservice complexes
+## Le "langage" de Docker Compose
+
+- N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`.
+- [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/) est essentielle.
+- Cette documentation indique aussi les différences entre les mots-clés supportés dans la version 2 et la version 3 des fichiers Docker Compose.
+
+
+## Visualisation des applications microservice complexes
 
 - Certaines applications microservice peuvent avoir potentiellement des dizaines de petits conteneurs spécialisés. Le service devient alors difficile à lire dans le compose file.
 
