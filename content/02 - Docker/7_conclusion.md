@@ -7,6 +7,14 @@ weight: 70
 
 ---
 
+## Retours
+
+- Comment ça s'est passé ?
+  - Difficulté : trop facile ? trop dur ? quoi en particulier ?
+  - Vitesse : trop rapide ? trop lent ? lors de quoi en particulier ?
+  - Attentes sur le contenu ? Les manipulations ?
+  - Questions restées ouvertes ? Nouvelles questions ?
+
 ## Bonnes pratiques et outils
 
 ### Sécurité / durcissement
@@ -55,6 +63,7 @@ Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
   - Gitlab propose par défaut des runners préconfigurés qui utilisent des conteneurs Docker et tournent en général dans un cluster Kubernetes.
   - Gitlab propose aussi un registry d'images Docker, privé ou public, par projet.
 - Les tests à l'intérieur des conteneurs peuvent aussi être faits de façon plus poussée, avec par exemple Ansible comme source de healthcheck ou comme suite pour les tests.
+- Dans une autre catégorie, Gitpod base son workflow sur des images Docker permettant de configurer un environnement de développement
 
 <!--
 
