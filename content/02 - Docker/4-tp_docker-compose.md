@@ -257,7 +257,7 @@ networks:
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
 
-Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git`) avec MySQL.
+Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/miguelgrinberg/microblog`) avec MySQL.
 
 ## Plein d'autres services
 
