@@ -1,4 +1,7 @@
-
+---
+title: 'TODO Ansible Avancé'
+draft: true
+---
 
 - Faire une version publique du lab !!
 
