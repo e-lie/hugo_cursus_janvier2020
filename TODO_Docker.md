@@ -262,3 +262,36 @@ slides sur containers Windows
 - Updater a v3 et network le docker compose exemple du cours.
 
 - Écrire les commandes possibles de docker swarm dans les slides
+
+- le td5 version elie a l'air d'avoir des scemas et autres trucs cool dedans
+- Cool buildah tuto: https://mkdev.me/en/posts/dockerless-part-2-how-to-build-container-image-for-rails-application-without-docker-and-dockerfile
+- Cool podman tuto: https://mkdev.me/en/posts/dockerless-part-3-moving-development-environment-to-containers-with-podman
+- rkt est dead
+- laïus CRI, CRI-o, containerd, runc ?
+
+* Laïus DB répliquée PostgreSQL
+
+  - http://code4projects.altervista.org/install-postgresql-cluster-docker/
+  - https://severalnines.com/database-blog/how-deploy-postgresql-docker-container-using-clustercontrol
+  - https://medium.com/@2hamed/replicating-postgres-inside-docker-the-how-to-3244dc2305be
+  - https://access.crunchydata.com/documentation/crunchy-postgres-containers/4.2.0/examples/backup-restoration/pgbasebackup/
+  - https://access.crunchydata.com/documentation/crunchy-postgres-containers/4.2.0/examples/backup-restoration/pgbackrest/
+  - https://access.crunchydata.com/documentation/crunchy-postgres-containers/4.2.0/examples/postgresql/statefulset-cluster/
+  - https://github.com/paunin/PostDock#postgres
+  - https://info.crunchydata.com/blog/an-easy-recipe-for-creating-a-postgresql-cluster-with-docker-swarm
+
+* imprimer des tas de schémas et de fiches plastifiées sur les concepts de docker (idéalement qui "s'emboîtent" façon puzzle) et les distribuer dès le début, recréer les chémas avec ça au tableau
+
+- faire au début de chaque jour des petites questions / moments d'expression sur ce qui a été vaguement retenu ou compris de la veille
+
+## Swarm monitoring
+
+- Swarmprom : https://dockerswarm.rocks/swarmprom/
+- Prometheus w/ Swarm : https://prometheus.io/docs/guides/dockerswarm/
+- cadvisor: https://github.com/google/cadvisor
+
+### Swarm blue green
+
+https://www.goetas.com/blog/traps-on-the-way-of-blue-green-deployments/
+
+https://github.com/cecchisandrone/docker-swarm-blue-green (demo avec mysql galera)
