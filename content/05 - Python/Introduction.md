@@ -1,11 +1,11 @@
 ---
-title: Partie 1 - Révisions avec le REPL intelligent ipython - Types élémentaires en python
+title: Introduction - Quatre grands thèmes de l'activité de développement 
 draft: false
 ---
 
-# Échauffement: révisions avec le REPL intelligent ipython
 
-## Introduction: Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
+
+# Introduction: Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
 
 Attitude du développeur: avoir des connaissances fondamentales et la recherche web facile pour pouvoir faire le tri dans la jungle.
 
@@ -23,11 +23,4 @@ Python3 uniquement !
 
 On va parcourir beaucoup de distance (en profondeur) et vous pourrez (devriez ?) creuser en largeur par la suite grâce aux références indiquées.
 
-### Exercice: Installer et découvrir ipython
 
-Afficher la documentation sur une fonction, l'exemple de print
-
-## Les types de variables élémentaires
-### Exercice : convertir, tester le type des variables, notion de vraisemblance
-
-Encart: `if variable:` -> une structure très pythonique

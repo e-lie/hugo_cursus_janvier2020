@@ -1,24 +1,48 @@
 ---
-title: Partie 3 - Architecture 1 - la programmation Orientée Objet
+title: Partie 3 - Bien démarrer un projet, créer un script proprement
 draft: false
 ---
 
-# Architecture partie 1 : la programmation Orientée Objet
+## Découvrir Pip et Pipenv pour la gestion des projets Python
 
-## Introduction à la programmation orientée objet
-### Exercice: Coder un exemple de classe d'école
+TODO
 
-## Données et Méthodes de classe
-### Exercice: Créer une classe de parsing XML
+### Exercice: initialiser un environnement de développement virtuel python
 
-## Encapsulation: par qui et comment un code est-il utilisé ?
-### Exercice: Gérer les attributs privés et getter pythoniques pour notre classe
+TODO parler de pylint
+TODO 
 
-## Héritage et polymorphisme: utile mais point trop n'en faut
-### Exercice: Créer une classe de base pour notre parser
+## Présentation rapide de Git et de la gestion de versions
 
-## Le "Python Data Model" ou l'art subtil de faire du code élégant et maintenable en Python
-### Exercice: Refactoring de notre classe avec un itérateur pythonique
+TODO récupérerer des images de la formation git
 
-## Architecture d'un programme : tout en schémas
-### Exercice: dessiner et plannifier le développement de notre programmel
+### Exercice: cycle de développement entre CLI et VSCode
+
+TODO 
+
+## Importer des librairies
+
+TODO
+
+Comment fonctionnent les numéros de versions : version majeures (risque), version mineures(pas de risque normalement), correctifs.
+Utilisez cette convention pour vos programmes, même des petits scripts ! On commence donc à 0.1.0 ;)
+
+### Exercice : Explorer PiPy et Créer un fichier requirements.txt avec indication de version
+
+TODO
+
+## Gérer des fichiers en Python
+
+TODO
+
+### Exercice : Ouvrir et lire un fichier XML
+
+TODO
+
+## Créer un script documenté et utilisable en ligne de commande
+
+https://www.askpython.com/python/python-command-line-arguments TODO
+
+### Exercice: Ajout de documentation `doctype` du code et usage de la libraire `docopt`
+
+TODO

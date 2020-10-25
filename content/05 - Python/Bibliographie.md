@@ -13,9 +13,19 @@ draft: false
 
 ## Tutoriels
 
-## Références
+TODO
+
+## Articles
+
+#### Architecture
+- https://www.infoq.com/news/2012/05/DRY-code-duplication-coupling/
+- https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction
+
+## Sites de références
+TODO python.org -> doc
+TODO stackoverflow python popular questions
 
 ## Évènements Python
 
-- PyconFr: 
-- A Paris ?
+TODO PyconFr: 
+TODO A Paris ?

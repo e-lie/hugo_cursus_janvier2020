@@ -1,22 +1,26 @@
 ---
-title: Partie 4 - Implémenter et structurer un programme plus complexe
+title: Partie 4 - Architecture 1 - la programmation Orientée Objet
 draft: false
 ---
 
-# Implémenter et structurer un programme plus complexe
+## Introduction à la programmation orientée objet
+### Exercice: Coder un exemple de classe d'école
 
-## Qualité logicielle: les tests Pytest et le "Test Driven Development" en python
+## Données et Méthodes de classe
+### Exercice: Créer une classe de parsing XML
 
-blackbox testing + glassbox testing + mocking (cf. Apprendre la programmation en Python)
+## Encapsulation: par qui et comment un code est-il utilisé ?
+### Exercice: Gérer les attributs privés et getter pythoniques pour notre classe
 
-### Exercice: écrire des tests pour nos méthodes et classes et implémenter une nouvelle méthode en TDD
+## Héritage et polymorphisme: utile mais point trop n'en faut
+### Exercice: Créer une classe de base pour notre parser
 
-## Interfaces graphiques en Python: tkinter, PyQt et le web
-### Exercice: Créer une interface graphique pour lancer nos scripts et afficher les résultats.
+## Le "Python Data Model" ou l'art subtil de faire du code élégant et maintenable en Python
 
-## Structurer notre programme en packages Python:
-### Exercice: Restructuration de notre code en packages
+TODO parler de la méthode dir()
+Pour parler des méthodes spéciales du python data model, on parle aussi de surcharge d'opérateur
 
-## Exécution concurrente d'un programme Python
-### Parallélisme et concurrence : Notions de processus, threads, asynchrone, workqueues
-### Exercice: créer un backend d'exécution concurrente pour exécuter nos scripts
+### Exercice: Refactoring de notre classe avec un itérateur pythonique
+
+## Architecture d'un programme : tout en schémas
+### Exercice: dessiner et plannifier le développement de notre programme
