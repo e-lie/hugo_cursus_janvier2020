@@ -1,12 +1,12 @@
 ---
-title: Introduction - Quatre grands thèmes de l'activité de développement 
+title: Introduction
 draft: false
 weight: 1
 ---
 
 
 
-# Introduction: Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
+### Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
 
 Attitude du développeur: avoir des connaissances fondamentales et la recherche web facile pour pouvoir faire le tri dans la jungle.
 
