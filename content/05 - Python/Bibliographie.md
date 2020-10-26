@@ -1,6 +1,7 @@
 ---
 title: Bibliographie
 draft: false
+weight: 55
 ---
 
 # Bibliographie
