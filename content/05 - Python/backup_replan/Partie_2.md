@@ -1,6 +1,6 @@
 ---
 title: Partie 1 - Révisions ? 
-draft: false
+draft: true
 ---
 
 ### Exercice: Installer et découvrir ipython

@@ -1,6 +1,6 @@
 ---
 title: Partie 5 - Architecture 2 - Implémenter et structurer un programme plus complexe
-draft: false
+draft: true
 ---
 
 ## Qualité logicielle: les tests Pytest et le "Test Driven Development" en python

@@ -1,6 +1,6 @@
 ---
 title: Partie 3 - Bien démarrer un projet, créer un script proprement
-draft: false
+draft: true
 ---
 
 ## Découvrir Pip et Pipenv pour la gestion des projets Python
