@@ -1,6 +1,6 @@
 baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
 languageCode = "fr-FR"
-title = "Formation Pythoon Intermédiaire"
+title = "Formation Python Intermédiaire"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"

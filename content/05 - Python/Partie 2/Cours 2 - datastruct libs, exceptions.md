@@ -1,5 +1,5 @@
 ---
-title: Cours 2 - Révisions variables, fonction, structures de contrôle
+title: Cours 2 - Révisions structures de données, librairies, exceptions, ...
 draft: false
 weight: 20
 ---
