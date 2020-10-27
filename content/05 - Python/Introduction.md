@@ -1,9 +1,8 @@
 ---
 title: Introduction
 draft: false
-weight: 1
+weight: 2
 ---
-
 
 
 ### Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
