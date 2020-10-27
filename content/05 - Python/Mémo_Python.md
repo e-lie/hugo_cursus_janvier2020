@@ -4,16 +4,16 @@ draft: false
 weight: 3
 ---
 
-# Récapitulation des principales syntaxes Python
+## Récapitulation des principales syntaxes Python
 
-## Demander et afficher des informations
+### Demander et afficher des informations
 
 | Syntaxe                | Description                              |
 | ---------------------- | ---------------------------------------- |
 | `print("message")`     | Affiche "message" dans la console        |
 | `v = input("message")` | Demande une valeur et la stocke dans `v` |
 
-## Calculs
+### Calculs
 
 | Syntaxe  | Description                           |
 | -------- | ------------------------------------- |
@@ -28,7 +28,7 @@ Toutes ces opérations peuvent être appliquées directement sur une variable vi
 la syntaxe du type `a += b` (additionner b à a et directement modifier la valeur
 de a avec le résultat).
 
-## Types de variable et conversion
+### Types de variable et conversion
 
 | Syntaxe    | Description                           |
 | ---------- | ------------------------------------- |
@@ -37,7 +37,7 @@ de a avec le résultat).
 | `float(v)` | Converti `v` en float                 |
 | `str(v)`   | Converti `v` en string                |
 
-## Chaînes de caractères
+### Chaînes de caractères
 
 | Syntaxe                | Description                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------- |
@@ -50,7 +50,7 @@ de a avec le résultat).
 | `chaine.strip()`       | "Nettoie" `chaine` en supprimant les espaces et `\n` au début et à la fin       |
 | `\n`                   | Représentation du caractère 'nouvelle ligne'                                    |
 
-## Fonctions
+### Fonctions
 
 ```python
 def ma_fonction(toto, tutu=3):
@@ -65,7 +65,7 @@ Cette fonction :
 - `une_valeur` est une variable locale à la fonction ;
 - elle retourne `une_valeur` ;
 
-## Conditions
+### Conditions
 
 ```python
 if condition:
@@ -80,7 +80,7 @@ else:
     instruction6
 ```
 
-### Opérateurs de conditions
+#### Opérateurs de conditions
 
 | Syntaxe           | Description                             |
 | ----------------- | --------------------------------------- |
@@ -95,13 +95,13 @@ else:
 | `not cond`        | négation de la condition `cond`         |
 | `a in b`          | `a` est dans `b` (chaîne, liste, set..) |
 
-### Inline `ifs`
+#### Inline `ifs`
 
 ```python
 parite = "pair" if n % 2 == 0 else "impair"
 ```
 
-## Exception, assertions
+### Exception, assertions
 
 `try`/`except` permettent de tenter des instructions et d'attraper les
 exceptions qui peuvent survenir pour ensuite les gérer de manière spécifique :
@@ -125,7 +125,7 @@ def une_fonction(n):
 ```
 
 
-## Boucles
+### Boucles
 
 | Syntaxe                       | Description                                                     |
 | ----------------------------- | --------------------------------------------------------------- |
@@ -136,7 +136,7 @@ def une_fonction(n):
 | `break`                       | Quitte immédiatement une boucle                                 |
 | `continue`                    | Passe immédiatement à l'itération suivante d'une boucle         |
 
-## Structures de données
+### Structures de données
 
 | Syntaxe                  | Description                                                |
 | ------------------------ | ---------------------------------------------------------- |
@@ -155,7 +155,7 @@ def une_fonction(n):
 | `L.insert(i, e)` | Insère `e` à la position `i` dans la liste `L`                                        |
 | `chaine.join(L)`    | Produit une string à partir de `L` en intercallant la string `chaine` entre les elements |
 
-## Fichiers
+### Fichiers
 
 Ouvrir et lire un fichier :
 

@@ -1,10 +1,10 @@
 ---
-title: Cursus DevOps Ansible Mai 2020 
+title: Formation Python Intermédiaire 
 ---
 
 # Bienvenue !
 
-Vous trouverez sur ce site les supports de formations pour un module Ansible réalisé pour FEEL EUROPE le 13 et 14 mai 2020.
+Vous trouverez sur ce site les supports de formations pour un module Python Intermédiaire réalisé pour Ivory Tower le 2-3-4 novembre 2020.
 Il restera en ligne durant au moins les 2 prochaines années.
 
 Vous pouvez imprimer son contenu (page par page) en PDF à l'aide de la fonction d'impression de chromium qui donne de bons résultats.
