@@ -1,11 +1,11 @@
 ---
-title: Exo 5 - Rendre le jeu de carte Pythonique avec le Python Object Model
+title: Exo 4 - Rendre le jeu de carte Pythonique avec le Python Object Model
 draft: false
 weight: 20
 ---
 
 
-## 5.1 Utiliser les syntaxes de liste sur la classe `Paquet`
+## 4.1 Utiliser les syntaxes de liste sur la classe `Paquet`
 
 - Plutôt que d'utiliser `len(mon_paquet.cartes)` pour avoir le nombre de carte on voudrait utiliser `len(mon_paquet)`. Implémentez la méthode spéciale `__len__` pour renvoyer la longueur du paquet. Profitez-en pour empêcher que les utilisateurs de la classe modifient directement le paquet en rendant l'attribut `cartes` privé. Testez votre programme en mettant à jour le code `main.py`
 
@@ -18,7 +18,7 @@ weight: 20
 - Ajoutez maintenant `__setitem__` dans le code de `Paquet`. Supprimez et remplacez la méthode `melanger` par `shuffle` dans le code du projet.
 
 
-## 5.2 Itérateurs de carte : génération de la suite de carte à partir d'une carte
+## 4.2 Itérateurs de carte : génération de la suite de carte à partir d'une carte
 
 
 Plutôt que de générer les 52 cartes avec une boucle for dans le constructeur du paquet on voudrait utiliser un générateur/itérateur associé à la classe carte.

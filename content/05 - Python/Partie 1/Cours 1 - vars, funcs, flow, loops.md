@@ -681,6 +681,28 @@ print(str(x) + " est impair !")
 ```
 
 
+## Debugging interactif : `pdb`, `ipdb`
+- Python DeBugger
+- Permet (entre autre) de définir des "break point" pour rentrer en interactif
+   - `import ipdb; ipdb.set_trace()`
+   - en 3.7 : `breakpoint()` <small>Mais fait appel à `pdb` et non `ipdb` ?</small>
+- Une fois en interactif, on peut inspecter les variables, tester des choses, ...
+- On dispose aussi de commandes spéciales pour executer le code pas-à-pas
+- Significativement plus efficace que de rajouter des `print()` un peu partout !
+
+
+#### Commandes spéciales
+
+- `l(ist)` : affiche les lignes de code autour de code (ou continue le listing precedent)
+- `c(ontinue)` : continuer l'execution normalement (jusqu'au prochain breakpoint)
+- `s(tep into)` : investiguer plus en détail la ligne en cours, possiblement en descendant dans les appels de fonction
+- `n(ext)` : passer directement à la ligne suivante
+- `w(here)` : print the stack trace, c.a.d. les différents sous-appels de fonction dans lesquels on se trouve
+- `u(p)` : remonte d'un cran dans les appels de la stacktrace
+- `d(own)` : redescend d'un cran dans les appels de la stacktrace
+
+- `pp <variable>` : pretty-print d'une variable (par ex. une liste, un dict, ..)
+
 ## Posture de développeur et bonnes pratiques
 
 - Lorsqu'on écrit du code, la partie "tester" et "debugger" fait partie du job.

@@ -5,65 +5,9 @@ weight: 20
 ---
 
 
-## Exercice 4.1 : Cercles et cylindres
+## Exercice 3.1 : Cercles et cylindres
 
-Dans cet exercice nous allons représenter des objets et calculs géométriques simples en coordonnées entières. Utilisez des annotations de types `: int`, `-> None`, `-> int` et `: Tuples[int ...]` dès que possible (voir [la documentation de mypy](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)).py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`. 
-
-- Implémenter la méthode `points` pour la classe `Carte`, qui retourne un nombre entre 1 et 13 en fonction de la valeur de la carte. Valider ce comportement depuis un fichier `main.py` qui importe la classe Carte.
-
-- Implémenter la méthode `__repr__` pour la classe `Carte`, de sorte à ce que `print(Carte(3, "COEUR"))` affiche `<Carte 3 de COEUR>`.
-
-```python
-c = Carte("Q", "PIQUE")
-
-print(c.couleur)
-# Affiche PIQUE
-
-print(c.points)
-# Affiche 12
-
-print(c)
-# Affiche <Carte DAME de PIQUE>
-```
-
-## Exercice 4.2 : Programmer un jeu de carteù= à 
-
-### Encapsulation et validation des valeurs de carte possibles
-
-Pour sécuriser l'usage ultérieur de notre jeu de carte on aimerait que les cartes ne puissent être crées et modifiées qu'avec des valeurs correctes (les 4 couleurs et 13 valeurs précisées)
-
-- Modifiez le constructeur pour valider que les données fournies sont valides. Sinon levez une exception (on utilise conventionnellement le type d'exception `ValueError` pour cela ou un type d'exception personnalisé).
-
-- Modifiez également les paramètres `couleur` et `valeur` pour les rendre privés, puis créer des accesseurs et mutateurs qui permettent d'y accéder en mode public et de valider les données à la modification.
-
-### La classe Paquet, une collection de cartes
-
-- Dans un nouveau fichier `paquet.py`, créer une classe `Paquet` correspondant à un paquet de 52 cartes. Le constructeur devra créer toute les cartes du jeu et les stocker dans une liste ordonnée. Vous aurez probablement besoin d'importer la classe `Carte`. Testez le comportement de cette classe en l'important et en l'utilisant dans `main.py`.
-
-- Implémenter la méthode `melanger` pour la classe `Paquet` qui mélange l'ordre des cartes.
-
-- Implémenter la méthode `couper` qui prends un nombre aléatoire du dessus du paquet et les place en dessous.
-
-- Implémenter la méthode `piocher` qui retourne la `Carte` du dessus du paquet (et l'enlève du paquet)
-
-1.0 : Implémenter la méthode `distribuer` qui prends en argument un nombre de carte et un nombre de joueurs (e.g. `p.distribuer(joueurs=4, cartes=5)`), pioche des cartes pour chacun des joueurs à tour de rôle, et retourne les mains correspondantes.
-
-
-```python
-p = Paquet()
-p.melanger()
-
-main_alice, main_bob = p.distribuer(joueurs=2, cartes=3)
-
-print(main_alice)
-# affiche par exemple [<Carte 3 de PIQUE>, <Carte VALET de CARREAU>, <Carte 1 de trefle>]
-
-print(p.pioche())
-# affiche <Carte 9 de CARREAU>
-
-print(main_alice[1].points())
-# affiche 11
-```
+Dans cet exercice nous allons représenter des objets et calculs géométriques simples en coordonnées entières. Utilisez des annotations de types `: int`, `-> None`, `-> int` et `: Tuples[int ...]` dès que possible. Testez régulièrement la consistance de ces types avec `mypy fichier.py`.
 
 - Implémenter une classe `Cercle` avec comme attributs un rayon `rayon` et les coordonnées `x` et `y` de son centre. Par exemple on pourra instancier un cercle avec `mon_cercle = Cercle(5, (3,1))`
 
@@ -73,9 +17,10 @@ print(main_alice[1].points())
 
 - Dans la classe `Cercle`, implémenter une méthode `intersect` qui retourne `True` ou `False` suivant si deux cercles se touchent. Exemple d'utilisation : `c1.intersect(c2)`
 
-- Surcharger la méthode `intersect` pour la classe `Cylindre`, en se basant sur le résultat de la méthode de la classe mère
+- Surcharger la méthode `intersect` pour la classe `Cylindre`, en se basant sur le résultat de la méthode de la classe mère.
 
-## Exercice 4.2 : Programmer un jeu de carte
+
+## Exercice 3.2 : Programmer un jeu de carte
 
 ### Une classe Carte pour représenter les éléments d'un jeu
 
@@ -134,3 +79,20 @@ print(p.pioche())
 print(main_alice[1].points())
 # affiche 11
 ```
+
+## Exercice 3.3 : Introduction aux ORM avec ActiveAlchemy
+
+On se propose de reprendre le jeu de données des apps Yunohost (Exos part 2, fichier `app.yunohost.org/community.json`) et d'importer ces données dans une base SQL (plus précisémment SQLite)
+
+- Installer `active_alchemy` à l'aide de `pip3`
+
+- Créer un fichier `mydb.py` qui se contente de créer une base `db` (instance de ActiveAlchemy) de type sqlite. Dans la suite, on importera l'objet `db` depuis `mydb.py` dans les autres fichiers si besoin.
+
+- Créer un fichier `models.py` et créer dedans une classe (aussi appellé modèle) `App`. On se limitera aux attributs (aussi appellés champs / colonnes) suivants : 
+    - un **nom** qui est une chaîne de caractère *unique* parmis toutes les `App` ;
+    - un **niveau** qui est un entier (ou vide) ;
+    - une **adresse** qui est une chaîne de caractère *unique* parmis toutes les `App` ;
+
+- Créer un fichier `nuke_and_reinit.py` dont le rôle est de détruire et réinitialiser les tables, puis de les remplir avec les données du fichier json. On utilisera pour ce faire `db.drop_all()` et `db.create_all()`. Puis, itérer sur les données du fichier json pour créer les objets `App` correspondant. Commiter les changements à l'aide de `db.session.add` et `commit`.
+
+- Créer un fichier `analyze.py` qui cherche et affiche le nom de toutes les `App` connue avec un niveau supérieur ou égal à `n`. En utilisant l'utilitaire bash `time` (ou bien avec `time.time()` en python), comparer les performances de `analyze.py` avec un script python équivalent mais qui travaille à partir du fichier `community.json` directement (en local, pas via `requests.get`)

@@ -54,7 +54,7 @@ favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
 ```
 
 
-### Iteration
+#### Iteration
 
 ```python
 for pokemon in favourite_pokemons:
@@ -62,7 +62,7 @@ for pokemon in favourite_pokemons:
 ```
 
 
-### Iteration avec index
+#### Iteration avec index
 
 ```python
 print("Voici la liste de mes pokemons préféré:")
@@ -76,21 +76,19 @@ favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
 ```
 
 
-### Modification d'un élément
+#### Modification d'un élément
 
 ```python
 favourite_pokemons[1] = "Roucarnage"
 ```
 
-
-### Ajout à la suite, contatenation
+#### Ajout à la suite, contatenation
 
 ```python
 favourite_pokemons.append("Mewtwo")
 ```
 
-
-### Insertion, concatenation
+#### Insertion, concatenation
 
 ```python
 favourite_pokemons.insert(1, "Papillusion")
@@ -124,20 +122,19 @@ for pokemon in favourite_pokemons:
 ```
 
 
-### Transformation de string en liste
+#### Transformation de string en liste
 
 ```python
 "Hello World".split()    -> ["Hello", "World"]
 ```
 
-### Transformation de liste en string
+#### Transformation de liste en string
 
 ```python
 ' | '.join(["a", "b", "c"])      -> "a | b | c"
 ```
 
 
-# 8. Structures de données
 
 ## 8.2 Les dictionnaires
 
@@ -149,14 +146,6 @@ phone_numbers = { "Alice":   "06 93 28 14 03",
                   "Charlie": "04 92 84 92 03"  }
 ```
 
-
-```python
-phone_numbers = { "Alice":   "06 93 28 14 03",
-                  "Bob":     "06 84 19 37 47",
-                  "Charlie": "04 92 84 92 03"  }
-```
-
-
 ### Accès à une valeur
 
 ```python
@@ -164,7 +153,6 @@ phone_numbers["Charlie"]        -> "04 92 84 92 03"
 phone_numbers["Elie"]           -> KeyError !
 phone_numbers.get("Elie", None) -> None
 ```
-
 
 ### Modification d'une entrée, ajout d'une nouvelle entrée
 
@@ -180,7 +168,6 @@ phone_numbers["Deborah"] = "07 02 93 84 21"
 "Elie" in phone_numbers    # -> False
 "Bob" not in phone_numbers # -> False
 ```
-
 
 ```python
 phone_numbers = { "Alice":   "06 93 28 14 03",
@@ -211,8 +198,6 @@ for prenom, phone_number in phone_numbers.items():
     print("Le numéro de " + prenom + " est " + phone_number)
 ```
 
-
-# 8. Structures de données
 
 ## 8.3 Construction plus complexes
 
@@ -262,10 +247,6 @@ contacts["Deborah"] = {"email": "deb@hotmail.fr"}
 
 
 
-
-
-# 8. Structures de données
-
 ## 8.3 Les sets
 
 Les `set`s sont des collections d'éléments **unique** et **non-ordonnée**
@@ -281,7 +262,6 @@ chat.add("z")                           # ajoute `z` à `chat`
 ```
 
 
-# 8. Structures de données
 
 ## 8.4 Les tuples
 
@@ -305,7 +285,6 @@ Autre exemple `dictionnaire.items()` renvoie une liste de tuple `(clef, valeur)`
 ```
 
 
-# 8. Structures de données
 
 ## 8.5 List/dict comprehensions
 
@@ -326,8 +305,6 @@ Carré des entiers impairs d'une liste
 ```
 
 
-# 8. Structures de données
-
 ## 8.5 List/dict comprehensions
 
 Les "list/dict comprehensions" sont des syntaxes particulière permettant de rapidement construire des listes (ou dictionnaires) à partir d'autres structures.
@@ -346,9 +323,6 @@ Carré des entiers impairs d'une liste
 { nom: age-20 for nom, age in ages.items() if age >= 20 }
 ```
 
-
-# 8. Structures de données
-
 ## 8.6 Générateurs
 
 (Pas vraiment une structure de données, mais c'est lié aux boucles ...)
@@ -359,9 +333,7 @@ Carré des entiers impairs d'une liste
 - Typiquement, évite de créer des listes intermédiaires
 
 
-# 8. Structures de données
-
-## 8.6 Générateurs : exemple SANS generateur
+## exemple SANS generateur
 
 ```python
 mes_pokemons = { "Bulbizarre": 12,    "Pikachu": 25,
@@ -378,16 +350,11 @@ def au_moins_niveau_20(pokemons):
 
     return output
 
-###
-
 for pokemon in au_moins_niveau_20(mes_pokemons):
    ...
 ```
 
-
-# 8. Structures de données
-
-## 8.6 Générateurs : exemple AVEC generateur
+## exemple AVEC generateur
 
 ```python
 mes_pokemons = { "Bulbizarre": 12,    "Pikachu": 25,
@@ -401,8 +368,6 @@ def au_moins_niveau_20(pokemons):
         if niveau >= 20:
             yield pokemon
 
-####
-
 for pokemon in au_moins_niveau_20(mes_pokemons):
    ...
 ```
@@ -410,12 +375,10 @@ for pokemon in au_moins_niveau_20(mes_pokemons):
 Il n'est pas nécessaire de créer la liste intermédiaire `output`
 
 
-# 8. Structures de données
-
-## 8.6 Générateurs : autre exemple
+## Un autre exemple
 
 ```python
-def factoriel():
+def factorielle():
 
    n = 1
    acc = 1
@@ -427,9 +390,6 @@ def factoriel():
        yield acc
 ```
 
-
-
-# Recap'
 
 
 # Recap'
@@ -478,8 +438,6 @@ A2 = aire_triangle(4, 2)      # -> A2 vaut 8 !
 - Appel de fonction
 
 
-# Recap'
-
 ## Conditions
 
 ```python
@@ -497,8 +455,6 @@ def aire_triangle(base, hauteur):
 - Opérateurs (`==`, `!=`, `<=`, `>=`, `and`, `or`, `not`, `in`, ...)
 - Mot clefs `if`, `elif`, `else`
 
-
-# Recap'
 
 ## Listes, dictionnaires et boucles
 
@@ -521,9 +477,6 @@ for ingredient, qty in ingredients_gateau.items():
     print("J'ai besoin de " + str(qty) + "g de " + ingredient)
 ```
 
-
-# Recap'
-
 ## Algorithmes simples : `max`
 
 ```python
@@ -539,9 +492,6 @@ def max(liste_entiers):
 
     return m
 ```
-
-
-# Recap'
 
 ## Algorithmes simples : filtrer une liste
 
@@ -565,7 +515,6 @@ def pairs(liste_entiers):
 # 9. Fichiers
 
 
-# 9. Fichiers
 
 ## 9.0 Lire "brutalement"
 
@@ -584,8 +533,6 @@ Attention à bien distinguer:
 - la variable / objet Python (dans l'exemple, nommée `f`) qui est une interface pour interagir avec ce fichier
 
 
-# 9. Fichiers
-
 ## 9.1 Lire, avec une "gestion de contexte"
 
 ```python
@@ -603,8 +550,6 @@ for ligne in contenu_du_fichier:
 - `f.readlines()` permet d'obtenir une liste de toutes les lignes du fichier
 
 
-# 9. Fichiers
-
 ## 9.1 Lire
 
 - `f.readlines()` renvoie une **liste** contenant les lignes une par une
@@ -612,8 +557,6 @@ for ligne in contenu_du_fichier:
 
 - Attention, si je modifie la variable `contenu_du_fichier` ... je ne modifie pas vraiment le fichier sur le disque ! Pour cela, il faut explicitement demander à *écrire* dans le fichier.
 
-
-# 9. Fichiers
 
 ## 9.2 Ecrire
 
@@ -632,8 +575,6 @@ with open("/home/alex/test", "a") as f:
 ```
 
 
-# 9. Fichiers
-
 ## 9.3 Fichiers et exceptions
 
 ```python
@@ -645,9 +586,8 @@ except:
 ```
 
 
-# 9. Fichiers
 
-## 9.3 Fichiers et exceptions (autre exemple)
+## Un autre exemple
 
 ```python
 try:
@@ -660,8 +600,6 @@ except FileNotFoundError:
 ```
 
 
-# 9. Fichiers
-
 ## 9.4 Note "technique" sur la lecture des fichiers
 
 - Il y a un "curseur de lecture". On peut lire petit morceaux par petit morceaux ... une fois arrivé au bout, il n'y a plus rien à lire, il faut replacer le curseur si on veut de nouveau lire.
@@ -673,10 +611,6 @@ print(f.read())  # ---> Rien !
 f.seek(0)        # On remet le curseur au début
 print(f.read())  # ---> Tout plein de choses !
 ```
-
-
-
-# 10. Librairies
 
 
 # 10. Librairies
@@ -702,10 +636,6 @@ import math
 math.sqrt(2)   # -> 1.4142135623730951
 ```
 
-
-
-# 10. Librairies
-
 ### Importer juste des choses précises
 
 ```python
@@ -721,10 +651,6 @@ from math import sqrt, sin, cos
 
 sqrt(2)   # -> 1.4142135623730951
 ```
-
-
-
-# 10. Librairies
 
 ## 10.1 Exemple : `json`
 
@@ -747,9 +673,6 @@ sqrt(2)   # -> 1.4142135623730951
 }
 ```
 
-
-# 10. Librairies
-
 ## 10.1 Exemple : `json`
 
 ```python
@@ -765,8 +688,6 @@ j["mailman"]["state"]     # -> "working"
 ```
 
 
-# 10. Librairies
-
 ## 10.2 Exemple : `requests`
 
 Envoyer une requête HTTP et récuperer la réponse (et potentiellement le
@@ -780,10 +701,6 @@ r = requests.get("https://en.wikipedia.org/wiki/Python", timeout=30)
 print(r.status_code)    # -> 200 si ça a marché
 print(r.text)           # -> Le contenu de la page
 ```
-
-
-
-# 10. Librairies
 
 ## 10.3 Exemple : `csv`
 
@@ -803,9 +720,6 @@ with open("newtable.csv", "w") as f:
     newtable.writerow(["Bob", 29, "Bordeaux"])
 ```
 
-
-# 10. Librairies
-
 ## 10.4 Exemple : `os`
 
 `os` permet d'interagir avec le système d'exploitation pour réaliser différent
@@ -823,10 +737,6 @@ os.system("touch /etc/toto")   # (à éviter) Execute une commande "brute"
 
 Voir aussi : copie ou suppression de fichiers, modification des permissions, ...
 
-
-
-# 10. Librairies
-
 ## 10.5 Exemple : `sys`
 
 permet d'interagir / de s'interfacer avec le systeme
@@ -842,16 +752,10 @@ sys.argv     # Tableau des arguments passés en ligne de commande
 sys.exit(1)  # Sortir du programme avec un code de retour de 1
 ```
 
-
-# 10. Librairies
-
 ## 10.6 Exemple : `argparse`
 
 - Du vrai parsing d'argument en ligne de commande
 - (Un peu long à initialiser mais puissant)
-
-
-# 10. Librairies
 
 ## 10.7 Exemple : `subprocess`
 
@@ -868,8 +772,6 @@ print(out)    # -> Affiche 'Hello World'
 - `Popen` : méthode plus bas niveau
 
 
-# 10. Librairies
-
 ## 10.8 Exemple : `io`
 
 Par exemple, pour créer des objets "file-like". Par exemple :
@@ -885,12 +787,8 @@ print(f.read())    # -> 'i am writing text data'
 ```
 
 
-# 10. Librairies
-
 ![](../../images/moar.jpg)
 
-
-# 10. Librairies
 
 ## Moar ?
 
@@ -907,8 +805,6 @@ print(f.read())    # -> 'i am writing text data'
 - Plots, LDAP, ...
 
 
-# 10. Librairies
-
 ## 10.7 `pip`
 
 - Gestionnaire de paquet / modules Python
@@ -923,10 +819,6 @@ print(f.read())    # -> 'i am writing text data'
 - Lister les paquets installés
     - `pip3 list`, `pip3 freeze`
 - Les paquets installés sont dans `/usr/lib/python*/dist-packages/`
-
-
-
-# 10. Librairies
 
 ## 10.8 Ecrire ses propres modules
 
@@ -950,11 +842,6 @@ print(dire_bonjour)
 # -> <function dire_bonjour at 0x7fb964fab668>
 ```
 
-
-# 10. Librairies
-
-## 10.8 Ecrire ses propres modules
-
 Considérant les fichiers suivants :
 
 ```bash
@@ -975,7 +862,6 @@ print(bonjour)
 # -> <module 'mylib.bonjour' from 'mylib/bonjour.pyc'>
 ```
 
-
 # Exercices complementaires
 
 - Utiliser la librairie random pour simuler 100 lancés de dé 6 et calculer dans un dictionnaire la frequence de chaque face obtenue
@@ -986,10 +872,7 @@ print(bonjour)
    - "2019-08-25T00:07:46Z"
    - "2016-05-17T12:06:54Z"
 
-
-
 # 11. Outils et bonnes pratiques
-
 
 # Documentation
 
@@ -997,7 +880,7 @@ Pour les librairies (et Python en général) :
 - `docs.python.org`
 - `devdocs.io`
 - stack overflow ...
-- doc strings
+- doc strings !!
 
 Pour votre code :
 - nom de variables, fonctions, argument !!!
@@ -1005,12 +888,9 @@ Pour votre code :
 - gestionnaire de version
 - generation de doc automatique ?
 
-
 # Faire du "bon code"
 
-.center[
 **La lisibilité est la priorité numéro 1**
-]
 
 Un programme est vivant et évolue. Mieux vaut un programme cassé mais lisible (donc débuggable) qu'un programme qui marche mais incompréhensible (donc fragile et/ou qu'on ne saura pas faire évoluer)
 
@@ -1078,27 +958,4 @@ puis lancer: `pytest tests.py`
 `pytest` considere comme des tests toutes les fonctions qui commencent par `test_`
 
 
-# Debugging interactif : `pdb`, `ipdb`
-- Python DeBugger
-- Permet (entre autre) de définir des "break point" pour rentrer en interactif
-   - `import ipdb; ipdb.set_trace()`
-   - en 3.7 : `breakpoint()` <small>Mais fait appel à `pdb` et non `ipdb` ?</small>
-- Une fois en interactif, on peut inspecter les variables, tester des choses, ...
-- On dispose aussi de commandes spéciales pour executer le code pas-à-pas
-- Significativement plus efficace que de rajouter des `print()` un peu partout !
-
-
-# Debugging interactif : `pdb`, `ipdb`
-
-### Commandes spéciales
-
-- `l(ist)` : affiche les lignes de code autour de code (ou continue le listing precedent)
-- `c(ontinue)` : continuer l'execution normalement (jusqu'au prochain breakpoint)
-- `s(tep into)` : investiguer plus en détail la ligne en cours, possiblement en descendant dans les appels de fonction
-- `n(ext)` : passer directement à la ligne suivante
-- `w(here)` : print the stack trace, c.a.d. les différents sous-appels de fonction dans lesquels on se trouve
-- `u(p)` : remonte d'un cran dans les appels de la stacktrace
-- `d(own)` : redescend d'un cran dans les appels de la stacktrace
-
-- `pp <variable>` : pretty-print d'une variable (par ex. une liste, un dict, ..)
 

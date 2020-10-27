@@ -1,12 +1,12 @@
 ---
-title: Correction 4 - POO
+title: Correction 3 - POO
 draft: false
 weight: 20
 ---
 
-## Correction Exercice 4.1
+## Correction Exercice 3.1 - Cercles et Cylindres
 
-{{% expand "Correction 4.1" %}}
+{{% expand "Correction 3.1" %}}
 
 ```python
 from typing import Tuple
@@ -65,11 +65,11 @@ print(mon_cylindre.intersect(mon_cylindre2))
 ```
 {{% /expand %}}
 
-## Correction Exercice 4.2
+## Correction Exercice 3.2 - Jeu de carte
 
 ### Une classe Carte pour représenter les éléments d'un jeu
 
-{{% expand "Correction 4.2 `carte.py`" %}}
+{{% expand "Correction 3.2 `carte.py`" %}}
 
 ```python
 class InvalidCardColor(ValueError):
@@ -111,7 +111,7 @@ class Carte:
 
 ### Encapsulation et validation des valeurs de carte possibles
 
-{{% expand "Correction 4.2 `carte.py`" %}}
+{{% expand "Correction 3.2 `carte.py`" %}}
 
 ```python
 class InvalidCardColor(ValueError):
@@ -173,7 +173,7 @@ class Carte:
 
 ### La classe Paquet, une collection de cartes
 
-{{% expand "Correction 4.2 `paquet.py`" %}}
+{{% expand "Correction 3.2 `paquet.py`" %}}
 
 ```python
 from carte import Carte
@@ -227,7 +227,7 @@ class Paquet:
 {{% /expand %}}
 
 
-{{% expand "Correction 4.2 `main.py`" %}}
+{{% expand "Correction 3.2 `main.py`" %}}
 
 ```python
 from carte import Carte
@@ -274,3 +274,53 @@ print(cartes_bob)
 ```
 
 {{% /expand %}}
+
+
+## Correction Exercice 3.3 - ORM
+
+#### `mydb.py`
+
+```python
+from active_alchemy import ActiveAlchemy
+
+db = ActiveAlchemy('sqlite:///apps.db')
+```
+
+#### `models.py`
+
+```python
+from mydb import db
+
+class App(db.Model):
+    name = db.Column(db.String(20), unique=True, nullable=False)
+    level = db.Column(db.Integer, nullable=True)
+    url = db.Column(db.String(50), unique=True, nullable=False)
+    
+    def __repr__(self):
+        return "<App " + self.name + ">"
+```
+
+#### `nuke_and_reinit`
+
+```python
+import json
+from mydb import db
+from models import App
+
+db.drop_all()
+db.create_all()
+
+with open("apps.json") as f:
+    apps_from_json = json.loads(f.read())
+
+for app, infos in apps_from_json.items():
+    a = App(name=app, level=infos["level"], url=infos["git"]["url"])
+    db.session.add(a)
+
+db.session.commit()
+
+apps_level_3 = App.query().filter(App.level == 3)
+for app in apps_level_3:
+    print(app.name)
+
+```
