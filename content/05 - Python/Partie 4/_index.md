@@ -1,5 +1,5 @@
 ---
-title: Partie 4 - POO
+title: Partie 4 - Python Object Model et modules
 weight: 5
 ---
 

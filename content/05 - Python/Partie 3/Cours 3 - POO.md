@@ -1,5 +1,5 @@
 ---
-title: Cours 4 - Programmation Orientée Objet
+title: Cours 3 - Programmation Orientée Objet
 draft: false
 weight: 20
 ---
