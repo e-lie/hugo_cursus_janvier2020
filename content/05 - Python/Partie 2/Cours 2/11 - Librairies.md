@@ -43,6 +43,10 @@ sqrt(2)   # -> 1.4142135623730951
 
 ## Exemple : `json`
 
+Le JSON est un format de fichier qui permet de décrire des données numériques complexe et imbriquées pour le stocker ou le transférer. Il s'agit du format de données dominant aujourd'hui sur le web. Il est utilisé dans tous les langages et Python intègre à l'installation une librairie pour le manipuler.
+
+A noter également qu'il est quasiment isomorphe à un dictionnaire Python.
+
 ```python
 {
     "mailman": {
@@ -62,7 +66,7 @@ sqrt(2)   # -> 1.4142135623730951
 }
 ```
 
-## Exemple : `json`
+La fonction principale de la librairie est `loads()` qui tranforme une chaîne de caractère au format JSON en dictionnaire.
 
 ```python
 import json
@@ -76,11 +80,10 @@ with open("applications.json") as f:
 j["mailman"]["state"]     # -> "working"
 ```
 
-
-## Exemple : `requests`
+## Exemple : `requests` pour un besoin web simple (bas niveau)
 
 Envoyer une requête HTTP et récuperer la réponse (et potentiellement le
-contenu d'une page)
+contenu d'une page).
 
 ```python
 import requests
@@ -148,8 +151,8 @@ sys.exit(1)  # Sortir du programme avec un code de retour de 1
 
 ## Exemple : `subprocess`
 
-`subprocess` peut typiquement être utiliser pour lancer des commandes et
-récupérer leur résultat
+`subprocess` peut typiquement être utilisé pour lancer des commandes en parallèle du programme principal et 
+récupérer leur résultat.
 
 ```python
 out = subprocess.check_output(["echo", "Hello World!"])
