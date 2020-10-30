@@ -1,6 +1,6 @@
 ---
 title: Cours 4 - Le Python Object Model
-draft: false
+draft: true
 weight: 20
 ---
 

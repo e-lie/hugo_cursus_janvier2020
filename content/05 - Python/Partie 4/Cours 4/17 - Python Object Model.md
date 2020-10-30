@@ -1,4 +1,8 @@
-
+---
+title: 17. Python Object Model
+draft: false
+weight: 20
+---
 
 
 # Python Object Model 

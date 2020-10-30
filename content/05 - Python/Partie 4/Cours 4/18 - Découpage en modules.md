@@ -1,5 +1,9 @@
+---
+title: 19. Organiser son code en modules
+draft: false
+weight: 20
+---
 
-## Ecrire ses propres modules
 
 Considérant les fichiers suivants :
 

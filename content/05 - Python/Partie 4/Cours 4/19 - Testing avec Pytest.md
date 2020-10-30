@@ -1,4 +1,8 @@
-
+---
+title: 19. Tester son code 
+draft: false
+weight: 20
+---
 
 # Faire des vrais tests avec pytest
 
