@@ -4,8 +4,6 @@ draft: false
 weight: 2
 ---
 
-
-
 ## Plan
 
 #### Partie 1 : Révisions élémentaires
@@ -49,14 +47,10 @@ Alternance entre :
 Tous est décrit sur le site.
 
 
-
-
 ## Votre profil et vos attentes ?
 
 
-
-
-# Développement Python
+# Langage Python et programmation.
 
 
 ## « L'Informatique »
@@ -85,7 +79,6 @@ Tous est décrit sur le site.
 
 ## Le langage Python
 
-
 ![](../../images/python/python.png)
 
 - "Moyen-niveau" : équilibre entre performance, flexibilité et simplicité d'écriture
@@ -93,6 +86,8 @@ Tous est décrit sur le site.
 - Interprété, "scripting", prototypage rapide
 - Flexible (typage dynamique, ...)
 - Grande communauté, de plus en plus répandu...
+
+Nous récapitulerons en conclusion les caractéristiques du langage, ses avantages et ses inconvénients.
 
 
 ## Python history
@@ -103,13 +98,9 @@ Tous est décrit sur le site.
 > — Guido van Rossum
 
 
-
 ![](../../images/python/guido.jpg)
 
-
-
 ## Some programming mindset
-
 
 | Remarque               | Meme                                     |
 | :-: | :-: |
@@ -119,23 +110,52 @@ Tous est décrit sur le site.
 | **Explorez !**  | ![](../../images/python/changingThings.jpg?height=350px)       
 
 
+# Développement Logiciel
 
-#### Quatre grands thèmes de l'activité de développement : Algorithme / Langage / Architecture / Qualité Logicielle
+- Jusqu'ici nous avons parlé du langage python et de la façon dont il permet d'exprimer un programme. Il s'agit donc de **programmation**.
 
-Attitude du développeur: avoir des connaissances fondamentales et la recherche web facile pour pouvoir faire le tri dans la jungle.
+- Mais l'activité de coder va au delà de l'expression d'une logique dans un langage. Il s'agit d'organiser la production d'un ensemble d'élément de programme, un logiciel et pour cela on parle plutôt de **développement logiciel**.
 
-Deux sources web classiques de l'information pertinente: `github` et `stackoverflow`.
+## Quatre grands thèmes de l'activité de développement
 
-Lire des (bons) livres plutôt que des (mauvais) tutoriels.
+#### Algorithme / Langage / Architecture / Qualité Logicielle
 
-Bonne nouvelle le Python est un écosystème informatique plutôt sain: culture libriste et passion de l'informatique dans la communauté python.
+### Algorithme vs Langage
 
-Les choix de ce cours: alterner fondamental/méthode concrête/spécificité du langage python.
+Lorsqu'on programme il est utile de faire la distinction en ce qui relève de :
+- L'algorithme c'est à dire de la logique de résolution de problème (indépendant du langage).
+- L'expression élégante de cet algorithme dans le langage qu'on veut utiliser.
 
-Le sujet est très vaste, le métier de développeur est long à intégrer.
+Pour trouver un algorithme il vaut mieux **dessiner et écrire sur un papier** ce que l'on cherche à faire !
 
-Python3 uniquement !
+### Architecture
 
-On va parcourir beaucoup de distance (en profondeur) et vous pourrez (devriez ?) creuser en largeur par la suite grâce aux références indiquées.
+
+
+
+## Attitude du développeur
+
+
+- Il est important avoir des connaissances fondamentales (ce que je vous raconte ici notamment) et des connaissances techniques.
+
+- Il faut également avoir la recherche web facile pour pouvoir faire le tri dans la junglede tétails techniques.
+
+### Deux sources web classiques de l'information pertinente
+
+- `github`
+- `stackoverflow`.
+
+### Lire des livres
+
+Lire des (bons) livres plutôt que des (mauvais) tutoriels. [Cf Bibliographie](/05-python/d-bibliographie/)
+
+### Communauté
+
+Bonne nouvelle le Python est un écosystème informatique plutôt sain: culture libriste et passion de l'informatique dans la communauté python. N'hésitez pas à aller rencontrer d'autre développeurs.
+
+### Après cette formation
+
+Le sujet est très vaste, le métier de développeur est long à intégrer. Il faut "passer plusieurs couches de peintures".
+Nous allons parcourir pas mal de distance (en profondeur) et vous pourrez (devriez ?) creuser en largeur par la suite grâce aux références indiquées.
 
 

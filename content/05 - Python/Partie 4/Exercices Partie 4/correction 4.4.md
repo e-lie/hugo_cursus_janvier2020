@@ -1,6 +1,6 @@
 ---
 title: Correction 4.4 - Application du design pattern observateur
-draft: false
+draft: true
 weight: 32
 ---
 

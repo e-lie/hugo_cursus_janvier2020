@@ -24,7 +24,6 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 
 - Il faut tester et débugger **au fur et à mesure**, **pas tout d'un seul coup** !
 
-
 ## Le debugging interactif : `pdb`, `ipdb`, VSCode
 
 - PDB = Python DeBugger
@@ -36,12 +35,8 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 - On dispose aussi de commandes spéciales pour executer le code pas-à-pas
 - Significativement plus efficace que de rajouter des `print()` un peu partout !
 
-- Dans VSCode on peut fixer des breakpoints (points rouges) directement dans le code en cliquant sur la colonne de gauche de l'éditeur.
-- Il faut ensuite aller dans l'onglet debug et sélectionner une configuration de debug ou en créer une plus précise (https://code.visualstudio.com/docs/python/python-tutorial)
-- Ensuite on lance le programme en mode debug et au moment de l'arrêt il est possible d'explorer les valeurs de toutes les variables du programme (Démo)
 
-
-#### Commandes spéciales
+#### Commandes pdb et ipdb
 
 - `l(ist)` : affiche les lignes de code autour de code (ou continue le listing precedent)
 - `c(ontinue)` : continuer l'execution normalement (jusqu'au prochain breakpoint)
@@ -53,6 +48,11 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 
 - `pp <variable>` : pretty-print d'une variable (par ex. une liste, un dict, ..)
 
+#### Debug VSCode 
+- Dans VSCode on peut fixer des breakpoints (points rouges) directement dans le code en cliquant sur la colonne de gauche de l'éditeur.
+- Il faut ensuite aller dans l'onglet debug et sélectionner une configuration de debug ou en créer une plus précise (https://code.visualstudio.com/docs/python/python-tutorial)
+- Ensuite on lance le programme en mode debug et au moment de l'arrêt il est possible d'explorer les valeurs de toutes les variables du programme (Démo)
+
 
 ## Bonnes pratiques pour la lisibilité, maintenabilité
 
@@ -62,52 +62,37 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 - **Robustesse** : garder ses fonctions autant que possibles indépendantes, limiter les effets de bords
     - lorsque j'arose mes plantes, ça ne change pas la température du four
 
-
 - Lorsque mon programme évolue, **je prends le temps de le refactoriser si nécessaire**
     - si je répète plusieurs fois les mémes opérations, il peut être intéressant d'introduire une nouvelle fonction
     - si le contenu d'une variable ou d'une fonction change, peut-être qu'il faut modifier son nom
     - si je fais pleins de petites opérations bizarre, peut-être qu'il faut créer une fonction
 
-### Ne pas réinventer la roue
-
-Il y a des tas de problème qui ont déjà été résolu par d'autres développeurs et ont créé des bibliothèques !
-
- Par exemple :
-- fonctions mathématiques (cos, sqrt, ...)
-- fonctions cryptographiques (hash de mot de passe, ...)
-- lecture / parsing de fichier divers (JSON, YAML, CSV, HTML, XLS, ...)
-
-Généralement lorsqu'on réinvente la roue:
-- on perd du temps
-- on le fais moins bien que les bibliothèques existantes
-- on créé des risques de sécurité
-
 ### Quelques programmes réels utilisant Python 
 
 #### Dropbox
 
-![](../../images/dropbox.png)
+![](../../../../images/python/dropbox.png)
 
 #### Atom
 
-![](../../images/atom.png)
+![](../../../../images/python/atom.png)
 
 #### Eve online
 
-![](../../images/eveonline.jpg)
+![](../../../../images/python/eveonline.jpg)
 
 #### Matplotlib
 
-![](../../images/matplotlib.png)
+![](../../../../images/python/matplotlib.png)
 
 #### Blender
 
-![](../../images/blender.jpg)
+![](../../../../images/python/blender.jpg)
 
 #### OpenERP / Odoo
 
-![](../../images/odoo.jpg)
+![](../../../../images/python/odoo.jpg)
 
 #### Tartiflette
 
-![](../../images/tartiflette.png)
+![](../../../../images/python/tartiflette.png)

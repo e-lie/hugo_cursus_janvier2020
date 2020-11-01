@@ -20,7 +20,7 @@ L'intérêt des serveurs distant est double:
 
 ### Connexion à Guacamole
 
-- Connectez-vous à [guacamole.dopl.uk](https://guacamole.dopl.uk) avec comme login votre username Teams et comme mot de passe `devops101`.
+- Connectez-vous à [guacamole.dopl.uk](https://guacamole.dopl.uk) avec comme login votre prenomnom (sans point) et comme mot de passe `devops101`.
 
 Normalement vous devriez avoir deux connexions disponibles:
 

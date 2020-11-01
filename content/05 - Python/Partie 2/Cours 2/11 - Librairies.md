@@ -179,7 +179,7 @@ print(f.read())    # -> 'i am writing text data'
 ```
 
 
-![](../../images/moar.jpg)
+![](../../../../images/python/moar.jpg)
 
 
 ## Moar ?
@@ -197,7 +197,7 @@ print(f.read())    # -> 'i am writing text data'
 - Plots, LDAP, ...
 
 
-## `pip`
+### Gestionnaire de paquet `pip`
 
 - Gestionnaire de paquet / modules Python
 - PIP : "Pip Install Packages"
@@ -211,4 +211,37 @@ print(f.read())    # -> 'i am writing text data'
 - Lister les paquets installés
     - `pip3 list`, `pip3 freeze`
 - Les paquets installés sont dans `/usr/lib/python*/dist-packages/`
+
+
+### Virtualenv
+
+- Environnement virtuel
+- Isoler des paquets / dépendances pour utiliser des versions spécifiques
+
+```bash
+# La premiere fois :
+sudo apt install python-virtualenv python3-virtualenv virtualenv
+
+# Creation d'un virtualenv 'venv'
+virtualenv -p python3 venv
+source venv/bin/activate
+
+# Installation de dependances
+pip3 install <une dependance...>
+pip3 install <une autre dependance...>
+
+
+# On développe, on teste, etc....
+
+
+# Si on a fini et/ou que l'on veut "sortir" du virtualenv
+deactivate
+```
+
+### Outils plus récents Pipenv et Conda
+
+Pip et les virtualenv sont les outils classique pour gérer les dépendances en Python mais il existe également de nouvelles solutions moins classique
+
+- `Pipenv` un outil rassemblant pip et virtualenv pour simplifier le processus de travail.
+- `Conda` un gestionnaire de dépendances multiplateforme.
 

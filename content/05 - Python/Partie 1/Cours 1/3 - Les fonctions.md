@@ -17,7 +17,7 @@ def ma_fonction(arg1, arg2):
     return resultat
 ```
 
-    ![](../../images/fonction.png)
+![](../../../../images/python/fonction.png)
 
 On peut ensuite utiliser la fonction avec les arguments souhaitées et récupérer le resultat :
 
@@ -102,8 +102,6 @@ def aire_disque(rayon):
     return 3.1415 * rayon_carree
 ```
 
-![](../../images/fonction.png)
-
 
 - `def`, `:`
 - des instructions **indentées** !!
@@ -150,16 +148,11 @@ def aire_disque(rayon):
 - `return` **quitte immédiatement la fonction**
 
 
-#### ... regardons tout cela dans VSCode ...!
-
-##### et discutons des erreurs classiques
-
-
 ### Erreur classique:
 
-#### utiliser `print` au lieu de `return`
+#### Utiliser `print` au lieu de `return`
 
-##### Ce programme n'affiche rien
+#### Ce programme n'affiche rien
 
 ```python
 def aire_disque(rayon):
@@ -170,7 +163,7 @@ A = aire_disque(6)      # A vaut bien quelque chose
                         # mais nous ne demandons pas de l'afficher ...
 ```
 
-##### Solution naive : remplacer le `return` par un `print`
+#### Solution naive : remplacer le `return` par un `print`
 
 ```python
 def aire_disque(rayon):
@@ -257,7 +250,7 @@ distance(1, dy=1, dz=9)
 distance(2, dz=4, dy=7)
 ```
 
-#### Exemple réaliste
+### Exemple réaliste
 
 ```python
 subprocess.Popen(args,
@@ -277,3 +270,4 @@ subprocess.Popen(args,
 ```
 
 c.f. `https://docs.python.org/2/library/subprocess.html#subprocess.Popen`
+

@@ -5,36 +5,17 @@ weight: 20
 ---
 
 
-- VM Linux
-- Python (3.x)
 
-### Pour débutter
+Le premier outil développement est bien sur l'interpréteur lui même utiliser pour lancer un fichier de code.
 
-- **Thonny** : `apt install thonny`
-
-### Plus tard
-
-- **Vim** (éditeur en console pour ninjas)
-- **Atom** (IDE relativement minimaliste, épuré et extensible)
-- **Pycharm** (IDE très gros qui fait même le café)
-- ???
-
-
-Dans Thonny :
-
-```python
-print("Hello, world!")
-```
-
-
-## Parenthèse : Python 2 vs Python 3
+## Python 2 vs Python 3
 
 - Python 2 existe depuis 2000
 - Python 3 existe depuis 2008
 - Fin de vie de Python 2 en 2020
 - ... mais encore la version par défaut dans de nombreux système ... (c.f. `python --version`)
 
-il faut lancer `python3` explicitement ! <small>(et non `python`)</small>
+Généralement il faut lancer `python3` explicitement ! (et non `python`) pour utiliser python3
 
 ### Différences principales
 
@@ -45,8 +26,6 @@ il faut lancer `python3` explicitement ! <small>(et non `python`)</small>
 - Disponibilité des librairies ?
 
 Il existe des outils comme 2to3 pour ~automatiser la transition
-
-
 
 ### Executer un script explicitement avec python
 
@@ -77,7 +56,7 @@ $ python3
 >>> print("Hello, world!")
 ```
 
-#### `ipython3` : alternative à la console 'classique'
+### `ipython3` : alternative à la console python 'classique'
 
 ```bash
 $ sudo apt install ipython3
@@ -85,4 +64,16 @@ $ ipython3
 In [1]: print("Hello, world!")
 ```
 
-#### pour quitter : `exit`
+#### Principaux avantages:
+
+- Complétion des noms de variables et de modules avec TAB
+- Coloré pour la lisibilité
+- Plus explicite parfois
+- des commandes magiques comme `%cd`, `%run script.py`, 
+
+#### Inconvénients:
+
+- Moins standard
+- à installer en plus de l'interpréteur python.
+
+##### pour quitter : `exit`

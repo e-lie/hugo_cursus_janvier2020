@@ -1,7 +1,7 @@
 ---
 title: Correction - Exercice 2.1
 weight: 5
-draft: false
+draft: true
 ---
 
 ## 2.1 - Fichiers, JSON et dictionnaires

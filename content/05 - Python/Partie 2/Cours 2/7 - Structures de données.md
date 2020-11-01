@@ -4,8 +4,7 @@ draft: false
 weight: 20
 ---
 
-Les listes et dictionnaires permettent de stocker des séries
-d'information...
+Les structures de données permettent de stocker des séries d'information et d'y accéder (plus ou moins) facilement et rapidement.
 
 ## Les listes
 Une collection d'éléments **ordonnés** référencé par un indice

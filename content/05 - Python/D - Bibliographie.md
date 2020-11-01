@@ -12,10 +12,6 @@ weight: 55
 - Fluent Python (Ce que pythonique veut dire, comment utiliser python proprement)
 - Serious Python (problématiques avancées de développement)
 
-## Tutoriels
-
-TODO
-
 ## Articles
 
 #### Architecture
@@ -23,10 +19,11 @@ TODO
 - https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction
 
 ## Sites de références
-TODO python.org -> doc
-TODO stackoverflow python popular questions
+- https://python.org
+- https://stackoverflow.com
+- https://devdocs.io
 
 ## Évènements Python
 
-TODO PyconFr: 
-TODO A Paris ?
+- PyconFr: https://www.pycon.fr/2020/
+- Cherchez des RDV python près de chez vous.

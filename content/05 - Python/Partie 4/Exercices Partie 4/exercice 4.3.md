@@ -174,7 +174,25 @@ if __name__ == "__main__":
 
 ## 4.3.4 Créer un package python d'application web : web_calculator
 
+- Dans le dépot du projet récupérez la correction intermédiaire et le début du projet flask en allant sur la branche `correction_inter_flask` (`git checkout <branche>`).
+
 - Ajoutez la librairie web `flask` aux dépendances du projet et installez la avec pip.
+
+- Créez un script `web_calculator.py` avec le code d'une application web de base:
+
+```python
+from flask import Flask, render_template
+
+web_app = Flask(__name__)
+
+@web_app.route('/')
+def index():
+    return render_template("index.html", title="Webcalculator Home")
+```
+
+- Testez l'application avec `flask run` ou le lancement VSCode `Webcalculator` puis visitez http://localhost:5000 dans votre navigateur.
+
+Maintenant que cette application minimale fonction une bonne pratique est d'en faire un package:
 
 - Créez un package `web_app` initialisant une application flask quand on l'importe avec le code :
 
@@ -183,3 +201,43 @@ from flask import Flask
 
 web_app = Flask(__name__)
 ```
+
+- Créez un fichier `routes.py` dans le package avec notre route index et en important correctement les modules nécessaires.
+
+- Déplacez le dossier `templates` dans le package également et gardez dans `web_calculator.py` uniquement `from web_app import web_app`.
+
+- Retestez l'application comme précédemment : comment cela fonctionne-t-il au niveau de l'import ?
+
+- Créez une seconde route `def compute(operation, int_n, int_m):` en mode `GET` avec comme url `/<operation>/<int_n>/<int_m>` qui
+    - utilisez la librairie `fancy_int_operations` pour effectuer des opérations sur des entier `int_n` et `int_m`
+    - utilise le template jinja `operation.html` pour afficher le résultat
+    - on pourra bien sur debugger l'application dans VSCode ou  avec ipdb pour bien comprendre l'exécution et trouver les erreurs.
+    - Testez votre application dans le navigateur.
+
+Pour utiliser la librairie `computation_libs.fancy_int_operations` nous avons du déplacer le package à l'intérieur de `web_app` pour le rendre accessible à l'application web. Notre `cli_calculator` ne fonctionne plus du coup.
+
+- La bonne méthode pour travailler avec des packages indépendants consiste à créer un paquet pip "editable" à partir de notre package:
+    - remettez `computation_libs` à la racine du projet.
+    - ajoutez dans `computation_libs` un fichier de packaging `setup.py` utilisé par `setuptools` pour packer notre librairie.
+    - mettez à l'intérieur:
+
+```python
+from setuptools import setup, find_packages
+
+setup(name='computation-libs', version='0.1', packages=find_packages())
+```
+
+    - Installez la librairie avec `pip install -e ./computation_libs`
+
+- Gérez les mauvaises entrées utilisateur avec un `try: except:` renvoyant le cas échéant vers le template `invalid.html`. Testez.
+
+## 4.3.4 Tester nos modules avec Pytest
+
+- Ecrire des tests unitaires `pytest` sur les 3 opérations de notre librairie.
+
+- Ecrire des test d'intégration sur notre application flask.
+
+## Correction:
+
+La correction finale est dans la branche `correction_finale` du dépôt. 
+

@@ -6,7 +6,7 @@ weight: 20
 
 
 
-![](../../images/string.png)
+![](../../../../images/python/string.png)
 
 
 #### Syntaxe des chaînes
@@ -22,9 +22,7 @@ m = "Hello world"
 len(m)        # -> 11
 ```
 
-
-
-![](../../images/string.png)
+![](../../../../images/python/string.png)
 
 #### Extraction
 

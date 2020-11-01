@@ -18,27 +18,17 @@ print(reponse)
 
 
 
-![](../../images/sorcery.jpg)
+![sorcery](../../../../images/python/sorcery.jpg)
 
 
 
 ### 1.2. Principe
 
 - Les variables sont des abstractions de la mémoire
-- Un contenant pour une information : nom + contenu
+- Une étiquette collée apposée sur une partie de la mémoire : nom pointe vers un contenu
 - Différent du concept mathématique
 
-![](../../images/memory1.png)
-
-
-
-### 1.2. Principe
-
-- Les variables sont des abstractions de la mémoire
-- Un contenant pour une information : nom + contenu
-- Différent du concept mathématique
-
-![](../../images/memory2.png)
+![](../../../../images/python/memory2.png)
 
 
 
