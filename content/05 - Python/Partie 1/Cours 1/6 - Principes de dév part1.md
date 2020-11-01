@@ -36,6 +36,10 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 - On dispose aussi de commandes spéciales pour executer le code pas-à-pas
 - Significativement plus efficace que de rajouter des `print()` un peu partout !
 
+- Dans VSCode on peut fixer des breakpoints (points rouges) directement dans le code en cliquant sur la colonne de gauche de l'éditeur.
+- Il faut ensuite aller dans l'onglet debug et sélectionner une configuration de debug ou en créer une plus précise (https://code.visualstudio.com/docs/python/python-tutorial)
+- Ensuite on lance le programme en mode debug et au moment de l'arrêt il est possible d'explorer les valeurs de toutes les variables du programme (Démo)
+
 
 #### Commandes spéciales
 
