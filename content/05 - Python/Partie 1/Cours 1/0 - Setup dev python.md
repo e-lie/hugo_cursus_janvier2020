@@ -4,9 +4,14 @@ draft: false
 weight: 20
 ---
 
+Notre premier outil développement est bien sur l'interpréteur `python` lui même utilisé pour lancer un fichier de code.
 
+## Installation
 
-Le premier outil développement est bien sur l'interpréteur lui même utiliser pour lancer un fichier de code.
+- Sur linux installer le paquet `python3` (généralement déjà installé parce que linux utilise beaucoup python)
+- Sur Windows installer depuis `python.org` ou depuis un outil comme chocolatey
+- Sur MacOs déjà installé mais pour gérer un version plus à jours on peut le faire manuellement depuis python.org ou avec homebrew.
+
 
 ## Python 2 vs Python 3
 
@@ -25,7 +30,7 @@ Généralement il faut lancer `python3` explicitement ! (et non `python`) pour u
 - `range`, `xrange`
 - Disponibilité des librairies ?
 
-Il existe des outils comme 2to3 pour ~automatiser la transition
+Il existe des outils comme 2to3 pour ~automatiser la transition.
 
 ### Executer un script explicitement avec python
 
@@ -77,3 +82,42 @@ In [1]: print("Hello, world!")
 - à installer en plus de l'interpréteur python.
 
 ##### pour quitter : `exit`
+
+## Les éditeurs de code
+
+VSCode est un éditeur de code récent et très à la mode, pour de bonnes raisons:
+- Il est simple ou départ et fortement extensible: à l'installation seules les fonctionnalités de base sont disponibles
+    - Éditeur de code avec coloration et raccourcis pratiques
+    - Navigateur de fichier (pour manipuler une grande quantité de fichers et sous dossier sans sortir de l'éditeur)
+    - Recherche et remplacement flexible avec des expressions régulières (très important pour trouver ce qu'on cherche et faire de refactoring)
+    - Terminal intégrée (On a plein d'outils de développement à utiliser dans le terminal)
+    - Une interface git assez simple très bien faite (git on s'y perd facilement, une bonne interface aide à s'y retrouver)
+
+Indépendamment du logiciel choisi on trouve en général toutes ces fonctionnalités dans un éditeur de code.
+
+### Observons un peu tout ça avec une démo de VSCode et récapitulons l'importance des ces fonctions.
+
+## Installer des extensions pertinentes
+
+Au sein de l'éditeur nous voulons coder en Python et également:
+- Pouvoir détecter les erreurs de syntaxe.
+- Pouvoir explorer le code python réparti dans plusieurs fichiers (sauter à la définition d'une fonction par exemple).
+- Complétion automatique des noms de symboles (ça peut être pénible parfois).
+- Pouvoir debugger le code python de façon agréable.
+- Pouvoir refactorer (changer le nom de variables ou fonctions partout automatiquement).
+
+Installez l'extension `Python` (et affichez la documentation si vous êtes curieux) en allant dans la section `Extensions` (Icone de gauche avec 4 carrés dont un détaché)
+
+Nous allons également utiliser git sérieusement donc nous allons installer une super extension git appelée `Gitgraph` pour pouvoir mieux explorer l'historique d'un dépôt git.
+
+Enfin vous pouvez installer d'autres extensions pour personnaliser l'éditeur comme l'extension VIM si vous aimez habituellement utiliser cet éditeur.
+
+### Opensource et extensibilité : ne pas s'enfermer dans un environnement de travail
+
+- VSCode est développé par Microsoft et partiellement opensource (Le principal code est accessible mais pas tout)
+- VSCodium est la version opensource communautaire de VSCode mais certaines fonctions puissantes et pratiques sont seulement dans VSCode (les environement distant Docker et SSH par exemple)
+- Un fork récent et complètement opensource de VSCode qui peut fonctionner directement dans le navigateur (Cf. gitpod.io). Moins mature.
+
+Ces trois logiciels sont très proches et vous pouvez coder vos extensions (compatibles avec les 3) pour étendre ces éditeur.
+
+Il me semble important pour choisir un outil de se demander si on possède l'outil ou si l'outil nous possède (plus ou moins les deux en général). Pour pouvoir gérér la complexité du développement moderne on dépend de pas mal d'outils. Savoir choisir des outils ouverts et savoir utiliser également les outils en ligne commande (`git`, `pylint`, etc cf. suite du cours) est très important pour ne pas s'enfermer dans un environnement limitant et possessif.

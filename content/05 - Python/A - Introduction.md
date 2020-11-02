@@ -11,6 +11,7 @@ weight: 2
 - Variables, fonctions
 - Structures de contrôle (conditions, boucles)
 - Debugging
+- setup de dev
 
 #### Partie 2 : Révisions Python
 

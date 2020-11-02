@@ -5,8 +5,6 @@ weight: 20
 ---
 
 
-
-
 En Python, lorsqu'une erreur se produit ou qu'un cas particulier empêche (a priori) la suite du déroulement normal d'un programme ou d'une fonction, une *exception* est déclenchée
 
 Attention : différent des erreurs de syntaxe
@@ -164,10 +162,8 @@ can_be_converted_to_int("abcd") # -> False
 ## The "python way"
 ### « Better to ask forgiveness than permissions »
 
-
+Traduction "on essaye et puis on voit et on gère les dégats".
 (ça se discute)
-
-
 
 ## Assertions
 
@@ -218,7 +214,6 @@ assert trier([0, 82, 4, -21, 2]) == [-21, 0, 2, 4, 82]
 assert trier([-7, -3, 0]) == [-7, -3, 0]
 assert trier([]) == []
 ```
-
 
 
 ## Plusieurs approches
