@@ -6,38 +6,35 @@ weight: 2
 
 ## Plan
 
-#### Partie 1 : Révisions élémentaires
+#### Partie 1 : Révisions? élémentaires
 
 - Variables, fonctions
 - Structures de contrôle (conditions, boucles)
 - Debugging
 - setup de dev
 
-#### Partie 2 : Révisions Python
+#### Partie 2 :
 
 - Structures de données (listes, dictionnaires, ...)
-- Fichiers, exceptions, librairies, ...
+- Fichiers
+- exceptions
+- librairies
+- XML en python
 
 #### Partie 3 : Programmation Orientée Objet
 
 - Classes et méthodes
 - Héritage et Polymorphisme
 - Encapsulation
-- Méthodes et données de classe
+- Stockage de données?
 
 #### Partie 4 : Python Object Model
 
-- Méthodes spéciales
-- Itérateurs
-- Décorateur
-
-#### Partie 5 : Architecture et qualité logicielle
-
-- Modules
-- Tests unitaires
-- Stockage de données
-- Parallélisation 
-
+- Python Object Model, méthodes spéciales
+- Itérateurs, Décorateurs, Design Patterns
+- Modules et Packages, script CLI, documentation
+- Testing
+- +? Parallélisme, ?
 
 ## Méthode
 
