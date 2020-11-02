@@ -6,11 +6,13 @@ weight: 20
 
 Les structures de données permettent de stocker des séries d'information et d'y accéder (plus ou moins) facilement et rapidement.
 
+
+
 ## Les listes
 Une collection d'éléments **ordonnés** référencé par un indice
 
 ```python
-favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
+favourite_animaux = [ "girafe", "chenille", "lynx" ]
 fibonnaci = [ 1, 1, 2, 3, 5, 8 ]
 stuff = [ 3.14, 42, "bidule", ["a", "b", "c"] ]
 ```
@@ -18,96 +20,96 @@ stuff = [ 3.14, 42, "bidule", ["a", "b", "c"] ]
 ### Accès à element particulier ou a une "tranche"
 
 ```python
-favourite_pokemons[1]      ->  "Roucoups"
-favourite_pokemons[-2:]    ->  ["Roucoups", "Insecateur"]
+favourite_animaux[1]      ->  "chenille"
+favourite_animaux[-2:]    ->  ["chenille", "lynx"]
 ```
 
 
 ### Longueur
 
 ```python
-len(favourite_pokemons)    -> 3
+len(favourite_animaux)    -> 3
 ```
 
 
 ### Tester qu'un élément est (ou n'est pas) dans une liste
 
 ```python
-"Insecateur" in favourite_pokemons   # -> True
-"Mewtwo" not in favourite_pokemons   # -> True
+"lynx" in favourite_animaux   # -> True
+"Mewtwo" not in favourite_animaux   # -> True
 ```
 
 
 ```python
-favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
+favourite_animaux = [ "girafe", "chenille", "lynx" ]
 ```
 
 
 #### Iteration
 
 ```python
-for pokemon in favourite_pokemons:
-    print(pokemon + " est un de mes pokemons préférés !")
+for animal in favourite_animaux:
+    print(animal + " est un de mes animaux préférés !")
 ```
 
 
 #### Iteration avec index
 
 ```python
-print("Voici la liste de mes pokemons préféré:")
-for i, pokemon in enumerate(favourite_pokemons):
-    print(str(i+1) + " : " + pokemon)
+print("Voici la liste de mes animaux préféré:")
+for i, animal in enumerate(favourite_animaux):
+    print(str(i+1) + " : " + animal)
 ```
 
 
 ```python
-favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
+favourite_animaux = [ "girafe", "chenille", "lynx" ]
 ```
 
 
 #### Modification d'un élément
 
 ```python
-favourite_pokemons[1] = "Roucarnage"
+favourite_animaux[1] = "papillon"
 ```
 
 #### Ajout à la suite, contatenation
 
 ```python
-favourite_pokemons.append("Mewtwo")
+favourite_animaux.append("coyote")
 ```
 
 #### Insertion, concatenation
 
 ```python
-favourite_pokemons.insert(1, "Papillusion")
-favourite_pokemons += ["Pikachu", "Scarabrute"]
+favourite_animaux.insert(1, "sanglier")
+favourite_animaux += ["lion", "moineau"]
 ```
 
 
 ### Exemple de manip classique : filtrer une liste pour en construire une nouvelle
 
 ```python
-favourite_pokemons = [ "Bulbizarre", "Roucoups", "Insecateur" ]
+favourite_animaux = [ "girafe", "chenille", "lynx" ]
 
 # Création d'une liste vide
-pokemons_starting_with_B = []
+animaux_starting_with_B = []
 
 # J'itère sur la liste de pokémons favoris
-for pokemon in favourite_pokemons:
+for animal in favourite_animaux:
 
    # Si le nom du pokémon actuel commence par B
-   if pokemon.startswith("B"):
+   if animal.startswith("B"):
 
       # Je l'ajoute à la liste
-      pokemons_starting_with_B.append(pokemon)
+      animaux_starting_with_B.append(animal)
 ```
 
 
-À la fin, `pokemons_starting_with_B` contient:
+À la fin, `animaux_starting_with_B` contient:
 
 ```python
-["Bulbizarre"]
+["girafe"]
 ```
 
 
@@ -325,39 +327,39 @@ Carré des entiers impairs d'une liste
 ### exemple SANS generateur
 
 ```python
-mes_pokemons = { "Bulbizarre": 12,    "Pikachu": 25,
+mes_animaux = { "girafe": 12,    "Pikachu": 25,
                  "Rattata": 15,       "Rondoudou": 23
                  # [...]
                }
 
-def au_moins_niveau_20(pokemons):
+def au_moins_un_metre(animaux):
 
     output = []
-    for pokemon, niveau in pokemons.items():
-        if niveau >= 20:
-            output.append(pokemon)
+    for animal, taille in animaux.items():
+        if taille >= 20:
+            output.append(animal)
 
     return output
 
-for pokemon in au_moins_niveau_20(mes_pokemons):
+for animal in au_moins_un_metre(mes_animaux):
    ...
 ```
 
 ### exemple AVEC generateur
 
 ```python
-mes_pokemons = { "Bulbizarre": 12,    "Pikachu": 25,
-                 "Rattata": 15,       "Rondoudou": 23
+mes_animaux = { "girafe": 300,    "coyote": 50,
+                 "chenille": 2,       "cobra": 45
                  # [...]
                }
 
-def au_moins_niveau_20(pokemons):
+def au_moins_un_metre(animaux):
 
-    for pokemon, niveau in pokemons.items():
-        if niveau >= 20:
-            yield pokemon
+    for animal, niveau in animaux.items():
+        if taille >= 100:
+            yield animal
 
-for pokemon in au_moins_niveau_20(mes_pokemons):
+for animal in au_moins_un_metre(mes_animaux):
    ...
 ```
 

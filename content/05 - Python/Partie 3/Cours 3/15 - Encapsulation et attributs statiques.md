@@ -5,7 +5,16 @@ weight: 20
 ---
 
 
+## D'abord quelques astuces
+
+- `dir(un_objet)` : listes tous les attributs / methodes d'un objet (ou module)
+- Il existe aussi `un_objet.__dict__` 
+- `MaClasse.__subclasses__()` : lister toutes les classes filles d'une classe
+
+
 ## Attributs 'statiques' (partagés par tous les objets d'une classe)
+
+Les attributs qui sont définits dans le corps de la classe et non dans le constructeurs sont statiques en python. C'est à dire que leur valeur est commune à toutes les instances de la classe en cours d'utilisation dans le programme. Cela peut être très pratique pour maintenir une vision globale de l'état du programme de façon sécurisée.
 
 ```python
 class FormeGeometrique():
@@ -23,16 +32,69 @@ print(FormeGeometrique.nb_instances)
 # -> affiche 3
 ```
 
+<!-- 
+TODO méthodes statiques et méthodes de classe
+-->
 
-## Quelques astuces
+## L'encapsulation
 
-- `dir(un_objet)` : listes tous les attributs / methodes d'un objet (ou module)
-- Il existe aussi `un_objet.__dict__` 
-- `MaClasse.__subclasses__()` : lister toutes les classes filles d'une classe
+Nous avons évoqué dans le cours 13 qu'un des intérêts de la POO est de sécuriser les variables dans un contexte isolé pour éviter qu'elles soient accédées à tort et à travers par différents programmeurs ce qui a tendance à créer des bugs mythiques.
+
+Pour éviter cela on essaye au maximum d'encapsuler les attributs et les méthodes internes qui servent à faire fonctionner une classe pour éviter que les utilisateurs de la classe (ignorants son fonctionnement) puissent pas les appeler directement et "casser" le fonctionnement de la classe.
+
+On parle d'attributs et méthodes `privés` quand ils sont internes et inaccessibles.
+
+En Python les attributs et méthodes d'un objet sont "publiques" par défaut : on peut y accéder quand on veut et donc il faut donc une façon de pouvoir interdire leur usage:
+
+- On utilise un underscore `_` devant le nom de l'attribut ou méthode pout indiquer qu'il est privé et ne doit pas être utilisé.
+
+Exemple: `self._valeurinterne = 50` ou `def _mamethodeprivee(self, arg): ...`
+
+En réalité l'attribut/méthode est toujours accessible, il s'agit d'une convention mais il faut la respecter !! Par défaut les editeurs de code vous masqueront les elements privés lors de l'autocomplétion par exemple.
+
+## Accesseurs (getters) et mutateurs (setters)
+
+Même lorsque qu'un attribut d'objet devrait être accessible à l'utilisateur (par exemple le rayon d'un cercle), on voudrait pouvoir contrôler l'accès à cet attribut pour que tout ce passe bien. 
+
+Par exemple éviter que l'utilisateur puisse définir un rayon négatif !!
+
+Pour cela on créé des attributs privés et on définit des méthodes "publique"
+
+On veut donc généralement pouvoir y donner accès à l'utilisateur de la classe **selon certaines conditions**.
+
+Pour cela un définit une méthode d'accès (getter/accesseur) qui décrit comment récupérer la valeur ou une méthode de modification (setter/mutateur) qui contrôle comment on peut modifier la valeur (et qui vous envoie balader si vous définissez un rayon négatif).
+
+## Exemple (non pythonique !)
+
+```python
+class Cercle:
+
+   def __init__(self, centre, rayon, couleur="black", epaisseur=0.1):
+       self.centre = centre
+       self._rayon = rayon
+       self._couleur = couleur
+
+    def get_couleur(self):
+        print("on accède à la couleur")
+        return self._couleur
+
+    def set_rayon(self, rayon)
+        assert rayon > 0, "Le rayon doit être supérieur à 0 !"
+        self._rayon = rayon
 
 
+
+cercle1 = Cercle((3, 5), 2, "red")
+cercle1.get_couleur()
+cercle1.set_rayon(1)
+cercle1.set_rayon(-1) # Erreur
+```
+
+Cependant en Python on ne fait généralement pas directement comme dans cet exemple !
 
 ##  Des attributs "dynamiques" avec `@property`
+
+Le décorateur @property ajouté à une méthode permet de l'appeler comme un attribut (sans parenthèses)
 
 ```python
 class Carre(FigureGeometrique):
@@ -47,8 +109,6 @@ class Carre(FigureGeometrique):
 carre_vert  = Carre((5, -1), 3, "green", epaisseur=0.2)
 print(carre_vert.aire) # N.B. : plus besoin de mettre de parenthèse ! Se comporte comme un attribut
 ```
-
-
 
 ### Autre exemple avec `@property`
 
@@ -71,15 +131,7 @@ print("Il reste %s à payer" % ma_facture.montant_restant_a_payer)
 # -> Il reste 38 à payer
 ```
 
-
-## Attributs et méthodes privées
-
-- Il est possible de définir des attributs et méthode privées si elles commencent par `__`
-   - par exemple: `self.__toto`
-- Un attribut / méthode privée de peut être appelé que depuis "l'intérieur de la classe"
-   - attention : il ne s'agit pas de vraie "privacy" mais plutot de disuasion...
-
-- On peut étre tenté de définir des getters et setters `get_toto()`, `set_toto()` pour interagir avec les attributs privés ... mais la façon pythonique est:
+La façon pythonique de faire des getters et setters en python est donc la suivante:
 
 ```python
         @property
@@ -91,13 +143,10 @@ print("Il reste %s à payer" % ma_facture.montant_restant_a_payer)
             self.__toto = value   # ... ou tout autre traitement
 ```
 
-
 On peut ensuite accéder et modifier l'attribut `toto` de manière transparente : 
 
 ```python
 monobjet = Objet()
 
+monobjet.toto = "nouvelle_valeur"
 print(monobjet.toto)
-
-monobjet.toto = 3
-```
