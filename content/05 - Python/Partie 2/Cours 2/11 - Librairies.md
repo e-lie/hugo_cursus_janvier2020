@@ -272,7 +272,7 @@ print(f.read())    # -> 'i am writing text data'
 
 ```bash
 # La premiere fois :
-sudo apt install python-virtualenv python3-virtualenv virtualenv
+sudo apt install python3-virtualenv virtualenv
 
 # Creation d'un virtualenv 'venv'
 virtualenv -p python3 venv
