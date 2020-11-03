@@ -290,6 +290,8 @@ pip3 install <une autre dependance...>
 deactivate
 ```
 
+Documentation pour toutes les plateformes : https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
 ### Outils plus récents Pipenv et Conda
 
 Pip et les virtualenv sont les outils classique pour gérer les dépendances en Python mais il existe également de nouvelles solutions moins classique

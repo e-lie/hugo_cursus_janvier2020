@@ -1,5 +1,5 @@
 ---
-title: Cours 3 - Classes, attributs et méthodes
+title: 13. POO - Classes, attributs et méthodes
 draft: false
 weight: 20
 ---
@@ -12,6 +12,7 @@ Il permet d'organiser un programme de façon standard et ainsi d'éviter des err
 ## Principe de base
 
 Regrouper les variables et fonctions en entités ("objets") cohérentes qui appartiennent à des classes
+
    - **attributs** (les variables décrivant l'état de l'objet)
    - **méthodes** (les fonctions appliqubles à l'objet)
 
