@@ -86,6 +86,7 @@ Lorsqu'on enchaine simplement des instructions sans trop de structure dans un pr
 On commence généralement à définir des variables globales accessibles partout pour maintenir l'état de notre programme. Plusieurs fonctions viennent modifier de façon concurrente ces variables globales (pensez au score dans un jeu par exemple) pouvant mener à des bugs complexes.
 
 On arrive aussi à beaucoup de code dupliqué et il devient très difficile dans ce contexte de refactorer un programme:
+
 - dès qu'on tire un spaghetti tout casse
 - dès qu'on veut changer un endroit il faut modifier beaucoup de choses
 - la compréhension du programme devient difficile pour le développeur initial et encore plus pour ses collègues.
