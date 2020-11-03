@@ -295,3 +295,9 @@ slides sur containers Windows
 https://www.goetas.com/blog/traps-on-the-way-of-blue-green-deployments/
 
 https://github.com/cecchisandrone/docker-swarm-blue-green (demo avec mysql galera)
+
+
+
+## Nginx / Let's encrypt
+Test https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/dockerfile and https://hub.docker.com/r/jwilder/nginx-proxy
+http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/
