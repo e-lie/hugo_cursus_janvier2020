@@ -307,8 +307,7 @@ Les "list/dict comprehensions" sont des syntaxes particulière permettant de rap
 ```
 
 ### Exemple (dict comprehension)
-
-Carré des entiers impairs d'une liste
+ 
 
 ```python
 { nom: age-20 for nom, age in ages.items() if age >= 20 }
@@ -327,8 +326,8 @@ Carré des entiers impairs d'une liste
 ### exemple SANS generateur
 
 ```python
-mes_animaux = { "girafe": 12,    "Pikachu": 25,
-                 "Rattata": 15,       "Rondoudou": 23
+mes_animaux = { "girafe": 300,    "coyote": 50,
+                 "chenille": 2,       "cobra": 45
                  # [...]
                }
 
@@ -336,7 +335,7 @@ def au_moins_un_metre(animaux):
 
     output = []
     for animal, taille in animaux.items():
-        if taille >= 20:
+        if taille >= 100:
             output.append(animal)
 
     return output
