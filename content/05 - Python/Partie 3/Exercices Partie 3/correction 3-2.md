@@ -1,73 +1,30 @@
 ---
-title: Correction 3 - POO
+title: Correction exercice 3.2 - Jeu de carte
 draft: true
 weight: 20
 ---
 
-## Correction Exercice 3.1 - Cercles et Cylindres
-
-{{% expand "Correction 3.1" %}}
-
-```python
-from typing import Tuple
-from math import sqrt
-
-class Cercle:
-
-    def __init__(self, rayon: int, coord_centre: Tuple[int, int]=(0,0) ) -> None:
-        self.centre: Tuple[int, ...] = coord_centre
-        self.r: int = rayon
-
-    @property
-    def aire(self) -> float:
-        return 3.1415 * self.r * self.r
-
-    def intersect(self, second_cercle) -> bool:
-        somme_des_rayons: int = self.r + second_cercle.r
-        distance_des_centres: float = sqrt(
-            (self.centre[0] - second_cercle.centre[0])**2
-            + (self.centre[1] - second_cercle.centre[1])**2
-        )
-        return somme_des_rayons >= distance_des_centres
-
-
-class Cylindre(Cercle):
-
-    def __init__(self, rayon: int, hauteur: int, coord_centre: Tuple[int, int, int]=(0, 0, 0) ) -> None:
-        super().__init__(rayon)
-        self.centre: Tuple[int, ...] = coord_centre
-        self.hauteur: int = hauteur
-
-    def intersect(self, second_cylindre) -> bool:
-        cercles_intersects: bool = super().intersect(second_cylindre)
-        
-        somme_des_hauteurs: int = self.hauteur + second_cylindre.hauteur
-        distance_z_des_centres: int = abs(self.centre[2] - second_cylindre.centre[2])
-        hauteur_intersects: bool = somme_des_hauteurs / 2 >= distance_z_des_centres
-        
-        return cercles_intersects and hauteur_intersects
-
-
-
-mon_cercle = Cercle(5, (3,1))
-mon_cylindre = Cylindre(10,8,(-2,-6,-1))
-
-mon_cercle2 = Cercle(5, (10,20))
-mon_cylindre2 = Cylindre(5,10,(1,-2,4))
-
-print(mon_cercle.centre)
-print(mon_cercle.aire) 
-print(mon_cylindre.centre)
-print(mon_cylindre.aire)
-
-print(mon_cercle.intersect(mon_cercle2))
-print(mon_cylindre.intersect(mon_cylindre2))
-```
-{{% /expand %}}
-
-## Correction Exercice 3.2 - Jeu de carte
 
 ### Une classe Carte pour représenter les éléments d'un jeu
+
+- Dans un fichier `carte.py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`. 
+
+- Implémenter la méthode `points` pour la classe `Carte`, qui retourne un nombre entre 1 et 13 en fonction de la valeur de la carte. Valider ce comportement depuis un fichier `main.py` qui importe la classe Carte.
+
+- Implémenter la méthode `__repr__` pour la classe `Carte`, de sorte à ce que `print(Carte(3, "COEUR"))` affiche `<Carte 3 de COEUR>`.
+
+```python
+c = Carte("Q", "PIQUE")
+
+print(c.couleur)
+# Affiche PIQUE
+
+print(c.points)
+# Affiche 12
+
+print(c)
+# Affiche <Carte DAME de PIQUE>
+```
 
 {{% expand "Correction 3.2 `carte.py`" %}}
 
@@ -110,6 +67,12 @@ class Carte:
 {{% /expand %}}
 
 ### Encapsulation et validation des valeurs de carte possibles
+
+Pour sécuriser l'usage ultérieur de notre jeu de carte on aimerait que les cartes ne puissent être crées et modifiées qu'avec des valeurs correctes (les 4 couleurs et 13 valeurs précisées)
+
+- Modifiez le constructeur pour valider que les données fournies sont valides. Sinon levez une exception (on utilise conventionnellement le type d'exception `ValueError` pour cela ou un type d'exception personnalisé).
+
+- Modifiez également les paramètres `couleur` et `valeur` pour les rendre privés, puis créer des accesseurs et mutateurs qui permettent d'y accéder en mode public et de valider les données à la modification.
 
 {{% expand "Correction 3.2 `carte.py`" %}}
 
@@ -172,6 +135,33 @@ class Carte:
 
 
 ### La classe Paquet, une collection de cartes
+
+- Dans un nouveau fichier `paquet.py`, créer une classe `Paquet` correspondant à un paquet de 52 cartes. Le constructeur devra créer toute les cartes du jeu et les stocker dans une liste ordonnée. Vous aurez probablement besoin d'importer la classe `Carte`. Testez le comportement de cette classe en l'important et en l'utilisant dans `main.py`.
+
+- Implémenter la méthode `melanger` pour la classe `Paquet` qui mélange l'ordre des cartes.
+
+- Implémenter la méthode `couper` qui prends un nombre aléatoire du dessus du paquet et les place en dessous.
+
+- Implémenter la méthode `piocher` qui retourne la `Carte` du dessus du paquet (et l'enlève du paquet)
+
+1.0 : Implémenter la méthode `distribuer` qui prends en argument un nombre de carte et un nombre de joueurs (e.g. `p.distribuer(joueurs=4, cartes=5)`), pioche des cartes pour chacun des joueurs à tour de rôle, et retourne les mains correspondantes.
+
+
+```python
+p = Paquet()
+p.melanger()
+
+main_alice, main_bob = p.distribuer(joueurs=2, cartes=3)
+
+print(main_alice)
+# affiche par exemple [<Carte 3 de PIQUE>, <Carte VALET de CARREAU>, <Carte 1 de trefle>]
+
+print(p.pioche())
+# affiche <Carte 9 de CARREAU>
+
+print(main_alice[1].points())
+# affiche 11
+```
 
 {{% expand "Correction 3.2 `paquet.py`" %}}
 
@@ -275,52 +265,3 @@ print(cartes_bob)
 
 {{% /expand %}}
 
-
-## Correction Exercice 3.3 - ORM
-
-#### `mydb.py`
-
-```python
-from active_alchemy import ActiveAlchemy
-
-db = ActiveAlchemy('sqlite:///apps.db')
-```
-
-#### `models.py`
-
-```python
-from mydb import db
-
-class App(db.Model):
-    name = db.Column(db.String(20), unique=True, nullable=False)
-    level = db.Column(db.Integer, nullable=True)
-    url = db.Column(db.String(50), unique=True, nullable=False)
-    
-    def __repr__(self):
-        return "<App " + self.name + ">"
-```
-
-#### `nuke_and_reinit`
-
-```python
-import json
-from mydb import db
-from models import App
-
-db.drop_all()
-db.create_all()
-
-with open("apps.json") as f:
-    apps_from_json = json.loads(f.read())
-
-for app, infos in apps_from_json.items():
-    a = App(name=app, level=infos["level"], url=infos["git"]["url"])
-    db.session.add(a)
-
-db.session.commit()
-
-apps_level_3 = App.query().filter(App.level == 3)
-for app in apps_level_3:
-    print(app.name)
-
-```

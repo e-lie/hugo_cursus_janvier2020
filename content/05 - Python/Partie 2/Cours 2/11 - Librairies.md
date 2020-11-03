@@ -112,6 +112,21 @@ with open("newtable.csv", "w") as f:
     newtable.writerow(["Bob", 29, "Bordeaux"])
 ```
 
+## Exemple : `sys`
+
+permet d'interagir / de s'interfacer avec le systeme (librairie système commune à toutes les plateforme)
+
+Par exemple:
+
+```python
+import sys
+
+sys.stdout   # La sortie standard du programme
+sys.path     # Les chemins depuis lesquels sont chargés les imports
+sys.argv     # Tableau des arguments passés en ligne de commande
+sys.exit(1)  # Sortir du programme avec un code de retour de 1
+```
+
 ## Exemple : `os`
 
 `os` permet d'interagir avec le système d'exploitation pour réaliser différent
@@ -129,25 +144,56 @@ os.system("touch /etc/toto")   # (à éviter) Execute une commande "brute"
 
 Voir aussi : copie ou suppression de fichiers, modification des permissions, ...
 
-## Exemple : `sys`
-
-permet d'interagir / de s'interfacer avec le systeme
-
-Par exemple:
-
-```python
-import sys
-
-sys.stdout   # La sortie standard du programme
-sys.path     # Les chemins depuis lesquels sont chargés les imports
-sys.argv     # Tableau des arguments passés en ligne de commande
-sys.exit(1)  # Sortir du programme avec un code de retour de 1
-```
-
 ## Exemple : `argparse`
 
 - Du vrai parsing d'argument en ligne de commande
 - (Un peu long à initialiser mais puissant)
+
+## Exemple concurrent: `docopt`
+
+Sert à la même chose que argparse mais beaucoup plus rapide à utiliser ! Docopt analyse la documentation du module pour deviner les arguments !
+
+```python
+"""Naval Fate.
+
+Usage:
+  naval_fate.py ship new <name>...
+  naval_fate.py ship <name> move <x> <y> [--speed=<kn>]
+  naval_fate.py ship shoot <x> <y>
+  naval_fate.py mine (set|remove) <x> <y> [--moored | --drifting]
+  naval_fate.py (-h | --help)
+  naval_fate.py --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+  --speed=<kn>  Speed in knots [default: 10].
+  --moored      Moored (anchored) mine.
+  --drifting    Drifting mine.
+
+"""
+from docopt import docopt
+
+
+if __name__ == '__main__':
+    arguments = docopt(__doc__)
+    print(arguments)
+```
+
+Ensuite `python naval_fate.py ship new monbateau --speed=15` renvoie un dictionnaire d'arguments du type:
+
+```python
+{'--drifting': False,    'mine': False,
+ '--help': False,        'move': True,
+ '--moored': False,      'new': True,
+ '--speed': '15',        'remove': False,
+ '--version': False,     'set': False,
+ '<name>': ['Guardian'], 'ship': True,
+ '<x>': '100',           'shoot': False,
+ '<y>': '150'}
+```
+
+On peut les utiliser pour paramétrer le programme CLI !
 
 ## Exemple : `subprocess`
 
@@ -163,8 +209,10 @@ print(out)    # -> Affiche 'Hello World'
 - `check_call` : verifie que la commande a bien marché (code de retour '0') ou declenche une exception
 - `Popen` : méthode plus bas niveau
 
+Cf. Partie sur l'execution concurrente en Python
 
-## Exemple : `io`
+
+<!-- ## Exemple : `io`
 
 Par exemple, pour créer des objets "file-like". Par exemple :
 
@@ -176,7 +224,7 @@ print(f.read())    # -> 'some initial text data'
 f.seek(0)
 f.write("i am writing")
 print(f.read())    # -> 'i am writing text data'
-```
+``` -->
 
 
 ![](../../../../images/python/moar.jpg)
@@ -201,7 +249,11 @@ print(f.read())    # -> 'i am writing text data'
 
 - Gestionnaire de paquet / modules Python
 - PIP : "Pip Install Packages"
-- PyPI : Python Package Index
+- PyPI : Python Package Index : visitez https://pypi.org
+
+(à ne pas confondre avec Pypy  un interpreter python écrit en Python)
+
+
 - Installer un paquet :
     - `pip3 install <paquet>`
 - Rechercher un paquet :
@@ -245,3 +297,6 @@ Pip et les virtualenv sont les outils classique pour gérer les dépendances en 
 - `Pipenv` un outil rassemblant pip et virtualenv pour simplifier le processus de travail.
 - `Conda` un gestionnaire de dépendances multiplateforme.
 
+### Installer Pip et Virtualenv sur Windows
+
+- https://matthewhorne.me/how-to-install-python-and-pip-on-windows-10/

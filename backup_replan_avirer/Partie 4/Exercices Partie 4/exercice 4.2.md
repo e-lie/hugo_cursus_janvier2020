@@ -22,7 +22,7 @@ Plutôt que de générer les 52 cartes avec une boucle for dans le constructeur 
 
 ## Bonus : d'autres générateurs de carte
 
-Les listes sont des collections finies et les itérateurs de liste sont donc toujours finis. Cependant un itérateur n'a pas de taille en général et peut parfois générer indéfiniment des valeurs (grace à un générateur infini par exemple).
+Les listes sont des collections finies et les itérateurs de liste sont donc toujours finis. Cependant un itérateur n'a pas de taille en général et peut parfois renvoyer des valeurs indéfiniment des valeurs (grace à un générateur infini par exemple).
 
-- Modifiez l'itérateur de carte pour qu'elle se base sur un générateur de carte aléatoire infini.
+- Modifiez l'itérateur de carte pour qu'il se base sur un générateur de carte infini utilisant les nombre de la suite de fibonacci et les quatre couleurs du UNO. (Voir correction de fibonacci dans la partie 1)
 

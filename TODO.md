@@ -16,6 +16,7 @@
     - [ ] Cours sur les modules et les packages + le concept de namespaces + setuptools
     - [ ] Cours sur docopt i.e la doc et le parsing d'arguments
     - [ ] Cours sur pytest
+    - [ ] fixer le certificat HTTPS
 
 # Facultatif
 

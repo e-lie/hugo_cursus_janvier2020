@@ -1,6 +1,6 @@
 ---
 title: Corrections 1
-draft: true
+draft: false
 weight: 20
 ---
 
@@ -58,7 +58,7 @@ def centrer(mot, largeur=80):
     
 def encadrer(mot, largeur=80, caractere='@'):
 	ligne1 = caractere * largeur
-    ligne2 = centrer(mot, largeur).replace("|", caractere)
+    ligne2 = centrer(mot, largeur)
     
     return "{}\n{}\n{}".format(ligne1, ligne2, ligne1)
 	

@@ -9,11 +9,11 @@ weight: 20
 ### 1. Calculs dans l'interpréteur
 
 - À l'aide de python, calculer le résultat des opérations suivantes :
-    - 567×72
-    - 33⁴
-    - 98.2/6
-    - ((7×9)⁴)/6
-    - vrai et non (faux ou non vrai)
+    - `567×72`
+    - `33⁴`
+    - `98.2/6`
+    - `((7×9)⁴)/6`
+    - `vrai et non (faux ou non vrai)`
 
 
 ### 2. Interactivité

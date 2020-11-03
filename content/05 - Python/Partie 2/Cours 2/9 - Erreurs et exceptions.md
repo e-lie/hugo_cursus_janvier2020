@@ -20,9 +20,7 @@ Attention : différent des erreurs de syntaxe
 - Tenter de télêcharger des données sans être connecté à internet
 - etc...
 
-
-
-- Une exception a un *type*
+- Une exception a un *type* (c'est un objet d'un classe d'exception -> cf. Partie 3):
     - `Exception`, `ValueError`, `IndexError`, `TypeError`, `ZeroDivisionError`, ...
 - Lorsqu'une exception interrompt le programme, l'interpréteur affiche la *stacktrace* (TraceBack) qui contient des informations pour comprendre quand et pourquoi l'exception s'est produite.
 
@@ -33,8 +31,6 @@ Traceback (most recent call last):
 NameError: name 'coucou' is not defined
 ```
 
-
-
 - Une exception a un *type*
     - `Exception`, `ValueError`, `IndexError`, `TypeError`, `ZeroDivisionError`, ...
 - Lorsqu'une exception interrompt le programme, l'interpréteur affiche la *stacktrace* (TraceBack) qui contient des informations pour comprendre quand et pourquoi l'exception s'est produite.
@@ -42,7 +38,7 @@ NameError: name 'coucou' is not defined
 ```python
 # python3 test_int.py
 
-Tape un entier entre 1 et 3: truc
+Tapez un entier entre 1 et 3: truc
 
 Traceback (most recent call last):
   File "test_int.py", line 8, in <module>
@@ -52,7 +48,7 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: 'truc'
 ```
 
-
+Souvent une exception est due à une entrée utilisateur incorrecte (comme ici) mais pas toujours.
 
 ## `raise`
 
@@ -90,9 +86,6 @@ Par exemple : écrire dans un fichier
 - Est-ce qu'il y a assez d'espace disque libre ?
 - Si je commence à écrire, peut-être vais-je tomber sur un secteur disque deffectueux
 - ...
-
-
-De manière générale dans un programme, il peut y'avoir beaucoup de manipulation dont on sait qu'elles peuvent échouer pour un nombre de raisons trop grandes à lister ...
 
 Autre exemple : aller chercher une information sur internet
 - Est-ce que je suis connecté à Internet ?
@@ -135,14 +128,21 @@ except:
 
 
 ```python
-reponse = input("Entrez un entier svp !")
+while True
+    reponse = input("Entrez un entier svp !")
 
-try:
-    n = int(reponse)
-except:
-    # Faire en sorte de boucler pour reposer la question à l'utilisateur ...
+    try:
+        n = int(reponse)
+        break
+    except:
+        # Faire en sorte de boucler pour reposer la question à l'utilisateur ...
+        print("Ce n'est pas un entier !")
+        continue
 ```
 
+## Autre exemple (inhabituel):
+
+#### On peut utiliser les exception comme une sorte de if ou inversement
 
 ```python
 def can_be_converted_to_int(stuff):
@@ -170,6 +170,8 @@ Traduction "on essaye et puis on voit et on gère les dégats".
 Il est possible d'utiliser des `assert`ions pour **expliciter certaines hypothèses**
 faites pendant l'écriture du code. Si elles ne sont pas remplies, une exception est déclenchée.
 
+Un peu comme un `"if not condition raise error"`.
+
 ```python
 def max(liste_entiers):
     assert liste_entiers != [], "max() ne peut pas fonctionner sur une liste vide!"
@@ -189,11 +191,12 @@ def distance(x=0, y=0):
 
 ```python
 def some_function(n):
-    assert isinstance(n, int), "Cette fonction ne prends que des int en argument !"
+    assert n, "Cette fonction n'accepte pas 0 ou None comme argument !"
     assert n % 2 == 0, "Cette fonction ne prends que des entiers pairs en argument !"
 
     [...]
 ```
+
 
 ## Assertions et tests unitaires
 
@@ -214,13 +217,15 @@ assert trier([0, 82, 4, -21, 2]) == [-21, 0, 2, 4, 82]
 assert trier([-7, -3, 0]) == [-7, -3, 0]
 assert trier([]) == []
 ```
+Cf. Chapitre 19
 
+## Calcul du max d'un liste d'entier : plusieurs approches !
 
-## Plusieurs approches
+Attention : dans les exemples suivant je dois penser au cas où `resultat` peut valoir `None`
 
-Calcul du max d'une liste d'entiers
+> Je **soupçonne fortemment** que `ma_liste` puisse ne pas être une liste ou puisse être vide
 
-> Je soupçonne fortemment que `ma_liste` puisse ne pas être une liste ou puisse être vide
+#### Soit je teste explicitement avant pour être sur (moins pythonique) !
 
 ```python
 if not isinstance(ma_liste, list) or ma_liste == []:
@@ -229,12 +234,10 @@ else:
     resultat = max(ma_liste)
 ```
 
-Attention : dans la suite du programme, je dois penser au cas où `resultat` peut valoir `None`
+> Ça devrait marcher, mais j'ai un doute ... 
 
+#### Soit j'essaye et je gère les cas d'erreur (plus pythonique)!
 
-Calcul du max d'une liste d'entiers
-
-> Ça devrait marcher, mais j'ai un doute ...
 
 ```python
 try:
@@ -244,10 +247,7 @@ except ValueError as e:
     resultat = None
 ```
 
-Attention : dans la suite du programme, je dois penser au cas où `resultat` peut valoir `None`
-
-
-Calcul du max d'une liste d'entiers
+#### Soit j'assert le test pour laisser la fonction appelante le soin de gérer l'entrée correctement 
 
 > Normalement `ma_liste` est une liste non-vide, sinon il y a un très gros problème avant dans le programme...
 
@@ -256,3 +256,5 @@ assert isinstance(ma_liste, list) and ma_liste != []
 
 resultat = max(ma_liste)
 ```
+
+Dans ce cas la fonction 

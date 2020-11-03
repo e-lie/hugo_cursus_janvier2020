@@ -97,6 +97,8 @@ nom.startswith("Jack")  # 'nom' commence par 'Jack' ?
 nom.endswith("ack")     # 'nom' fini par 'row' ?
 ```
 
+Remarque: l'opérateur `in` est très utile et générale en Python: il sert à vérifier qu'un élément existe dans une collection. Par exemple si l'entier 2 est présent dans une liste d'entier ou comme ici si un mot est présent dans une chaine de caractère.
+
 #### 'Inline' `if`s
 
 On peut rassembler un if else sur une ligne comme suit:
