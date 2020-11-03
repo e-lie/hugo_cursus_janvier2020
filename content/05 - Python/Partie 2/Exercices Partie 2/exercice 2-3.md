@@ -4,7 +4,7 @@ draft: false
 weight: 20
 ---
 
-- Installez `lxml` grâce à `pip3`, et récupérez le "gros" fichier XML, `copyright.xml`. Attention à ne pas tenter d'ouvrir "brutalement" ce fichier avec un éditeur ou avec la méthode utilisée en 1 : cela consommera beaucoup trop de RAM !
+- Installez `lxml` grâce à `pip3`, et récupérez le "gros" fichier XML, `copyright.xml` à l'adresse `https://dl.google.com/rights/books/renewals/google-renewals-20080516.zip`. Attention à ne pas tenter d'ouvrir "brutalement" ce fichier avec un éditeur ou avec la méthode utilisée en 1 : cela consommera beaucoup trop de RAM !
 
 - En utilisant des commandes comme `head -n 50 copyright.xml`, analyser visuellement la structure du fichier d'après ses premières lignes.
 

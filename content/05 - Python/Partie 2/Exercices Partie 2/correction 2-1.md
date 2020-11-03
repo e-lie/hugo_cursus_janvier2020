@@ -11,10 +11,10 @@ draft: true
 {{% expand "correction" %}}
 
 ```python
-def ouvrir_fichier(chemin_fichier):
+def contenu_fichier(chemin_fichier):
     try:
         fichier = open(chemin_fichier, 'r')
-        contenu = fichier.read() # lire tout le contenu
+        contenu = fichier.read() # lire tout le contenu sou forme texte
     except:
         raise Exception("Impossible de récupérer le contenu du fichier indiqué")
 
@@ -22,10 +22,10 @@ def ouvrir_fichier(chemin_fichier):
 
 
 if __name__ == "__main__":
-    contenu = ouvrir_fichier('ouvrir_fichier.py') # ouvre le code de l'exercice lui même
+    contenu = contenu_fichier('ouvrir_fichier.py') # ouvre le code de l'exercice lui même
     print(contenu)
 
-    contenu = ouvrir_fichier('fichier_inexistant.py') # déclenche notre exception en français
+    contenu = contenu_fichier('fichier_inexistant.py') # déclenche notre exception en français
 ```
 
 {{% /expand %}}
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
 {{% /expand %}}
 
-- Télécharger le fichier `https://app.yunohost.org/community.json` (avec votre navigateur ou `wget` par exemple). Écrire une fonction qui lit ce fichier, le charge en tant que données json. Écrire une autre fonction capable de filtrer le dictionnaire pour ne garder que les apps d'un level supérieur ou égal à un level `n` donné en argument. Essayez votre fonction avec le niveau 8.
+- Télécharger le fichier `https://app.yunohost.org/community.json` (avec votre navigateur ou `wget` par exemple). Écrire une fonction qui lit ce fichier, le charge en tant que données json et renvoie un dictionnaire Python. Écrire une autre fonction capable de filtrer le dictionnaire pour ne garder que les apps d'un level supérieur ou égal à un level `n` donné en argument. Essayez votre fonction avec le niveau 8.    
 
 {{% expand "correction" %}}
 ```python

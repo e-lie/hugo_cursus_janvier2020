@@ -8,15 +8,16 @@ weight: 21
 ## Lire "brutalement"
 
 ```python
-f = open("/etc/passwd", "r")
-contenu_du_fichier = f.readlines()
-f.close()
+mon_fichier = open("/etc/passwd", "r")
+contenu_du_fichier = mon_fichier.readlines()
+mon_fichier.close()
 
 for ligne in contenu_du_fichier:
     print(ligne)
 ```
 
 Attention à bien distinguer:
+
 - le nom du fichier (`passwd`) et son chemin d'accès absolu (`/etc/passwd`)
 - le vrai fichier qui existe sur le disque
 - la variable / objet Python (dans l'exemple, nommée `f`) qui est une interface pour interagir avec ce fichier
@@ -25,8 +26,8 @@ Attention à bien distinguer:
 ## Lire, avec une "gestion de contexte"
 
 ```python
-with open("/etc/passwd", "r") as f:
-    contenu_du_fichier = f.readlines()
+with open("/etc/passwd", "r") as mon_fichier:
+    contenu_du_fichier = mon_fichier.readlines()
 
 for ligne in contenu_du_fichier:
     print(ligne)
@@ -42,6 +43,7 @@ for ligne in contenu_du_fichier:
 ## Lire
 
 - `f.readlines()` renvoie une **liste** contenant les lignes une par une
+- `f.readline()` renvoie une ligne du fichier à chaque appel.
 - `f.read()` renvoie une (grande) **chaĩne** contenant toutes les lignes concaténées
 
 - Attention, si je modifie la variable `contenu_du_fichier` ... je ne modifie pas vraiment le fichier sur le disque ! Pour cela, il faut explicitement demander à *écrire* dans le fichier.

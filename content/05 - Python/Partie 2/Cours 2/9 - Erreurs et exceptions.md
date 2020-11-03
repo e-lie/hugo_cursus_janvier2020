@@ -126,7 +126,7 @@ except:
 
 
 ```python
-while True
+while True:
     reponse = input("Entrez un entier svp !")
 
     try:
