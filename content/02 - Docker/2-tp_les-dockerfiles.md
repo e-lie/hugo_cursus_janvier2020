@@ -7,7 +7,7 @@ weight: 25
 
 ## I – Découverte d'une application web flask
 
-- Récupérez d’abord une application Flask exemple en la clonant ou en l'ouvrant avec Gitpod :
+- Récupérez d’abord une application Flask exemple en la clonant :
 
 ```bash
 git clone https://github.com/miguelgrinberg/microblog/
@@ -50,6 +50,8 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Dans le dossier du projet ajoutez un fichier nommé `Dockerfile`
 
 - Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre conteneur de base est le conteneur officiel Ubuntu.
+<!-- prendre une autre image ? alpine ? -->
+
 - Nous pouvons déjà contruire un conteneur à partir de ce modèle Ubuntu vide :
   `docker build -t microblog .`
 
@@ -66,7 +68,7 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 
 - Vous êtes maintenant dans le conteneur avec une invite de commande. Utilisez quelques commandes Linux pour le visiter rapidement (`ls`, `cd`...).
 
-- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
+- Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
   - `RUN apt-get update -y`
   - `RUN apt-get install -y python3-pip`
@@ -89,18 +91,11 @@ WORKDIR /app
 
 Ces deux lignes indiquent de copier tout le contenu du dossier courant sur l'hôte dans un dossier /app à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/app`.
 
-- Ensuite, pour démarrer l’application nous aurons besoin d’un script de boot. Créez un fichier `boot.sh` dans `app` avec à l’intérieur :
-
-```bash
-#!/bin/sh
-flask run -h 0.0.0.0
-```
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile :
 
 ```Dockerfile
-RUN chmod +x boot.sh
-ENTRYPOINT ["./boot.sh"]
+CMD flask run -h 0.0.0.0
 ```
 
 - Reconstruisez le conteneur et lancez-le en ouvrant le port `5000` avec la commande : `docker run -d -p 5000:5000 microblog`
@@ -111,6 +106,49 @@ ENTRYPOINT ["./boot.sh"]
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse localhost:5001
 
+
+
+## Faire varier la configuration en fonction de l'environnement
+
+Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
+Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
+
+Pour démarrer l’application, nous aurons donc besoin d’un script de boot :
+
+- créez un fichier `boot.sh` dans `app` avec à l’intérieur :
+
+```bash
+#!/bin/bash
+set -e
+if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
+    echo "Running Development Server"
+    exec flask run -h 0.0.0.0
+else
+    echo "Running Production Server"
+    exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
+fi
+```
+
+
+- Enfin, modifions la section de démarrage en remplaçant la ligne qui commence par `CMD` à la fin du `Dockerfile` par :
+
+```Dockerfile
+RUN chmod +x boot.sh
+ENTRYPOINT ["./boot.sh"]
+```
+
+- Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
+
+- Construisez l'image avec `build`, puis lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
+  Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
+
+<!-- - Ensuite, pour démarrer l’application nous aurons besoin d’un script de boot. Créez un fichier `boot.sh` dans `app` avec à l’intérieur :
+```bash
+#!/bin/sh
+flask run -h 0.0.0.0
+``` -->
+
+
 ## Docker Hub
 
 - Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
@@ -120,6 +158,95 @@ docker login
 docker tag microblog:latest <your-docker-registry-account>/microblog:latest
 docker push <your-docker-registry-account>/microblog:latest
 ``` -->
+
+## La version de `microblog` avec base de données
+
+- Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
+
+```
+git add Dockerfile boot.sh
+git commit -m "Dockerfile simple"
+git tag "tp2-dockerfile-simple"
+```
+
+- basculez grâce à Git au code de la version du code qui utilise une base de données : `git checkout v0.4`.
+
+La version v0.4 de l'app peut fonctionner de deux façons :
+
+- en stockant un fichier `sqlite` servant de base de données `SQL`.
+- avec un autre conteneur servant de base de données `SQL` (par exemple `mysql`).
+
+Nous verrons comment manipuler des volumes de bases de données et cet autre conteneur `mysql` dans le TP suivant. En attendant, nous allons packager l'app `microblog` pour lui permettre d'utiliser une base de données des deux façons (via un fichier dans un volume ou via la connexion à un conteneur `mysql`).
+
+- récupérez vos fichiers `Dockerfile` et `boot.sh` créés précédemment depuis le tag Git créé à l'occasion (`tp2-dockerfile-simple`) grâce à la commande Git suivante :
+  - `git checkout tp2-dockerfile-simple -- Dockerfile boot.sh`
+
+
+  <!-- - `RUN pip3 install flask` -->
+
+<!-- - Ajoutez cette ligne après la première, ajoutez les ensuite sur une même ligne. Que remarque-t-on ?
+
+La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon, la construction utilise le cache.
+
+- Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
+
+- Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le docker engine -->
+<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`. -->
+
+
+---
+
+<!-- - basculez au code de la version plus complexe avec Git : `git checkout v0.18` -->
+
+<!-- - La fin du [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) indique que la version v0.18 de l'app peut fonctionner avec un autre conteneur servant de base de données `mysql`. Nous verrons comment au TP suivant sur les volumes et le réseau. -->
+
+<!-- _(La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP)_ -->
+
+<!-- - Voici à quoi doit ressembler ce `Dockerfile` plus complexe :
+
+```Dockerfile
+FROM python:3.7-buster
+
+RUN useradd microblog
+
+WORKDIR /home/microblog
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+RUN pip install gunicorn pymysql
+
+COPY app app
+COPY migrations migrations
+COPY microblog.py config.py boot.sh ./
+RUN chmod a+x boot.sh
+
+ENV FLASK_APP microblog.py
+
+RUN chown -R microblog:microblog ./
+USER microblog
+
+EXPOSE 5000
+CMD ["/bin/bash", "./boot.sh"]
+```
+
+- `boot.sh`
+
+```bash
+#!/bin/sh
+flask db upgrade
+flask translate compile
+exec gunicorn -b :5000 --access-logfile - --error-logfile - microblog:app
+``` -->
+
+- Poussez l'image microblog sur le Docker Hub comme indiqué dans le tutoriel.
+
+```bash
+docker login
+docker tag microblog:latest <your-docker-registry-account>/microblog:latest
+docker push <your-docker-registry-account>/microblog:latest
+```
+
+
 
 ## Décortiquer une image
 
@@ -203,90 +330,9 @@ if __name__ == "__main__":
 
 - _(Facultatif)_ Rajoutez une instruction `HEALTHCHECK` au `Dockerfile` de notre app microblog.
 
-## _Facultatif :_ La version plus complexe de `microblog`
+---
 
-- Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
-
-```
-git add Dockerfile boot.sh
-git commit -m "Dockerfile simple"
-```
-
-<!-- - basculez au code de la version plus complexe avec Git : `git checkout v0.18` -->
-
-- La fin du [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) indique que la version v0.18 de l'app peut fonctionner avec un autre conteneur servant de base de données `mysql`. Nous verrons comment au TP suivant sur les volumes et le réseau.
-
-<!-- _(La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP)_ -->
-
-- Voici à quoi doit ressembler ce `Dockerfile` plus complexe :
-
-```Dockerfile
-FROM python:3.7-buster
-
-RUN useradd microblog
-
-WORKDIR /home/microblog
-
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-RUN pip install gunicorn pymysql
-
-COPY app app
-COPY migrations migrations
-COPY microblog.py config.py boot.sh ./
-RUN chmod a+x boot.sh
-
-ENV FLASK_APP microblog.py
-
-RUN chown -R microblog:microblog ./
-USER microblog
-
-EXPOSE 5000
-CMD ["/bin/bash", "./boot.sh"]
-```
-
-- `boot.sh`
-
-```bash
-#!/bin/sh
-flask db upgrade
-flask translate compile
-exec gunicorn -b :5000 --access-logfile - --error-logfile - microblog:app
-```
-
-- Poussez l'image microblog sur le Docker Hub comme indiqué dans le tutoriel.
-
-```bash
-docker login
-docker tag microblog:latest <your-docker-registry-account>/microblog:latest
-docker push <your-docker-registry-account>/microblog:lates
-```
-
-## _Facultatif :_ Faire varier la configuration en fonction de l'environnement
-
-Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
-Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
-
-- A partir de ce script bash `boot.sh` d'exemple, adaptez le votre pour adapter le lancement de l'application au contexte :
-
-```bash
-#!/bin/bash
-set -e
-if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
-    echo "Running Development Server"
-    exec python "/app/app_name.py"
-else
-    echo "Running Production Server"
-    exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
-fi
-```
-
-- Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
-
-- Construisez l'image avec `build`, puis lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
-  Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
-
-## _Facultatif :_ Observons et optimisons l'image `microblog`
+<!-- ## _Facultatif :_ Observons et optimisons l'image `microblog`
 
 - Changez le contenu du fichier `requirements.txt` (ajoutez une ligne commentée pour que docker dectecte un changement) puis relancez le build. Observez la construction. Que remarque-t-on ?
 
@@ -344,7 +390,7 @@ SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
 RUN useradd microblog
 WORKDIR /home/microblog
 
-#Ajouter tout le contexte sauf le contenu de .dockerignore
+# Ajouter tout le contexte sauf le contenu de .dockerignore
 ADD . .
 
 # Installer les déps python, pas besoin de venv car docker
@@ -363,7 +409,7 @@ USER microblog
 # Remettre le shell standard pour ne pas surprendre les utilisateur de l'image
 SHELL ["/bin/sh", "-c"]
 CMD ["/bin/bash", "./boot.sh"]
-```
+``` -->
 
 ## _Facultatif:_ un Registry privé
 
