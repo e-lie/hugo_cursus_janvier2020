@@ -31,10 +31,6 @@ Traceback (most recent call last):
 NameError: name 'coucou' is not defined
 ```
 
-- Une exception a un *type*
-    - `Exception`, `ValueError`, `IndexError`, `TypeError`, `ZeroDivisionError`, ...
-- Lorsqu'une exception interrompt le programme, l'interpréteur affiche la *stacktrace* (TraceBack) qui contient des informations pour comprendre quand et pourquoi l'exception s'est produite.
-
 ```python
 # python3 test_int.py
 
@@ -81,6 +77,7 @@ def envoyer_mail(destinataire, sujet, contenu):
 De manière générale dans un programme, il peut y'avoir beaucoup de manipulation dont on sait qu'elles peuvent échouer pour un nombre de raisons trop grandes à lister ...
 
 Par exemple : écrire dans un fichier
+
 - Est-ce que le programme a la permission d'écrire dans ce fichier ?
 - Est-ce qu'aucun autre programme n'est en train d'écrire dans ce fichier ?
 - Est-ce qu'il y a assez d'espace disque libre ?
@@ -88,6 +85,7 @@ Par exemple : écrire dans un fichier
 - ...
 
 Autre exemple : aller chercher une information sur internet
+
 - Est-ce que je suis connecté à Internet ?
 - Est-ce que la connection est suffisament stable et rapide ?
 - Est-ce que le programme a le droit d'effectuer d'envoyer des requêtes ?

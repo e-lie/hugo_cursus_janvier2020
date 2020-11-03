@@ -354,7 +354,7 @@ mes_animaux = { "girafe": 300,    "coyote": 50,
 
 def au_moins_un_metre(animaux):
 
-    for animal, niveau in animaux.items():
+    for animal, taille in animaux.items():
         if taille >= 100:
             yield animal
 
