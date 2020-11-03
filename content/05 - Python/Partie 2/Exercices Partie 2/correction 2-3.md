@@ -1,6 +1,6 @@
 ---
 title: Correction exercice 2.3 - Lecture itérative avec la library externe lxml
-draft: true
+draft: false
 weight: 20
 ---
 

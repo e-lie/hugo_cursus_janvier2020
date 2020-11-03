@@ -32,9 +32,28 @@ print(FormeGeometrique.nb_instances)
 # -> affiche 3
 ```
 
-<!-- 
-TODO méthodes statiques et méthodes de classe
--->
+
+## Méthodes statiques et méthodes de classe
+
+... Sont deux types de méthodes rattachées à une classe mais non à une instance de la classe (un objet). On les fabrique en ajoutant les décorateurs `@staticmethod` ou `@classmethod` sur une méthode de la classe.
+
+La méthode statique est complètement indépendante de la classe même si rangée à l'intérieur alors que la méthode de classe récupère implicitement sa classe comme premier argument ce qui permet de construire des objet de la classe dans le corps de la méthode
+
+### Exemple d'utilisation d'un méthode de classe
+
+```python
+class MaCollectionDeLettre: # Réimplétation de String
+
+    def __init__(self, astring): # Build an object from a string
+      self._string = astring
+
+    @classmethod
+    def build_from_list(cls, alist): # Alternative constructor to build from a list of lettres
+      x = cls('') # L'argument implicite cls permet de construire un objet de la classe
+      x._string = ','.join(str(s) for s in alist)
+      return x
+```
+
 
 ## L'encapsulation
 

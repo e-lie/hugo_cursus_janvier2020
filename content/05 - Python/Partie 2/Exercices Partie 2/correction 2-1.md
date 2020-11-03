@@ -1,7 +1,7 @@
 ---
 title: Correction - Exercice 2.1
 weight: 5
-draft: true
+draft: false
 ---
 
 ## 2.1 - Fichiers, JSON et dictionnaires
@@ -13,9 +13,11 @@ draft: true
 ```python
 def contenu_fichier(chemin_fichier):
     try:
-        fichier = open(chemin_fichier, 'r')
-        contenu = fichier.read() # lire tout le contenu sou forme texte
-    except:
+        with open(chemin_fichier, 'r') as fichier
+            contenu = fichier.read() # lire tout le contenu sous forme texte
+    except FileNotFoundError:
+        raise FileNotFoundError("Fichier non trouvé !")
+    except FileNotFoundError:
         raise Exception("Impossible de récupérer le contenu du fichier indiqué")
 
     return contenu
@@ -35,15 +37,13 @@ if __name__ == "__main__":
 {{% expand "correction" %}}
 
 ```python
-def remplacer_dans_fichier(chemin, mot_a_remplacer, nouveau_mot):
-    with open(chemin, 'r') as fichier:
-        toute_les_lignes = fichier.readlines() # retourne une liste de lignes
-
-    lignes_remplacees = [ ligne.replace(mot_a_remplacer, nouveau_mot) for ligne in toute_les_lignes ]
-    result = "".join(lignes_remplacees)
-
-    with open(chemin, 'w') as fichier:
-        fichier.write(result)
+def remplacer_dans_fichier(chemin_fichier, mot_a_remplacer, nouveau_mot):
+    result = contenu_fichier(chemin_fichier).replace(mot_a_remplacer, nouveau_mot)
+    try:
+        with open(chemin, 'w') as fichier:
+            fichier.write(result)
+    except:
+        raise Exception("Problème pour écrire dans le fichier")
 
 if __name__ == '__main__':
     remplacer_dans_fichier("monfichier.py", "mon_mot", "nouveau_mot")
