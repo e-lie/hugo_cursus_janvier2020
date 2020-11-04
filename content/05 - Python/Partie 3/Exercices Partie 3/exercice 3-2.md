@@ -14,7 +14,7 @@ weight: 20
 - Implémenter la méthode `__repr__` pour la classe `Carte`, de sorte à ce que `print(Carte(3, "COEUR"))` affiche `<Carte 3 de COEUR>`.
 
 ```python
-c = Carte("Q", "PIQUE")
+c = Carte("DAME", "PIQUE")
 
 print(c.couleur)
 # Affiche PIQUE

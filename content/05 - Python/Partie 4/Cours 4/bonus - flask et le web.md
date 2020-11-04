@@ -119,7 +119,7 @@ Un template ressemble à :
 On peut l'*hydrater* avec par exemple ces données :
 
 ```python
-prenom = "Alex"
+prenom = "Marius"
 apps = [ { "name": "mailman", "level": 2 },
          { "name": "wordpress", "level": 7 },
          { "name": "nextcloud", "level": 8 }    ]
@@ -129,7 +129,7 @@ Rendu :
 
 ```
 <html>
-  Bonjour Alex !
+  Bonjour Marius !
 
   mailman est niveau 2 !
   wordpress est niveau 7 !
@@ -148,7 +148,7 @@ def homepage():
              { "name": "wordpress", "level": 7 },
              { "name": "nextcloud", "level": 8 }    ]
     return render_template('hello.html', 
-                           name="Alex",
+                           name="Marius",
                            apps=apps)
 ```
 
@@ -214,7 +214,7 @@ def homepage():
     apps = App.query.all()
     
     return render_template('hello.html', 
-                           prenom="Alex",
+                           prenom="Marius",
                            apps=apps)
 ```
 

@@ -8,13 +8,20 @@ weight: 55
 
 ## Livres
 
-- Apprendre la programmation avec Python 3.
-- Fluent Python (Ce que pythonique veut dire, comment utiliser python proprement)
+- Apprendre la programmation avec Python 3 (plutôt complet et orienté débutant)
+- Fluent Python (Ce que pythonique veut dire, comment utiliser Python proprement)
 - Serious Python (problématiques avancées de développement)
+
+## Tutoriels
+
+- Flask Mega Tutorial très long et développé : tutoriel pour coder une application web d'assez grande taille en Python de façon réaliste et illustrant pleins de point du travail de développeur et d'architecture d'application Python :
+    - Bases de données
+    - Structuration en package
+    - Testing
+    - Distribution et déploiement de l'application
 
 ## Articles
 
-#### Architecture
 - https://www.infoq.com/news/2012/05/DRY-code-duplication-coupling/
 - https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction
 

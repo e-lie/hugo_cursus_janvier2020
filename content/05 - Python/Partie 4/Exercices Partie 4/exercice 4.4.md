@@ -1,6 +1,6 @@
 ---
 title: Exercice 4.4 - Application du design pattern observateur
-draft: true
+draft: false
 weight: 22
 ---
 

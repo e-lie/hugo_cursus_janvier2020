@@ -1,6 +1,6 @@
 ---
 title: Correction exercice 3.2 - Jeu de carte
-draft: true
+draft: false
 weight: 20
 ---
 
@@ -14,7 +14,7 @@ weight: 20
 - Implémenter la méthode `__repr__` pour la classe `Carte`, de sorte à ce que `print(Carte(3, "COEUR"))` affiche `<Carte 3 de COEUR>`.
 
 ```python
-c = Carte("Q", "PIQUE")
+c = Carte("DAME", "PIQUE")
 
 print(c.couleur)
 # Affiche PIQUE
@@ -142,7 +142,7 @@ class Carte:
 
 - Implémenter la méthode `couper` qui prends un nombre aléatoire du dessus du paquet et les place en dessous.
 
-- Implémenter la méthode `piocher` qui retourne la `Carte` du dessus du paquet (et l'enlève du paquet)
+- Implémenter la méthode `piocher` qui retourne la `Carte` du dessus du paquet (eticla l'enlève du paquet)
 
 1.0 : Implémenter la méthode `distribuer` qui prends en argument un nombre de carte et un nombre de joueurs (e.g. `p.distribuer(joueurs=4, cartes=5)`), pioche des cartes pour chacun des joueurs à tour de rôle, et retourne les mains correspondantes.
 
@@ -179,9 +179,8 @@ class Paquet:
                 c = Carte(valeur, couleur)
                 self.cartes.append(c)
                 
-    def __repr__(self):
-        
-        return str(self.cartes)
+    def __repr__(self): # fonction qui décrit comment représenter une carte sous forme texte (exp avec print) 
+        return str(self.cartes) # Renvoie simplement l'affichage de la liste de cartesTRE 
     
     def melanger(self):
         

@@ -1,6 +1,6 @@
 ---
 title: Correction 4.1 - Un paquet pythonique
-draft: true
+draft: false
 weight: 30
 ---
 

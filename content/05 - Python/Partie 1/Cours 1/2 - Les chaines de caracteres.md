@@ -48,14 +48,14 @@ m[-3:]   # -> 'rld'
 ```
 
 ```python
-name = "Alex"
+name = "Marius"
 age = 28
 "Je m'appelle " + name + " et j'ai " + str(age) + " ans"
 ```
 #### Construction à partir de données, avec `%s`
 
 ```python
-"Je m'appelle %s et j'ai %s ans" % ("Alex", 28)
+"Je m'appelle %s et j'ai %s ans" % ("Marius", 28)
 ```
 
 #### Construction à partir de données, avec `format`

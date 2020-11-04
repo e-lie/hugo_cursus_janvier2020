@@ -1,6 +1,6 @@
 ---
 title: Correction exercice 3.3 - Introduction aux ORM avec ActiveAlchemy
-draft: true
+draft: false
 weight: 20
 ---
 

@@ -102,7 +102,7 @@ x **= 3  # Équivalent à x = x ** 3
 ```python
 42            # Entier / integer               / int
 3.1415        # Réel                           / float
-"Alex"        # Chaîne de caractère (string)   / str
+"Marius"        # Chaîne de caractère (string)   / str
 True / False  # Booléen                        / bool
 None          # ... "rien" / aucun (similar à `null` dans d'autres langages)
 ```

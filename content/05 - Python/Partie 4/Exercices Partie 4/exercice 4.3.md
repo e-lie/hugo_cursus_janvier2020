@@ -239,5 +239,5 @@ setup(name='computation-libs', version='0.1', packages=find_packages())
 
 ## Correction:
 
-La correction finale est dans la branche `correction_finale` du dépôt. 
+La correction finale est dans la branche `correction_finale` du dépôt visible sur github [ici](https://github.com/e-lie/python202011-exercice-fancy-ops/tree/correction_finale)
 

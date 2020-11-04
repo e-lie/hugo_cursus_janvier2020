@@ -12,7 +12,7 @@ Les structures de données permettent de stocker des séries d'information et d'
 Une collection d'éléments **ordonnés** référencé par un indice
 
 ```python
-favourite_animaux = [ "girafe", "chenille", "lynx" ]
+animaux_favoris = [ "girafe", "chenille", "lynx" ]
 fibonnaci = [ 1, 1, 2, 3, 5, 8 ]
 stuff = [ 3.14, 42, "bidule", ["a", "b", "c"] ]
 ```
@@ -20,35 +20,35 @@ stuff = [ 3.14, 42, "bidule", ["a", "b", "c"] ]
 ### Accès à element particulier ou a une "tranche"
 
 ```python
-favourite_animaux[1]      ->  "chenille"
-favourite_animaux[-2:]    ->  ["chenille", "lynx"]
+animaux_favoris[1]      ->  "chenille"
+animaux_favoris[-2:]    ->  ["chenille", "lynx"]
 ```
 
 
 ### Longueur
 
 ```python
-len(favourite_animaux)    -> 3
+len(animaux_favoris)    -> 3
 ```
 
 
 ### Tester qu'un élément est (ou n'est pas) dans une liste
 
 ```python
-"lynx" in favourite_animaux   # -> True
-"Mewtwo" not in favourite_animaux   # -> True
+"lynx" in animaux_favoris   # -> True
+"Mewtwo" not in animaux_favoris   # -> True
 ```
 
 
 ```python
-favourite_animaux = [ "girafe", "chenille", "lynx" ]
+animaux_favoris = [ "girafe", "chenille", "lynx" ]
 ```
 
 
 #### Iteration
 
 ```python
-for animal in favourite_animaux:
+for animal in animaux_favoris:
     print(animal + " est un de mes animaux préférés !")
 ```
 
@@ -56,57 +56,57 @@ for animal in favourite_animaux:
 #### Iteration avec index
 
 ```python
-print("Voici la liste de mes animaux préféré:")
-for i, animal in enumerate(favourite_animaux):
+print("Voici la liste de mes animaux préférés:")
+for i, animal in enumerate(animaux_favoris):
     print(str(i+1) + " : " + animal)
 ```
 
 
 ```python
-favourite_animaux = [ "girafe", "chenille", "lynx" ]
+animaux_favoris = [ "girafe", "chenille", "lynx" ]
 ```
 
 
 #### Modification d'un élément
 
 ```python
-favourite_animaux[1] = "papillon"
+animaux_favoris[1] = "papillon"
 ```
 
 #### Ajout à la suite, contatenation
 
 ```python
-favourite_animaux.append("coyote")
+animaux_favoris.append("coyote")
 ```
 
 #### Insertion, concatenation
 
 ```python
-favourite_animaux.insert(1, "sanglier")
-favourite_animaux += ["lion", "moineau"]
+animaux_favoris.insert(1, "sanglier")
+animaux_favoris += ["lion", "moineau"]
 ```
 
 
 ### Exemple de manip classique : filtrer une liste pour en construire une nouvelle
 
 ```python
-favourite_animaux = [ "girafe", "chenille", "lynx" ]
+animaux_favoris = [ "girafe", "chenille", "lynx" ]
 
 # Création d'une liste vide
-animaux_starting_with_B = []
+animaux_starting_with_c = []
 
 # J'itère sur la liste de pokémons favoris
-for animal in favourite_animaux:
+for animal in animaux_favoris:
 
-   # Si le nom du pokémon actuel commence par B
-   if animal.startswith("B"):
+   # Si le nom de l'animal actuel commence par c
+   if animal.startswith("c"):
 
       # Je l'ajoute à la liste
       animaux_starting_with_B.append(animal)
 ```
 
 
-À la fin, `animaux_starting_with_B` contient:
+À la fin, `animaux_starting_with_c` contient:
 
 ```python
 ["girafe"]
@@ -141,8 +141,8 @@ phone_numbers = { "Alice":   "06 93 28 14 03",
 
 ```python
 phone_numbers["Charlie"]        -> "04 92 84 92 03"
-phone_numbers["Elie"]           -> KeyError !
-phone_numbers.get("Elie", None) -> None
+phone_numbers["Marius"]           -> KeyError !
+phone_numbers.get("Marius", None) -> None
 ```
 
 ### Modification d'une entrée, ajout d'une nouvelle entrée
@@ -156,7 +156,7 @@ phone_numbers["Deborah"] = "07 02 93 84 21"
 ### Tester qu'une clef est dans le dictionnaire
 
 ```python
-"Elie" in phone_numbers    # -> False
+"Marius" in phone_numbers    # -> False
 "Bob" not in phone_numbers # -> False
 ```
 
