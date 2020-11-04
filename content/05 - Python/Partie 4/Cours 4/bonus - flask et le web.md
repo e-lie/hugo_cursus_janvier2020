@@ -36,6 +36,7 @@ Cons:
 ### En quelques mots
 
 Un "micro-framework" pour faire du web, composé de plusieurs morceaux
+
 - Vues gérées avec **Jinja**  (moteur de template avec une syntaxe "à la Python")
 - Controleurs gérés avec **Werkzeug**  (une URL <-\> une fonction)
 - Modèles gérées avec **SQLAlchemy**  (ORM : une classe <-\> une table SQL)
