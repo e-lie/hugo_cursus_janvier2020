@@ -10,8 +10,8 @@ Docker : (Hadrien)
 
 # Slides
 
-- Dire que images OCI que c'est un gzipped filesystem basically + metadata
-- Ajouter dockercoins en td swarm + imgur.schmilblick
+<!-- - Dire que images OCI que c'est un gzipped filesystem basically + metadata -->
+<!-- - Ajouter dockercoins en td swarm + imgur.schmilblick -->
 
 # TD général
 
@@ -92,6 +92,56 @@ La sécurité de Docker c'est aussi celle de la chaîne de dépendance des packa
   https://docs.docker.com/engine/context/working-with-contexts/
   docker lxc driver
 - multistage build : https://docs.docker.com/develop/develop-images/multistage-build/
+
+## Multistage build
+
+https://docs.docker.com/develop/develop-images/multistage-build/
+
+Here’s an example of a `Dockerfile.build` and `Dockerfile` which adhere to the builder pattern:
+
+**`Dockerfile.build`**:
+
+```
+FROM golang:1.7.3
+WORKDIR /go/src/github.com/alexellis/href-counter/
+COPY app.go .
+RUN go get -d -v golang.org/x/net/html \
+  && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+```
+
+Notice that this example also artificially compresses two `RUN` commands together using the Bash `&&` operator, to avoid creating an additional layer in the image. This is failure-prone and hard to maintain. It’s easy to insert another command and forget to continue the line using the `\` character, for example.
+
+**`Dockerfile`**:
+
+```
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY app .
+CMD ["./app"]
+```
+
+## Use multi-stage builds
+
+With multi-stage builds, you use multiple `FROM` statements in your Dockerfile. Each `FROM` instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image. To show how this works, let’s adapt the Dockerfile from the previous section to use multi-stage builds.
+
+**`Dockerfile`**:
+
+```Dockerfile
+FROM golang:1.7.3 AS builder
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html
+COPY app.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]
+```
+
+<!-- insert le blabla sur optimiser l'image de la fin du TD2 -->
 
 ## Stateful
 
@@ -296,8 +346,54 @@ https://www.goetas.com/blog/traps-on-the-way-of-blue-green-deployments/
 
 https://github.com/cecchisandrone/docker-swarm-blue-green (demo avec mysql galera)
 
-
-
 ## Nginx / Let's encrypt
+
 Test https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/dockerfile and https://hub.docker.com/r/jwilder/nginx-proxy
 http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/
+
+## Dockerfile cours
+
+### ENV
+
+Parler des variables :
+
+```Dockerfile
+FROM busybox
+ENV FOO=/bar
+WORKDIR ${FOO}   # WORKDIR /bar
+ADD . $FOO       # ADD . /bar
+COPY \$FOO /quux # COPY $FOO /quux
+```
+
+https://docs.docker.com/engine/reference/builder/#environment-replacement
+
+### CMD
+
+Aussi éclaircir diffs entre `CMD` et `ENTRYPOINT` (et ne surtout pas confondre avec `RUN`):
+
+> The CMD instruction has three forms:
+> `CMD ["executable","param1","param2"]` (exec form, this is the preferred form)
+> `CMD ["param1","param2"]` (as default parameters to `ENTRYPOINT`)
+> `CMD command param1 param2` (shell form)
+
+> If you would like your container to run the same executable every time, then you should consider using ENTRYPOINT in combination with CMD.
+
+### EXPOSE
+
+The `EXPOSE` instruction informs Docker that the container listens on the specified network ports at runtime.
+The `EXPOSE` instruction **does not actually publish the port**. It functions as **a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published**. To actually publish the port when running the container, use the `-p` flag on docker run to publish and map one or more ports.
+
+<!-- or the `-P` flag to publish all exposed ports and map them to high-order ports -->
+
+**Regardless of the `EXPOSE` settings, you can override them at runtime by using the `-p` flag.**
+
+## TD Dockerfile
+
+Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
+Ou quoi que ce soit qui ait du Go ou du build webpack JS.
+
+## Export to pdf
+- check how to create hugo template w/ every post on one page
+
+## COurs 2 Dockerfile
+Différence ADD et COPY

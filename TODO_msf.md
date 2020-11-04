@@ -1,0 +1,2 @@
+- https://support.atlassian.com/bitbucket-cloud/docs/run-docker-commands-in-bitbucket-pipelines/
+- check how to create hugo template w/ every post on one page
