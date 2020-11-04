@@ -49,7 +49,7 @@ ls /tmp/data/
 
 ---
 
-# Partager des données avec un volume
+### Partager des données avec un volume
 
 - Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
 
@@ -68,7 +68,7 @@ docker volume create --driver local \
 
 ---
 
-# Plugins de volumes
+### Plugins de volumes
 
 On peut utiliser d'autres systèmes de stockage en installant de nouveau plugins de driver de volume. Par exemple, le plugin `vieux/sshfs` permet de piloter un volume distant via SSH.
 
@@ -100,7 +100,7 @@ volumes:
 
 ---
 
-# Permissions
+### Permissions
 
 - Un volume est créé avec les permissions du dossier préexistant.
 
@@ -115,7 +115,7 @@ CMD ["echo", "Data container for graphite"]
 
 ---
 
-# Backups de volumes
+### Backups de volumes
 
 - Pour effectuer un backup la méthode recommandée est d'utiliser un conteneur suplémentaire dédié
 - qui accède au volume avec `--volume-from`
@@ -128,7 +128,7 @@ CMD ["echo", "Data container for graphite"]
 
 ---
 
-# Gestion des ports réseaux (_port mapping_)
+## Gestion des ports réseaux (_port mapping_)
 
 - Par défaut les conteneurs n'ouvrent pas de port même s'ils sont déclarés avec `EXPOSE` dans le Dockerfile.
 
@@ -138,7 +138,7 @@ CMD ["echo", "Data container for graphite"]
 
 ---
 
-# Bridge et overlay
+## Bridge et overlay
 
 - Un réseau bridge est une façon de créer un pont entre deux carte réseaux pour construire un réseau à partir de deux.
 
@@ -149,7 +149,7 @@ CMD ["echo", "Data container for graphite"]
 
 ---
 
-# Le réseau Docker est très automatique
+### Le réseau Docker est très automatique
 
 - Serveur DNS et DHCP intégré dans le "user-defined network" (c'est une solution IPAM)
 
@@ -161,7 +161,7 @@ CMD ["echo", "Data container for graphite"]
 
 ---
 
-# Lier des conteneurs
+## Lier des conteneurs
 
 - On peut créer un lien entre des conteneurs
 
@@ -171,13 +171,13 @@ CMD ["echo", "Data container for graphite"]
 
 - Aujourd'hui il faut utiliser un réseau dédié créé par l'utilisateur ("user-defined bridge network")
 
-# Partager des données entre conteneurs
+### Partager des données entre conteneurs
 
 - Pour partager des données il faut monter des volumes partagés.
 
 ---
 
-# Plugins réseaux
+### Plugins réseaux
 
 Il existe :
 
@@ -188,6 +188,6 @@ Il existe :
     - de la sécurité
     - un DNS qui permet de simuler de la découverte de service
     - Du multicast UDP
-    - …
+    <!-- - … -->
 
 ---
