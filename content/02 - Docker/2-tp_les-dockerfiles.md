@@ -79,13 +79,13 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
   - `RUN pip3 install flask`
-  <!-- - `RUN pip install -r requirements.txt` -->
+  - `RUN pip install -r requirements.txt`
   - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
 
 ```Dockerfile
-COPY . /app
+COPY ./app /app
 WORKDIR /app
 ```
 
@@ -104,7 +104,7 @@ CMD flask run -h 0.0.0.0
 
 - Lancez un deuxième container cette fois avec : `docker run -d -p 5001:5000 microblog`
 
-- Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse localhost:5001
+- Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
 
 
@@ -159,8 +159,9 @@ docker tag microblog:latest <your-docker-registry-account>/microblog:latest
 docker push <your-docker-registry-account>/microblog:latest
 ``` -->
 
-## La version de `microblog` avec base de données
-
+<!-- TODO: transition with TP3, package app to use VOLUME -->
+<!-- TODO: transition with TP3, package app to add pip package mysql connector -->
+<!-- ## La version de `microblog` avec base de données
 - Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
 
 ```
@@ -180,7 +181,16 @@ Nous verrons comment manipuler des volumes de bases de données et cet autre con
 
 - récupérez vos fichiers `Dockerfile` et `boot.sh` créés précédemment depuis le tag Git créé à l'occasion (`tp2-dockerfile-simple`) grâce à la commande Git suivante :
   - `git checkout tp2-dockerfile-simple -- Dockerfile boot.sh`
+  
+  
+  ---
+  
+   -->
 
+
+
+
+<!-- TODO: add instruction and see how cache is busted -->
 
   <!-- - `RUN pip3 install flask` -->
 
@@ -191,16 +201,16 @@ La construction reprend depuis la dernière étape modifiée (l'ajout de require
 - Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
 
 - Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le docker engine -->
-<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`. -->
+<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`. 
 
 
 ---
+-->
 
-<!-- - basculez au code de la version plus complexe avec Git : `git checkout v0.18` -->
+<!-- TODO: multi-stage build -->
 
-<!-- - La fin du [tutoriel de Miguel Grindberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) indique que la version v0.18 de l'app peut fonctionner avec un autre conteneur servant de base de données `mysql`. Nous verrons comment au TP suivant sur les volumes et le réseau. -->
 
-<!-- _(La partie du tutoriel de Miguel Grindberg sur Elasticsearch n'est pas à faire dans ce TP)_ -->
+
 
 <!-- - Voici à quoi doit ressembler ce `Dockerfile` plus complexe :
 
@@ -331,85 +341,6 @@ if __name__ == "__main__":
 - _(Facultatif)_ Rajoutez une instruction `HEALTHCHECK` au `Dockerfile` de notre app microblog.
 
 ---
-
-<!-- ## _Facultatif :_ Observons et optimisons l'image `microblog`
-
-- Changez le contenu du fichier `requirements.txt` (ajoutez une ligne commentée pour que docker dectecte un changement) puis relancez le build. Observez la construction. Que remarque-t-on ?
-
-La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon, la construction utilise le cache.
-
-- Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
-
-- Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le docker engine
-
-- Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`.
-- Faites de même pour les `RUN` avec `chown/chmod`
-
-- Retestez votre image.
-
-- Pour ajouter les fichiers de l'application en une seule commande nous allons utiliser `ADD . .` et utiliser un fichier `.dockerignore` (à créer à la racine) pour lister les fichier à ignorer lors de la copie.
-
-Fichier `.dockerignore` :
-
-```
-logs
-venv
-.gitignore
-app.db
-babel.cfg
-Dockerfile
-LICENSE
-Procfile
-README.md
-tests.py
-Vagrantfile
-```
-
-- Modifier le Dockerfile pour installer les dépendances sur une seule ligne.
-
-- Ajoutez au début du `Dockerfile` une commande `LABEL maintainer=<votre_nom>`
-
-- Ajoutez une commande `LABEL version=<votre_version>`
-
-- Le shell par défaut de Docker est `SHELL ["/bin/sh", "-c"]`. Cependant ce shell a certains comportement inhabituels et la commande de construction **n'échoue pas forcément** si une commande s'est mal passée. Dans une optique d'intégration continue, pour rendre la modification ultérieure de l'image plus sûre ajoutez au début (en dessous des `LABEL`) `SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]`.
-
-- Cependant le shell bash est non standard sur docker. Pour ne pas perturber les utilisateurs de l'image qui voudrait lancer des commande il peut être intéressant de rebasculer sur `sh` à la fin de la construction. Ajoutez à l'avant dernière ligne: `SHELL ["/bin/sh", "-c"]`
-
-- `Dockerfile` optimisé :
-
-```Dockerfile
-FROM python:3.7-buster
-
-LABEL maintainer="Hadrien"
-LABEL version="1.0"
-
-# shell plus restrictif pour ne pas avoir d'erreurs silencieuse
-SHELL ["/bin/bash", "-eux", "-o", "pipefail", "-c"]
-
-# Ne pas lancer les app en root dans docker
-RUN useradd microblog
-WORKDIR /home/microblog
-
-# Ajouter tout le contexte sauf le contenu de .dockerignore
-ADD . .
-
-# Installer les déps python, pas besoin de venv car docker
-RUN pip install -r requirements.txt && \
-    pip install gunicorn pymysql
-RUN chmod a+x boot.sh && \
-    chown -R microblog:microblog ./
-
-# Déclarer la config de l'app
-ENV FLASK_APP microblog.py
-EXPOSE 5000
-
-# Changer d'user pour lancer l'app
-USER microblog
-
-# Remettre le shell standard pour ne pas surprendre les utilisateur de l'image
-SHELL ["/bin/sh", "-c"]
-CMD ["/bin/bash", "./boot.sh"]
-``` -->
 
 ## _Facultatif:_ un Registry privé
 
