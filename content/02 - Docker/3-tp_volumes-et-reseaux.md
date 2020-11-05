@@ -225,22 +225,58 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 **_Généralement, il faut faire beaucoup plus attention au prune de volumes (données à perdre) qu'au `prune` de conteneurs (rien à perdre car immutable et en général dans le registry)._**
 
-### Facultatif : `microblog` avec MySQL
+### Facultatif : utiliser `VOLUME` avec `microblog`
 
-Lancez l'application `microblog` (v. 0.18) du TP précédent en la mettant dans le même réseau qu'un conteneur `mysql``
+Lire le `Dockerfile` de l'application `microblog` à l'adresse `https://github.com/uptime-formation/microblog` (branche `docker`) du TP précédent.
 
-### Facultatif : ajouter une instruction `VOLUME` à `microblog`
+À l'aide de la lecture de ce `Dockerfile`, stocker la base de données SQLite de l'application `microblog` sur un volume nommé. Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
-Etudiez [le code de l'application `microblog` du TP précédent](https://github.com/miguelgrinberg/microblog/blob/master/config.py) puis modifiez le Dockerfile de l'application `microblog` du TP précédent pour stocker la base de données SQLite sur un volume nommé
+Pour récupérer le `Dockerfile`, exécuter dans le répertoire `microblog` les commandes suivantes :
+* `git stash` (pour sauvegarder dans un lieu temporaire vos modifications courantes)
+* `git checkout docker` (récupérer le contenu de la branche `docker`)
 
-{{% expand "Indice :" %}}
+Comment l'app utilise-t-elle ce volume ? La ligne de code Python qui nous intéresse est la suivante :
 
-La ligne qui nous intéresse est la suivante :
-
+`config.py` :
 ```python
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
- 'sqlite:///' + os.path.join(basedir, 'app.db')
+ 'sqlite:///' + os.path.join(basedir, 'data/app.db')
 
 ```
+Un volume apparaît comme un dossier à l'intérieur du conteneur, la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté.
+
+
+{{% expand "Indice 1 :" %}}
+
+Dans le conteneur, le chemin du dossier à monter contenant la base de données est :
+`/home/microblog/data` 
+
+{{% /expand %}}
+
+<!-- Marquer solution -->
+
+### Facultatif : `microblog` avec MySQL
+
+Lire le `Dockerfile` de l'application `microblog` à l'adresse `https://github.com/uptime-formation/microblog` (branche `docker`) du TP précédent pour le lancer dans le même réseau qu'un conteneur `mysql` lancé avec les bonnes options de configuration.
+
+Pour récupérer le `Dockerfile`, exécuter dans le répertoire `microblog` les commandes suivantes :
+* `git stash` (pour sauvegarder dans un lieu temporaire vos modifications courantes)
+* `git checkout docker` (récupérer le contenu de la branche `docker`)
+
+
+{{% expand "Indice 1 :" %}}
+
+La ligne du `Dockerfile` qui nous intéresse est la suivante :
+
+```yaml
+DATABASE_URL: mysql+mysqlconnector://microblog:${MYSQL_PASSWORD}@db/microblog
+```
+Il faut donc remplacer la variable `DATABASE_URL` au lancement.
+
+{{% /expand %}}
+
+{{% expand "Indice 2 :" %}}
+
+Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à lire sur le [Docker Hub](https://hub.docker.com/).
 
 {{% /expand %}}
