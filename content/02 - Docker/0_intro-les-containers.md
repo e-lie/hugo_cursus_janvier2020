@@ -103,7 +103,7 @@ Pour la culture, 6 types de _namespaces_ :
 
 ---
 
-# Démo : bloquer le système hôte depuis un simple conteneur
+# Bloquer le système hôte depuis un simple conteneur
 
 > `:(){ : | :& }; :`
 
