@@ -1,5 +1,5 @@
 ---
-title: Cursus Docker Octobre 2020
+title: Cursus Docker Novembre 2020
 ---
 
-# Cursus Docker Octobre 2020
+# Cursus Docker Novembre 2020

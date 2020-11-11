@@ -1,6 +1,6 @@
 baseURL = "https://cours.hadrienpelissier.fr/"
 languageCode = "fr-FR"
-title = "Docker - Octobre 2020"
+title = "Docker - Novembre 2020"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
