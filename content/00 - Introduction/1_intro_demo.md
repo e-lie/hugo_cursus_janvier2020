@@ -10,7 +10,8 @@ draft: no
 
 - Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
 
-- Nous allons prendre des notes en commun sur un pad interactif CodiMD et par là faire une rapide démo de Docker et Docker-Compose.
+<!-- - Nous allons prendre des notes en commun sur un pad interactif CodiMD -->
+<!-- - et par là faire une rapide démo de Docker et Docker-Compose. -->
 
 ---
 
@@ -26,10 +27,10 @@ draft: no
 - Permet de standardiser et de contrôler la livraison et le déploiement.
 
 ---
-
+<!-- 
 # Démo
 
-1. Je cherche comment déployer mon logiciel "CodiMD" avec Docker ~~sur Google~~ [dans la documentation officielle de mon logiciel](https://hackmd.io/c/codimd-documentation/%2Fs%2Fcodimd-docker-deployment).
+1. Je cherche comment déployer mon logiciel "CodiMD" avec Docker ~~sur Google~~ [dans la documentation officielle de mon logiciel](https://hackmd.io/s/codimd-docker-deployment).
 2. Je trouve le fichier "docker-compose.yml". _Docker-Compose permet de déployer plusieurs conteneurs et de les faire interagir ensemble (nous reviendrons dessus en détail au chapitre 4)_
 3. Je le télécharge et je le place dans mon dossier de travail. J'ouvre un terminal à cet emplacement.
 4. _Ici, on devrait étudier le fichier pour l'adapter et, surtout, changer les mots de passe par défaut dans la configuration._
@@ -45,14 +46,14 @@ draft: no
 9. Docker va me permettre de déployer un serveur nginx juste pour ça rapidement.
 10. Ecrivons une configuration nginx simple qui redirige vers notre pad et plaçons-la dans `/nginx.conf` :
 
-<!-- ```nginx
+```nginx
 server {
         listen  80;
         location / {
                 proxy_pass  http://$host:3000/;
         }
 }
-``` -->
+```
 
 ```nginx
 server {
@@ -61,7 +62,7 @@ server {
 }
 ```
 
-<!-- ```
+```
 server {
         listen   80;
         server_name  0.0.0.0;
@@ -73,17 +74,17 @@ server {
                 proxy_pass         http://hackmd_codimd_1:3000/;
 		proxy_redirect off;
         }
-} ``` -->
+} ```
 
 11. Lançons un conteneur Docker nginx se basant sur ma configuration :
     `docker run -p 80:80 -d -v /nginx.conf:/etc/nginx/conf.d/default.conf --name nginx-pad-proxy nginx`
-    <!-- With network: `docker run -p 80:80 -d --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d --name nginx-pad-proxy nginx` -->
-     <!-- Test config and network: `docker run --rm --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d nginx nginx -t` -->
+    With network: `docker run -p 80:80 -d --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d --name nginx-pad-proxy nginx`
+     Test config and network: `docker run --rm --network hackmd_default -v /tmp/config-nginx:/etc/nginx/conf.d nginx nginx -t`
 12. Rien qu'en tapant mon IP (nous n'avons pas configuré le DNS), on devrait être redirigé·e sur le super pad !
 
 13. Je rajoute rapidement un domaine grâce au service [netlib.re](https://netlib.re)
 
 14. Posez-y vos questions, et annotez toutes les astuces et conseils qui vous ont aidés ou aideraient les autres.
-    <!-- Structurer en écrivant quelques titres -->
+    Structurer en écrivant quelques titres -->
 
 ---
