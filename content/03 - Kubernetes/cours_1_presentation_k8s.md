@@ -1,6 +1,6 @@
 ---
 title: Cours 1 - Présentation de Kubernetes
-draft: false
+draft: true
 ---
 
 Kubernetes est la solution dominante d'orchestration de conteneurs développée en Open Source au sein de la Cloud Native Computing Foundation.

@@ -1,6 +1,6 @@
 ---
 title: 'TP3 - Déployer Jenkins avec Helm'
-draft: false
+draft: true
 ---
 
 Helm est un gestionnaire de paquet K8s qui permet d'installer des paquets sans faire des copier-coller pénibles de yaml :
