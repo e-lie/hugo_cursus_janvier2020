@@ -1,6 +1,6 @@
 ---
 title: 'Kubernetes'
-draft: false
+draft: true
 weight: 4
 pre: "<i class='fas fa-dharmachakra'></i> - "
 ---
