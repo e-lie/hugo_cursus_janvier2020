@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Exporter tout le contenu</title>
+
+  <style>
+    
+  </style>
+
+</head>
+
+<body>
+
+  <a href="/">Retour au site</a>
+  <p>
+    Pour exporter correctement les TPs et autres pages de ce site au format pdf, utilisez la fonction <pre>imprimer</pre> de Google Chrome ou Firefox (vous pouvez aussi activer le Mode Lecture de Firefox en cliquant Affichage > Passer en Mode Lecture).
+    </p>
+
+  <p>Table des matières :</p>
+  
+
+  <ul>
+    {{ range .Site.RegularPages }}
+      <li><a href="#{{ substr .RelPermalink 1 -1 }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+
+  
+  <div id="body">
+    {{ with .Site.GetPage "/" }}
+        {{ range .Sections.ByWeight }}
+            {{/* We don't want a menu item for specific pages listed here */}}
+            {{ if (and (ne .Title "Posts") (ne .Title "Test Page")) }}
+    <div class="section" id="{{ .Page.File.UniqueID }}">
+        <h1 class="title">
+	    {{ .Title }}
+	</h1>
+	<div class="content">
+	    {{ .Content }}
+	</div>
+        {{ partial "content_recursive.html" . }}
+    </div>
+    {{ end }}
+    {{ end }}
+    {{ end }}
+</div>
+
+
+
+</body>
+</html>
