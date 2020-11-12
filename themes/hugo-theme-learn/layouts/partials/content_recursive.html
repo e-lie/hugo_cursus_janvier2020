@@ -1,6 +1,6 @@
 {{ $child_pages := union .Sections .Pages }}
 {{ range $child_pages.ByWeight }}
-<div class="section" id="{{ .Page.File.UniqueID }}">
+<div class="section">
     <h1 class="title">
 	{{ .Title }}
     </h1>
