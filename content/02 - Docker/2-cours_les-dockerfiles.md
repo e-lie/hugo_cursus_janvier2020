@@ -106,6 +106,16 @@ ENTRYPOINT ["/usr/bin/python3"]
 HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
 ```
 
+---
+
+## Les variables
+On peut utiliser des variables d'environnement dans les Dockerfiles. La syntaxe est `${...}`.
+Exemple :
+```Dockerfile
+ENV VERSION=3.14
+ADD https://example.com/download/app-v${VERSION}.zip /app
+```
+
 ## Documentation
 
 - Il existe de nombreuses autres instructions possibles très clairement décrites dans la documentation officielle : [https://docs.docker.com/engine/reference/builder/](https://docs.docker.com/engine/reference/builder/)
