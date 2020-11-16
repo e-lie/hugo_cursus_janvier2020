@@ -174,6 +174,8 @@ CMD ["echo", "Data container for graphite"]
   - MAIS cette fonctionnalité est **obsolète**
 
 - Aujourd'hui il faut utiliser un réseau dédié créé par l'utilisateur ("user-defined bridge network")
+  - avec l'option `--network` de `docker run`
+  - avec l'instruction `networks:` dans un docker composer
 
 ### Partager des données entre conteneurs
 

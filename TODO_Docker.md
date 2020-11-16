@@ -87,7 +87,6 @@ La sécurité de Docker c'est aussi celle de la chaîne de dépendance des packa
 
 - systemd-nspawn : autre bundle type rkt ou lxc
 - Concept d'immutabilité
-- ajouter l'explication de la commande "HEALTHCHECK"
   https://docs.docker.com/engine/reference/commandline/config/
   https://docs.docker.com/engine/context/working-with-contexts/
   docker lxc driver
@@ -201,20 +200,10 @@ Les faire participer au planning de formation dans la limite du possible
 
 - remplacer dans tp3 par un truc avec microblog et un volume sur sqlite file (app/app.db ou app.db) puis mysql puis docker-compose avec elasticsearch (en insistant sur le fait que c'est intenable à la main et là l'utilité de dockercompose)
 - ajouter les "expand"
-
-- tester redis et dire pour le cache rdb
-- !!! moby counter contacts redis as client JS not server !!!
 - +WordPress config a la main et extraire fichier d econf puis avec vars env en tp3 volume et réseau ?
 - Virzr optio link docker
 - chapitre cours containers Windows
 
-TESTS connexions :
-
-- un proxy HTTP c'est censuré aussi ?
-- Et wsl en fait ?
-- brng your own amchine + tethering
-- guacamole VNC ?
-- demander ouverture du SSH ou de VNC pour la salle
 
 - tp2 modifier pour pas boot.sh la premiere fois
 - tp4 links désuets ? et quid du depends_on ?
