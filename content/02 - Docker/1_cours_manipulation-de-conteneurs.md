@@ -10,8 +10,6 @@ Deux concepts centraux :
 - Une **image** : un modèle pour créer un conteneur.
 - Un **conteneur** : l'instance qui tourne sur la machine.
 
-![](../../images/docker-components.png)
-
 Autres concepts primordiaux :
 
 - Un **volume** : un espace virtuel pour gérer le stockage d'un conteneur et le partage entre conteneurs.

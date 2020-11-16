@@ -213,20 +213,6 @@ CMD ["./app"]
 
 ---
 
-# Publier des images vers un registry privé
-
-- Généralement les images spécifiques produites par une entreprise n'ont pas vocation à finir dans un dépôt public.
-
-- On peut installer des **registries privés**.
-
-- On utilise alors `docker login <adresse_repo>` pour se logger au registry et le nom du registry dans les `tags` de l'image.
-
-- Plusieurs options:
-  - **Gitlab** fournit un registry très intéressant car intégré dans leur workflow DevOps.
-  - **Docker Trusted Registry (DTR)** fait partie de **Docker Enterprise** et pratique des tests de sécurité sur les images.
-
----
-
 # Créer des conteneurs personnalisés
 
 - Il n'est pas nécessaire de partir d'une image Linux vierge pour construire un conteneur.
@@ -244,3 +230,16 @@ CMD ["./app"]
 
 ---
 
+# Publier des images vers un registry privé
+
+- Généralement les images spécifiques produites par une entreprise n'ont pas vocation à finir dans un dépôt public.
+
+- On peut installer des **registries privés**.
+
+- On utilise alors `docker login <adresse_repo>` pour se logger au registry et le nom du registry dans les `tags` de l'image.
+
+- Plusieurs options:
+  - **Gitlab** fournit un registry très intéressant car intégré dans leur workflow DevOps.
+  - **Docker Trusted Registry (DTR)** fait partie de **Docker Enterprise** et pratique des tests de sécurité sur les images.
+
+---
