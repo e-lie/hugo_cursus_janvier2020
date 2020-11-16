@@ -180,10 +180,36 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
   - Souvent on utilise des images de base construites à partir de `alpine` qui est un bon compromis (6 mégaoctets seulement et un gestionnaire de paquets `apk`).
   - Par exemple `python3` est fourni en version `python:alpine` (99 Mo), `python:3-slim` (179 Mo) et `python:latest` (918 Mo).
 
-- Limiter le nombre de commandes de modification du conteneur :
-  - `RUN`, `ADD` et toute commande impliquant une modification du système de fichier du conteneur va créer un nouveau layer dans l'image.
-    - Souvent on enchaîne les commandes en une seule pour économiser des couches.
-    - Il existe une limite du nombre de couches maximum par image (42 layers).
+<!-- - Limiter le nombre de commandes de modification du conteneur :
+  -  -->
+
+---
+
+## Les multi-stage builds
+
+Quand on tente de réduire la taille d'une image, on a recours à un tas de techniques. Anciennement, on utilisait deux `Dockerfile` différents : un pour la version prod, léger, et un pour la version dev, avec des outils en plus. Ce n'était pas idéal.
+Par ailleurs, il existe une limite du nombre de couches maximum par image (42 layers). Souvent on enchaînait les commandes en une seule pour économiser des couches (souvent, les commandes `RUN` et `ADD`), en y perdant en lisibilité.
+
+Maintenant on peut utiliser les multistage builds.
+
+Avec les multi-stage builds, on peut utiliser plusieurs instructions `FROM` dans un Dockerfile. Chaque instruction `FROM` utilise une base différente.
+On sélectionne ensuite les fichiers intéressants (des fichiers compilés par exemple) en les copiant d'un stage à un autre.
+
+Exemple de `Dockerfile` utilisant un multi-stage build :
+
+```Dockerfile
+FROM golang:1.7.3 AS builder
+WORKDIR /go/src/github.com/alexellis/href-counter/
+RUN go get -d -v golang.org/x/net/html
+COPY app.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]
+```
 
 ---
 
@@ -191,7 +217,7 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 
 - Généralement les images spécifiques produites par une entreprise n'ont pas vocation à finir dans un dépôt public.
 
-- On peut installer des **registry privés**.
+- On peut installer des **registries privés**.
 
 - On utilise alors `docker login <adresse_repo>` pour se logger au registry et le nom du registry dans les `tags` de l'image.
 
@@ -217,3 +243,4 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 - On peut également prendre une sorte de snapshot du conteneur (de son système de fichiers, pas des processus en train de tourner) sous forme d'image avec `docker commit <image>` et `docker push`.
 
 ---
+

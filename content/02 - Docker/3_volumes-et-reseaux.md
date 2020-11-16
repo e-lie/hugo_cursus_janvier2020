@@ -21,6 +21,8 @@ Solutions :
 
 # Volumes
 
+L'instruction `VOLUME` dans un `Dockerfile` permet de désigner les volumes qui devront être créés lors du lancement du conteneur. On précise ensuite avec l'option `-v` de `docker run` à quoi connecter ces volumes. Si on ne le précise pas, Docker crée quand même un volume Docker au nom généré aléatoirement, un volume "caché".
+
 ## Bind mounting
 
 Lorsqu'un répertoire hôte spécifique est utilisé dans un volume (la syntaxe `-v HOST_DIR:CONTAINER_DIR`), elle est souvent appelée **bind mounting** ("montage lié").
@@ -130,9 +132,11 @@ CMD ["echo", "Data container for graphite"]
 
 ## Gestion des ports réseaux (_port mapping_)
 
-- Par défaut les conteneurs n'ouvrent pas de port même s'ils sont déclarés avec `EXPOSE` dans le Dockerfile.
+- L'instruction `EXPOSE` dans le Dockerfile informe Docker que le conteneur écoute sur les ports réseau au lancement. L'instruction `EXPOSE` **ne publie pas les ports**. C'est une sorte de **documentation entre la personne qui construit les images et la personne qui lance le conteneur à propos des ports que l'on souhaite publier**. 
 
-- Option `-p <port_host>:<port_guest>` de `docker run`.
+- Par défaut les conteneurs n'ouvrent donc pas de port même s'ils sont déclarés avec `EXPOSE` dans le Dockerfile.
+
+- Pour publier un port au lancement d'un conteneur, c'est l'option `-p <port_host>:<port_guest>` de `docker run`.
 
 - Instruction `port:` d'un compose file.
 

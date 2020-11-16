@@ -91,55 +91,6 @@ La sécurité de Docker c'est aussi celle de la chaîne de dépendance des packa
   https://docs.docker.com/engine/reference/commandline/config/
   https://docs.docker.com/engine/context/working-with-contexts/
   docker lxc driver
-- multistage build : https://docs.docker.com/develop/develop-images/multistage-build/
-
-## Multistage build
-
-https://docs.docker.com/develop/develop-images/multistage-build/
-
-Here’s an example of a `Dockerfile.build` and `Dockerfile` which adhere to the builder pattern:
-
-**`Dockerfile.build`**:
-
-```
-FROM golang:1.7.3
-WORKDIR /go/src/github.com/alexellis/href-counter/
-COPY app.go .
-RUN go get -d -v golang.org/x/net/html \
-  && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-```
-
-Notice that this example also artificially compresses two `RUN` commands together using the Bash `&&` operator, to avoid creating an additional layer in the image. This is failure-prone and hard to maintain. It’s easy to insert another command and forget to continue the line using the `\` character, for example.
-
-**`Dockerfile`**:
-
-```
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-COPY app .
-CMD ["./app"]
-```
-
-## Use multi-stage builds
-
-With multi-stage builds, you use multiple `FROM` statements in your Dockerfile. Each `FROM` instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don’t want in the final image. To show how this works, let’s adapt the Dockerfile from the previous section to use multi-stage builds.
-
-**`Dockerfile`**:
-
-```Dockerfile
-FROM golang:1.7.3 AS builder
-WORKDIR /go/src/github.com/alexellis/href-counter/
-RUN go get -d -v golang.org/x/net/html
-COPY app.go .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-
-FROM alpine:latest
-RUN apk --no-cache add ca-certificates
-WORKDIR /root/
-COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
-CMD ["./app"]
-```
 
 <!-- insert le blabla sur optimiser l'image de la fin du TD2 -->
 
@@ -392,8 +343,5 @@ The `EXPOSE` instruction **does not actually publish the port**. It functions as
 Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
 Ou quoi que ce soit qui ait du Go ou du build webpack JS.
 
-## Export to pdf
-- check how to create hugo template w/ every post on one page
-
-## COurs 2 Dockerfile
+## Cours 2 Dockerfile
 Différence ADD et COPY
