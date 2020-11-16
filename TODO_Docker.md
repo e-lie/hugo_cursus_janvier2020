@@ -334,3 +334,6 @@ Ou quoi que ce soit qui ait du Go ou du build webpack JS.
 
 ## Cours 2 Dockerfile
 Différence ADD et COPY
+
+
+- TP2/TP3 : linéariser si /home/app ou /app dans microblog et /data
