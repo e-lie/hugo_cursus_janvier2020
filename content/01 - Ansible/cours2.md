@@ -1,6 +1,7 @@
 ---
 title: 'Cours 2 - Les playbooks Ansible'
 draft: false
+weight: 11
 ---
 
 Les commandes ad-hoc sont des appels directs de modules Ansible qui fonctionnent de façon idempotente mais ne présente pas les avantages du code qui donne tout son intérêt à l'IaC:
@@ -272,9 +273,9 @@ https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.h
 
 Les plus utiles:
 
-- `hostvars`: dictionaire de toute les variables liée à un hote.
+- `hostvars`: dictionaire de toute les variables rangé par hote de l'inventaire.
 - `ansible_host`: information utilisée pour la connexion (ip ou domaine).
-- `inventory_hostname`: non de la machine dans l'inventaire (nom, domain ou ip).
+- `inventory_hostname`: nom de la machine dans l'inventaire.
 - `groups`: dictionnaire de tous les groupes avec la liste des machines appartenant à chaque groupe.
 
 Pour explorer chacune de ces variables vous pouvez utiliser:
@@ -287,11 +288,13 @@ ou encore:
 
 ### Facts
 
-Les facts sont des valeurs de variables récupérés au début de l'exécution durant l'étape **gather_facts** et qui décrive l'état courant de chaque machine.
+Les facts sont des valeurs de variables récupérées au début de l'exécution durant l'étape **gather_facts** et qui décrive l'état courant de chaque machine.
 
 - Par exemple, `ansible_os_family` est un fact/variable décrivant le type d'OS installé sur la machine. Elle n'existe qu'une fois les facts récupérés.
 
 ! Lors d'une **commande adhoc** ansible les **facts** ne sont pas récupérés : la variable `ansible_os_family` ne sera pas disponible.
+
+La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
 
 
 ## Structures de controle ansible (et non JinJa2)
@@ -309,7 +312,7 @@ Elle permet de rendre une tâche conditionnelle (une sorte de `if`)
   when: ansible_os_family == 'RedHat'
 ```
 
-Sinon la tache sautée (skipped) durant l'exécution.
+Sinon la tache est sautée (skipped) durant l'exécution.
 
 #### La directive `loop:`
 
@@ -363,7 +366,6 @@ Pour transformer la valeur des variables à la volée lors de leur appel on peut
   - [https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/](https://www.tailored.cloud/devops/how-to-filter-and-map-lists-in-ansible/)
   - [https://www.tailored.cloud/devops/advanced-list-operations-ansible/](https://www.tailored.cloud/devops/advanced-list-operations-ansible/)
 
-
 La liste complète des filtres ansible se trouve ici : [https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html](https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html)
 
 #### Debugger un playbook.
@@ -375,5 +377,5 @@ Avec Ansible on dispose d'au moins trois manières de debugger un playbook:
 - Utiliser une tache avec le module `debug` : `debug msg="{{ mavariable }}"`.
 
 - Utiliser la directive `debugger: always` ou `on_failed` à ajouter à la fin d'une tâche. L'exécution s'arrête alors après l'exécution de cette tâche et propose un interpreteur de debug.
-  - `p <ma_variable>` permet d'afficher la valeur d'une variable.
-  - `continue` ou `c` de reprendre l'exécution.
+
+Les commandes et l'usage du debugger sont décris dans la documentation: https://docs.ansible.com/ansible/latest/user_guide/playbooks_debugger.html

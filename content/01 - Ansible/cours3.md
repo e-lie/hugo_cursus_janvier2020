@@ -1,6 +1,7 @@
 ---
 title: 'Cours 3 - Organiser un projet'
 draft: false
+weight: 12
 ---
 
 ## Organisation d'un dépot de code Ansible
@@ -170,3 +171,9 @@ dependencies:
 ``` 
 
 Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré. -->
+
+
+<!-- 
+### Tester un role en TDD avec Molécule
+
+TODO -->

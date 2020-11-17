@@ -1,6 +1,7 @@
 ---
 title: 'TP1 - Mise en place et Ansible ad-hoc'
 draft: false
+weight: 21
 ---
 
 ## Installation de Ansible
@@ -145,16 +146,7 @@ exit
 
 Maintenant nous devons configurer une identité (ou clé) ssh pour pouvoir nous connecter au serveur de façon plus automatique et sécurisée. Cette clé a déjà été créé pour votre utilisateur stagiaire. Il reste à copier la version publique dans le conteneur.
 
-- Vérifiez qu'il existe bien une clé `id_ed25519` et `id_ed25519.pub` dans le dossier `~/.ssh` (Sinon on peut la créer avec `ssh-keygen -t ed25519`). la **passphrase** de la clé est **devops101**.
-
-```
-sudo cd /root/.ssh
-sudo cp id* /home/stagiaire/.ssh/
-sudo chown -R stagiaire:stagiaire /home/stagiaire/.ssh
-ssh-add
-```
-
-- On copie ensuite notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:
+- On copie notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:
 
 ```bash
 sudo lxc list # permet de trouver l'ip du conteneur
@@ -168,26 +160,55 @@ LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'imag
 
 Nous allons maintenant créer snapshots opérationnels de base qui vont nous permettre de construire notre lab d'infrastructure en local.
 
-```
+```bash
 sudo lxc stop centos1
-sudo lxc publish --alias centos_ansible centos1
+sudo lxc publish --alias centos_ansible_ready centos1
 sudo lxc image list
 ```
 
-```
-sudo lxc launch ubuntu_ansible ubu1
-sudo lxc launch centos_ansible centos1
+On peut ensuite lancer autant de conteneur que nécessaire avec la commande launch:
+
+```bash
+sudo lxc launch centos_ansible_ready centos2 centos3
 ```
 
-- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+- Une fois l'image exportée faite supprimez les conteneurs.
 
-- Une fois la modification faite supprimé le conteneur initial.
- 
-```
-sudo lxc delete centos1
+```bash
+sudo lxc delete centos1 centos2 centos3 --force
 ```
 
 {{% /expand %}}
+
+### Récupérer les images de correction depuis un remote LXD
+
+Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
+
+- Ajoutez le remote `tp-images` avec la commande:
+
+```bash
+lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
+```
+
+- Le mot de passe est: `formation_ansible`.
+
+
+
+### Lancer et tester les conteneurs
+
+Créons à partir des images du remotes un conteneur ubuntu et un autre centos:
+
+```bash
+sudo lxc launch tp-images:ubuntu_ansible ubu1
+sudo lxc launch tp-images:centos_ansible centos1
+```
+
+- Pour se connecter en SSH nous allons donc utiliser une clé SSH appelée `id_stagiaire` qui devrait être présente dans votre dossier `~/.ssh/`. Vérifiez cela en lançant `ls -l /home/stagiaire/.ssh`.
+
+- Déverrouillez cette clé ssh avec `ssh-add ~/.ssh/id_stagiaire` et le mot de passe `devops101` (le ssh-agent doit être démarré dans le shell pour que cette commande fonctionne si ce n'est pas le cas `eval $(ssh-agent)`).
+
+- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+
 
 ## Créer un projet de code Ansible
 
@@ -330,8 +351,6 @@ la machine centos a un retour changed jaune alors que la machine ubuntu a un ret
 {{% /expand %}}
 
 - Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur la machine ubuntu et non démarré sur la machine centos.
-
-- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur les machines ubuntu (retour vert) et pas encore démarré sur les machines centos (retour jaune).
 
 {{% expand "Réponse  :" %}}
 ```

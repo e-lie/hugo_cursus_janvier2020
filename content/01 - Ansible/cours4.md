@@ -1,6 +1,7 @@
 ---
 title: 'Cours 4 - Sécurité et Cloud'
 draft: false
+weight: 13
 ---
 
 # Sécurité
@@ -9,7 +10,9 @@ Les problématiques de sécurité linux ne sont pas résolue magiquement par Ans
 
 Si cette problématique des liens entre Ansible et sécurité vous intéresse : `Security automation with Ansible`
 
-Il est à noter tout de même qu'Ansible est généralement apprécié d'un point de vue sécurité car il n'augmente pas (vraiment) la surface d'attaque de vos infrastructure : il est basé sur ssh qui est éprouvé et ne nécessite généralement pas de réorganisation des infrastructures. Pour les cas les plus spécifiques et vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
+Il est à noter tout de même qu'Ansible est généralement apprécié d'un point de vue sécurité car il n'augmente pas (vraiment) la surface d'attaque de vos infrastructure : il est basé sur ssh qui est éprouvé et ne nécessite généralement pas de réorganisation des infrastructures.
+
+Pour les cas plus spécifiques et si vous voulez éviter ssh, Ansible est relativement agnostique du mode de connexion grâce aux plugins de connexions (voir ci-dessous).
 
 ## Authentification et SSH
 
@@ -25,9 +28,11 @@ Il faut utiliser comme nous avons fait dans les TP des logins ssh avec les utili
 
 Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'utiliser de nombreux autres modes de connexion spécifiques :
 
-- La liste des plugins de se trouve ici [https://docs.ansible.com/ansible/latest/plugins/connection.html#plugin-list]
+- Pour afficher la liste des plugins  disponible lancez `ansible-doc -t connection -l`.
 
 - Une autre connexion courante est `ansible_connection=local` qui permet de configurer la machine locale sans avoir besoin d'installer un serveur ssh.
+
+- Citons également les connexions `ansible_connexion=docker` et `ansible_connexion=lxd` pour configurer des conteneurs linux ainsi que `ansible_connexion=` pour les serveurs windows
 
 - Les questions de sécurités de la connexion se posent bien sur différemment selon le mode de connexion utilisés (port, authentification, etc.)
 
@@ -35,7 +40,9 @@ Le mode de connexion par défaut de Ansible est SSH cependant il est possible d'
 
 ## Variables et secrets
 
-Principal risque de sécurité lié à ansible comme avec Docker et l'IaC en général consiste à laisser trainer des secrets (mot de passe, identités de clients, api token, secret de chiffrement / migration etc.) dans le code ou sur les serveurs (moins problématique).
+Le principal risque de sécurité lié à Ansible comme avec Docker et l'IaC en général consiste à laisser trainer des secrets (mot de passe, identités de clients, api token, secret de chiffrement / migration etc.) dans le code ou sur les serveurs (moins problématique).
+
+Attention : les dépôt git peuvent cacher des secrets dans leur historique. Pour chercher et nettoyer un secret dans un dépôt l'outil le plus courant est BFG : https://rtyley.github.io/bfg-repo-cleaner/
 
 ## Désactiver le logging des informations sensibles
 
@@ -130,11 +137,12 @@ $ ./inventory_terraform.py
 
 On peut ensuite appeler `ansible-playbook` en utilisant ce programme plutôt qu'un fichier statique d'inventaire: `ansible-playbook -i inventory_terraform.py configuration.yml`
 
-
 ## Étendre et intégrer Ansible
 
 
-Bonne pratique : Normalement l'information de configuration Ansible doit provenir au maximum de l'inventaire. Ceci est conforme à l'orientation plutôt déclarative d'Ansible et à son exécution descendante (master -> nodes). La méthode à privilégier pour intégrer Ansible à des sources d'information existantes est donc de développer un **plugin d'inventaire**.
+### La bonne pratique : utiliser un plugin d'inventaire pour alimenter
+
+Bonne pratique : Normalement l'information de configuration Ansible doit provenir au maximum de l'inventaire. Ceci est conforme à l'orientation plutôt déclarative d'Ansible et à son exécution descendante (master -> nodes). La méthode à privilégier pour intégrer Ansible à des sources d'information existantes est donc d'utiliser ou développer un **plugin d'inventaire**.
 
 [https://docs.ansible.com/ansible/latest/plugins/inventory.html](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
 
@@ -167,24 +175,13 @@ On peut explorer plus facilement la hiérarchie d'un inventaire statique ou dyna
 ansible-inventory --inventory <inventory> --graph
 ```
 
-### Liste des type de plugins possibles pour étendre Ansible
+### Principaux type de plugins possibles pour étendre Ansible
 
 [https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
 
 - Ansible modules
 - Inventory plugins
 - Connection plugins
-
-#### Secondaire
-
-- Action plugins
-- Cache plugins
-- Callback plugins
-- Filter plugins
-- Lookup plugins
-- Test plugins
-- Vars plugins
-
 
 ### Intégration Ansible et AWS
 
@@ -199,8 +196,3 @@ Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les mod
 **Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
 
 **Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes.
-
-### Intégration Ansible avec Openstack
-
-Utiliser un `inventory plugin` basé sur le composant `Nova` d'`OpenStack` c'est à dire la base de données partagé du cloud Openstack.
-
