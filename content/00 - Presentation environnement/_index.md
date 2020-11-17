@@ -9,7 +9,7 @@ Pour cette formation en distanciel nous utiliserons les outils suivants:
 
 - L'espace de travail Teams fournis pour la formation dans lequel a lieu les conférences Videos/Audio. Il permet également de faire des remarques et partager des fichier entre nous.
 - Ce site internet qui contient tout le contenu de la formation. Le site internet est maintenu à jour tout au long de la formation (**pensez à recharger les pages régulièrement**) vous pourrez l'imprimer en PDF à la fin.
-- Pour toute la partie pratique nous utiliserons des serveurs distants accessibles en mode graphique(VNC) via le site [guacamole.dopl.uk](https://guacamole.dopl.uk/guacamole)
+- Pour toute la partie pratique nous utiliserons des serveurs distants accessibles en mode graphique(VNC) via le site [guacamole.dopl.uk](https://guacamole.dopl.uk/)
 
 
 ### Serveurs distants
