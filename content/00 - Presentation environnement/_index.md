@@ -11,7 +11,6 @@ Pour cette formation en distanciel nous utiliserons les outils suivants:
 - Ce site internet qui contient tout le contenu de la formation. Le site internet est maintenu à jour tout au long de la formation (**pensez à recharger les pages régulièrement**) vous pourrez l'imprimer en PDF à la fin.
 - Pour toute la partie pratique nous utiliserons des serveurs distants accessibles en mode graphique(VNC) via le site [guacamole.dopl.uk](https://guacamole.dopl.uk/)
 
-
 ### Serveurs distants
 
 L'intérêt des serveurs distant est double:
