@@ -79,7 +79,7 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
   - `RUN pip3 install flask`
-  - `RUN pip3 install -r requirements.txt`
+  <!-- - `RUN pip3 install -r requirements.txt` -->
   - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
