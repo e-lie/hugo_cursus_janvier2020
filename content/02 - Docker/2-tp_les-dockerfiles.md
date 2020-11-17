@@ -294,10 +294,9 @@ docker image inspect <num_image>
 - Dans un nouveau dossier ou répertoire, créez un fichier `Dockerfile` dont le contenu est le suivant :
 
 ```Dockerfile
-FROM ubuntu:16.04
+FROM python:alpine
 
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install python-pip curl
+RUN apk add curl
 RUN pip install flask==0.10.1
 
 ADD /app.py /app/app.py
