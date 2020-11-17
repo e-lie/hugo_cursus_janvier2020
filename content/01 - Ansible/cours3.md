@@ -1,6 +1,6 @@
 ---
 title: 'Cours 3 - Organiser un projet'
-draft: false
+draft: true
 weight: 12
 ---
 
