@@ -1,7 +1,7 @@
 ---
 title: Préparation de la VM de travail
 weight: 2
-draft: no
+draft: yes
 ---
 
 
