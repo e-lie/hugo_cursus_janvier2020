@@ -186,6 +186,52 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 docker run -d --name wp --port 8080:80 wordpress
 ```
 
+### Wordpress, MYSQL et les variables d'environnement
+
+Nous pouvons accéder au Wordpress, mais il n'a pas encore de base MySQL configurée. Ce serait un peu dommage de configurer cette base de données à la main et cela irait contre la logique DevOps. Nous allons configurer cela à partir de variables d'environnement et d'un deuxième conteneur créé à partir de l'image `mysql`.
+
+Depuis Ubuntu:
+
+- Il va falloir mettre ces deux conteneurs dans le même réseau, créons ce réseau :
+```bash
+docker network create wordpress
+```
+
+- Cherchez le conteneur `mysql` version 5.7 sur le Docker Hub.
+
+- Utilisez des variables d'environnement pour préciser le mot de passe root, le nom de la base de données et le nom d'utilisateur de la base de données (trouver la documentation sur le Docker Hub).
+
+
+
+{{% expand "Solution :" %}}
+
+```bash
+docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress -p 3306:3306 --network wordpress mysql:5.7
+```
+{{% /expand %}}
+
+- Faites de même avec la documentation sur le Docker Hub pour préconfigurer l'app Wordpress.
+
+
+{{% expand "Solution :" %}}
+
+```bash
+docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress:3306" -e WORDPRESS_DB_PASSWORD=monwordpress -e WORDPRESS_DB_USER=wordpress --network wordpress -p 80:80 wordpress
+```
+
+{{% /expand %}}
+
+<!-- - Mappez mysql sur le port 6666 (`-p`).
+- Installez `mariadb-client` (ou `mariadb`) sur Ubuntu et connectez-vous à votre conteneur en ligne de commande.
+
+```bash
+sudo apt install mariadb-client
+mysql --user=root --host=127.0.0.1 --port=6666
+``` -->
+
+<!-- - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter -->
+<!-- - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte -->
+
 ## Explorer une image
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
@@ -204,30 +250,6 @@ docker rm $(docker ps -aq -f status=exited)
 
 - En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
-### MYSQL et les variables d'environnement
-
-Depuis Ubuntu:
-
-- Cherchez le conteneur `mysql` version 5.7.
-- Lancez-le.
-
-```bash
-docker run --name mysql -d mysql:5.7
-```
-
-- Utilisez une variable d'environnement pour préciser que le mot de passe doit être vide (trouver la documentation sur le Docker Hub).
-
-- Mappez mysql sur le port 6666 (`-p`).
-- Installez `mariadb-client` (ou `mariadb`) sur Ubuntu et connectez-vous à votre conteneur en ligne de commande.
-
-```bash
-sudo apt install mariadb-client
-mysql --user=root --host=127.0.0.1 --port=6666
-```
-
-- regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter
-- utilisez `--help` sur la commande mysql pour choisir le port et l'hôte
-
 ### Portainer
 
 - Lancer une instance de Portainer :
@@ -239,14 +261,14 @@ docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.
 
 - Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
 
-## Installer Docker Desktop for Windows
+<!-- ## Installer Docker Desktop for Windows
 
 - À l'aide des [instructions du site officiel](https://docs.docker.com/docker-for-windows/install/), téléchargez et installez Docker Desktop for Windows.
-- après avoir vérifié que Docker fonctionnait avec `docker info` dans une invite de commande Windows, installez Visual Studio Code. Ensemble, explorons son interface. .
+- après avoir vérifié que Docker fonctionnait avec `docker info` dans une invite de commande Windows, installez Visual Studio Code. Ensemble, explorons son interface. . -->
 
 <!-- - Facultatif : installez l'extension VSCode "Docker" par Microsoft pour vous faciliter la vie. Explorez l'interface. -->
 
-## _Facultatif :_ explorer Gitpod
+<!-- ## _Facultatif :_ explorer Gitpod
 
 - Se créer un compte sur [github.com](https://github.com)
 
@@ -272,4 +294,4 @@ export DOCKER_HOST=localhost:23750
 
 ```
 
-- Vérifiez en faisant `docker info` et `docker ps` que vous avez bien accès à la même installation de Docker que sur votre VM Scaleway.
+- Vérifiez en faisant `docker info` et `docker ps` que vous avez bien accès à la même installation de Docker que sur votre VM Scaleway. -->

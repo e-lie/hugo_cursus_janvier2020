@@ -332,8 +332,19 @@ The `EXPOSE` instruction **does not actually publish the port**. It functions as
 Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
 Ou quoi que ce soit qui ait du Go ou du build webpack JS.
 
+
+
+
 ## Cours 2 Dockerfile
 Différence ADD et COPY
 
 
 - TP2/TP3 : linéariser si /home/app ou /app dans microblog et /data
+
+# Retours IB novembre
+COURS 1 : docker collision volume possible !
+
+TP 1 : 
+--detached et --port n'existent plus
+ajouter wordpress + mysql + environnement
+---
