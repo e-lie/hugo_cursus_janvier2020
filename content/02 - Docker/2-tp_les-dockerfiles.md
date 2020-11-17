@@ -85,11 +85,13 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
 
 ```Dockerfile
+COPY ./microblog.py /microblog.py
 COPY ./app /app
-WORKDIR /app
+WORKDIR /
 ```
 
-Ces deux lignes indiquent de copier tout le contenu du dossier courant sur l'hôte dans un dossier /app à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/app`.
+La première ligne copie le fichier Python pour lancer l'app.
+Ces deux autres lignes indiquent de copier tout le contenu du dossier courant sur l'hôte dans un dossier /app à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/`.
 
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile :
