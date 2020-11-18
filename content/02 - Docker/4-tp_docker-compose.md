@@ -139,8 +139,6 @@ services:
     build: .
     ports:
       - "9090:9090"
-    volumes:
-      - ./app:/app
 ```
 
 - Plusieurs remarques :
@@ -149,12 +147,9 @@ services:
   - les lignes suivantes permettent de décrire comment lancer notre conteneur
   - `build: .` indique que l'image d'origine de notre conteneur est le résultat de la construction d'une image à partir du répertoire courant (équivaut à `docker build -t identidock .`)
   - la ligne suivante décrit le mapping de ports entre l'extérieur du conteneur et l'intérieur.
-  - on définit ensuite la valeur de l'environnement de lancement du conteneur
-  - on définit un volume (le dossier `app` dans le conteneur sera le contenu de notre dossier de code dans l'hôte Docker)
 
 - Lancez le service (pour le moment mono-conteneur) avec `docker-compose up` (cette commande sous-entend `docker-compose build`)
 - Visitez la page web de l'app.
-- Essayez de modifier le code Python de l'application et de recharger la page web. Voilà comment, grâce à un volume (ici monté entre `./app` sur l'hôte et `/app` dans le conteneur), on peut développer sans reconstruire l'image à chaque fois !
 
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
 
@@ -172,8 +167,6 @@ services:
     build: .
     ports:
       - "9090:9090"
-    volumes:
-      - ./app:/app
 
   dnmonster:
     image: amouat/dnmonster:1.0
@@ -214,8 +207,6 @@ services:
     build: .
     ports:
       - "9090:9090"
-    volumes:
-      - ./app:/app
     networks:
       - identinet
 
