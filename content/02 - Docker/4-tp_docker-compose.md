@@ -190,7 +190,10 @@ networks:
 ```
 
 - Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant deux fois ce bout de code **_(attention aux indentations !)_** :
-  networks: - identinet
+
+```yaml
+    networks: - identinet
+```
 
 - Ajoutons également un conteneur `redis` **_(attention aux indentations !)_**. Cette base de données sert à mettre en cache les images et à ne pas les recalculer à chaque fois.
 
