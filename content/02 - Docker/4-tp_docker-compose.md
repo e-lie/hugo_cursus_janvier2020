@@ -261,7 +261,7 @@ curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/fi
 ```
 
 Renommons cette configuration et donnons-lui les droits qu'exige Filebeat :
-```
+```bash
 mv filebeat.docker.yml filebeat.yml
 sudo chown root filebeat.yml
 ```
