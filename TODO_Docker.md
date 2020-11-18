@@ -467,3 +467,6 @@ curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/fi
 faire simplement comprendre les volumes en appliquant l'exemple du cours : docker -v /machin, touch, exit, etc.
 
 ---
+
+
+faire faire swarm de façon plus clean et debug d'ingress sur scaleway : quelle IP ?
