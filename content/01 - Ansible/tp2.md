@@ -395,7 +395,14 @@ app:
 ``` -->
 {{% /expand %}}
 
-Correction de cette sous partie disponible dans le dépôt: [https://github.com/e-lie/ansible_tp2_before_handlers_correction](https://github.com/e-lie/ansible_tp2_before_handlers_correction).
+- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Renommez le clone en tp2_before_handlers.
+- ouvrez le projet avec VSCode.
+- Activez la branche `tp2_before_handlers_correction` avec `git checkout tp2_before_handlers_correction`.
+
+Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+
+Vous pouvez consultez la correction également directement sur le site de github.
 
 ## Ajouter un handler pour nginx et le service
 
