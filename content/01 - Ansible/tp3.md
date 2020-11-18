@@ -1,6 +1,6 @@
 ---
 title: "TP3 - Structurer le projet avec des roles" 
-draft: true
+draft: false
 weight: 23
 ---
 

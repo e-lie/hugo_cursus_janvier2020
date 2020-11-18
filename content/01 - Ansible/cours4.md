@@ -1,6 +1,6 @@
 ---
 title: 'Cours 4 - Sécurité et Cloud'
-draft: true
+draft: false
 weight: 13
 ---
 

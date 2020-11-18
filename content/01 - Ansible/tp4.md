@@ -1,6 +1,6 @@
 ---
 title: "TP4 - Orchestration, Serveur de contrôle et Cloud" 
-draft: true
+draft: false
 weight: 24
 ---
 
