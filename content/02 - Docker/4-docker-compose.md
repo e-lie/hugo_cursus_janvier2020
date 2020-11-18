@@ -97,8 +97,46 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
 networks:
-  - front_end
-  - back_end
+  front_end:
+  back_end:
+```
+
+Un deuxième exemple :
+```yaml
+version: "3.3"
+services:
+
+  mysql:
+    container_name: mysqlpourwordpress
+    environment:
+      - MYSQL_ROOT_PASSWORD=motdepasseroot
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=monwordpress
+    ports:
+      - "3306:3306"
+    networks:
+    - wordpress
+    image: "mysql:5.7"
+
+  wordpress:
+    depends_on:
+      - mysql
+    container_name: wordpressavecmysql
+    environment:
+      - "WORDPRESS_DB_HOST=mysqlpourwordpress:3306"
+      - WORDPRESS_DB_PASSWORD=monwordpress
+      - WORDPRESS_DB_USER=wordpress
+    networks:
+    - wordpress
+    ports:
+      - "80:80"
+    image: wordpress
+    volumes:
+      - wordpress_config:/var/www/html/
+
+networks:
+  wordpress:
 ```
 
 ---
