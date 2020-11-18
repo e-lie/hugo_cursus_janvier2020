@@ -260,7 +260,7 @@ Pour ce faire, il suffit d'abord de télécharger une configuration de Filebeat 
 curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
 ```
 
-Renommons cette configuration et donnons-lui les droits qu'exige Filebeat :
+Renommons cette configuration et rectifions qui possède ce fichier pour satisfaire une contrainte de sécurité de Filebeat :
 ```bash
 mv filebeat.docker.yml filebeat.yml
 sudo chown root filebeat.yml
