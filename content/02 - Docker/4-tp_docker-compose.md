@@ -251,13 +251,22 @@ Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lan
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
 
-### _Facultatif / Avancé_ : utiliser Traefik pour le routage
-
-Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votre `docker-compose.yml` précédent, installer le reverse proxy Traefik pour accéder à ces services. Explorer le dashboard Traefik.
-
 ## Une stack Elastic
 
-Testez la stack suivante puis, à l'aide de la documentation Elasticsearch, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
+### Centraliser les logs
+L'utilité d'Elasticsearch est que, grâce à une configuration très simple de son module Filebeat, nous allons pouvoir centraliser les logs de tous nos conteneurs Docker.
+Pour ce faire, il suffit d'abord de télécharger une configuration de Filebeat prévue à cet effet :
+```bash
+curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
+```
+
+Renommons cette configuration et donnons-lui les droits qu'exige Filebeat :
+```
+mv filebeat.docker.yml filebeat.yml
+sudo chown root filebeat.yml
+```
+
+Enfin, créons un fichier `docker-compose.yml` pour lancer une stack Elasticsearch :
 
 ```yaml
 version: "3"
@@ -298,6 +307,14 @@ networks:
   logging-network:
     driver: bridge
 ```
+
+### Ajouter un nœud Elasticsearch
+Puis, à l'aide de la documentation Elasticsearch, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
+
+### _Facultatif / Avancé_ : utiliser Traefik pour le routage
+
+Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votre `docker-compose.yml` précédent, installer le reverse proxy Traefik pour accéder à ces services. Explorer le dashboard Traefik.
+
 
 <!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
 <!-- TODO: Fiare avec ma version de l'app et du docker compose -->
