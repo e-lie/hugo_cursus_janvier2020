@@ -344,7 +344,36 @@ Différence ADD et COPY
 # Retours IB novembre
 COURS 1 : docker collision volume possible !
 
-TP 1 : 
---detached et --port n'existent plus
-ajouter wordpress + mysql + environnement
 ---
+
+Rendre le quiz plus dur starfoullah
+
+
+reverif tp2 pip3 / ubuntu / app / requirements etc quel bordel
+
+
+## TP2 partir de microblog sur uptime pas de la v0.2 de miguel toute pourrie !
+
+# Ajout dans TP1 une conf wp déjà toute faite pour avoir un wordpress déjà tout fait
+## Et leur dire d'arrêter le wp en 8080 pour pas s'emmêler les pinceaux
+
+ajout pour moi command ansible reboot all
++ instructions guacamole et shortcults Ctrl+Alt+Shift
+
+- sur xfce changer le fond d'écran bleu glauque
+
+- les laisser plus autonomes dans le TP2 quitte à mettre la solution à la fin ou en cachant via des balises spoiler
+
+- repackager tp3 microblog pour que soit dans /app et pas /home/machin et virer la variable
+
+- faire une branceh git microblog par exo de tp et num de tp avec tp_correction
+
+- nommer les exos
+- rendre menu intra page plus lisible dans le template hugo
+- résoudre bug sur les anchorlinks de la page imprimée
+
+
+- check le tuto @ https://github.com/docker/getting-started.git
+- docker scan
+
+- faire un laïus sur comment fonctionne un hash en informatique pour expliquer ce qu'est cet id unique de l'image, ou au moins expliquer que c'est une fn qui associe un truc presque unique et presque bijectif

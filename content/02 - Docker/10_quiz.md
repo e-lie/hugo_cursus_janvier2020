@@ -12,7 +12,7 @@ Quelle est la principale différence entre une machine virtuelle (VM) et un cont
 
 1. Un conteneur est une boîte qui contient un logiciel Windows alors qu'une VM fonctionne généralement sous Linux.
 1. Un conteneur permet de faire des applications distribuées dans le cloud contrairement aux machines virtuelles.
-1. Un conteneur partage le noyau du système hôte alors qu'une machine virtuelle virtualise son propre noyaux indépendant.
+1. Un conteneur partage le noyau du système hôte alors qu'une machine virtuelle virtualise son propre noyau indépendant.
 
 ## Question 2
 

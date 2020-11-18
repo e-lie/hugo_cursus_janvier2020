@@ -183,7 +183,7 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 - Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local.
 
 ```bash
-docker run -d --name wp --port 8080:80 wordpress
+docker run -d --name wp -p 8080:80 wordpress
 ```
 
 ### Wordpress, MYSQL et les variables d'environnement
@@ -232,7 +232,7 @@ mysql --user=root --host=127.0.0.1 --port=6666
 <!-- - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter -->
 <!-- - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte -->
 
-## Explorer une image
+## Faire du ménage
 
 - Lancez la commande `docker ps -aq -f status=exited`. Que fait-elle ?
 
@@ -248,7 +248,9 @@ docker rm $(docker ps -aq -f status=exited)
 - Supprimez une image
 - Que fait la commande `docker image prune -a` ?
 
-- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, utilisez `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker puis explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
+## Décortiquer un conteneur
+
+- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, puis `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker, explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
 ### Portainer
 
@@ -256,7 +258,7 @@ docker rm $(docker ps -aq -f status=exited)
 
 ```bash
 docker volume create portainer_data
-docker run -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+docker run --name portainer -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
 
 - Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.

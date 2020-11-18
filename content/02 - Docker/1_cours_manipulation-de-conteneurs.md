@@ -185,7 +185,7 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 ## **L'ordre des arguments est important !**
 
 - **Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`**
-- On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom**, de **port** ou de **volumes**.
+- On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom** ou de **port**.
 
 ---
 

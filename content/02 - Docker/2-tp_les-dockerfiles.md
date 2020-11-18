@@ -260,23 +260,16 @@ docker push <your-docker-registry-account>/microblog:latest
 
 
 
-## Décortiquer une image
+<!-- ## Décortiquer une image
 
 - Affichez la liste des images présentes dans votre Docker Engine.
 
-<!-- ```
-docker image ls
-``` -->
 
 - Inspectez la dernière image que vous venez de créez (`docker image --help` pour trouver la commande)
 
-<!-- ```
-docker image inspect <num_image>
-``` -->
 
 - Observez l'historique de construction de l'image avec `docker image history <image>`
 
-<!-- - Committez les modifications de votre dépôt avec `git` (faire le commit en local est suffisant). -->
 
 - Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
 
@@ -285,7 +278,7 @@ docker image inspect <num_image>
 
 - Vous pouvez aussi utiliser la commande `docker save votre_image -o image.tar`, et utiliser `tar -C image_decompressee/ -xvf image.tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
 
-- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
+- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive` -->
 
 ## L'instruction HEALTHCHECK
 

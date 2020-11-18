@@ -15,12 +15,15 @@ weight: 35
 - Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec Docker.
 
 ```bash
+docker volume create portainer_data
 docker run --detach --name portainer \
     -p 9000:9000 \
     -v portainer_data:/data \
-    -v /var/run/docker.sock:/var/run/docker.sock
+    -v /var/run/docker.sock:/var/run/docker.sock \
     portainer/portainer-ce
 ```
+
+Si vous aviez déjà créé le conteneur Portainer, vous pouvez le relancer en faisant `docker start portainer`
 
 - Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
 
@@ -203,7 +206,7 @@ C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounte
   - situé à l'intérieur du nouveau réseau (`moby-network2`) comme à la partie précédent.
   - utilisant l'option `--network-alias redis` pour pouvoir être joignable par `moby-counter2` (que nous n'avons pas encore créé).
   - partageant le volume de données du premier (cf. cours)
-      - monté en read-only (`:ro` après le paramètre de la question précédente)    
+      - monté en read-only (`:ro` après le paramètre de la question précédente)
 
 {{% expand "Indice :" %}}
 `docker run -v redis_data:/data -d --name redis2 --network moby-network2 --network-alias redis redis:alpine`
@@ -227,29 +230,32 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 ### Facultatif : utiliser `VOLUME` avec `microblog`
 
-Lire le `Dockerfile` de l'application `microblog` à l'adresse `https://github.com/uptime-formation/microblog` (branche `docker`) du TP précédent.
+- Rendez-vous dans votre repértoire home en tapant `cd`.
+- S'il existe, renommez le dossier `microblog` précédemment créé en `microblog_tp2` (via l'explorateur de fichiers ou via `mv`).
+- Puis, clonez une version déjà dockerisée de l'application `microblog` en lançant `git clone https://github.com/uptime-formation/microblog`.
+- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez le contenu de la branche Git `docker` en faisant `git checkout docker`.
+- Lire le `Dockerfile` de l'application `microblog`.
 
-À l'aide de la lecture de ce `Dockerfile`, stocker la base de données SQLite de l'application `microblog` sur un volume nommé. Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
-Pour récupérer le `Dockerfile`, exécuter dans le répertoire `microblog` les commandes suivantes :
-* `git stash` (pour sauvegarder dans un lieu temporaire vos modifications courantes)
-* `git checkout docker` (récupérer le contenu de la branche `docker`)
-
-Comment l'app utilise-t-elle ce volume ? La ligne de code Python qui nous intéresse est la suivante :
+La ligne de code Python qui nous permet de déterminer comment l'app utilise le volume du Dockerfile est la suivante :
 
 `config.py` :
+
 ```python
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
  'sqlite:///' + os.path.join(basedir, 'data/app.db')
 
 ```
+
 Un volume apparaît comme un dossier à l'intérieur du conteneur, la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté.
 
+- À l'aide de la lecture de ce `Dockerfile`, utiliser un volume nommé pour stocker la base de données SQLite de l'application.
+- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
-{{% expand "Indice 1 :" %}}
+{{% expand "Indice :" %}}
 
 Dans le conteneur, le chemin du dossier à monter contenant la base de données est :
-`/home/microblog/data` 
+`/home/microblog/data`
 
 {{% /expand %}}
 
@@ -259,18 +265,15 @@ Dans le conteneur, le chemin du dossier à monter contenant la base de données 
 
 Lire le `Dockerfile` de l'application `microblog` à l'adresse `https://github.com/uptime-formation/microblog` (branche `docker`) du TP précédent pour le lancer dans le même réseau qu'un conteneur `mysql` lancé avec les bonnes options de configuration.
 
-Pour récupérer le `Dockerfile`, exécuter dans le répertoire `microblog` les commandes suivantes :
-* `git stash` (pour sauvegarder dans un lieu temporaire vos modifications courantes)
-* `git checkout docker` (récupérer le contenu de la branche `docker`)
-
 
 {{% expand "Indice 1 :" %}}
 
 La ligne du `Dockerfile` qui nous intéresse est la suivante :
 
-```yaml
-DATABASE_URL: mysql+mysqlconnector://microblog:${MYSQL_PASSWORD}@db/microblog
+```Dockerfile
+ENV DATABASE_URL=mysql+mysqlconnector://microblog:${MYSQL_PASSWORD}@db/microblog
 ```
+
 Il faut donc remplacer la variable `DATABASE_URL` au lancement.
 
 {{% /expand %}}
