@@ -155,7 +155,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 - Un playbook commence par un tiret car il s'agit d'une liste de plays.
 
-- Un play est un ensemble de taches ordonnées en plusieurs sections et qui commence par préciser sur quelles machines il s'applique (section `hosts`).
+- Un play est un dictionnaire yaml qui décrit un ensemble de taches ordonnées en plusieurs sections. Un play commence par préciser sur quelles machines il s'applique puis précise quelques paramètres faculatifs d'exécution comme `become: yes` pour l'élévation de privilège (section `hosts`).
 
 - La section `hosts` est obligatoire. Toutes les autres sections sont **facultatives** !
 
@@ -163,7 +163,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 
 - La section `tasks` peut être remplacée ou complétée par une section `roles` et des sections `pre_tasks` `post_tasks`
 
-- Les `handlers` sont des tâches conditionnelles qui s'exécutent à la fin
+- Les `handlers` sont des tâches conditionnelles qui s'exécutent à la fin (post traitements conditionnels comme le redémarrage d'un service)
 
 ### Ordre d'execution
 
@@ -173,7 +173,7 @@ Observez en particulier la syntaxe assez condensée de la liste "fruits" en YAML
 4. `post_tasks`
 5. `handlers`
 
-Les roles ne sont pas des taches à proprement parler mais un ensemble de tâches et ressources regroupées dans un module un peu comme une librairie developpement. Cf. cours 3.
+Les roles ne sont pas des tâches à proprement parler mais un ensemble de tâches et ressources regroupées dans un module un peu comme une librairie developpement. Cf. cours 3.
 
 ### bonnes pratiques de syntaxe
 
@@ -224,21 +224,6 @@ L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` po
 <!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
 `su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
 
-
-## Jinja2 et variables
-
-La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
-
-Ce moteur permet de créer des parties dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
-
-Ces parties dynamiques utilisent 3 types de procédés:
-
-- Les variables: `{{ mavariable }}` est remplacée par la valeur de cette variable provenant du dictionnaire d'exécution d'Ansible.
-
-- Les structures de contrôles (seulement dans les templates): `{% for host in groups['appserver'] %}`.
-
-- Les filtres qui permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
-
 ### Variables Ansible
 
 Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variables.
@@ -246,26 +231,54 @@ Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variabl
 Pour s'en rendre compte on peut lancer : 
 `ansible <hote_ou_groupe> -m debug -a "msg={{ hostvars }}"`
 
-Ce dictionnaire contient en particulier des configurations ansible (`ansible_ssh_user` par exemple), des facts c'est à dire des variables dynamique caractérisant les systèmes cible (par exemple `ansible_os_family`) et des variables personnalisé de l'utilisateur que vous définissez avec vos propre nom généralement en **snake_case**.
+Ce dictionnaire contient en particulier:
 
-On peut définir des variables à différents endroits comme
+- des variables de configuration ansible (`ansible_user` par exemple)
+- des facts c'est à dire des variables dynamiques caractérisant les systèmes cible (par exemple `ansible_os_family`) et récupéré au lancement d'un playbook.
+- des variables personnalisées (de l'utilisateur) que vous définissez avec vos propre nom généralement en **snake_case**.
+
+## Jinja2 et variables dans les playbooks et rôles (fichiers de code)
+
+La plupart des fichiers Ansible (sauf l'inventaire) sont traités avec le moteur de template python JinJa2.
+
+Ce moteur permet de créer des valeurs dynamiques dans le code des playbooks, des roles, et des fichiers de configuration.
+
+- Les variables écrites au format `{{ mavariable }}` sont remplacées par leur valeur provenant du dictionnaire d'exécution d'Ansible.
+
+- Des filtres (fonctions de transformation) permettent de transformer la valeur des variables: exemple : `{{ hostname | default('localhost') }}` (Voir plus bas)
+
+## Jinja2 et les variables dans les fichiers de templates
+
+Les fichiers de templates (.j2) utilisés avec le module template, généralement pour créer des fichiers de configuration peuvent **contenir des variables** et des **filtres** comme les fichier de code (voir au dessus) **mais également** d'autres constructions jinja2 comme:
+
+- Des `if` : `{% if nginx_state == 'present' %}...{% endif %}`.
+- Des boucles `for` : `{% for host in groups['appserver'] %}...{% endfor %}`.
+- Des inclusions de templates `{% include 'autre_fichier_template.j2' %}`
+
+
+
+## Définition des variables
+
+On peut définir et modifier la valeur des variables à différents endroits du code ansible:
 
 - La section `vars:` du playbook.
-- Un fichier de varibles appelé avec `var_files:`
-- L'inventaire : pour chaque machine ou pour le groupe.
+- Un fichier de variables appelé avec `var_files:`
+- L'inventaire : variables pour chaque machine ou pour le groupe.
 - Dans des dossier extension de l'inventaire `group_vars`, `host_bars`
 - Dans le dossier `defaults` des roles (cf partie sur les roles)
 - Dans une tache avec le module `set_facts`.
-- A runtime avec `--extra-vars "version=1.23.45 other_variable=foo"`
+- A runtime au moment d'appeler la CLI ansible avec `--extra-vars "version=1.23.45 other_variable=foo"`
 
 Lorsque définies plusieurs fois, les variables ont des priorités en fonction de l'endroit de définition.
-L'ordre de priorité est très complexe: `https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable`
+L'ordre de priorité est plutôt complexe: `https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable`
 
-en résumé: les variables de runtime sont prioritaires sur les variables dans un playbook qui sont prioritaires sur les variables de l'inventaire qui sont prioritaires sur les variables par défaut d'un role.
+En résumé la règle peut être exprimée comme suit: les variables de runtime sont prioritaires sur les variables dans un playbook qui sont prioritaires sur les variables de l'inventaire qui sont prioritaires sur les variables par défaut d'un role.
 
-- Bonne pratique: limiter au maximum les redéfinitions de variables (au maximum une valeur par défaut, une valeur contextuelle et une valeur runtime).
+- Bonne pratique: limiter les redéfinitions de variables en cascade (au maximum une valeur par défaut, une valeur contextuelle et une valeur runtime) pour éviter que le playbook soit trop complexe et difficilement compréhensible et donc maintenable.
 
-Remarque: `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire.
+### Remarques de syntaxe
+
+- `groups.all` et `groups['all']` sont deux syntaxes équivalentes pour désigner les éléments d'un dictionnaire.
 
 ### variables spéciales
 
@@ -273,12 +286,12 @@ https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.h
 
 Les plus utiles:
 
-- `hostvars`: dictionaire de toute les variables rangé par hote de l'inventaire.
+- `hostvars`: dictionaire de toute les variables rangées par hote de l'inventaire.
 - `ansible_host`: information utilisée pour la connexion (ip ou domaine).
 - `inventory_hostname`: nom de la machine dans l'inventaire.
 - `groups`: dictionnaire de tous les groupes avec la liste des machines appartenant à chaque groupe.
 
-Pour explorer chacune de ces variables vous pouvez utiliser:
+Pour explorer chacune de ces variables vous pouvez utiliser le module `debug` en mode adhoc ou dans un playbook:
 
 `ansible <hote_ou_groupe> -m debug -a "msg={{ ansible_host }}"`
 
@@ -288,7 +301,7 @@ ou encore:
 
 ### Facts
 
-Les facts sont des valeurs de variables récupérées au début de l'exécution durant l'étape **gather_facts** et qui décrive l'état courant de chaque machine.
+Les facts sont des valeurs de variables récupérées au début de l'exécution durant l'étape **gather_facts** et qui décrivent l'état courant de chaque machine.
 
 - Par exemple, `ansible_os_family` est un fact/variable décrivant le type d'OS installé sur la machine. Elle n'existe qu'une fois les facts récupérés.
 
@@ -297,8 +310,7 @@ Les facts sont des valeurs de variables récupérées au début de l'exécution 
 La liste des facts peut être trouvée dans la documentation et dépend des plugins utilisés pour les récupérés: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
 
 
-## Structures de controle ansible (et non JinJa2)
-
+## Structures de controle Ansible (et non JinJa2)
 
 #### La directive `when`
 
@@ -355,7 +367,7 @@ On peut également controler cette boucle avec quelques paramètres:
     
 ```
 
-Cette fonctionnalité était anciennement accessible avec le mot clé `with_items:` qui est maintenant déprécié.
+Cette fonctionnalité de boucle était anciennement accessible avec le mot clé `with_items:` qui est maintenant déprécié.
 
 ### Filtres Jinja
 
