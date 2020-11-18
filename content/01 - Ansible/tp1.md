@@ -197,14 +197,21 @@ lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
 - Le mot de passe est: `formation_ansible`.
 
 
+- Copiez ensuite les images depuis ce remote dans le dépot d'image local avec :
+
+```bash
+lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
+lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
+```
+
 
 ### Lancer et tester les conteneurs
 
 Créons à partir des images du remotes un conteneur ubuntu et un autre centos:
 
 ```bash
-lxc launch tp-images:ubuntu_ansible ubu1
-lxc launch tp-images:centos_ansible centos1
+lxc launch ubuntu_ansible ubu1
+lxc launch centos_ansible centos1
 ```
 
 - Pour se connecter en SSH nous allons donc utiliser une clé SSH appelée `id_stagiaire` qui devrait être présente dans votre dossier `~/.ssh/`. Vérifiez cela en lançant `ls -l /home/stagiaire/.ssh`.

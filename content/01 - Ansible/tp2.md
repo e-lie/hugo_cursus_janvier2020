@@ -19,8 +19,8 @@ host_key_checking = false
 - Créez deux machines ubuntu `app1` et `app2`.
 
 ```
-lxc launch tp-images:ubuntu_ansible app1
-lxc launch tp-images:ubuntu_ansible app2
+lxc launch ubuntu_ansible app1
+lxc launch ubuntu_ansible app2
 ```
 
 - Créez l'inventaire statique `inventory.cfg`.
@@ -88,7 +88,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Avec le module `apt` installez les applications: `python3-dev`, `python3-pip`, `python3-virtualenv`, `virtualenv`, `nginx`, `git`. Donnez à cette tache le nom: `ensure basic dependencies are present`. ajoutez pour cela la directive `become: yes` au début du playbook.
 
 ```yaml
-    - name: ensure basic apps present
+    - name: Ensure apt dependencies are present
       apt:
         name:
           - python3-dev
@@ -105,7 +105,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Ajoutez une tâche `systemd` pour s'assurer que le service `nginx` est démarré.
 
 ```yaml
-    - name: ensure nginx started
+    - name: Ensure nginx service started
       systemd:
         name: nginx
         state: started
@@ -114,7 +114,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Ajoutez une tache pour créer un utilisateur `flask` et l'ajouter au groupe `www-data`. Utilisez bien le paramètre `append: yes` pour éviter de supprimer des groupes à l'utilisateur.
 
 ```yaml
-    - name: "add the user flask"
+    - name: Add the user running webapp
       user:
         name: "flask"
         state: present
@@ -134,7 +134,7 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
 - Utilisez le pour télécharger le code source de l'application (branche `master`) dans le dossier `/home/flask/hello` mais en désactivant la mise à jour (au cas ou le code change).
 
 ```yaml
-    - name: git get app files
+    - name: Git clone/update python hello webapp in user home
       git:
         repo: "https://github.com/e-lie/flask_hello_ansible.git"
         dest: /home/flask/hello
@@ -158,7 +158,7 @@ Le langage python a son propre gestionnaire de dépendances `pip` qui permet d'i
 Avec ces informations et la documentation du module `pip` installez les dépendances de l'application.
 
 ```yaml
-    - name: install modules in a virtualenv
+    - name: Install python dependencies for the webapp in a virtualenv
       pip:
         requirements: /home/flask/hello/requirements.txt
         virtualenv: /home/flask/hello/venv
@@ -172,7 +172,7 @@ Notre application sera executée en tant qu'utilisateur flask pour des raisons d
 - Créez une tache `file` qui change le propriétaire du dossier de façon récursive.
 
 ```yaml
-    - name: change permissions of app directory
+    - name: Change permissions of app directory
       file:
         path: /home/flask/hello
         state: directory
@@ -250,11 +250,11 @@ server {
   become: yes
 
   tasks:
-    - name: update apt cache
+    - name: Update apt cache
       apt:
         update_cache: yes
 
-    - name: ensure basic apps present
+    - name: Ensure apt dependencies are present
       apt:
         name:
           - python3-dev
@@ -265,12 +265,12 @@ server {
           - git
         state: present
 
-    - name: ensure nginx started
+    - name: Ensure nginx service started
       systemd:
         name: nginx
         state: started
 
-    - name: "add the user flask"
+    - name: Add the user running webapp
       user:
         name: "flask"
         state: present
@@ -278,7 +278,7 @@ server {
         groups:
         - "www-data"
 
-    - name: git get app files
+    - name: Git clone/update python hello webapp in user home
       git:
         repo: "https://github.com/e-lie/flask_hello_ansible.git"
         dest: /home/flask/hello
@@ -286,49 +286,48 @@ server {
         clone: yes
         update: no
     
-    - name: install modules in a virtualenv
+    - name: Install python dependencies for the webapp in a virtualenv
       pip:
         requirements: /home/flask/hello/requirements.txt
         virtualenv: /home/flask/hello/venv
         virtualenv_python: python3
     
-    - name: change permissions of app directory
-      file:
+    - name: Change permissions of app directory recursively
         path: /home/flask/hello
         state: directory
         owner: "flask"
         group: www-data
         recurse: true
     
-    - name: template systemd service config
+    - name: Template systemd service config
       template:
         src: templates/app.service.j2
         dest: /etc/systemd/system/hello.service
     
-    - name: start systemd app service
+    - name: Start systemd app service
       systemd:
         name: "hello.service"
         state: restarted
         enabled: yes
     
-    - name: template nginx site config
+    - name: Template nginx site config
       template:
         src: templates/nginx.conf.j2
         dest: /etc/nginx/sites-available/hello.test.conf
     
-    - name: remove default nginx site config
+    - name: Remove default nginx site config
       file:
         path: /etc/nginx/sites-enabled/default
         state: absent
     
-    - name: enable nginx site
+    - name: Enable nginx site for hello webapp
       file:
         src: /etc/nginx/sites-available/hello.test.conf
         dest: /etc/nginx/sites-enabled/hello.test.conf
         state: link
         force: yes
     
-    - name: restart  nginx service
+    - name: Restart nginx service
       systemd:
         name: "nginx"
         state: restarted
@@ -384,15 +383,17 @@ Ajoutons des variables pour gérer dynamiquement les paramètres de notre déplo
 {{% expand "Facultatif  :" %}}
 - Ajoutez deux variables `repository` et `version` pour l'adresse du dépôt git et la version de l'application `master` par défaut.
 
+- Remplacez les valeurs correspondante dans le playbook par ces nouvelles variables.
 
-<!-- ```yaml
+
+```yaml
 app:
   name: hello
   user: flask
   domain: hello.test
   repository: https://github.com/e-lie/flask_hello_ansible.git
   version: master
-``` -->
+```
 {{% /expand %}}
 
 - Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
