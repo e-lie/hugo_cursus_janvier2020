@@ -65,9 +65,13 @@ services:
       POSTGRES_USER: rails_user
       POSTGRES_PASSWORD: rails_password
       POSTGRES_DB: rails_db
+    networks:
+      - back_end
 
   redis:
     image: redis:3.2-alpine
+    networks:
+      - back_end
 
   rails:
     build: .
@@ -77,17 +81,24 @@ services:
     environment:
       DATABASE_URL: "postgres://rails_user:rails_password@postgres:5432/rails_db"
       REDIS_HOST: "redis:6379"
+    networks:
+      - front_end
+      - back_end
     volumes:
       - .:/app
 
   nginx:
     image: nginx:latest
-    links:
-      - rails
+    networks:
+      - front_end
     ports:
       - 3000:80
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+networks:
+  - front_end
+  - back_end
 ```
 
 ---
