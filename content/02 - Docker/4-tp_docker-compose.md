@@ -121,12 +121,12 @@ Une fois dans le conteneur lancez:
 
 - Validez la version actuelle du code avec Git en faisant : `git init && git add -A && git commit -m "Code initial pour le TP Docker Compose"`
 
-### Pousser notre image sur un registry (le Docker Hub)
+<!-- ### Pousser notre image sur un registry (le Docker Hub)
 
 - Si ce n'est pas déjà fait, créez un compte sur `hub.docker.com`.
 - Lancez `docker login` pour vous identifier en CLI.
 - Donnons un tag avec votre login Docker Hub à notre image pour pouvoir la pousser sur le registry : `docker tag identidock <votre_hub_login>/identidock:0.1`
-- Puis poussons l'image sur le Docker Hub avec : `docker push <votre_hub_login>/identidock:0.1`
+- Puis poussons l'image sur le Docker Hub avec : `docker push <votre_hub_login>/identidock:0.1` -->
 
 ### Le fichier Docker Compose
 
@@ -139,8 +139,6 @@ services:
     build: .
     ports:
       - "9090:9090"
-    environment:
-      APP_ENVIRONMENT: DEV
     volumes:
       - ./app:/app
 ```
@@ -161,13 +159,8 @@ services:
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
 
 ```yml
-    networks:
-      - identinet
-
   dnmonster:
     image: amouat/dnmonster:1.0
-    networks:
-      - identinet
 ```
 
 Le `docker-compose.yml` doit pour l'instant ressembler à ça :
@@ -179,20 +172,14 @@ services:
     build: .
     ports:
       - "9090:9090"
-    environment:
-      APP_ENVIRONMENT: DEV
     volumes:
       - ./app:/app
-    networks:
-      - identinet
 
   dnmonster:
     image: amouat/dnmonster:1.0
-    networks:
-      - identinet
 ```
 
-Cette fois, plutôt de construire une autre image, nous indiquons simplement comment la récupérer sur le Docker Hub avec le mot clé `image:`. Nous déclarons aussi un réseau appelé `identidock` pour y mettre les deux conteneurs de notre application.
+Enfin, nous déclarons aussi un réseau appelé `identinet` pour y mettre les deux conteneurs de notre application.
 
 - Il faut déclarer ce réseau à la fin du fichier (notez que l'on doit spécifier le driver réseau) :
 
@@ -201,6 +188,10 @@ networks:
   identinet:
     driver: bridge
 ```
+
+- Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant deux fois ce bout de code **_(attention aux indentations !)_** :
+    networks:
+      - identinet
 
 - Ajoutons également un conteneur `redis` **_(attention aux indentations !)_**. Cette base de données sert à mettre en cache les images et à ne pas les recalculer à chaque fois.
 
@@ -220,8 +211,6 @@ services:
     build: .
     ports:
       - "9090:9090"
-    # environment:
-    #   ENV: DEV
     volumes:
       - ./app:/app
     networks:
@@ -249,21 +238,22 @@ networks:
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). Cette documentation indique aussi les différences entre la version 2 et la version 3 des fichiers Docker Compose.
 
-## Le Docker Compose de `microblog`
+<!-- ## Le Docker Compose de `microblog` -->
+
+
+<!-- Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/uptime-formation/microblog`) avec MySQL. -->
+
 
 <!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
 <!-- Nous allons ensuite installer le reverse proxy Traefik pour accéder à ces services. -->
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
-
-Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/miguelgrinberg/microblog`) avec MySQL.
-
 ## Plein d'autres services
 
 On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré.
 
-Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à Internet).
+Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet).
 
 ### _Facultatif / Avancé_ : utiliser Traefik pour le routage
 
@@ -271,7 +261,7 @@ Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votr
 
 ## Une stack Elastic
 
-Testez la stack suivante puis ajoutez un nœud Elastic. A l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
+Testez la stack suivante puis, à l'aide de la documentation Elasticsearch, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
 
 ```yaml
 version: "3"
@@ -313,19 +303,19 @@ networks:
     driver: bridge
 ```
 
-### _Facultatif_ : ajouter une stack ELK à `microblog`
+<!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
+<!-- TODO: Fiare avec ma version de l'app et du docker compose -->
+<!-- Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
+Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`. -->
 
-Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
-Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`.
-
-### _Facultatif / avancé_ : centraliser les logs de microblog sur ELK
+<!-- ### _Facultatif / avancé_ : centraliser les logs de microblog sur ELK
 
 Avec la [documentation de Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover.html) et des [hints Filebeat](https://www.elastic.co/guide/en/beats/filebeat/current/configuration-autodiscover-hints.html) ainsi que grâce à [cette page](https://discuss.elastic.co/t/nginx-filebeat-elk-docker-swarm-help/130512/2), trouvez comment centraliser les logs Flask de l'app `microblog` grâce au système de labels Docker de Filebeat.
 
 Tentons de centraliser les logs de
-de ces services dans ELK.
+de ces services dans ELK. -->
 
-### Un `docker-compose.prod.yml` pour `identicon`
+<!-- ### Un `docker-compose.prod.yml` pour `identicon`
 
 #### Faire varier la configuration en fonction de l'environnement
 
@@ -442,4 +432,4 @@ Commentons ce code:
 
 Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_compose_correction_202001>
 
----
+--- -->
