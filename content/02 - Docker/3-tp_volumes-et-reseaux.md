@@ -41,13 +41,13 @@ Récupérons les images depuis Docker Hub:
 - `docker image pull redis:alpine`
 - `docker image pull russmckendrick/moby-counter`
 
-- Lancez la commande `ip a > /tmp/interfaces_avant.txt` pour lister vos interfaces réseau et les écrire dans le fichier
+- Lancez la commande `ip a | tee /tmp/interfaces_avant.txt` pour lister vos interfaces réseau et les écrire dans le fichier
 
 Pour connecter les deux applications créons un réseau manuellement:
 
 - `docker network create moby-network`
 
-Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip a > /tmp/interfaces_apres.txt` et comparez (`diff /tmp/interfaces_avant.txt /tmp/interfaces_apres.txt`). Qu'est-ce qui a changé ?
+Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip a | tee /tmp/interfaces_apres.txt` et comparez (`diff /tmp/interfaces_avant.txt /tmp/interfaces_apres.txt`). Qu'est-ce qui a changé ?
 
 Maintenant, lançons les deux applications en utilisant notre réseau :
 
@@ -73,7 +73,7 @@ Explorons un peu notre réseau Docker.
 docker exec moby-counter ping -c3 redis
 ```
 
-- De même, affichez le contenu des fichiers `/etc/hosts`. Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur. De même, affichez `/etc/resolv.conf` : le résolveur DNS a été configuré par Docker. C'est comme ça que le conteneur connaît l'adresse IP de `redis`. Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis 127.0.0.11` toujours grâce à `docker exec` :
+- De même, affichez le contenu des fichiers `/etc/hosts` (c'est la commande `cat`). Nous constatons que Docker a automatiquement configuré l'IP externe **du conteneur dans lequel on est** avec l'identifiant du conteneur. De même, affichez `/etc/resolv.conf` : le résolveur DNS a été configuré par Docker. C'est comme ça que le conteneur connaît l'adresse IP de `redis`. Pour s'en assurer, interrogeons le serveur DNS de notre réseau `moby-network` en lançant la commande `nslookup redis 127.0.0.11` toujours grâce à `docker exec` :
   `docker exec moby-counter nslookup redis 127.0.0.11`
 
 - Créez un deuxième réseau `moby-network2`
