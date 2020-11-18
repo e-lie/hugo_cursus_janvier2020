@@ -6,13 +6,13 @@ weight: 45
 
 ## Articuler deux images avec Docker compose
 
-### Dans une VM
+<!-- ### Dans une VM -->
 
-- Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ?
-- Installez VSCode avec la commande `sudo snap install --classic code`
+<!-- - Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ? -->
+<!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
 - Installez docker-compose avec `sudo apt install docker-compose`.
 <!-- - S'il y a un bug  -->
-- S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire`
+<!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
 <!-- ### Avec Gitpod
 
@@ -119,7 +119,7 @@ Une fois dans le conteneur lancez:
 
 {{% /expand %}}
 
-- Validez la version actuelle du code avec Git en faisant : `git init && git add -A && git commit -m "Code initial pour le TP Docker Compose"`
+<!-- - Validez la version actuelle du code avec Git en faisant : `git init && git add -A && git commit -m "Code initial pour le TP Docker Compose"` -->
 
 <!-- ### Pousser notre image sur un registry (le Docker Hub)
 
