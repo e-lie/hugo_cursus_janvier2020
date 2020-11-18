@@ -115,7 +115,7 @@ Passons à l'exploration des volumes:
 - Recréez le réseau `moby-network` et les conteneurs `redis` et `moby-counter` à l'intérieur :
 
 ```bash
-docker network create moby-counter
+docker network create moby-network
 docker container run -d --name redis --network moby-network redis
 docker container run -d --name moby-counter --network moby-network -p 8000:80 russmckendrick/moby-counter
 ```
