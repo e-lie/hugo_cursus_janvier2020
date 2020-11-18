@@ -78,17 +78,21 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
-LXD est déjà installé et initialisé sur notre ubuntu (`apt install lxd` ou `snap install lxd` et `lxd init`).
+LXD est déjà installé et initialisé sur notre ubuntu (sinon `apt install snapd` + `snap install lxd` + ajouter votre utilisateur courant au group unix `lxd`).
 
-- Affichez la liste des conteneurs avec `sudo lxc list`. Aucun conteneur ne tourne.
-- Maintenant lançons notre premier conteneur `centos` avec `sudo lxc launch images:centos/7/amd64 centos1`.
+Il faut cependant l'initialiser avec : `lxd init`
+
+- Cette commande vous pose un certain nombre de questions pour la configuration et vous pouvez garder TOUTES les valeurs par défaut en fait ENTER simplement à chaque question.
+
+- Affichez la liste des conteneurs avec `lxc list`. Aucun conteneur ne tourne.
+- Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
 - Listez à nouveau les conteneurs lxc.
-- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `sudo lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `sudo lxc exec centos1 -- bash`.
+- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
 - Nous pouvons installer des logiciels dans le conteneur comme dans une VM. Pour sortir du conteneur on peut simplement utiliser `exit`.
 
-- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `sudo lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH).
+- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH).
 
-- Supprimez la machine centos1 avec `sudo lxc stop centos1 && sudo lxc delete centos1`
+- Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
 
 ## Facultatif : Configurer un conteneur pour Ansible manuellement
 {{% expand "Facultatif :" %}}
@@ -149,7 +153,7 @@ Maintenant nous devons configurer une identité (ou clé) ssh pour pouvoir nous 
 - On copie notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:
 
 ```bash
-sudo lxc list # permet de trouver l'ip du conteneur
+lxc list # permet de trouver l'ip du conteneur
 ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
 ssh stagiaire@<ip_conteneur>
 ```
@@ -161,21 +165,21 @@ LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'imag
 Nous allons maintenant créer snapshots opérationnels de base qui vont nous permettre de construire notre lab d'infrastructure en local.
 
 ```bash
-sudo lxc stop centos1
-sudo lxc publish --alias centos_ansible_ready centos1
-sudo lxc image list
+lxc stop centos1
+lxc publish --alias centos_ansible_ready centos1
+lxc image list
 ```
 
 On peut ensuite lancer autant de conteneur que nécessaire avec la commande launch:
 
 ```bash
-sudo lxc launch centos_ansible_ready centos2 centos3
+lxc launch centos_ansible_ready centos2 centos3
 ```
 
 - Une fois l'image exportée faite supprimez les conteneurs.
 
 ```bash
-sudo lxc delete centos1 centos2 centos3 --force
+lxc delete centos1 centos2 centos3 --force
 ```
 
 {{% /expand %}}
@@ -199,8 +203,8 @@ lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
 Créons à partir des images du remotes un conteneur ubuntu et un autre centos:
 
 ```bash
-sudo lxc launch tp-images:ubuntu_ansible ubu1
-sudo lxc launch tp-images:centos_ansible centos1
+lxc launch tp-images:ubuntu_ansible ubu1
+lxc launch tp-images:centos_ansible centos1
 ```
 
 - Pour se connecter en SSH nous allons donc utiliser une clé SSH appelée `id_stagiaire` qui devrait être présente dans votre dossier `~/.ssh/`. Vérifiez cela en lançant `ls -l /home/stagiaire/.ssh`.
@@ -251,7 +255,7 @@ host_key_checking = false # nécessaire pour les labs ou on créé et supprime d
 - Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
 
 ```
-sudo lxc list # récupérer l'ip de la machine
+lxc list # récupérer l'ip de la machine
 ```
 
 Créez et complétez le fichier `inventory.cfg` d'après ce modèle:

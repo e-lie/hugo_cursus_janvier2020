@@ -19,14 +19,14 @@ host_key_checking = false
 - Créez deux machines ubuntu `app1` et `app2`.
 
 ```
-sudo lxc launch ubuntu_ansible app1
-sudo lxc launch ubuntu_ansible app2
+lxc launch tp-images:ubuntu_ansible app1
+lxc launch tp-images:ubuntu_ansible app2
 ```
 
 - Créez l'inventaire statique `inventory.cfg`.
 
 ```
-$ sudo lxc list # pour récupérer l'adresse ip puis
+$ lxc list # pour récupérer l'adresse ip puis
 
 [all:vars]
 ansible_user=<user>

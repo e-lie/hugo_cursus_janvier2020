@@ -25,7 +25,7 @@ app2 ansible_host=10.x.y.122 container_image=ubuntu_ansible node_state=started
 db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 ```
 
-- Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `sudo lxc list` et copier simple les deux chiffre du milieu des adresses IP)
+- Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `lxc list` et copier simple les deux chiffre du milieu des adresses IP)
 
 - Ajoutez un playbook `provision_lxd_infra.yml` contenant:
 
@@ -78,7 +78,7 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Lancez le playbook avec `sudo` car `lxd` se contrôle en root sur localhost: `sudo ansible-playbook provision_lxd_infra` (c'est le seul cas exceptionnel ou ansible-playbook doit être lancé avec sudo, pour les autre playbooks ce n'est pas le cas)
 
-- Lancez `sudo lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé.
+- Lancez `lxc list` pour afficher les nouvelles machines de notre infra et vérifier que le serveur de base de données a bien été créé.
 
 ## Facultatif: Ajouter une machine mysql simple avec un role externe
 
