@@ -130,6 +130,9 @@ docker container run -d --name moby-counter --network moby-network -p 8000:80 ru
 
 - Rechargez la page. Que s'est-il passé ?
 
+- Supprimez le conteneur `redis` avec `docker rm --force redis`
+- Lancez `docker volume prune` pour faire le ménage et supprimer les volumes non utilisés
+
 ### Récupérer un volume d'un conteneur supprimé
 
 - Faites de nouveau un motif reconnaissable dans l'application web
@@ -176,7 +179,7 @@ CMD [ "redis-server" ]
 
 Notez que, vers la fin du fichier, il y a deux instructions VOLUME et WORKDIR ; cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
 
-Beaucoup de conteneurs docker sont des applications `stateful` c'est à dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
+Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
 
 - Inspectez la liste des volumes (par exemple avec Portainer) pour retrouver l'identifiant du volume caché. Normalement il devrait y avoir un volume `portainer_data` (si vous utilisez Portainer) et un volume anonyme avec un hash.
 
