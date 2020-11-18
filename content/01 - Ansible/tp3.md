@@ -27,15 +27,14 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
 
 - Remplacez `x` et `y` dans l'adresse IP par celle fournies par votre réseau virtuel lxd (faites `lxc list` et copier simple les deux chiffre du milieu des adresses IP)
 
-- Ajoutez un playbook `provision_lxd_infra.yml` contenant:
+- Ajoutez un playbook `provision_lxd_infra.yml` dans un dossier `provisionners` contenant:
 
 ```yaml
 - hosts: localhost
   connection: local
-  become: yes
 
   tasks:
-    - name: setup linux container for the infrastructure simulation
+    - name: Setup linux containers for the infrastructure simulation
       lxd_container:
         name: "{{ item }}"
         state: "{{ hostvars[item]['node_state'] }}"
@@ -55,8 +54,8 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
             # get ip address from inventory
             ipv4.address: "{{ hostvars[item].ansible_host }}"
 
-        # uncomment if you installed lxd using snap
-        # url: unix:/var/snap/lxd/common/lxd/unix.socket
+        # Comment following line if you installed lxd using apt
+        url: unix:/var/snap/lxd/common/lxd/unix.socket
         wait_for_ipv4_addresses: true
         timeout: 600
 
@@ -64,14 +63,17 @@ db1 ansible_host=10.x.y.131 container_image=ubuntu_ansible node_state=started
       loop: "{{ groups['all'] }}"
     
 
+    # Uncomment following if you want to populate hosts file pour container local hostnames
+    # AND launch playbook with --ask-become-pass option
 
-    - name: Config /etc/hosts file accordingly
-      lineinfile:
-        path: /etc/hosts
-        regexp: ".*{{ item }}$"
-        line: "{{ hostvars[item].ansible_host }}    {{ item }}"
-        state: "present"
-      loop: "{{ groups['all'] }}"
+    # - name: Config /etc/hosts file accordingly
+    #   become: yes
+    #   lineinfile:
+    #     path: /etc/hosts
+    #     regexp: ".*{{ item }}$"
+    #     line: "{{ hostvars[item].ansible_host }}    {{ item }}"
+    #     state: "present"
+    #   loop: "{{ groups['all'] }}"
 ```
 
 - Etudions le playbook (explication démo).
@@ -185,10 +187,12 @@ Nous aimerions maintenant créer un playbook `upgrade_apps.yml` qui contrairemen
 
 ## Correction
 
-Le dépot de correction se trouve à l'adresse: [https://github.com/e-lie/ansible_tp3_correction](https://github.com/e-lie/ansible_tp3_correction)
+- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Renommez le clone en tp3.
+- ouvrez le projet avec VSCode.
+- Activez la branche `tp3_correction` avec `git checkout tp3_correction`.
 
-Il contient également des éléments du TP4 (loadbalancer, playbook de déploiement, awx)
-
+Il contient également les corrigés du TP2 et TP4 dans d'autre branches.
 ## Bonus 
 
 Essayez différents exemples de projets de Geerlingguy accessibles sur github à l'adresse [https://github.com/geerlingguy/ansible-for-devops](https://github.com/geerlingguy/ansible-for-devops).

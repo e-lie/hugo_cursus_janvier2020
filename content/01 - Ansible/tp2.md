@@ -471,9 +471,14 @@ flask_apps:
 
 ## Correction
 
-Vous trouverez la correction complète du tp2 à l'adresse [https://github.com/e-lie/ansible_flask_tp2_correction](https://github.com/e-lie/ansible_flask_tp2_correction).
+- Pour la correction clonez le dépôt de base à l'adresse [https://github.com/e-lie/ansible_tp_corrections](https://github.com/e-lie/ansible_tp_corrections).
+- Renommez le clone en tp2.
+- ouvrez le projet avec VSCode.
+- Activez la branche `tp2_correction` avec `git checkout tp2_correction`.
 
-(`git clone https://github.com/e-lie/ansible_flask_tp2_correction tp2_correction` pour la récupérer).
+Le dépot contient également les corrigés du TP3 et TP4 dans d'autre branches.
+
+Vous pouvez consultez la correction également directement sur le site de github.
 
 ## Bonus
 
