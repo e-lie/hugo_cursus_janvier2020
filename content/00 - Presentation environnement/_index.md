@@ -14,6 +14,7 @@ Pour cette formation en distanciel nous utiliserons les outils suivants:
 ### Serveurs distants
 
 L'intérêt des serveurs distant est double:
+
 - L'environnement est fiable et identique pour tout le monde ce qui évitera les bugs spécifiques en fonction des environnements de chacun.
 - Ils facilite le travail à distance car tous les stagiaires peuvent voir l'écran du formateur et inversement le formateur peut intervenir rapidement sur les machines de tous les stagiaires.
 
