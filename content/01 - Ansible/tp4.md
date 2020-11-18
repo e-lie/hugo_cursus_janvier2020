@@ -65,7 +65,7 @@ Pour terraform puisse s'identifier auprès de digitalocean nous devons renseigne
 - collez le token récupéré précédemment dans le fichier de variables `terraform.tfvars`
 - normalement la clé ssh `id_stagiaire` est déjà configuré au niveau de DigitalOcean et précisé dans ce fichier. Elle sera donc automatiquement ajoutée aux VPS que nous allons créer.
 
-- Maintenant que ces deux fichiers sont complétés (quoi créer et comment s'identifier auprès du provider) nous pouvons lancer la création de nos VPS:
+- Maintenant que ce fichier est complété nous pouvons lancer la création de nos VPS:
   - `terraform init` permet à terraform de télécharger les "driver" nécessaire pour s'interfacer avec notre provider. Cette commande crée un dossier .terraform
   - `terraform plan` est facultative et permet de calculer et récapituler les créations modifications de ressources à partir de la description de `main.tf`
   - `terraform apply` permet de déclencher la création des ressources.
@@ -75,9 +75,6 @@ Pour terraform puisse s'identifier auprès de digitalocean nous devons renseigne
 Maintenant que nous avons des machines dans le cloud nous devons fournir leurs IP à Ansible pour pouvoir les configurer. Pour cela nous allons utiliser un inventaire dynamique.
 
 ### Terraform dynamic inventory
-
-- Le meilleur inventaire dynamique pour terraform est [https://github.com/nbering/terraform-provider-ansible/](https://github.com/nbering/terraform-inventory/). 
-
 
 Une bonne intégration entre Ansible et Terraform permet de décrire précisément les liens entre resource terraform et hote ansible ainsi que les groupes de machines ansible. Pour cela notre binder propose de dupliquer les ressources dans `main.tf` pour créer explicitement les hotes ansible à partir des données dynamiques de terraform.
 
