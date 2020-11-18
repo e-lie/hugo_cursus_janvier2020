@@ -159,8 +159,8 @@ services:
 - Ajoutons maintenant un deuxième conteneur. Nous allons tirer parti d'une image déjà créée qui permet de récupérer une "identicon". Ajoutez à la suite du fichier Compose **_(attention aux indentations !)_** :
 
 ```yml
-  dnmonster:
-    image: amouat/dnmonster:1.0
+dnmonster:
+  image: amouat/dnmonster:1.0
 ```
 
 Le `docker-compose.yml` doit pour l'instant ressembler à ça :
@@ -190,16 +190,15 @@ networks:
 ```
 
 - Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant deux fois ce bout de code **_(attention aux indentations !)_** :
-    networks:
-      - identinet
+  networks: - identinet
 
 - Ajoutons également un conteneur `redis` **_(attention aux indentations !)_**. Cette base de données sert à mettre en cache les images et à ne pas les recalculer à chaque fois.
 
 ```yml
-  redis:
-    image: redis
-    networks:
-      - identinet
+redis:
+  image: redis
+  networks:
+    - identinet
 ```
 
 {{% expand "`docker-compose.yml` final :" %}}
@@ -233,23 +232,23 @@ networks:
 
 {{% /expand %}}
 
-
 - Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`, ainsi que [la documentation officielle du langage des Compose files](https://docs.docker.com/compose/compose-file/). Cette documentation indique aussi les différences entre la version 2 et la version 3 des fichiers Docker Compose.
 
 <!-- ## Le Docker Compose de `microblog` -->
 
-
 <!-- Créons un fichier Docker Compose pour faire fonctionner [l'application Flask finale du TP précédent](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) (à cloner avec `git clone https://github.com/uptime-formation/microblog`) avec MySQL. -->
-
 
 <!-- Refaire plutôt avec un wordpress, un ELK, un nextcloud, et le microblog, et traefik, recentraliser les logs -->
 
 <!-- Nous allons ensuite installer le reverse proxy Traefik pour accéder à ces services. -->
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme le microblog, et d'installer le reverse proxy Traefik pour accéder à ces services. -->
+
 ## D'autres services
+
+### Un pad CodiMD
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré. -->
 
