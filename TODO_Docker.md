@@ -377,3 +377,93 @@ ajout pour moi command ansible reboot all
 - docker scan
 
 - faire un laïus sur comment fonctionne un hash en informatique pour expliquer ce qu'est cet id unique de l'image, ou au moins expliquer que c'est une fn qui associe un truc presque unique et presque bijectif
+
+
+----
+FROM python:3.6-alpine
+
+RUN addgroup -S microblog && adduser -S microblog -G microblog
+
+WORKDIR /microblog
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+# DATABASE_URL by default stores data in a SQLite app.db file in the data folder
+# These settings can be overriden at runtime
+# e.g. to use MySQL, override this variable with:
+# DATABASE_URL=mysql+mysqlconnector://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DB}
+ENV DATABASE_URL=sqlite:///data/app.db
+VOLUME ["/data"] 
+
+COPY app app
+COPY migrations migrations
+COPY microblog.py config.py boot.sh ./
+RUN chmod a+x boot.sh
+
+ENV FLASK_APP microblog.py
+
+RUN chown -R microblog:microblog ./
+USER microblog
+
+EXPOSE 5000
+ENTRYPOINT ["./boot.sh"]
+
+---
+docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog -p 3306:3306 --network microblog mysql:5.7
+
+
+docker run --name microblog -e DATABASE_URL=mysql+mysqlconnector://microblog:microblog@mysql/microblog -p 5000:5000 --network microblog microblog
+
+---
+
+james : 
+stephane : matinée moin sstructurée, réseaux a l'air plus compliqué, pas assez cadré
+kevin : pas adminsys du coup hs reseaux ? bien aimé dockerfile docker compose, yaml pas un pb
+fabien : orchestration en plus
+
+killian : network trop flou !!! bien aimé identidock, on aurait du travailler avec les volumes ou le transformer en stack
+louise agnes : theorie OK
+sebastien : 
+
+---
+
+ 
+PRESENCE !
+
+make docker compose guac start at startup
+
+volume nommés dans cours !
+retaper cours volume reseu, supprimer plugins pourris network et préciser volumes nommés
+
+alleger tp network
+
+bien savoir quand faire pauses
+
+dans tp3 faire que faille rajouter une instruction volume
+
+TP2 microblog pas grinberg
+TP3 microblog volume ça va pas + buggé sqlite
+dire qu'on peut stocker un volume n'importe où
+
+composerize
+
+docker compose up dans le cours !
+
+exemple docker compose !
+
+YAML exemple wordpress
+
+soit parler des vars docerfile et docker compose bien soit ne pas en parler, quel env pour ces vars ? host ? container ?
+
+
+Numéroter tp docker
+
+ajout filebeat.yml
+
+
+curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
+
+faire simplement comprendre les volumes en appliquant l'exemple du cours : docker -v /machin, touch, exit, etc.
+
+---
