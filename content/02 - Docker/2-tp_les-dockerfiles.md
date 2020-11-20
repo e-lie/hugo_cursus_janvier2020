@@ -1,5 +1,5 @@
 ---
-title: TP - Images et conteneurs
+title: TP 2 - Images et conteneurs
 weight: 25
 ---
 

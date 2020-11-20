@@ -1,7 +1,7 @@
 ---
-title: TP Bonus - Intégration continue avec Gitlab
+title: TP 6 (bonus) - Intégration continue avec Gitlab
 draft: false
-weight: 75
+weight: 65
 ---
 
 1. Si vous n'en avez pas déjà un, créez un compte Gitlab : <https://gitlab.com/users/sign_in#register-pane>

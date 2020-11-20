@@ -1,5 +1,5 @@
 ---
-title: "TP - Installer Docker et jouer avec"
+title: "TP 1 - Installer Docker et jouer avec"
 weight: 15
 ---
 
