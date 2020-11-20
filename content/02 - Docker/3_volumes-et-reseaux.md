@@ -20,8 +20,20 @@ Solutions :
 ---
 
 # Volumes
+<!-- Ajout schéma -->
+<!-- Ajout raisonnement tout ce qui est stateful sur un volume : fichiers de config, certifs, fichiers de base de données -->
 
-L'instruction `VOLUME` dans un `Dockerfile` permet de désigner les volumes qui devront être créés lors du lancement du conteneur. On précise ensuite avec l'option `-v` de `docker run` à quoi connecter ces volumes. Si on ne le précise pas, Docker crée quand même un volume Docker au nom généré aléatoirement, un volume "caché".
+## Les volumes Docker via la sous-commande `volume`
+
+- `docker volume ls`
+- `docker volume inspect`
+- `docker volume prune`
+- `docker volume create`
+- `docker volume rm`
+
+
+<!-- ## Volumes nommés -->
+<!-- Où sont ils stockés -->
 
 ## Bind mounting
 
@@ -40,17 +52,15 @@ exit
 ls /tmp/data/
 ```
 
----
-
-## Les volumes Docker via la sous-commande `volume`
-
-- `docker volume ls`
-- `docker volume inspect`
-- `docker volume prune`
-- etc.
+<!-- Autre exemple avec config -->
 
 ---
+### L'instruction `VOLUME` dans un `Dockerfile`
 
+L'instruction `VOLUME` dans un `Dockerfile` permet de désigner les volumes qui devront être créés lors du lancement du conteneur. On précise ensuite avec l'option `-v` de `docker run` à quoi connecter ces volumes. Si on ne le précise pas, Docker crée quand même un volume Docker au nom généré aléatoirement, un volume "caché".
+
+<!-- ### Création de volume au lancement -->
+<!-- Avec docker run on peut en créer où on veut -->
 ### Partager des données avec un volume
 
 - Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
@@ -132,6 +142,8 @@ CMD ["echo", "Data container for graphite"]
 
 ## Gestion des ports réseaux (_port mapping_)
 
+<!-- Schéma -->
+
 - L'instruction `EXPOSE` dans le Dockerfile informe Docker que le conteneur écoute sur les ports réseau au lancement. L'instruction `EXPOSE` **ne publie pas les ports**. C'est une sorte de **documentation entre la personne qui construit les images et la personne qui lance le conteneur à propos des ports que l'on souhaite publier**. 
 
 - Par défaut les conteneurs n'ouvrent donc pas de port même s'ils sont déclarés avec `EXPOSE` dans le Dockerfile.
@@ -143,18 +155,21 @@ CMD ["echo", "Data container for graphite"]
 ---
 
 ## Bridge et overlay
+<!-- Schéma réseau classique bridge -->
 
 - Un réseau bridge est une façon de créer un pont entre deux carte réseaux pour construire un réseau à partir de deux.
 
 - Par défaut les réseaux docker fonctionne en bridge (le réseau de chaque conteneur est bridgé à un réseau virtuel docker)
 
 - par défaut les adresses sont en 172.0.0.0/8, typiquement chaque hôte définit le bloc d'IP 172.17.0.0/16 configuré avec DHCP.
-- Un réseau overlay est un réseau virtuel privé déployé par dessus un réseau existant (typiquement public). Pour par exemple faire un cloud multi-DC.
+
+<!-- Schéma réseau overlay -->
+- Un réseau overlay est un réseau virtuel privé déployé par dessus un réseau existant (typiquement public). Pour par exemple faire un cloud multi-datacenters.
 
 ---
 
 ### Le réseau Docker est très automatique
-
+<!-- Schéma DNS et DHCP -->
 - Serveur DNS et DHCP intégré dans le "user-defined network" (c'est une solution IPAM)
 
 - Donne un nom de domaine automatique à chaque conteneur.
@@ -162,24 +177,19 @@ CMD ["echo", "Data container for graphite"]
 - Mais ne pas avoir peur d'aller voir comment on perçoit le réseau de l'intérieur. Nécessaire pour bien contrôler le réseau.
 
 - `ingress` : un loadbalancer automatiquement connecté aux nœuds d'un Swarm. Voir la [doc sur les réseaux overlay](https://docs.docker.com/network/overlay/).
-
+<!-- schéma ingress -->
 ---
 
 ## Lier des conteneurs
-
-- On peut créer un lien entre des conteneurs
-
-  - avec l'option `--link` de `docker run`
-  - avec l'instruction `link:` dans un docker composer
-  - MAIS cette fonctionnalité est **obsolète**
 
 - Aujourd'hui il faut utiliser un réseau dédié créé par l'utilisateur ("user-defined bridge network")
   - avec l'option `--network` de `docker run`
   - avec l'instruction `networks:` dans un docker composer
 
-### Partager des données entre conteneurs
-
-- Pour partager des données il faut monter des volumes partagés.
+- On peut aussi créer un lien entre des conteneurs
+  - avec l'option `--link` de `docker run`
+  - avec l'instruction `link:` dans un docker composer
+  - MAIS cette fonctionnalité est **obsolète** et déconseillée
 
 ---
 
@@ -187,13 +197,13 @@ CMD ["echo", "Data container for graphite"]
 
 Il existe :
 
-- les réseaux par défaut de docker
+- les réseaux par défaut de Docker
 - plusieurs autres solutions spécifiques de réseau disponibles pour des questions de performance et de sécurité
-  - Ex. : **Weave Net** pour un cluster docker swarm
+  - Ex. : **Weave Net** pour un cluster Docker Swarm
     - fournit une autoconfiguration très simple
     - de la sécurité
     - un DNS qui permet de simuler de la découverte de service
     - Du multicast UDP
-    <!-- - … -->
+    <!-- Donner un autre exemple -->
 
 ---

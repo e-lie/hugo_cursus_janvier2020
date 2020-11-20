@@ -248,8 +248,8 @@ CMD ["./app"]
 
 - On utilise alors `docker login <adresse_repo>` pour se logger au registry et le nom du registry dans les `tags` de l'image.
 
-- Plusieurs options:
+- Exemples de registries :
   - **Gitlab** fournit un registry très intéressant car intégré dans leur workflow DevOps.
-  - **Docker Trusted Registry (DTR)** fait partie de **Docker Enterprise** et pratique des tests de sécurité sur les images.
+  <!-- - **Docker Trusted Registry (DTR)** fait partie de **Docker Enterprise** et pratique des tests de sécurité sur les images. -->
 
 ---

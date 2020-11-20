@@ -5,19 +5,19 @@ weight: 50
 
 
 # Docker Machine
-
+<!-- faire plus court -->
 ## C'est l'outil de gestion d'hôtes Docker
 
 - Il est capable de créer des serveurs Docker "à la volée"
-
+<!-- 
   - chez différents fournisseurs de cloud
   - en local avec VirtualBox pour tester son application en mode production et/ou distribué.
 
 - L'intérêt de `docker-machine` est d'être **parfaitement intégré** dans l'outil de CLI Docker.
 
-- Il sert également de base pour créer un Swarm Docker et distribuer les conteneurs entre plusieurs hôtes.
+- Il sert également de base pour créer un Swarm Docker et distribuer les conteneurs entre plusieurs hôtes. -->
 
----
+<!-- --- -->
 
 - Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
 
@@ -65,6 +65,7 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 ---
 
 # Docker Swarm
+<!-- ajout sous-commandes spécifiques à swarm, stack, services, swarm, node... -->
 
 - Swarm est l'**outil de clustering et d'orchestration natif** de Docker (développé par Docker Inc.).
 
@@ -80,16 +81,14 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 ## Architecture de Docker Swarm
 
-<!-- Remplacer image -->
+<!-- Remplacer image par truc où on voit que manager fait aussi tourner containers -->
 
 <br>![](../../images/archi_swarm.png)]
 
 - Un ensemble de nœuds de contrôle pour gérer les conteneurs
 - Un ensemble de nœuds worker pour faire tourner les conteneurs
-
+<!-- Ajout commandes docker swarm init et join, principe du token -->
 - Les nœuds managers sont en fait aussi des workers et font tourner des conteneurs, c'est leur rôles qui varient.
-
-]
 
 ---
 
@@ -135,7 +134,7 @@ networks:
 ---
 
 ## Service discovery
-
+<!-- ajout illustration -->
 - Par défaut les applications ne sont pas informées du contexte dans lequel elles tournent
 
 - La configuration doit être opérée de l'extérieur de l'application
@@ -163,6 +162,7 @@ networks:
 ---
 
 ## Service Discovery - Solutions
+<!-- ajout schéma etcd -->
 
 - Le DNS du réseau overlay de Docker Swarm avec des stacks permet une forme extrêmement simple et implicite de service discovery. En résumé, votre application microservice docker compose est automatiquement distribuée.
 
@@ -175,6 +175,7 @@ networks:
 ---
 
 ## Répartition de charge (load balancing)
+<!-- ajout illustration -->
 
 - Un load balancer : une sorte d'**"aiguillage" de trafic réseau**, typiquement HTTP(S) ou TCP.
 
@@ -194,6 +195,7 @@ networks:
 ---
 
 ## Le loadbalancing de Swarm est automatique
+<!-- ajout illustration -->
 
 - Loadbalancer intégré : Ingress
 
@@ -210,6 +212,7 @@ networks:
 - **NGINX** : Serveur web générique mais a depuis quelques années des fonctions puissantes de loadbalancing et de TCP forwarding.
 
 ---
+<!-- ajout explications -->
 
 ## Gérer les données sensibles dans Swarm avec les secrets Docker
 
