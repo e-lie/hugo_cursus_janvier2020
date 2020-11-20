@@ -478,3 +478,5 @@ Swarm tp avec rollout et rollback car bug,
 
 plus de schémas sur tp réseau et réseau docker 
 + sur réseau overlay swarm
+
+Expliquer clairement commandes stack et option dans docker compose deploy
