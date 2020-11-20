@@ -470,3 +470,11 @@ faire simplement comprendre les volumes en appliquant l'exemple du cours : docke
 
 
 faire faire swarm de façon plus clean et debug d'ingress sur scaleway : quelle IP ?
+
+
+décrire l'install WSL2 !
+
+Swarm tp avec rollout et rollback car bug,
+
+plus de schémas sur tp réseau et réseau docker 
++ sur réseau overlay swarm
