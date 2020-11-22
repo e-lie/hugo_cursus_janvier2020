@@ -3,21 +3,19 @@ title: TP 2 - Images et conteneurs
 weight: 25
 ---
 
-# TP time!
-
-## I – Découverte d'une application web flask
+## Découverte d'une application web flask
 
 - Récupérez d’abord une application Flask exemple en la clonant :
 
 ```bash
-git clone https://github.com/miguelgrinberg/microblog/
+git clone https://github.com/uptime-formation/microblog/
 ```
 
 - Déplacez-vous dans le dossier `microblog`
 
 <!-- - Nous allons activer une version non dockerisée de l’application grâce à git : `git checkout v0.18` -->
 
-- Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2`
+<!-- - Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2` -->
 
 <!-- - Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran. -->
 
@@ -36,12 +34,13 @@ git clone https://github.com/miguelgrinberg/microblog/
 
 <!-- - Visitez l’application dans le navigateur à l’adresse indiquée. -->
 
-- Observons le code dans VSCode. Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ?
+- Observons le code dans VSCode.
+<!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
 
-- Changez le prénom Miguel par le vôtre dans l’application.
+<!-- - Changez le prénom Miguel par le vôtre dans l’application. -->
 <!-- - Relancez l'app flask et testez la modification en rechargeant la page. -->
 
-## II – Passons à Docker
+## Passons à Docker
 
 Déployer une application Flask manuellement à chaque fois est relativement pénible. Pour que les dépendances de deux projets Python ne se perturbent pas, il faut normalement utiliser un environnement virtuel `virtualenv` pour séparer ces deux apps.
 
@@ -49,7 +48,7 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 
 - Dans le dossier du projet ajoutez un fichier nommé `Dockerfile`
 
-- Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre conteneur de base est le conteneur officiel Ubuntu.
+- Ajoutez en haut du fichier : `FROM bitnami/minideb` Cette commande indique que notre conteneur de base est une distribution Debian légère appelée `minideb` proposée par l'entreprise Bitnami.
 <!-- prendre une autre image ? alpine ? -->
 
 - Nous pouvons déjà contruire un conteneur à partir de ce modèle Ubuntu vide :
@@ -78,8 +77,9 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
+  - `COPY ./requirements.txt /requirements.txt`
   - `RUN pip3 install flask`
-  <!-- - `RUN pip3 install -r requirements.txt` -->
+  - `RUN pip3 install -r requirements.txt`
   - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
@@ -108,7 +108,8 @@ CMD flask run -h 0.0.0.0
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
-
+## Une image plus simple
+- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` et `apk add` à la place de `apt-get install`), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
 
 ## Faire varier la configuration en fonction de l'environnement
 
@@ -130,8 +131,7 @@ else
     exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
 fi
 ```
-
-
+<!-- VERIFIER GUNICORN BIEN INSTALLÉ -->
 - Enfin, modifions la section de démarrage en remplaçant la ligne qui commence par `CMD` à la fin du `Dockerfile` par :
 
 ```Dockerfile
@@ -141,7 +141,8 @@ ENTRYPOINT ["./boot.sh"]
 
 - Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
 
-- Construisez l'image avec `build`, puis lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
+- Construisez l'image avec `build`. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
+- Puis, lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
   Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
 
 <!-- - Ensuite, pour démarrer l’application nous aurons besoin d’un script de boot. Créez un fichier `boot.sh` dans `app` avec à l’intérieur :
