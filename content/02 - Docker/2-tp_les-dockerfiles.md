@@ -170,11 +170,11 @@ USER microblog
 
 {{% /expand %}}
 
-Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
+<!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
 
 {{% expand "Réponse :" %}}
 La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
-{{% /expand %}}
+{{% /expand %}} -->
 
 - Ajoutons également l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
 - NB : Publier le port grâce à l'option `-p port_de_l-hote:port_du_container` reste nécessaire, l'instruction `EXPOSE` n'est là qu'à titre de documentation de l'image.

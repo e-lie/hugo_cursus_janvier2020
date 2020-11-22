@@ -312,9 +312,9 @@ networks:
     driver: bridge
 ```
 
-### Ajouter un nœud Elasticsearch
+### _Facultatif :_ Ajouter un nœud Elasticsearch
 
-Puis, à l'aide de la documentation Elasticsearch, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
+Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
 
 
 <!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
@@ -447,3 +447,6 @@ Commentons ce code:
 Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_compose_correction_202001>
 
 --- -->
+
+
+<!-- Galera automagic docker-compose : https://gist.github.com/lucidfrontier45/497341c4b848dfbd6dfb -->

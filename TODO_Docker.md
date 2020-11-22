@@ -494,4 +494,11 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 - https://hub.docker.com/r/bitnami/pgpool/
 - https://hub.docker.com/r/citusdata/citus/
 - https://hub.docker.com/r/bitnami/mariadb-galera/
-- 
+
+
+- Ajouter cours 6 et 7 avec notions de reverse proxy et de CI/CD : illustrations
+- CI/CD : https://www.google.com/search?q=gitlab+ci&client=firefox-b-d&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiam9WOjZftAhUMxoUKHcAqAzEQ_AUoAXoECAwQAw&biw=1568&bih=799
+- Traefik : https://www.google.com/search?q=traefik&tbm=isch
+
+
+- Dasn TP3 à la fin dire : récupérez la config wordpress crée à la fin du TP2 sur le container, montez un nouveau container en bindant bien la config xordpress déjà générée depuis un volume nommé

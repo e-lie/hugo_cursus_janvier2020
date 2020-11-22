@@ -101,7 +101,7 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 
 {{% /expand %}}
 
-### Facultatif : Swarm avec Traefik
+### Swarm avec Traefik
 
 - Avec l'aide de la [documentation Traefik sur Docker Swarm](https://doc.traefik.io/traefik/routing/providers/docker/#configuration-examples), configurez Traefik avec Swarm.
 
