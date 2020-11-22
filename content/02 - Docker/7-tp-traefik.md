@@ -12,6 +12,7 @@ Nous allons nous baser sur le guide d'introduction [Traefik - Getting started](h
 - Avec l'aide de la documentation Traefik, ajoutez une section pour le reverse proxy Traefik pour dans un fichier Docker Compose de votre choix.
 
 {{% expand "Solution :" %}}
+ <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
 version: "3"
@@ -57,6 +58,7 @@ whoami:
 {{% expand "Solution :" %}}
 
 Remplacer le service `reverse-proxy` précédent par :
+ <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
 reverse-proxy:
@@ -104,6 +106,7 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 - Avec l'aide de la [documentation Traefik sur Docker Swarm](https://doc.traefik.io/traefik/routing/providers/docker/#configuration-examples), configurez Traefik avec Swarm.
 
 {{% expand "Solution :" %}}
+ <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 
 ```yaml
 version: "3.8"
@@ -157,6 +160,7 @@ services:
 
 Ensuite, en adaptant le nom de domaine, ajoutez des labels  **à la section `deploy`** (nécessaire dans Swarm) de vos containers ainsi :
 
+ <!-- {linenos=table,hl_lines=[8,"15-17"],linenostart=199} -->
 ```yaml
       whoami:
             image: "traefik/whoami"

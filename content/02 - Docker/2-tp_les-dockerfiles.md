@@ -31,7 +31,7 @@ git clone https://github.com/uptime-formation/microblog/
 <!-- - Visitez l’application dans le navigateur à l’adresse indiquée. -->
 
 - Observons ensemble le code dans VSCode.
-- <!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
+<!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
 
 <!-- - Changez le prénom Miguel par le vôtre dans l’application. -->
 <!-- - Relancez l'app flask et testez la modification en rechargeant la page. -->
@@ -68,17 +68,21 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 
 - Il s’agit d’un Linux standard, mais il n’est pas conçu pour être utilisé comme un système complet, juste pour une application isolée. Il faut maintenant ajouter notre application Flask à l’intérieur. Dans le Dockerfile supprimez la ligne CMD, puis ajoutez :
 
-  - `RUN apt-get update -y`
-  - `RUN apt-get install -y python3-pip`
+```Dockerfile
+RUN apt-get update -y
+RUN apt-get install -y python3-pip
+```
   <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
 - Reconstruisez votre conteneur. Si tout se passe bien, poursuivez.
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
-  - `COPY ./requirements.txt /requirements.txt`
-  - `RUN pip3 install -r requirements.txt`
-  - `ENV FLASK_APP microblog.py`
+```Docker
+COPY ./requirements.txt /requirements.txt
+RUN pip3 install -r requirements.txt
+ENV FLASK_APP microblog.py
+```
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
 
