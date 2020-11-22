@@ -11,13 +11,9 @@ weight: 25
 git clone https://github.com/uptime-formation/microblog/
 ```
 
-- Déplacez-vous dans le dossier `microblog`
+- Ouvrez VSCode avec le dossier `microblog` en tapant `code microblog` ou bien en lançant VSCode avec `code` puis en cliquant sur `Open Folder`.
 
-<!-- - Nous allons activer une version non dockerisée de l’application grâce à git : `git checkout v0.18` -->
-
-<!-- - Nous allons activer une version simple de l’application grâce à git : `git checkout v0.2` -->
-
-<!-- - Ouvrez le dossier microblog cloné avec VSCode (Open Folder). Dans VSCode, vous pouvez faire Terminal > New Terminal pour obtenir un terminal en bas de l'écran. -->
+- Dans VSCode, vous pouvez faire `Terminal > New Terminal` pour obtenir un terminal en bas de l'écran.
 
 <!-- - Pour la tester d’abord en local (sans conteneur) nous avons besoin des outils python. Vérifions s'ils sont installés :
     `sudo apt install python-pip python-dev build-essential` -->
@@ -34,8 +30,8 @@ git clone https://github.com/uptime-formation/microblog/
 
 <!-- - Visitez l’application dans le navigateur à l’adresse indiquée. -->
 
-- Observons le code dans VSCode.
-<!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
+- Observons ensemble le code dans VSCode.
+- <!-- - Qu’est ce qu’un fichier de template ? Où se trouvent les fichiers de templates dans ce projet ? -->
 
 <!-- - Changez le prénom Miguel par le vôtre dans l’application. -->
 <!-- - Relancez l'app flask et testez la modification en rechargeant la page. -->
@@ -43,12 +39,15 @@ git clone https://github.com/uptime-formation/microblog/
 ## Passons à Docker
 
 Déployer une application Flask manuellement à chaque fois est relativement pénible. Pour que les dépendances de deux projets Python ne se perturbent pas, il faut normalement utiliser un environnement virtuel `virtualenv` pour séparer ces deux apps.
+Avec Docker, les projets sont déjà isolés dans des conteneurs. Nous allons donc construire une image de conteneur pour empaqueter l’application et la manipuler plus facilement. Assurez-vous que Docker est installé.
 
-Nous allons donc construire une image de conteneur pour empaqueter l’application et la manipuler plus facilement. Assurez-vous que Docker est installé.
+Pour connaître la liste des instructions des Dockerfiles et leur usage, se référer au [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/).
 
-- Dans le dossier du projet ajoutez un fichier nommé `Dockerfile`
+- Dans le dossier du projet ajoutez un fichier nommé `Dockerfile` et sauvegardez-le
 
-- Ajoutez en haut du fichier : `FROM bitnami/minideb` Cette commande indique que notre conteneur de base est une distribution Debian légère appelée `minideb` proposée par l'entreprise Bitnami.
+- Normalement, VSCode vous propose d'ajouter l'extension Docker. Il va nous faciliter la vie, installez-le. Une nouvelle icône apparaît dans la barre latérale de gauche, vous pouvez y voir les images téléchargées et les conteneurs existants. L'extension ajoute aussi des informations utiles aux instructions Dockerfile quand vous survolez un mot-clé avec la souris.
+
+- Ajoutez en haut du fichier : `FROM ubuntu:latest` Cette commande indique que notre image de base est la dernière version de la distribution Ubuntu.
 <!-- prendre une autre image ? alpine ? -->
 
 - Nous pouvons déjà contruire un conteneur à partir de ce modèle Ubuntu vide :
@@ -78,29 +77,27 @@ Nous allons donc construire une image de conteneur pour empaqueter l’applicati
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
   - `COPY ./requirements.txt /requirements.txt`
-  - `RUN pip3 install flask`
   - `RUN pip3 install -r requirements.txt`
   - `ENV FLASK_APP microblog.py`
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
 
 ```Dockerfile
-COPY ./microblog.py /microblog.py
-COPY ./app /app
-WORKDIR /
+COPY ./ /microblog
+WORKDIR /microblog
 ```
 
-La première ligne copie le fichier Python pour lancer l'app.
-Ces deux autres lignes indiquent de copier tout le contenu du dossier courant sur l'hôte dans un dossier /app à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/`.
+Cette première ligne indique de copier tout le contenu du dossier courant sur l'hôte dans un dossier `/microblog` à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/`.
 
+  <!-- - `RUN pip3 install flask` -->
 
-- Enfin, ajoutons la section de démarrage à la fin du Dockerfile :
+- Enfin, ajoutons la section de démarrage à la fin du Dockerfile, c'est un script appelé `boot.sh` :
 
 ```Dockerfile
-CMD flask run -h 0.0.0.0
+CMD boot.sh
 ```
 
-- Reconstruisez le conteneur et lancez-le en ouvrant le port `5000` avec la commande : `docker run -d -p 5000:5000 microblog`
+- Reconstruisez le conteneur et lancez-le en ouvrant le port `5000` avec la commande : `docker run -p 5000:5000 microblog`
 
 - Naviguez dans le navigateur à l’adresse `localhost:5000` pour admirer le prototype microblog.
 
@@ -109,19 +106,21 @@ CMD flask run -h 0.0.0.0
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
 ## Une image plus simple
-- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` et `apk add` à la place de `apt-get install`), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
+
+- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip`), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
 
 ## Faire varier la configuration en fonction de l'environnement
 
 Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
 Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
 
-Pour démarrer l’application, nous aurons donc besoin d’un script de boot :
-
-- créez un fichier `boot.sh` dans `app` avec à l’intérieur :
+Pour démarrer l’application, nous avons fait appel à un script de boot `boot.sh` avec à l’intérieur :
 
 ```bash
 #!/bin/bash
+
+# ...
+
 set -e
 if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
     echo "Running Development Server"
@@ -131,155 +130,57 @@ else
     exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
 fi
 ```
-<!-- VERIFIER GUNICORN BIEN INSTALLÉ -->
-- Enfin, modifions la section de démarrage en remplaçant la ligne qui commence par `CMD` à la fin du `Dockerfile` par :
-
-```Dockerfile
-RUN chmod +x boot.sh
-ENTRYPOINT ["./boot.sh"]
-```
 
 - Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
 
 - Construisez l'image avec `build`. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
-- Puis, lancez une instance de l'app en configuration `PROD` et une une instance en environnement `DEV`.
-  Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
-
-<!-- - Ensuite, pour démarrer l’application nous aurons besoin d’un script de boot. Créez un fichier `boot.sh` dans `app` avec à l’intérieur :
-```bash
-#!/bin/sh
-flask run -h 0.0.0.0
-``` -->
-
+- Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
+- Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
 
 ## Docker Hub
 
 - Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
 
-<!-- ```bash
+{{% expand "Solution :" %}}
+
+```bash
 docker login
 docker tag microblog:latest <your-docker-registry-account>/microblog:latest
 docker push <your-docker-registry-account>/microblog:latest
-``` -->
+```
 
-<!-- TODO: transition with TP3, package app to use VOLUME -->
+{{% /expand %}}
+
 <!-- TODO: transition with TP3, package app to add pip package mysql connector -->
-<!-- ## La version de `microblog` avec base de données
-- Revenez au dossier de `microblog` puis committez les modifications de votre dépôt.
-
-```
-git add Dockerfile boot.sh
-git commit -m "Dockerfile simple"
-git tag "tp2-dockerfile-simple"
-```
-
-- basculez grâce à Git au code de la version du code qui utilise une base de données : `git checkout v0.4`.
-
-La version v0.4 de l'app peut fonctionner de deux façons :
-
-- en stockant un fichier `sqlite` servant de base de données `SQL`.
-- avec un autre conteneur servant de base de données `SQL` (par exemple `mysql`).
-
-Nous verrons comment manipuler des volumes de bases de données et cet autre conteneur `mysql` dans le TP suivant. En attendant, nous allons packager l'app `microblog` pour lui permettre d'utiliser une base de données des deux façons (via un fichier dans un volume ou via la connexion à un conteneur `mysql`).
-
-- récupérez vos fichiers `Dockerfile` et `boot.sh` créés précédemment depuis le tag Git créé à l'occasion (`tp2-dockerfile-simple`) grâce à la commande Git suivante :
-  - `git checkout tp2-dockerfile-simple -- Dockerfile boot.sh`
-  
-  
-  ---
-  
-   -->
-
-
-
-
 <!-- TODO: add instruction and see how cache is busted -->
 
-  <!-- - `RUN pip3 install flask` -->
 
-<!-- - Ajoutez cette ligne après la première, ajoutez les ensuite sur une même ligne. Que remarque-t-on ?
+<!-- TODO: multi-stage build : avec dnmonster ? -->
 
-La construction reprend depuis la dernière étape modifiée (l'ajout de requirements.txt). Sinon, la construction utilise le cache.
+## Améliorer le Dockerfile
 
-- Changez ensuite le contenu d'un des fichier python de l'application et relancez le build.
+- Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
 
-- Observez comme le build recommence à partir de l'instruction modifiée. Les layers précédents sont mis en cache par le docker engine -->
-<!-- - Pour optimiser, rassemblez les commandes `RUN` liées à pip en une seule commande avec `&&` et sur plusieurs lignes avec `\`. 
-
-
----
--->
-
-<!-- TODO: multi-stage build -->
-
-
-
-
-<!-- - Voici à quoi doit ressembler ce `Dockerfile` plus complexe :
+{{% expand "Solution :" %}}
 
 ```Dockerfile
-FROM python:3.7-buster
-
 RUN useradd microblog
-
-WORKDIR /home/microblog
-
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-RUN pip install gunicorn pymysql
-
-COPY app app
-COPY migrations migrations
-COPY microblog.py config.py boot.sh ./
-RUN chmod a+x boot.sh
-
-ENV FLASK_APP microblog.py
-
 RUN chown -R microblog:microblog ./
 USER microblog
-
-EXPOSE 5000
-CMD ["/bin/bash", "./boot.sh"]
 ```
 
-- `boot.sh`
+{{% /expand %}}
 
-```bash
-#!/bin/sh
-flask db upgrade
-flask translate compile
-exec gunicorn -b :5000 --access-logfile - --error-logfile - microblog:app
-``` -->
+Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
 
-- Poussez l'image microblog sur le Docker Hub comme indiqué dans le tutoriel.
+{{% expand "Réponse :" %}}
+La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
+{{% /expand %}}
 
-```bash
-docker login
-docker tag microblog:latest <your-docker-registry-account>/microblog:latest
-docker push <your-docker-registry-account>/microblog:latest
-```
+- Ajoutons également l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
+- NB : Publier le port grâce à l'option `-p port_de_l-hote:port_du_container` reste nécessaire, l'instruction `EXPOSE` n'est là qu'à titre de documentation de l'image.
 
-
-
-<!-- ## Décortiquer une image
-
-- Affichez la liste des images présentes dans votre Docker Engine.
-
-
-- Inspectez la dernière image que vous venez de créez (`docker image --help` pour trouver la commande)
-
-
-- Observez l'historique de construction de l'image avec `docker image history <image>`
-
-
-- Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
-
-  - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
-  - Il s'agit d'une arborescence.
-
-- Vous pouvez aussi utiliser la commande `docker save votre_image -o image.tar`, et utiliser `tar -C image_decompressee/ -xvf image.tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
-
-- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive` -->
+<!-- TODO: transition with TP3, package app to use VOLUME -->
 
 ## L'instruction HEALTHCHECK
 
@@ -337,16 +238,52 @@ if __name__ == "__main__":
 
 ---
 
+## _Facultatif_ : Décortiquer une image
+
+Une image est composée de plusieurs layers empilés entre eux par le Docker Engine et de métadonnées.
+
+- Affichez la liste des images présentes dans votre Docker Engine.
+
+- Inspectez la dernière image que vous venez de créez (`docker image --help` pour trouver la commande)
+
+- Observez l'historique de construction de l'image avec `docker image history <image>`
+
+- Visitons **en root** (`sudo su`) le dossier `/var/lib/docker/` sur l'hôte. En particulier, `image/overlay2/layerdb/sha256/` :
+
+  - On y trouve une sorte de base de données de tous les layers d'images avec leurs ancêtres.
+  - Il s'agit d'une arborescence.
+
+- Vous pouvez aussi utiliser la commande `docker save votre_image -o image.tar`, et utiliser `tar -C image_decompressee/ -xvf image.tar` pour décompresser une image Docker puis explorer les différents layers de l'image.
+
+- Pour explorer la hiérarchie des images vous pouvez installer `https://github.com/wagoodman/dive`
+
+---
+
 ## _Facultatif:_ un Registry privé
 
-- _(Facultatif)_ En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
+- En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
 - Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
 
-<!-- ## Faire parler la vache
-- Changez de répertoire et créez un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`. Indice : utilisez la commande `ENTRYPOINT`.
-Le but est de la faire fonctionner dans un conteneur à partir de commandes de type :
-- `docker run cowsay Coucou !`
-- `docker run cowsay Salut !`
-- `docker run cowsay Bonjour !` -->
+## _Facultatif:_ Faire parler la vache
 
-<!-- Faites que l'image soit la plus légère possible en utilisant l'image de base `alpine`. Attention, alpine possède des commandes légèrement différentes (`apk add` pour installer) et la plupart des programmes nes ont pas installés par défaut. -->
+Créons un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`.
+Le but est de faire fonctionner notre programme dans un conteneur à partir de commandes de type :
+- `docker run --rm cowsay Coucou !`
+- `docker run --rm cowsay Salut !`
+- `docker run --rm cowsay Bonjour !`
+
+- Doit-on utiliser la commande `ENTRYPOINT` ou la commande `CMD` ? Se référer au [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/) si besoin.
+- Pour information, `cowsay` s'installe dans `/usr/games/cowsay`.
+
+{{% expand "Solution :" %}}
+
+```Dockerfile
+FROM ubuntu
+RUN apt-get update && apt-get install -y cowsay
+ENTRYPOINT ["/usr/games/cowsay"]
+# les crochets sont nécessaires, car ce n'est pas tout à fait la même instruction qui est exécutée sans
+```
+{{% /expand %}}
+
+- L'instruction `ENTRYPOINT` et la gestion des entrées-sorties des programmes dans les Dockerfiles peut être un peu capricieuse et il faut parfois avoir de bonnes notions de Bash et de Linux pour comprendre (et bien lire la documentation Docker).
+- On utilise parfois des conteneurs juste pour qu'ils s'exécutent une fois (pour récupérer le résultat dans la console, ou générer des fichiers). On utilise alors l'option `--rm` pour les supprimer dès qu'ils s'arrêtent.

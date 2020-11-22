@@ -163,7 +163,7 @@ Ensuite, en adaptant le nom de domaine, ajoutez des labels  **à la section `dep
             deploy:
                   replicas: 5
                   labels:
-                        - traefik.http.routers.whoami-service.rule=Host(`whoami.docker.localhost`)
+                        - traefik.http.routers.whoami-service.rule=Host(`example.com`)
                         - traefik.http.services.whoami-service.loadbalancer.server.port=80
       #   Config TLS
       #     - "traefik.http.routers.whoami-service.entrypoints=websecure"
