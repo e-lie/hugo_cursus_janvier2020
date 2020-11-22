@@ -151,11 +151,6 @@ docker push <your-docker-registry-account>/microblog:latest
 
 {{% /expand %}}
 
-<!-- TODO: transition with TP3, package app to add pip package mysql connector -->
-<!-- TODO: add instruction and see how cache is busted -->
-
-
-<!-- TODO: multi-stage build : avec dnmonster ? -->
 
 ## Améliorer le Dockerfile
 
@@ -259,12 +254,12 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 
 ---
 
-## _Facultatif:_ un Registry privé
+## _Facultatif :_ un Registry privé
 
 - En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
 - Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
 
-## _Facultatif:_ Faire parler la vache
+## _Facultatif :_ Faire parler la vache
 
 Créons un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`.
 Le but est de faire fonctionner notre programme dans un conteneur à partir de commandes de type :
@@ -289,3 +284,10 @@ ENTRYPOINT ["/usr/games/cowsay"]
 
 - L'instruction `ENTRYPOINT` et la gestion des entrées-sorties des programmes dans les Dockerfiles peut être un peu capricieuse et il faut parfois avoir de bonnes notions de Bash et de Linux pour comprendre (et bien lire la documentation Docker).
 - On utilise parfois des conteneurs juste pour qu'ils s'exécutent une fois (pour récupérer le résultat dans la console, ou générer des fichiers). On utilise alors l'option `--rm` pour les supprimer dès qu'ils s'arrêtent.
+
+## _Facultatif :_ Un multi-stage build
+
+Transformez le `Dockerfile` de l'app `dnmonster` située à l'adresse suivante pour réaliser un multi-stage build afin d'obtenir l'image finale la plus légère possible :
+<https://github.com/amouat/dnmonster/>
+
+La documentation pour les multi-stage builds est à cette adresse : <https://docs.docker.com/develop/develop-images/multistage-build/>
