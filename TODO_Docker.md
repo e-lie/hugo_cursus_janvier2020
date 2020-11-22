@@ -468,6 +468,7 @@ faire simplement comprendre les volumes en appliquant l'exemple du cours : docke
 
 ---
 
+Mettre mode d'emploi Guacamole et surtout Ctrl+Alt+Shift
 
 faire faire swarm de façon plus clean et debug d'ingress sur scaleway : quelle IP ?
 
@@ -480,3 +481,17 @@ plus de schémas sur tp réseau et réseau docker
 + sur réseau overlay swarm
 
 Expliquer clairement commandes stack et option dans docker compose deploy
+
+---
+
+fix swarm  : --publish mode=host,target=80,published=8080
+
+---
+traefik security / docker.sock mounting security : https://github.com/Tecnativa/docker-socket-proxy
+traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-nodes/
+
+- prolonger tuto swarm avec tuto traefik swarm et hardening de swarm, et bdd répliquée :
+- https://hub.docker.com/r/bitnami/pgpool/
+- https://hub.docker.com/r/citusdata/citus/
+- https://hub.docker.com/r/bitnami/mariadb-galera/
+- 

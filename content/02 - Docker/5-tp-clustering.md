@@ -31,6 +31,8 @@ weight: 55
 - Puis déchoir (_demote_) le manager pour le sortir du cluster (drain) : `docker node update --availability drain <node-name>`
 <!-- - Comment ne pas exposer les ports de tous nos hôtes à tout l'internet ? -->
 
+<!-- --publish mode=host,target=80,published=8080 -->
+
 ### Introduction à Kubernetes
 
 Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver les équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.

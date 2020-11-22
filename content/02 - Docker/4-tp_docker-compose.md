@@ -10,9 +10,10 @@ weight: 45
 
 <!-- - Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ? -->
 <!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
+
 - Installez docker-compose avec `sudo apt install docker-compose`.
-<!-- - S'il y a un bug  -->
-<!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
+  <!-- - S'il y a un bug  -->
+  <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
 <!-- ### Avec Gitpod
 
@@ -185,8 +186,8 @@ networks:
 - Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant deux fois ce bout de code **_(attention aux indentations !)_** :
 
 ```yaml
-    networks:
-    - identinet
+networks:
+  - identinet
 ```
 
 - Ajoutons également un conteneur `redis` **_(attention aux indentations !)_**. Cette base de données sert à mettre en cache les images et à ne pas les recalculer à chaque fois.
@@ -254,13 +255,16 @@ Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compo
 ## Une stack Elastic
 
 ### Centraliser les logs
+
 L'utilité d'Elasticsearch est que, grâce à une configuration très simple de son module Filebeat, nous allons pouvoir centraliser les logs de tous nos conteneurs Docker.
 Pour ce faire, il suffit d'abord de télécharger une configuration de Filebeat prévue à cet effet :
+
 ```bash
 curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
 ```
 
 Renommons cette configuration et rectifions qui possède ce fichier pour satisfaire une contrainte de sécurité de Filebeat :
+
 ```bash
 mv filebeat.docker.yml filebeat.yml
 sudo chown root filebeat.yml
@@ -309,11 +313,8 @@ networks:
 ```
 
 ### Ajouter un nœud Elasticsearch
+
 Puis, à l'aide de la documentation Elasticsearch, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
-
-### _Facultatif / Avancé_ : utiliser Traefik pour le routage
-
-Avec l'aide de la documentation Traefik et des labels Traefik ajoutés dans votre `docker-compose.yml` précédent, installer le reverse proxy Traefik pour accéder à ces services. Explorer le dashboard Traefik.
 
 
 <!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
