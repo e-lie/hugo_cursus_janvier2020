@@ -269,11 +269,13 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 Créons un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`.
 Le but est de faire fonctionner notre programme dans un conteneur à partir de commandes de type :
 - `docker run --rm cowsay Coucou !`
-- `docker run --rm cowsay Salut !`
-- `docker run --rm cowsay Bonjour !`
+- `docker run --rm cowsay -f stegosaurus Yo!`
+- `docker run --rm cowsay -f elephant-in-snake Un éléphant dans un boa.`
 
 - Doit-on utiliser la commande `ENTRYPOINT` ou la commande `CMD` ? Se référer au [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/) si besoin.
 - Pour information, `cowsay` s'installe dans `/usr/games/cowsay`.
+- La liste des options (incontournables) de `cowsay` se trouve ici : <https://debian-facile.org/doc:jeux:cowsay>
+
 
 {{% expand "Solution :" %}}
 
