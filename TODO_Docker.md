@@ -364,3 +364,6 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 - https://github.com/GoogleContainerTools/kaniko
 
 - dire dans tp2 ) quoi srt d'avoir fait copy requirements pip avant de copy toute l'app
+
+- dire de faire passer la commande docker run wordpress à rallonge à la moulinette composerize
+- dans tp4 faire faire wordpress docker compose avec config sauvée du tp2
