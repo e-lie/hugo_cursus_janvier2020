@@ -1,6 +1,7 @@
 # TODO:
 
 ## Suggestions
+
 - Pad CodiMD monté en Docker pour toute la classe ?
 - TP2 : microblog ou dnmonster ?
 - TP3 : docker-compose avec flask, ajouter ELK ?
@@ -9,61 +10,48 @@
 - docker-compose secrets
 - Faire un gros docker swarm avec toute la classe ? https://github.com/dockersamples/docker-swarm-visualizer
 - Faire les démos compliquées comme des sortes de TP assistés et guidés.
+- https://docs.docker.com/engine/reference/commandline/config/
+- https://docs.docker.com/engine/context/working-with-contexts/
+
+- Distroless pour **sécurité** : https://github.com/GoogleContainerTools/distroless
+- Encrypted overlay network: https://github.com/dockersamples/global-2018-hol/tree/master/security/networking
 
 ## Inspirations TD
+
 - basic webapp : https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md
 - tuto docker desktop officiel
--  https://github.com/dockersamples/global-2018-hol/blob/master/beginner-linux/part-three.md https://github.com/docker-training/docker-paas
+- https://github.com/dockersamples/global-2018-hol/blob/master/beginner-linux/part-three.md https://github.com/docker-training/docker-paas
 - app de paiement avec secrets : https://github.com/dockersamples/atsea-sample-shop-app
 - app simple à la con : https://github.com/docker-training/namer
 - https://docs.docker.com/compose/rails/
+- déployer dokuwiki/mediawiki avec conf toute faite ?
+- piquer des trucs du tuto de fergus ?
+- same with nextcloud https://hub.docker.com/_/nextcloud or here https://github.com/nextcloud/docker
+- tp d'ouverture : tester k8s avec minikube ou k3s et l'app vote example
 
-# Ajouts slides
+---
 
-- systemd-nspawn : autre bundle type rkt ou lxc
-- Concept d'immutabilité
-  https://docs.docker.com/engine/reference/commandline/config/
-  https://docs.docker.com/engine/context/working-with-contexts/
-  docker lxc driver
+## TODO
 
-<!-- insert le blabla sur optimiser l'image de la fin du TD2 -->
+### Ajouts cours
 
-## Stateful
+- Prometheus
 
-- le stateless c'est bien beau mais avec une bdd ça se gère pas magiquement du tout
-
-distinction satteful/stateless
-https://container.training/swarm-selfpaced.yml.html#450
-
-## Volumes répliqués
-
-- pb des volumes partagés / répliqués
-  1. solution 1 : applicative
-     - réplication / sharding / clustering : difficiel à configurer
-  2. volume driver : infinit racheté par docker, flocker, convoy, visent à intégrer une techno de réplication : NFS/DRDB/EBS...
-     - c'est un moyen, pas une solution : le NFS est à configurer par nous
-
-## Secrets
-
-## Monitoring
-
-- question du monitoirng et d'un container UP mais zombie, ne fonctionne pas. Du coup logs. A centraliser pas à la main. Petit TP logs?
-  - /var/lib/docker/containers/<id>/<id>-json.log
-    pareil, solution 1: apllicatif, ELK
-    solution 2: logging driver, le default c'est json-file, sinon ça peut etre syslog, gelf, fluentd.
-    solution 3: des agents : des conteneurs auxquels on donne accès à la socket du host (docker.sock). Le fonctionenement par agent est très puissant. Ex de stack: cAdvisor/influxDB/Grafana.
-
-Docker logs monitoring :
-
-- Dockbeat
-- https://logz.io/blog/docker-logging/ : ELK avec Filebeat et docker collector, ou bien custom logging driver for docker avec syslog
-
-* https://docs.docker.com/swarm/plan-for-production/
 * Swarm TLS
 
-## Network
+- podman / buildah ?
 
-Encrypted overlay network: https://github.com/dockersamples/global-2018-hol/tree/master/security/networking
+## Sous-commandes Swarm
+
+    swarm init
+    swarm join
+    service create
+    service inspect
+    service ls
+    service rm
+    service scale
+    service ps
+    service update
 
 # Pédagogie
 
@@ -81,96 +69,62 @@ Faire des briques physiques avec des fils et des boites transparentes ou set tou
 
 Des schémas explicites
 
-Plus de temps sur les concepts et analogies : garage avec outils spécifiques pour tel type de voiture et ne se faire voler qu'un garage à la fois
+Plus de temps sur les concepts et analogies : garage avec outils spécifiques pour tel type de voiture
+
+<!-- et ne se faire voler qu'un garage à la fois -->
 
 problem-centered rather than content-oriented.
 
+---
+
 - docker in docker on ne fait que lui donner accès à la socket du host : c'est en fait du "sidecar"
 
-Les faire participer au planning de formation dans la limite du possible
+- ajouts illustrations réseau NAT de Docker
+- **REFAIRE TOUT LE QUIZ**
 
-# TODO
+# - **TEST MICROBLOG AVEC VOLUMES**
 
-- add healthcheck app: https://github.com/docker-training/healthcheck
-
-- Réviser réseau NAT de Docker
-- test rootless docker : https://docs.docker.com/engine/security/rootless/#prerequiresites
-- REFAIRE TOUT LE QUIZ
-
-- Distroless pour **sécurité** : https://github.com/GoogleContainerTools/distroless
-
-## Ajouts pendant humancoders
-
-- parler de permissions et de sudo
-- planifier vitesse rapide si les gens savent de vitesse plus lente
-- parler de CI gitlab ? de git ? de gitpod ?
-- REFAIRE TP SUR REDIS ET VOLUMES AVEC AUTRE CHOSE + plus explicite pour le réseau
-  => mon search cards pas CRUD, plutot le flask machin non ?
 - expliquer comment on stocke les images et les conteneurs et les volumes cocnrètement
 - s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
-- ouvrir sur k8s ou elk ou gitlab CI selon leur intérêt.
-  Ou simplement sur des trucs tordus d'app stateful (snapshots jsp)
-- partie sur git qd même ? important car infra as code, ouverture sur CI ? laisser les avancés plancher sur une CI gitlab ? vu qu'ils sont un peu ce profil
-- QCM ARGH
-- faire faire du git à ceux qui sont trop en avance ?
-- podman / buildah ?
-- upload sur un registry
 
-- Au début demo avec scaleway hop je mets un docker, hop un codimd et un nginx et boum.
-- Souligner que'intérêt est de déployer facilement.
-- Pour rappels linux, explorer justement bien le réseau avec le ssh dans scaleway, et les k ter face spour comprendre les interfaces docker. Pour comprendre, les volumes parler des permissions pour comprendre le chroot.
-- Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, avec du overlayfs.
-- Pour le to volume et réseau faire l'app flask avec le mysql. Si marche pas garder redis mais dire qu'il y a du cache et que ça soulingen l'importance et les limite du stateless vs stateful. Fsite fzire un script pour migrer du stateful redis Moby counter?
-- Leur demander de générer une clé ssh et me l'envoyer la clé publique par mail ou alors le servir avec nginx et me donner leur IP.
-- Leur donner 6 vm scaleway, leur faire foutre portainer dessus (commande ssh de la socket ? ou socat ?) puis protéger avec nginx (ou traefik) avec auth http. Ajouter swarm et hop c'est redondant. Autre vm avec swarm et pouf c'est resilient la.
-- Du coup faire faire déployer d'abord la flask app puis elk et flask avec elk puis WordPress, nextcloud, codimd, MediaWiki ou dokuwiki.
-  En gros a la fin ils on un ynh cheap et avec ci pour les plus avances.
-- Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément, plutôt en jour 1 même.
-  piquer des trucs du tuto de fergus ?
+- dire qqpart syntaxe "owner/image:version"
+-
+
+- Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, et chercher plus d'illustrations du overlayfs **ou les créer**.
+
+- Faire faire une ci gitlab pour les avancés pour qu'ils comprennent la puissance d'avoir packagé docker. Du coup faire git et framagit forcément (jour 1 pour versionner dockerfile / tp fil rouge ?)
+
 - dire que la ref docker est cool à checker car elle change tout le temps
-- dire que docker compose wordpress tout fait là https://hub.docker.com/_/wordpress ou là https://docs.docker.com/compose/wordpress/
-- same with nextcloud https://hub.docker.com/_/nextcloud or here https://github.com/nextcloud/docker
 
-- ajout d'exemple du build multi image
+- ajout correction tp build multi image
 
-- remplacer dans tp3 par un truc avec microblog et un volume sur sqlite file (app/app.db ou app.db) puis mysql puis docker-compose avec elasticsearch (en insistant sur le fait que c'est intenable à la main et là l'utilité de dockercompose)
-- ajouter les "expand"
-- +WordPress config a la main et extraire fichier d econf puis avec vars env en tp3 volume et réseau ?
-- Virzr optio link docker
+- ajouter les "expand" partout
+
 - chapitre cours containers Windows
 
+- tp2 modifier pour pas boot.sh la premiere fois?
 
-- tp2 modifier pour pas boot.sh la premiere fois
-- tp4 links désuets ? et quid du depends_on ?
-- TP6 trouver meilleur exemple de stack !!!
-- TESTER example-voting-app
-- sur le réseau rajouter une slide sur les drivers réseau et les possibilités des drivers réseau (plutôt K8s quand avancé) : VXLAN ou encapsulation IPIP (IP in IP), Cilium avec eBPF
-- rajouter dans slides + TP sur dockerfile des explications et exemples et manips sur VOLUME et sur EXPOSE.
-- Inverser TP Dockerfile et TP Volume + réseau
+- fouiller un peu plus flocker/convoy
+
+- rajouter dans slides + TP sur dockerfile plus d'explications et exemples et manips sur VOLUME et sur EXPOSE.
+
+- Inverser TP Dockerfile et TP Volume + réseau ? enfin après dockerfile jour 1 ça donne un sentiment d'avoir appris un truc concret : faire des images
+- séparer cours volume et cours network, td aussi ? 
+
 - Virer ou renforcer slide qui parlait de microservices.
-- Ajouter un memo de ce qui est déprécié ou non entre docker compose v2 et v3. Check pour depends_on : Version 3 no longer supports the condition form of depends_on.
+- Check pour depends_on : Version 3 no longer supports the condition form of depends_on.
 - donner texto les commandes pour fix le docker compose de voting_app ou commit sur mon repo et changer les refs
-
-+WordPress config a la main et extraire fichier d econf puis avec vars env en tp3 volume et réseau ?
-Virzr optio link docker
-slides sur containers Windows
 
 - acheter livrets containers julia et verif droits images utilisées / refaire schémas
 
-- stateful ajout slides : ex. avec pstgres xl et les autres et ELK, extraits des slides stateful
-- tp d'ouverture : tester k8s avec minikube ou k3s et l'app vote example
-- Dans docker compose donner exemple de traefik
-- Dans docker compose donner exemple de filebeat
-- Dans docker compose donner ajoute rrole de label da's les slides.
-- Rajouter facultatif traefik et changer ordre des tp
-
-- corriger tp 4 Pas env env prod mais env context prod, unifier gunicorn et uwsgi
 - rajout explications slide exposre un port qu'est-ce que c'est, syntaxe réseau et volume à gauche l'hote a droite le container
+
 - "Some of the major differences between v2 and v3 is that v3 does not support using the volumes_from and extends properties. A whole bunch of the CPU and memory properties have also been moved to a deploy property in v3 instead.
   It’s also worth mentioning if you happen to be using Docker Swarm, you’ll need to use v3+."
+
 - dans docker swarm on peut pas build, (logique : dans k8s non plus)
 
-- Laïus sur infrastructures en conclusion et docker permet pas de simplifier mais des outils pour gérer la complexité de l'informatique quand elle March e pas avec illustration xkcd.
+- Laïus sur infrastructures en conclusion et docker permet pas de simplifier mais des outils pour gérer la complexité de l'informatique quand elle March e pas avec illustration xkcd de dépendances faite par un mec du nevada.
 
 - Bien souligner awesome docker dans les ressources avec gif dockercraft.
 
@@ -178,11 +132,7 @@ slides sur containers Windows
 
 - Revoir comment on fait des variables réutilisables dans le même docker file / dockercompose.
 
-- Expliquer la place des secrets docker Swarm.
-
 - swarm : Trouver d'autres exemples que restart on failure.
-
-- Remettre la diff avec docker ce et ee.
 
 - Updater a v3 et network le docker compose exemple du cours.
 
@@ -191,7 +141,6 @@ slides sur containers Windows
 - le td5 version elie a l'air d'avoir des scemas et autres trucs cool dedans
 - Cool buildah tuto: https://mkdev.me/en/posts/dockerless-part-2-how-to-build-container-image-for-rails-application-without-docker-and-dockerfile
 - Cool podman tuto: https://mkdev.me/en/posts/dockerless-part-3-moving-development-environment-to-containers-with-podman
-- rkt est dead
 - laïus CRI, CRI-o, containerd, runc ?
 
 * Laïus DB répliquée PostgreSQL
@@ -220,11 +169,6 @@ slides sur containers Windows
 https://www.goetas.com/blog/traps-on-the-way-of-blue-green-deployments/
 
 https://github.com/cecchisandrone/docker-swarm-blue-green (demo avec mysql galera)
-
-## Nginx / Let's encrypt
-
-Test https://hub.docker.com/r/jrcs/letsencrypt-nginx-proxy-companion/dockerfile and https://hub.docker.com/r/jwilder/nginx-proxy
-http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/
 
 ## Dockerfile cours
 
@@ -267,54 +211,37 @@ The `EXPOSE` instruction **does not actually publish the port**. It functions as
 Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
 Ou quoi que ce soit qui ait du Go ou du build webpack JS.
 
-
-
-
 ## Cours 2 Dockerfile
-Différence ADD et COPY
 
+Différence ADD et COPY
 
 - TP2/TP3 : linéariser si /home/app ou /app dans microblog et /data
 
 # Retours IB novembre
+
 COURS 1 : docker collision volume possible !
+
+ajout pour moi command ansible reboot all
+
+- instructions guacamole et shortcults Ctrl+Alt+Shift
+
+* les laisser plus autonomes dans le TP2 quitte à mettre la solution à la fin ou en cachant via des balises spoiler
+
+* repackager tp3 microblog pour que soit dans /app et pas /home/machin et virer la variable
+
+* faire une branceh git microblog par exo de tp et num de tp avec tp_correction
+
+* nommer les exos
+* rendre menu intra page plus lisible dans le template hugo
+* résoudre bug sur les anchorlinks de la page imprimée
+
+* check le tuto @ https://github.com/docker/getting-started.git
+* docker scan
+
+* faire un laïus sur comment fonctionne un hash en informatique pour expliquer ce qu'est cet id unique de l'image, ou au moins expliquer que c'est une fn qui associe un truc presque unique et presque bijectif
 
 ---
 
-Rendre le quiz plus dur starfoullah
-
-
-reverif tp2 pip3 / ubuntu / app / requirements etc quel bordel
-
-
-## TP2 partir de microblog sur uptime pas de la v0.2 de miguel toute pourrie !
-
-# Ajout dans TP1 une conf wp déjà toute faite pour avoir un wordpress déjà tout fait
-## Et leur dire d'arrêter le wp en 8080 pour pas s'emmêler les pinceaux
-
-ajout pour moi command ansible reboot all
-+ instructions guacamole et shortcults Ctrl+Alt+Shift
-
-- sur xfce changer le fond d'écran bleu glauque
-
-- les laisser plus autonomes dans le TP2 quitte à mettre la solution à la fin ou en cachant via des balises spoiler
-
-- repackager tp3 microblog pour que soit dans /app et pas /home/machin et virer la variable
-
-- faire une branceh git microblog par exo de tp et num de tp avec tp_correction
-
-- nommer les exos
-- rendre menu intra page plus lisible dans le template hugo
-- résoudre bug sur les anchorlinks de la page imprimée
-
-
-- check le tuto @ https://github.com/docker/getting-started.git
-- docker scan
-
-- faire un laïus sur comment fonctionne un hash en informatique pour expliquer ce qu'est cet id unique de l'image, ou au moins expliquer que c'est une fn qui associe un truc presque unique et presque bijectif
-
-
-----
 FROM python:3.6-alpine
 
 RUN addgroup -S microblog && adduser -S microblog -G microblog
@@ -325,11 +252,15 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # DATABASE_URL by default stores data in a SQLite app.db file in the data folder
+
 # These settings can be overriden at runtime
+
 # e.g. to use MySQL, override this variable with:
+
 # DATABASE_URL=mysql+mysqlconnector://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DB}
+
 ENV DATABASE_URL=sqlite:///data/app.db
-VOLUME ["/data"] 
+VOLUME ["/data"]
 
 COPY app app
 COPY migrations migrations
@@ -345,28 +276,23 @@ EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
 
 ---
-docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog -p 3306:3306 --network microblog mysql:5.7
 
+docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog -p 3306:3306 --network microblog mysql:5.7
 
 docker run --name microblog -e DATABASE_URL=mysql+mysqlconnector://microblog:microblog@mysql/microblog -p 5000:5000 --network microblog microblog
 
 ---
 
-james : 
+james :
 stephane : matinée moin sstructurée, réseaux a l'air plus compliqué, pas assez cadré
 kevin : pas adminsys du coup hs reseaux ? bien aimé dockerfile docker compose, yaml pas un pb
 fabien : orchestration en plus
 
 killian : network trop flou !!! bien aimé identidock, on aurait du travailler avec les volumes ou le transformer en stack
 louise agnes : theorie OK
-sebastien : 
+sebastien :
 
 ---
-
- 
-PRESENCE !
-
-make docker compose guac start at startup
 
 volume nommés dans cours !
 retaper cours volume reseu, supprimer plugins pourris network et préciser volumes nommés
@@ -391,12 +317,6 @@ YAML exemple wordpress
 
 soit parler des vars docerfile et docker compose bien soit ne pas en parler, quel env pour ces vars ? host ? container ?
 
-
-Numéroter tp docker
-
-ajout filebeat.yml
-
-
 curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
 
 faire simplement comprendre les volumes en appliquant l'exemple du cours : docker -v /machin, touch, exit, etc.
@@ -407,21 +327,22 @@ Mettre mode d'emploi Guacamole et surtout Ctrl+Alt+Shift
 
 faire faire swarm de façon plus clean et debug d'ingress sur scaleway : quelle IP ?
 
-
 décrire l'install WSL2 !
 
 Swarm tp avec rollout et rollback car bug,
 
-plus de schémas sur tp réseau et réseau docker 
-+ sur réseau overlay swarm
+plus de schémas sur tp réseau et réseau docker
+
+- sur réseau overlay swarm
 
 Expliquer clairement commandes stack et option dans docker compose deploy
 
 ---
 
-fix swarm  : --publish mode=host,target=80,published=8080
+fix swarm : --publish mode=host,target=80,published=8080
 
 ---
+
 traefik security / docker.sock mounting security : https://github.com/Tecnativa/docker-socket-proxy
 traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-nodes/
 
@@ -430,18 +351,15 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 - https://hub.docker.com/r/citusdata/citus/
 - https://hub.docker.com/r/bitnami/mariadb-galera/
 
-
 - Ajouter cours 6 et 7 avec notions de reverse proxy et de CI/CD : illustrations
 - CI/CD : https://www.google.com/search?q=gitlab+ci&client=firefox-b-d&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiam9WOjZftAhUMxoUKHcAqAzEQ_AUoAXoECAwQAw&biw=1568&bih=799
 - Traefik : https://www.google.com/search?q=traefik&tbm=isch
 
-
 - Dasn TP3 à la fin dire : récupérez la config wordpress crée à la fin du TP2 sur le container, montez un nouveau container en bindant bien la config xordpress déjà générée depuis un volume nommé
 
-
 - Swarm galera ou postrgres ?
-- Suis je en capacité de faire l'intro k8s au cas où ? 
+- Suis je en capacité de faire l'intro k8s au cas où ?
 - Sire que volume dans docker file sert à créer anyway hidden file du coup plutôt data folder alors que volume au runtime est pour plug une config, et solr, et exempli gitlab ci, et minideb.
 - Ajout slides de gens qui maintiennent images cool comme bitnami.
-- Ajout slide clair docker security et les checklists de je sais plus qui. 
+- Ajout slide clair docker security et les checklists de je sais plus qui.
 - Et je n'ai pas rajouté dockercraft roh

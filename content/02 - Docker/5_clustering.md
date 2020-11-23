@@ -82,7 +82,8 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 ## Architecture de Docker Swarm
 
 
-<br />![](../../images/swarm/ops-swarm-arch.svg)]
+<br />
+![](../../images/swarm/ops-swarm-arch.svg)]
 
 - Un ensemble de nœuds de contrôle pour gérer les conteneurs
 - Un ensemble de nœuds worker pour faire tourner les conteneurs

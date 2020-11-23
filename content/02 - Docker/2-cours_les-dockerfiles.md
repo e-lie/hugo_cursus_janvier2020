@@ -197,7 +197,7 @@ Docker images are made up of multiple layers. Each of these layers is a read-onl
 
 ## Les multi-stage builds
 
-Quand on tente de réduire la taille d'une image, on a recours à un tas de techniques. Anciennement, on utilisait deux `Dockerfile` différents : un pour la version prod, léger, et un pour la version dev, avec des outils en plus. Ce n'était pas idéal.
+Quand on tente de réduire la taille d'une image, on a recours à un tas de techniques. Avant, on utilisait deux `Dockerfile` différents : un pour la version prod, léger, et un pour la version dev, avec des outils en plus. Ce n'était pas idéal.
 Par ailleurs, il existe une limite du nombre de couches maximum par image (42 layers). Souvent on enchaînait les commandes en une seule pour économiser des couches (souvent, les commandes `RUN` et `ADD`), en y perdant en lisibilité.
 
 Maintenant on peut utiliser les multistage builds.

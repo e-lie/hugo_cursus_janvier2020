@@ -334,7 +334,7 @@ Faire des boîtes isolées avec nos logiciels:
 - Cela permet d'assembler de grosses applications comme des legos
 - Cela réduit la complexité grâce:
   - à l'intégration de toutes les dépendance déjà dans la boîte
-  - au principe d'immutabilité qui implique de jeter les boîtes ( automatiser pour lutter contre la culture prudence). Rend l'infra prédictible.
+  - au principe d'immutabilité qui implique de jeter les boîtes (automatiser pour lutter contre la culture prudence). Rend l'infra prédictible.
 
 Docker (et un peu LXC)
 

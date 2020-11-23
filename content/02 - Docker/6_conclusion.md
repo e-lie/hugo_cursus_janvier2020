@@ -80,12 +80,12 @@ htop
 
 <!-- - Exemple avec option profil seccomp -->
 
-## Aller plus loin
-
-- Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
-
-
 ## Limites de Docker
+
+## Stateful
+
+- les conteneurs stateless c'est bien beau mais avec une base de données, ça ne se gère pas magiquement du tout
+  - quelques ressources sur le stateful avec Docker : <https://container.training/swarm-selfpaced.yml.html#450>
 
 ### Configurer le réseau de façon plus complexe avec des plugins réseau
 
@@ -94,6 +94,27 @@ htop
 
 <!-- (parenthèse systemd : docker daemon et systemd en cocurrence pour être tous les deux des process d'init : pas possible de lancer un conteneur depuis systemd) (2e parenthèse : pid 1) -->
 
+## Volumes distribués
+
+- problème des volumes partagés / répliqués
+  - domaine à part entière
+  - **Solution 1** : solutions applicatives robustes
+    - pour MySQL/MariaDB : [Galera](https://mariadb.com/kb/en/what-is-mariadb-galera-cluster/)
+    - pour Postgres : on peut citer [Citus](https://hub.docker.com/r/citusdata/citus/) ou [pgpool](https://hub.docker.com/r/bitnami/pgpool/), voir la [comparaison de différentes solutions](https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling)
+    - Elasticsearch est distribué *out-of-the-box*
+  - **Solution 2** : volume drivers avec Docker
+    - [Flocker](https://flocker.readthedocs.io/en/latest/docker-integration/tutorial-swarm-compose.html), [Convoy](https://github.com/rancher/convoy), visent à intégrer une technologie de réplication
+     - c'est un moyen, pas une solution : reste un outil pour configurer ce que l'on souhaite
+
+
+## Aller plus loin
+
+- Le livre _Mastering Docker_, de Russ McKendrick et Scott Gallagher
+- les ressources présentes dans la [bibliographie](../../bibliographie)
+- la liste de [Awesome Docker](https://github.com/veggiemonk/awesome-docker)
+
+![](../../images/dockercraft.gif)
+*[Dockercraft](https://github.com/docker/dockercraft) : administrez vos containers dans Minecraft*
 ## Retours
 
 - Comment ça s'est passé ?
@@ -101,4 +122,5 @@ htop
   - Vitesse : trop rapide ? trop lent ? lors de quoi en particulier ?
   - Attentes sur le contenu ? Les manipulations ?
   - Questions restées ouvertes ? Nouvelles questions ?
+  - Envie d'utiliser Docker ? ou de le jeter à la poubelle ?
 
