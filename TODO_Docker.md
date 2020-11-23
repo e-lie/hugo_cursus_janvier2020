@@ -361,5 +361,4 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 - Suis je en capacité de faire l'intro k8s au cas où ?
 - Sire que volume dans docker file sert à créer anyway hidden file du coup plutôt data folder alors que volume au runtime est pour plug une config, et solr, et exempli gitlab ci, et minideb.
 - Ajout slides de gens qui maintiennent images cool comme bitnami.
-- Ajout slide clair docker security et les checklists de je sais plus qui.
-- Et je n'ai pas rajouté dockercraft roh
+- https://github.com/GoogleContainerTools/kaniko
