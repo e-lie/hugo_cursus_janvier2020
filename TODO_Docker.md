@@ -362,3 +362,5 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 - Sire que volume dans docker file sert à créer anyway hidden file du coup plutôt data folder alors que volume au runtime est pour plug une config, et solr, et exempli gitlab ci, et minideb.
 - Ajout slides de gens qui maintiennent images cool comme bitnami.
 - https://github.com/GoogleContainerTools/kaniko
+
+- dire dans tp2 ) quoi srt d'avoir fait copy requirements pip avant de copy toute l'app

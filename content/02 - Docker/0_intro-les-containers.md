@@ -252,7 +252,7 @@ Docker modifie beaucoup la **"logistique"** applicative.
 
 - **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour les conteneurs OCI (Docker) depuis 2016.
 
-- **Podman** : une alternative à Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode *rootless* intéressant.
+- **Podman** : une alternative à Docker qui utilise la même syntaxe que Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode *rootless* et *daemonless* intéressant.
 
 - **systemd-nspawn** : technologie de conteneurs isolés proposée par systemd
 

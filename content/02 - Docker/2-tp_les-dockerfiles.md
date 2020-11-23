@@ -58,7 +58,7 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
   `CMD ["/bin/sleep", "3600"]`
   Cette ligne indique au conteneur d’attendre pendant 3600 secondes comme au TP précédent.
 
-- Reconstruisez le conteneur et relancez-le
+- Reconstruisez l'image et relancez un conteneur
 
 - Affichez la liste des conteneurs en train de fonctionner
 
@@ -74,15 +74,17 @@ RUN apt-get install -y python3-pip
 ```
   <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
-- Reconstruisez votre conteneur. Si tout se passe bien, poursuivez.
+- Reconstruisez votre image. Si tout se passe bien, poursuivez.
 
 - Pour installer les dépendances python et configurer la variable d'environnement Flask ajoutez:
 
-```Docker
+```Dockerfile
 COPY ./requirements.txt /requirements.txt
 RUN pip3 install -r requirements.txt
 ENV FLASK_APP microblog.py
 ```
+
+- Reconstruisez votre image. Si tout se passe bien, poursuivez.
 
 - Ensuite, copions le code de l’application à l’intérieur du conteneur. Pour cela ajoutez les lignes :
 
@@ -91,17 +93,23 @@ COPY ./ /microblog
 WORKDIR /microblog
 ```
 
-Cette première ligne indique de copier tout le contenu du dossier courant sur l'hôte dans un dossier `/microblog` à l’intérieur du conteneur. Puis le dossier courant dans le conteneur est déplacé à `/`.
+Cette première ligne indique de copier tout le contenu du dossier courant sur l'hôte dans un dossier `/microblog` à l’intérieur du conteneur.
+Nous n'avons pas copié les requirements en même temps pour pouvoir tirer partie des fonctionnalités de cache de Docker, et ne pas avoir à retélécharger les dépendances de l'application à chaque fois que l'on modifie le contenu de l'app.
+
+Puis, dans la 2e ligne, le dossier courant dans le conteneur est déplacé à `/`.
+
+- Reconstruisez votre image. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
+- Si tout se passe bien, poursuivez.
 
   <!-- - `RUN pip3 install flask` -->
 
 - Enfin, ajoutons la section de démarrage à la fin du Dockerfile, c'est un script appelé `boot.sh` :
 
 ```Dockerfile
-CMD boot.sh
+CMD ["./boot.sh"]
 ```
 
-- Reconstruisez le conteneur et lancez-le en ouvrant le port `5000` avec la commande : `docker run -p 5000:5000 microblog`
+- Reconstruisez l'image et lancez un conteneur basé sur l'image en ouvrant le port `5000` avec la commande : `docker run -p 5000:5000 microblog`
 
 - Naviguez dans le navigateur à l’adresse `localhost:5000` pour admirer le prototype microblog.
 
@@ -109,11 +117,28 @@ CMD boot.sh
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
-## Une image plus simple
 
-- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip`), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
+## Docker Hub
 
-## Faire varier la configuration en fonction de l'environnement
+- Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
+
+{{% expand "Solution :" %}}
+
+```bash
+docker login
+docker tag microblog:latest <your-docker-registry-account>/microblog:latest
+docker push <your-docker-registry-account>/microblog:latest
+```
+
+{{% /expand %}}
+
+## Améliorer le Dockerfile
+
+### Une image plus simple
+
+- A l'aide de l'image `python:3-alpine` et en remplaçant les instructions nécessaires (pas besoin d'installer `python3-pip` car ce programme est désormais inclus dans l'image de base), repackagez l'app microblog en une image taggée `microblog:slim` ou `microblog:light`. Comparez la taille entre les deux images ainsi construites.
+
+### Faire varier la configuration en fonction de l'environnement
 
 Le serveur de développement Flask est bien pratique pour debugger en situation de développement, mais n'est pas adapté à la production.
 Nous pourrions créer deux images pour les deux situations mais ce serait aller contre l'impératif DevOps de rapprochement du dev et de la prod.
@@ -137,38 +162,24 @@ fi
 
 - Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
 
-- Construisez l'image avec `build`. **Observons que le build recommence à partir de l'instruction modifiée. Les layers précédents avaient été mis en cache par le Docker Engine.**
+- Construisez l'image avec `build`.
 - Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
-- Avec `docker ps`, vérifiez qu'il existe bien une différence dans le programme lancé.
-
-## Docker Hub
-
-- Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
-
-{{% expand "Solution :" %}}
-
-```bash
-docker login
-docker tag microblog:latest <your-docker-registry-account>/microblog:latest
-docker push <your-docker-registry-account>/microblog:latest
-```
-
-{{% /expand %}}
+- Avec `docker ps` ou en lisant les logs, vérifiez qu'il existe bien une différence dans le programme lancé.
 
 
-## Améliorer le Dockerfile
-
+<!-- 
 - Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
 
 {{% expand "Solution :" %}}
 
 ```Dockerfile
-RUN useradd microblog
+# Ajoute un user et groupe appelés microblog
+RUN addgroup -S microblog && adduser -S microblog -G microblog
 RUN chown -R microblog:microblog ./
 USER microblog
 ```
 
-{{% /expand %}}
+{{% /expand %}} -->
 
 <!-- Après avoir ajouté ces instructions, lors du build, que remarque-t-on ?
 
@@ -176,10 +187,32 @@ USER microblog
 La construction reprend depuis la dernière étape modifiée. Sinon, la construction utilise les layers précédents, qui avaient été mis en cache par le Docker Engine.
 {{% /expand %}} -->
 
-- Ajoutons également l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
+### Exposer le port
+
+- Ajoutons l'instruction `EXPOSE 5000` pour indiquer à Docker que cette app est censée être accédée via son port `5000`.
 - NB : Publier le port grâce à l'option `-p port_de_l-hote:port_du_container` reste nécessaire, l'instruction `EXPOSE` n'est là qu'à titre de documentation de l'image.
 
-<!-- TODO: transition with TP3, package app to use VOLUME -->
+### Dockerfile amélioré
+
+{{% expand "`Dockerfile` final :" %}}
+```Dockerfile
+FROM python:3-alpine
+
+COPY ./requirements.txt /requirements.txt
+RUN pip3 install -r requirements.txt
+ENV FLASK_APP microblog.py
+
+COPY ./ /microblog
+WORKDIR /microblog
+
+ENV APP_ENVIRONMENT PROD
+
+EXPOSE 5000
+
+CMD ["./boot.sh"]
+```
+{{% /expand %}}
+
 
 ## L'instruction HEALTHCHECK
 

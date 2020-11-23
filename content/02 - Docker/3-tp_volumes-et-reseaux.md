@@ -192,9 +192,9 @@ Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qu
 
 ### Bind mounting
 
-Finalement, nous allons écraser ce volume anonyme par le nôtre.
+Finalement, nous allons recréer un conteneur avec un volume qui n'est pas anonyme.
 
-La bonne façon de créer des volumes consiste à les créer manuellement (volumes nommés) : `docker volume create redis_data`.
+En effet, la bonne façon de créer des volumes consiste à les créer manuellement (volumes nommés) : `docker volume create redis_data`.
 
 - Supprimez l'ancien conteneur `redis` puis créez un nouveau conteneur attaché à ce volume nommé : `docker container run -d --name redis -v redis_data:/data --network moby-network redis:alpine`
 
@@ -231,31 +231,60 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 **_Généralement, il faut faire beaucoup plus attention au prune de volumes (données à perdre) qu'au `prune` de conteneurs (rien à perdre car immutable et en général dans le registry)._**
 
-<!-- ### Facultatif : utiliser `VOLUME` avec `microblog` -->
+### Facultatif : utiliser `VOLUME` avec `microblog`
 
-<!-- FIXME: Edit microblog /data or /microblog/data emplacement -->
-<!-- - Lire le `Dockerfile` de l'application `microblog`.
+- Rendez-vous dans votre répertoire racine en tapant `cd`.
+- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`.
 
-Un volume apparaît comme un dossier à l'intérieur du conteneur.
+- Lire le `Dockerfile` de l'application `microblog`.
 
-- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application.
-- Utilisez un volume nommé et lancez un conteneur l'utilisant, créez un compte et écrivez un message.
+Un volume Docker apparaît comme un dossier à l'intérieur du conteneur.
+Nous allons faire apparaître le volume Docker comme un dossier à l'emplacement `/data` sur le conteneur.
+
+- Pour que l'app Python soit au courant de l'emplacement de la base de données, ajoutez à votre `Dockerfile` une variable d'environnement `DATABASE_URL` ainsi (cette variable est lue par le programme Python) :
+
+```Dockerfile
+ENV DATABASE_URL=sqlite:////data/app.db
+```
+
+- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application. 
+
+{{% expand "Indice :" %}}
+
+Dans le conteneur, le chemin de la base de données est :
+`/data/app.db`
+
+{{% /expand %}}
+
+{{% expand "Solution :" %}}
+
+Voici le `Dockerfile` complet :
+```Dockerfile
+FROM python:3-alpine
+
+COPY ./requirements.txt /requirements.txt
+RUN pip3 install -r requirements.txt
+ENV FLASK_APP microblog.py
+
+COPY ./ /microblog
+WORKDIR /microblog
+
+ENV APP_ENVIRONMENT PROD
+
+EXPOSE 5000
+
+ENV DATABASE_URL=sqlite:////data/app.db
+VOLUME ["/data"]
+
+CMD ["./boot.sh"]
+```
+
+{{% /expand %}}
+
+- Créez un volume nommé appelé `microblog_db`, et lancez un conteneur l'utilisant, créez un compte et écrivez un message.
 - Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé. -->
 
-
-<!-- {{% expand "Indice :" %}}
-
-Dans le conteneur, le chemin du dossier à monter contenant la base de données est :
-`/microblog/data`
-
-{{% /expand %}} -->
-
 ---
-
-<!-- - Rendez-vous dans votre repértoire home en tapant `cd`.
-- S'il existe, renommez le dossier `microblog` précédemment créé en `microblog_tp2` (via l'explorateur de fichiers ou via `mv`).
-- Puis, clonez une version déjà dockerisée de l'application `microblog` en lançant `git clone https://github.com/uptime-formation/microblog`. -->
-<!-- - Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez le contenu de la branche Git `docker` en faisant `git checkout docker`. -->
 <!-- 
 La ligne de code Python qui nous permet de déterminer comment l'app utilise le volume du Dockerfile est la suivante :
 
