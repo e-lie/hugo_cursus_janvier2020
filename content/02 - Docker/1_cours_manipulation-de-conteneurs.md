@@ -7,7 +7,7 @@ weight: 10
 
 Deux concepts centraux :
 
-- Une **image** : un modèle pour créer un conteneur.
+- Une **image** : un modèle pour créer un conteneur
 - Un **conteneur** : l'instance qui tourne sur la machine.
 
 Autres concepts primordiaux :
@@ -58,7 +58,6 @@ Choisir une édition :
 ---
  -->
 
-<!--
 # L'environnement de développement
 
 
@@ -68,13 +67,10 @@ Choisir une édition :
 
 - Portainer, un GUI Docker
 
-- VirtualBox pour lancer des VM
-
-- Vagrant pour piloter VirtualBox simplement depuis un fichier et en ligne de commande
+- VirtualBox pour avoir une VM Linux quand on est sur Windows
 
 ---
 
--->
 
 # Installer Docker sur Windows ou MacOS
 
@@ -89,7 +85,7 @@ Docker est basé sur le noyau Linux :
 
 # Installer Docker sur Windows
 
-Trois possibilités :
+Quatre possibilités :
 
 - Solution _legacy_ : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
   - Change légèrement le workflow par rapport à la version Linux native
@@ -143,11 +139,15 @@ Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau
 
 # Les images et conteneurs
 
+## Les images
+
 ![](../../images/docker-cycle.jpg)
 **Docker** possède à la fois un module pour lancer les applications (runtime) et un **outil de build** d'application.
 
 - Une image est le **résultat** d'un build :
   - on peut la voir un peu comme une boîte "modèle" : on peut l'utiliser plusieurs fois comme base de création de containers identiques, similaires ou différents.
+
+
 
 Pour lister les images on utilise :
 
@@ -158,7 +158,13 @@ docker image ls
 
 ---
 
-# Commandes Docker
+## Les conteneurs
+
+- Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
+  - un conteneur en cours de fonctionnement est un processus (et ses processus enfants) qui tourne dans le Linux hôte (mais qui est isolé de celui-ci)
+
+
+## Commandes Docker
 
 Docker fonctionne avec des sous-commandes et propose de grandes quantités d'options pour chaque commande.
 
@@ -170,7 +176,7 @@ docker image --help
 
 ---
 
-# Créer et lancer un conteneur
+### Créer et lancer un conteneur
 
 ![](../../images/ops-basics-isolation.svg)
 
@@ -182,14 +188,14 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 
 > créé et lance le conteneur
 
-## **L'ordre des arguments est important !**
-
+- **L'ordre des arguments est important !**
 - **Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`**
 - On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom** ou de **port**.
 
+
 ---
 
-# Options docker run
+### Options docker run
 
 - Les options facultatives indiquées ici sont très courantes.
   - `-d` permet\* de lancer le conteneur en mode **daemon** ou **détaché** et libérer le terminal
@@ -201,7 +207,7 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 
 ---
 
-# Commandes Docker
+## Commandes Docker
 
 - Le démarrage d'un conteneur est lié à une **commande**.
 
@@ -219,7 +225,7 @@ docker run debian echo 'attendre 10s' && sleep 10 # s'arrête après 10s
 
 ---
 
-# Stopper et redémarrer un conteneur
+### Stopper et redémarrer un conteneur
 
 `docker run` créé un nouveau conteneur à chaque fois.
 
@@ -231,13 +237,15 @@ docker start --attach <nom_ou_id_conteneur> # lance le conteneur et s'attache à
 
 ---
 
-# Isolation des conteneurs
+## Isolation des conteneurs
 
 - Les conteneurs sont plus que des processus, ce sont des boîtes isolées grâce aux **namespaces** et **cgroups**
 
 - Depuis l'intérieur d'un conteneur, on a l'impression d'être dans un Linux autonome.
 
-- Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID normaux mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les _user namespaces_.
+- Plus précisément, un conteneur est lié à un système de fichiers (avec des dossiers `/bin`, `/etc`, `/var`, des exécutables, des fichiers...), et possède des métadonnées (stockées en `json` quelque part par Docker)
+
+- Les utilisateurs Unix à l'intérieur du conteneur ont des UID et GID qui existent classiquement sur l'hôte mais ils peuvent correspondre à un utilisateur Unix sans droits sur l'hôte si on utilise les _user namespaces_.
 
 <!-- - Malgré l'isolation il est possible d'exploiter des failles de configuration pour s'échapper d'un conteneur
 - => il faut faire attention à ne pas lancer les applications en `root` à l'intérieur des conteneurs Docker et/ou à utiliser les *user namespaces* -->

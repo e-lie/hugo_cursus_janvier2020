@@ -81,9 +81,8 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 ## Architecture de Docker Swarm
 
-<!-- Remplacer image par truc où on voit que manager fait aussi tourner containers -->
 
-<br>![](../../images/archi_swarm.png)]
+<br />![](../../images/swarm/ops-swarm-arch.svg)]
 
 - Un ensemble de nœuds de contrôle pour gérer les conteneurs
 - Un ensemble de nœuds worker pour faire tourner les conteneurs
@@ -133,8 +132,9 @@ networks:
 
 ---
 
-## Service discovery
+<!-- faire plus court -->
 <!-- ajout illustration -->
+<!-- ## Service discovery
 - Par défaut les applications ne sont pas informées du contexte dans lequel elles tournent
 
 - La configuration doit être opérée de l'extérieur de l'application
@@ -159,10 +159,10 @@ networks:
 
 - Utiliser un outil dédié permet d'éviter de s'enfermer dans une seule solution.
 
----
+--- -->
 
-## Service Discovery - Solutions
 <!-- ajout schéma etcd -->
+<!-- ## Service Discovery - Solutions
 
 - Le DNS du réseau overlay de Docker Swarm avec des stacks permet une forme extrêmement simple et implicite de service discovery. En résumé, votre application microservice docker compose est automatiquement distribuée.
 
@@ -172,7 +172,7 @@ networks:
   - **Consul** (Hashicorp): Assez simple d'installation et fourni avec une sympathique interface web.
   - **etcd** : A prouvé ses performances aux plus grandes échelle mais un peu plus complexe.
 
----
+--- -->
 
 ## Répartition de charge (load balancing)
 <!-- ajout illustration -->

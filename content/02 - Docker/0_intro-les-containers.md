@@ -245,15 +245,17 @@ Docker modifie beaucoup la **"logistique"** applicative.
 
 - Docker est la technologie ultra-dominante sur le marché de la conteneurisation
 
-  - La simplicité d'usage et le travail de standardisation (OCI) lui garantissent légitimité et fiabilité
+  - La simplicité d'usage et le travail de standardisation (un conteneur Docker est un conteneur OCI : format ouvert standardisé par l'Open Container Initiative) lui garantissent légitimité et fiabilité
   - La logique du conteneur fonctionne, et la bonne documentation et l'écosystème aident !
 
 - **LXC** existe toujours et est très agréable à utiliser, notamment avec **LXD** (développé par Canonical, l'entreprise derrière Ubuntu).
 
-  - Il a cependant un positionnement différent : faire des conteneurs pour faire tourner des OS linux complets.
+  - Il a cependant un positionnement différent : faire des conteneurs pour faire tourner des OS Linux complets.
 
-- **RKT** : un autre container engine développé par **container linux** avec une architecture un peu différente. permet de faire tourner des images docker
+- **RKT** : un autre container engine développé par **container Linux** avec une architecture un peu différente. Permet de faire tourner des images Docker
 
-- **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour Docker et rkt depuis 2016.
+- **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour les conteneurs OCI (Docker) et rkt depuis 2016.
+
+- **Podman** : une alternative à Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode *rootless* intéressant.
 
 ---

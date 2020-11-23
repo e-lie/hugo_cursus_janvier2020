@@ -231,15 +231,32 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 **_Généralement, il faut faire beaucoup plus attention au prune de volumes (données à perdre) qu'au `prune` de conteneurs (rien à perdre car immutable et en général dans le registry)._**
 
-### Facultatif : utiliser `VOLUME` avec `microblog`
+<!-- ### Facultatif : utiliser `VOLUME` avec `microblog` -->
 
-- Rendez-vous dans votre repértoire home en tapant `cd`.
+<!-- FIXME: Edit microblog /data or /microblog/data emplacement -->
+<!-- - Lire le `Dockerfile` de l'application `microblog`.
+
+Un volume apparaît comme un dossier à l'intérieur du conteneur.
+
+- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application.
+- Utilisez un volume nommé et lancez un conteneur l'utilisant, créez un compte et écrivez un message.
+- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé. -->
+
+
+<!-- {{% expand "Indice :" %}}
+
+Dans le conteneur, le chemin du dossier à monter contenant la base de données est :
+`/microblog/data`
+
+{{% /expand %}} -->
+
+---
+
+<!-- - Rendez-vous dans votre repértoire home en tapant `cd`.
 - S'il existe, renommez le dossier `microblog` précédemment créé en `microblog_tp2` (via l'explorateur de fichiers ou via `mv`).
-- Puis, clonez une version déjà dockerisée de l'application `microblog` en lançant `git clone https://github.com/uptime-formation/microblog`.
-- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez le contenu de la branche Git `docker` en faisant `git checkout docker`.
-- Lire le `Dockerfile` de l'application `microblog`.
-
-
+- Puis, clonez une version déjà dockerisée de l'application `microblog` en lançant `git clone https://github.com/uptime-formation/microblog`. -->
+<!-- - Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez le contenu de la branche Git `docker` en faisant `git checkout docker`. -->
+<!-- 
 La ligne de code Python qui nous permet de déterminer comment l'app utilise le volume du Dockerfile est la suivante :
 
 `config.py` :
@@ -248,23 +265,15 @@ La ligne de code Python qui nous permet de déterminer comment l'app utilise le 
 SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
  'sqlite:///' + os.path.join(basedir, 'data/app.db')
 
-```
+``` -->
 
-Un volume apparaît comme un dossier à l'intérieur du conteneur, la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté.
+<!-- , la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté. -->
 
-- À l'aide de la lecture de ce `Dockerfile`, utiliser un volume nommé pour stocker la base de données SQLite de l'application.
-- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
-{{% expand "Indice :" %}}
-
-Dans le conteneur, le chemin du dossier à monter contenant la base de données est :
-`/home/microblog/data`
-
-{{% /expand %}}
 
 <!-- Marquer solution -->
 
-### Facultatif : `microblog` avec MySQL
+<!-- ### Facultatif : `microblog` avec MySQL
 
 Lire le `Dockerfile` de l'application `microblog` à l'adresse `https://github.com/uptime-formation/microblog` (branche `docker`) du TP précédent pour le lancer dans le même réseau qu'un conteneur `mysql` lancé avec les bonnes options de configuration.
 
@@ -285,4 +294,9 @@ Il faut donc remplacer la variable `DATABASE_URL` au lancement.
 
 Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à lire sur le [Docker Hub](https://hub.docker.com/).
 
-{{% /expand %}}
+{{% /expand %}} -->
+
+
+### _Facultatif :_ Packagez votre propre app
+
+Vous possédez tous les ingrédients pour packager l'app de votre choix désormais ! Récupérez une image de base et basez vous sur un Dockerfile existant s'il vous inspire, et lancez-vous !

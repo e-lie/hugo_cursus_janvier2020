@@ -29,15 +29,15 @@ draft: false
 
 - McKendrick, Gallagher 2017 Mastering Docker - Second Edition
 
-##### Pour aller plus loin :
+### Pour aller plus loin :
 
 - Miell,Sayers2019 - Docker in Practice
 
-##### Cheatsheet
+### Cheatsheet
 
 - [https://devhints.io/docker](https://devhints.io/docker)
 
-##### Ressources
+### Ressources
 
 - Doc officielle : https://docs.docker.com/
 - Référence officielle : https://docs.docker.com/reference/
@@ -52,6 +52,8 @@ draft: false
 - Tutoriels officiels sur la sécurité dans Docker : https://github.com/docker/labs/tree/master/security
 - Vidéo sur les bonnes pratiques dans Docker : https://noti.st/aurelievache/PrttUh
 - Vidéo "Containers, VMs... Comment ces technologies fonctionnent et comment les différencier ?" (Quentin Adam) https://www.youtube.com/watch?v=wG4_JQXvZIc
+- Diapositives sur Docker, Swarm, Kubernetes : https://container.training/
+  - en particulier les prolèmes du stateful : https://container.training/swarm-selfpaced.yml.html#450
 
 ## Kubernetes
 

@@ -1,87 +1,22 @@
 # TODO:
 
-Docker : (Hadrien)
+## Suggestions
+- Pad CodiMD monté en Docker pour toute la classe ?
+- TP2 : microblog ou dnmonster ?
+- TP3 : docker-compose avec flask, ajouter ELK ?
+- Pour swarm : faire ressortir les intérêts du truc, simuler une montée en charge.
+- faire un test de NFS ?
+- docker-compose secrets
+- Faire un gros docker swarm avec toute la classe ? https://github.com/dockersamples/docker-swarm-visualizer
+- Faire les démos compliquées comme des sortes de TP assistés et guidés.
 
-- tp1 existant à améliorer (pas debian sleep) et à la fin portainer
-- TP2 : partir d'un dockerfile du projet knowledge/search d'hadrien qui utiliserait mysql (flask v1) : améliorer TP 2 d'Elie existant et changer l'app, et gestion volumes et réseau en CLI pou rlancer mysql
-- TP3 : docker-compose avec flask v1 + mysql, puis la passer en elk (flask v2)
-- TP4 : Swarm vite fait (app web qui loadbalance où tu sais quel nœud t'a servi ou voting app) et intro à K8s en montrant les limites de swarm
--
-
-# Slides
-
-<!-- - Dire que images OCI que c'est un gzipped filesystem basically + metadata -->
-<!-- - Ajouter dockercoins en td swarm + imgur.schmilblick -->
-
-# TD général
-
-- ajouter un nginx dans le gatsby-wave pour docker-compose (avec mysql et avec elk), et faire du HTTP auth pour le elasticsearch
-- faire d'abord flask + mysql en CLI / Portainer puis en docker-compose
-- leur dire de faire du portainer s'ils galèrent
-- Des TD plus funs : funkwhale ? faire du docker machine et du basic swarm ? faire ressortir les intérêts du truc. Simuler une montée en charge en trouvant une manière de monitorer ?
-  ~~- Pad CodiMD monté en Docker pour toute la classe ? Autres services ?~~
-
-- faire un test de NFS ? ou autre test de volume partagé genre cluster Elasticsearch?
-
-Ajout TD/démo Swarm avec voteapp et/ou dockercoins pour la démo des docker machine
-
-## Idées TD
-
-docker-compose secrets + cache : https://github.com/docker-training/suggested-solutions/blob/master/dops/content-cache.yaml
-
-https://github.com/docker-training/webapp
-
-https://github.com/docker/labs/tree/master/Docker-Orchestration
-https://container.training/
-basic webapp : https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md
-
-docker swarm example : voting app https://github.com/dockersamples/example-voting-app https://github.com/docker/labs/blob/master/beginner/chapters/votingapp.md https://github.com/dockersamples/global-2018-hol/blob/master/beginner-linux/part-three.md https://github.com/docker-training/docker-paas
-
-app de paiement avec secrets : https://github.com/dockersamples/atsea-sample-shop-app
-
-Faire un gros docker swarm avec toute la classe ? https://github.com/dockersamples/docker-swarm-visualizer
-
-https://github.com/docker-training/healthcheck
-
-app simple à la con : https://github.com/docker-training/namer
-
-- c'est quand même utile de faire le TD packager une app
-
-https://docs.docker.com/compose/rails/
-
-faire lancer wordpress avec variables d'env. prépopées pour pas avoir à install
-
-Faire les démos compliquées comme des sortes de TP assistés et guidés.
-
-## TD existants détails/corrections
-
-- Verifier comportement redis avec un volume read-only (cache in-memory?): https://hub.docker.com/_/redis/ https://stackoverflow.com/questions/27681402/how-to-disable-redis-rdb-and-aof https://redis.io/commands/readonly
-- Clarifier quand boot.sh est dans app et qu'il se fait écraser par l'instruction volume du dockerfile
-- Clarifier entrypoint et CMD
-- redis-server --appendonly yes ou REDIS_REPLICATION_MODE=slave ?
-- Problèmes de place sur le disque de la VM par défaut (prendre image python3 plus légère ? fournir VM avec plusieurs disques ?)
-- erreurs python lors du build de microblog v0.18 (partie facultative tp4) : alpine ne possède pas les deps requises, réadapter avec ptyhon:3 qui marche
-- Utiliser un cache pour pip et refaire tp4 pour ne pas jouer sur les permissions. Ajouter un autre exemple sympa. Abandonner uwsgi ?
-
-# Sécurité
-
-La sécurité de Docker c'est aussi celle de la chaîne de dépendance des packages npm etc. : on fait confiance à trop de petites briques
-
-## Sécurité des conteneurs
-
-    - alpine par exemple c'est uclibc donc un glibc recodé par un seul mec : y a des erreurs de compilation sur par exemple compilation d'une JVAPP java et on sait pas pourquoi : du coup l'argument de dire "c'est le même binaire de A à Z", à relativiser car alpine a pas du tout les mêmes binaires par exemplee t donc plus fragile
-
-- demo de pb d'isolation entre deux process (version dependency) quand pas containers / ou entre process et OS pour introduire chroot, même si ; To be clear, this is NOT a vulnerability. The **root user is supposed to be able to change the root directory for the current process and for child processes**. Chroot only jails non-root processes. Wikipedia clearly summarises the limitations of chroot." Wikipédia : "On most systems, chroot contexts do not stack properly and chrooted programs with sufficient privileges may perform a second chroot to break out. To mitigate the risk of this security weakness, chrooted programs should relinquish root privileges as soon as practical after chrooting, or other mechanisms – such as FreeBSD jails – should be used instead. "
-  > En gros chroot fait que changer le root, si on peut rechroot on peut rechroot. Aussi, pb. d'isolation network et IPC. si privilégié pour le faire (du coup tempérer le "filesystem-based" d'Unix)
-  > http://pentestmonkey.net/blog/chroot-breakout-perl
-
-(parenthèse systemd : docker daemon et systemd en cocurrence pour être tous les deux des process d'init : pas possible de lancer un conteneur depuis systemd) (2e parenthèse : pid 1)
-
--
-- comprendre l'isolation container : concrètement quand on fait tourner des containers de gens différents dans le même docker c'est "cmme de l'hébergement mutuel php sur la même machine avec apache qui segmente" (effectivement en interne ça l'est)
-
-- différence en sécurité des VM c'est qu'on s'appuie pour les VM sur un sandboxing au niveau matériel (failles dans IOMMU/VT-X/instrctions x84) (si l'on oublie qu'un soft comme virtualbox a une surface d'attaque plus grade, par exemple exploit sur driver carte réseau) et dans l'autre faille de kernel
-- Exemple avec option profil seccomp
+## Inspirations TD
+- basic webapp : https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md
+- tuto docker desktop officiel
+-  https://github.com/dockersamples/global-2018-hol/blob/master/beginner-linux/part-three.md https://github.com/docker-training/docker-paas
+- app de paiement avec secrets : https://github.com/dockersamples/atsea-sample-shop-app
+- app simple à la con : https://github.com/docker-training/namer
+- https://docs.docker.com/compose/rails/
 
 # Ajouts slides
 
@@ -502,3 +437,11 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 
 
 - Dasn TP3 à la fin dire : récupérez la config wordpress crée à la fin du TP2 sur le container, montez un nouveau container en bindant bien la config xordpress déjà générée depuis un volume nommé
+
+
+- Swarm galera ou postrgres ?
+- Suis je en capacité de faire l'intro k8s au cas où ? 
+- Sire que volume dans docker file sert à créer anyway hidden file du coup plutôt data folder alors que volume au runtime est pour plug une config, et solr, et exempli gitlab ci, et minideb.
+- Ajout slides de gens qui maintiennent images cool comme bitnami.
+- Ajout slide clair docker security et les checklists de je sais plus qui. 
+- Et je n'ai pas rajouté dockercraft roh

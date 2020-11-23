@@ -11,26 +11,9 @@ weight: 15
 
 # Premier TD : on installe Docker et on joue avec
 
-<!-- ## Solution 1 : importez une machine Linux
+## Installer Docker sur la VM Ubuntu dans Guacamole
 
-- Récupérez une machine virtualbox ubuntu (18.04)
-
-- _(facultatif)_ Configurez-la avec 6 Go de RAM et 2 processeurs
-- Démarrez la machine
-
-- Faites les mises à jour via le Terminal (`apt update` et `apt upgrade`)
-
-- Installez VSCode avec la commande suivante :
-
-```bash
-sudo snap install --classic code
-```
-
--->
-
-## Installer Docker sur la VM Ubuntu dans Scaleway
-
-- Accédez à votre VM via l'interface Scaleway
+- Accédez à votre VM via l'interface Guacamole
 
 - Vérifiez l'installation de Docker en lançant `sudo docker info`. Si Docker n'est pas installé, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
 
@@ -41,7 +24,7 @@ sudo snap install --classic code
   - Le daemon tourne toujours en `root`
   - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
   - Ajoutez-le au groupe avec la commande `usermod -aG <groupe> <user>` (en remplaçant `<groupe>` et `<user>` par ce qu'il faut)
-  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, déconnectez-vous de votre session puis reconnectez-vous pour que la modification sur les groupes prenne effet.
+  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, redémarrez la VM avec `sudo reboot` puis reconnectez-vous à Guacamole pour que la modification sur les groupes prenne effet.
 
   <!-- **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)**  -->
 
@@ -77,7 +60,8 @@ docker ps -a # affiche  également les conteneurs arrêtés
 
 ## Manipuler un conteneur
 
-**Commandes utiles :** https://devhints.io/docker
+* **Commandes utiles :** <https://devhints.io/docker>
+* **Documentation `docker run` :** <https://docs.docker.com/engine/reference/run/>
 
 Mentalité :
 ![](../../images/changingThings.jpg)
@@ -91,7 +75,7 @@ Avec l'aide du support et de `--help`, et en notant sur une feuille ou dans un f
 
 ```bash
 docker run debian
-=> Il ne se passe rien car comme debian ne contient pas d'application bloquante le conteneur s'arrête
+=> Il ne se passe rien car comme debian ne contient pas de processus qui continue de tourner le conteneur s'arrête
 ```
 
 {{% /expand %}}
@@ -100,8 +84,8 @@ docker run debian
 
 - Lancez `docker logs` avec le nom ou l'id du conteneur. Vous devriez voir le résultat de la commande `echo` précédente.
 
-```
-docker logs <5b91aa9952fa>
+```bash
+docker logs <5b91aa9952fa> # n'oubliez pas que l'autocomplétion est activée, il suffit d'appuyer sur TAB !
 => Debian container
 ```
 
@@ -154,36 +138,63 @@ docker run debian -d --name debian2 sleep 500
 
 - Lancez un conteneur debian en mode interactif (options `-i -t`) avec la commande `/bin/bash` et le nom `debian_interactif`.
 <!-- - Lancez Kitematic pour observer son interface (facultatif) -->
-- Dans un nouveau terminal lancez `docker inspect <conteneur_debian>` (en rempaçant par le nom de votre conteneur Debian). Cette commande fournit plein d'informations utiles mais difficiles à lire.
-
-- Lancez-la à nouveau avec `| grep IPAddress` à la fin. Vous récupérez alors l'adresse du conteneur dans le réseau virtuel Docker.
 
 ---
 
 ## Chercher sur Docker Hub
 
 - Visitez [hub.docker.com](https://hub.docker.com)
-- Cherchez l'image de Wordpress et téléchargez la dernière version (`pull`).
+- Cherchez l'image de Nginx (un serveur web), et téléchargez la dernière version (`pull`).
 
 ```bash
-docker pull wordpress
+docker pull nginx
 ```
 
-- Lancez un conteneur Wordpress. Notez que lorsque l'image est déjà téléchargée le lancement d'un conteneur est quasi instantané.
+- Lancez un conteneur Nginx. Notez que lorsque l'image est déjà téléchargée le lancement d'un conteneur est quasi instantané.
 
 ```bash
-docker run wordpress
+docker run --name "test_nginx" nginx
 ```
 
 Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouvert.
 
-<!-- - Trouvez un moyen d'accéder quand même au Wordpress à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?). -->
-  <!-- - *(facultatif)* Pour ouvrir le port a posteriori sur un conteneur existant, utilisez `docker commit` comme indiqué [sur ce post StackOverflow](https://stackoverflow.com/questions/19335444/how-do-i-assign-a-port-mapping-to-an-existing-docker-container/26622041#26622041). -->
+- Trouvez un moyen d'accéder quand même au Nginx à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
 
-- Arrêtez le(s) conteneur(s) `wordpress` créé(s). Relancez un nouveau conteneur avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre site Wordpress en local.
+{{% expand "Solution :" %}}
+
+- Dans un nouveau terminal lancez `docker inspect test_nginx` (c'est le nom de votre conteneur Nginx). Cette commande fournit plein d'informations utiles mais difficiles à lire.
+
+- Lancez la commande à nouveau avec `| grep IPAddress` à la fin. Vous récupérez alors l'adresse du conteneur dans le réseau virtuel Docker.
+
+{{% /expand %}}
+
+
+- Arrêtez le(s) conteneur(s) `nginx` créé(s).
+- Relancez un nouveau conteneur `nginx` avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre Nginx en local.
 
 ```bash
-docker run -d --name wp -p 8080:80 wordpress
+docker run -p 8080:80 --name "test2_nginx" nginx # la syntaxe est : port_hote:port_container
+```
+
+- En visitant l'adresse et le port associé au conteneur Nginx, on doit voir apparaître des logs Nginx dans son terminal car on a lancé le conteneur en mode *attached*.
+- Supprimez ce conteneur. NB : On doit arrêter un conteneur avant de le supprimer, sauf si on utilise l'option "-f".
+
+---
+
+On peut lancer des logiciels plus ambitieux, comme par exemple Funkwhale, une sorte d'iTunes en web qui fait aussi réseau social :
+
+```bash
+docker run --name funky_conteneur -p 80:80 funkwhale/all-in-one:1.0.1
+```
+
+Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80, mais il n'y aura hélas pas de musique dedans :(
+
+*Attention à ne jamais lancer deux containers connectés au même port sur l'hôte, sinon cela échouera !*
+
+- Supprimons ce conteneur :
+
+```bash
+docker rm -f funky_conteneur
 ```
 
 ### Wordpress, MYSQL et les variables d'environnement
@@ -201,6 +212,7 @@ docker network create wordpress
 
 - Utilisez des variables d'environnement pour préciser le mot de passe root, le nom de la base de données et le nom d'utilisateur de la base de données (trouver la documentation sur le Docker Hub).
 
+- Il va aussi falloir définir un nom pour ce conteneur
 
 
 {{% expand "Solution :" %}}
@@ -210,7 +222,9 @@ docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e
 ```
 {{% /expand %}}
 
+- inspectez le conteneur MySQL avec `docker inspect`
 - Faites de même avec la documentation sur le Docker Hub pour préconfigurer l'app Wordpress.
+- En plus des variables d'environnement, il va falloir le mettre dans le même réseau, et exposer un port
 
 
 {{% expand "Solution :" %}}
@@ -221,16 +235,11 @@ docker run --name wordpressavecmysql -d -e WORDPRESS_DB_HOST="mysqlpourwordpress
 
 {{% /expand %}}
 
-<!-- - Mappez mysql sur le port 6666 (`-p`).
-- Installez `mariadb-client` (ou `mariadb`) sur Ubuntu et connectez-vous à votre conteneur en ligne de commande.
+- regardez les logs du conteneur Wordpress avec `docker logs`
 
-```bash
-sudo apt install mariadb-client
-mysql --user=root --host=127.0.0.1 --port=6666
-``` -->
-
-<!-- - regardez les logs du conteneur avec `docker logs` ou inspectez le conteneur avec `docker inspect` (idéalement avec `grep`) pour trouver l'hôte à contacter -->
-<!-- - utilisez `--help` sur la commande mysql pour choisir le port et l'hôte -->
+- visitez votre app Wordpress et terminez la configuration de l'application : si les deux conteneurs sont bien configurés, on ne devrait pas avoir à configurer la connexion à la base de données
+- avec `docker exec`, visitez votre conteneur Wordpress. Pouvez-vous localiser le fichier `wp-config.php` ? Une fois localisé, utilisez `docker cp` pour le copier sur l'hôte.
+<!-- - (facultatif) Détruisez votre conteneur Wordpress, puis recréez-en un et poussez-y votre configuration Wordpress avec `docker cp`. Nous verrons ensuite une meilleure méthode pour fournir un fichier de configuration à un conteneur. -->
 
 ## Faire du ménage
 
@@ -238,9 +247,14 @@ mysql --user=root --host=127.0.0.1 --port=6666
 
 - Combinez cette commande avec `docker rm` pour supprimer tous les conteneurs arrêtés (indice : en Bash, une commande entre les parenthèses de "`$()`" est exécutée avant et utilisée comme chaîne de caractère dans la commande principale)
 
-```
+{{% expand "Solution :" %}}
+
+```bash
 docker rm $(docker ps -aq -f status=exited)
 ```
+
+{{% /expand %}}
+
 
 - S'il y a encore des conteneurs qui tournent (`docker ps`), supprimez un des conteneurs restants en utilisant l'autocomplétion et l'option adéquate
 
@@ -250,9 +264,11 @@ docker rm $(docker ps -aq -f status=exited)
 
 ## Décortiquer un conteneur
 
-- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, puis `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker, explorez jusqu'à trouver l'exécutable principal contenu dans le conteneur.
+- En utilisant la commande `docker export votre_conteneur -o conteneur.tar`, puis `tar -C conteneur_decompresse -xvf conteneur.tar` pour décompresser un conteneur Docker, explorez (avec l'explorateur de fichiers par exemple) jusqu'à trouver l'exécutable principal contenu dans le conteneur.
 
 ### Portainer
+
+Portainer est un portail web pour gérer une installation Docker via une interface graphique. Il va nous faciliter la vie.
 
 - Lancer une instance de Portainer :
 
@@ -261,7 +277,7 @@ docker volume create portainer_data
 docker run --name portainer -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
 
-- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration.
+- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration et choisir un mot de passe.
 
 <!-- ## Installer Docker Desktop for Windows
 
