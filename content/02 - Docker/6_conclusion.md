@@ -33,8 +33,8 @@ Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
 
 ## Monitorer des conteneurs
 
-Avec Prometheus pour Docker et Docker Swarm : https://prometheus.io/docs/guides/dockerswarm/#conclusion
-
+* Avec Prometheus pour Docker et Docker Swarm
+* Ou bien Netdata, un peu plus joli et configuré pour monitorer des conteneurs *out-of-the-box*
 
 ## Tests sur des conteneurs
 
