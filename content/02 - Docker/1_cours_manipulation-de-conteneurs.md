@@ -87,6 +87,21 @@ Docker est basé sur le noyau Linux :
 
 Quatre possibilités :
 
+- Solution WSL2 : on utilise **Docker Desktop WSL2**:
+  - Fonctionne avec Windows Subsystem for Linux : c'est une VM Linux très bien intégrée à Windows
+  - Le meilleur des deux mondes ?
+  - Workflow similaire à celui d'un serveur Linux
+
+- Solution Windows : on utilise **Docker Desktop for Windows**:
+  - Fonctionne avec Hyper-V (l'hyperviseur optimisé de Windows)
+  - Casse VirtualBox/VMWare (incompatible avec la virtualisation logicielle)
+  - Proche du monde Windows et de PowerShell
+
+- Solution VirtualBox : on utilise **Docker Engine** dans une VM Linux
+  - Utilise une VM Linux avec VirtualBox
+  - Workflow identique à celui d'un serveur Linux
+  - Proche de la réalité de l'administration système actuelle
+
 - Solution _legacy_ : on utilise **Docker Toolbox** pour configurer Docker avec le **driver VirtualBox** :
   - Change légèrement le workflow par rapport à la version Linux native
   - Marche sur les "vieux" Windows (sans hyperviseur)
@@ -94,34 +109,10 @@ Quatre possibilités :
 
 ---
 
-# Installer Docker sur Windows
-
-Trois possibilités:
-
-- Solution Windows : on utilise **Docker Desktop for Windows**:
-  - Fonctionne avec Hyper-V (l'hyperviseur optimisé de Windows)
-  - Casse VirtualBox/VMWare (incompatible avec la virtualisation logicielle)
-  - Proche du monde Windows et de PowerShell
-
----
-
-# Installer Docker sur Windows
-
-Trois possibilités:
-
-- Solution Linux : on utilise **Docker Engine** dans une VM Linux
-  - Utilise une VM Linux avec bash
-  - Workflow identique à celui d'un serveur Linux
-  - Proche de la réalité de l'administration système actuelle
-
-On va utiliser ça :)
-
----
-
 # Installer Docker sous MacOS
 
-- Solution _legacy_ avec VM possible
 - Solution standard : on utilise **Docker Desktop for MacOS** (fonctionne avec la bibliothèque HyperKit qui fait de l'hypervision)
+- Solution Virtualbox / *legacy* : On utilise une VM Linux
 
 ---
 
@@ -129,7 +120,7 @@ On va utiliser ça :)
 
 Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau du système natif.
 
-- On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version est souvent trop ancienne (à part sous Arch Linux)
+- On peut l'installer avec le gestionnaire de paquets de l'OS mais cette version peut être trop ancienne.
 
 - Sur **Ubuntu** ou **CentOS** la méthode conseillée est d'utiliser les paquets fournis dans le dépôt officiel Docker (vous pouvez avoir des surprises avec la version _snap_ d'Ubuntu).
   - Il faut pour cela ajouter le dépôt et les signatures du répertoire de packages Docker.
@@ -175,6 +166,16 @@ docker image --help
 ```
 
 ---
+
+# Pour vérifier l'état de Docker
+
+- Les commandes de base pour connaître l'état de Docker sont :
+
+```bash
+docker info  # affiche plein d'information sur l'engine avec lequel vous êtes en contact
+docker ps    # affiche les conteneurs en train de tourner
+docker ps -a # affiche  également les conteneurs arrêtés
+```
 
 ### Créer et lancer un conteneur
 
@@ -284,7 +285,9 @@ Il s'agit d'un répertoire public et souvent gratuit d'images (officielles ou no
 
 - Il suffit pour cela de chercher l'identifiant et la version de l'image désirée.
 
-- Puis utiliser `docker run <id_image>:<version>`
+- Puis utiliser `docker run [<compte>/]<id_image>:<version>`
+
+- La partie `compte` est le compte de la personne qui a poussé ses images sur le Docker Hub. Les images Docker officielles (`ubuntu` par exemple) ne sont pas liées à un compte : on peut écrire simplement `ubuntu:focal`.
 
 - On peut aussi juste télécharger l'image : `docker pull <image>`
 
@@ -295,4 +298,4 @@ On peut également y créer un compte gratuit pour pousser et distribuer ses pro
 # En résumé
 
 ![](../../images/docker-architecture.png)
-![](../../images/docker-components.png)
+<!-- ![](../../images/docker-components.png) -->

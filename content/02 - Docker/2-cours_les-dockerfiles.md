@@ -11,7 +11,7 @@ weight: 20
 
 # Le processus de build Docker
 
-- Un image Docker ressemble un peu à une appliance VM car il s'agit d'un linux "freezé" dans un état.
+- Un image Docker ressemble un peu à une VM car on peut penser à un Linux "freezé" dans un état.
 
 - En réalité c'est assez différent : il s'agit uniquement d'un système de fichier (par couches ou _layers_) et d'un manifeste JSON (des méta-données).
 
@@ -19,7 +19,7 @@ weight: 20
 
 ---
 
-- Chaque nouveau build génère une nouvelle image dans le répertoire des images (/var/lib/docker/images) (attention ça peut vite prendre énormément de place)
+- Chaque nouveau build génère une nouvelle image dans le répertoire des images (`/var/lib/docker/images`) (attention ça peut vite prendre énormément de place)
 
 - On construit les images à partir d'un fichier `Dockerfile` en décrivant procéduralement (étape par étape) la construction.
 
@@ -41,7 +41,7 @@ CMD ['sleep 1000']
 docker build [-t tag] [-f dockerfile] <build_context>
 ```
 
-- généralement pour construire une image on se place directement dans le dossier avec le `Dockerfile` et les élements de contexte nécessaire (programme, config, etc)
+- généralement pour construire une image on se place directement dans le dossier avec le `Dockerfile` et les élements de contexte nécessaire (programme, config, etc), le contexte est donc le caractère **`.`**, il est obligatoire de préciser un contexte.
 
 - exemple : `docker build -t mondebian .`
 
@@ -161,10 +161,14 @@ HEALTHCHECK CMD curl --fail http://localhost:5000/health || exit 1
 On peut utiliser des variables d'environnement dans les Dockerfiles. La syntaxe est `${...}`.
 Exemple :
 ```Dockerfile
-ENV VERSION=3.14
-ADD https://example.com/download/app-v${VERSION}.zip /app
+FROM busybox
+ENV FOO=/bar
+WORKDIR ${FOO}   # WORKDIR /bar
+ADD . $FOO       # ADD . /bar
+COPY \$FOO /quux # COPY $FOO /quux
 ```
 
+Se référer au [mode d'emploi](https://docs.docker.com/engine/reference/builder/#environment-replacement) pour la logique plus précise de fonctionnement des variables.
 ## Documentation
 
 - Il existe de nombreuses autres instructions possibles très clairement décrites dans la documentation officielle : [https://docs.docker.com/engine/reference/builder/](https://docs.docker.com/engine/reference/builder/)
@@ -185,7 +189,8 @@ docker build [-t <tag:version>] [-f <chemin_du_dockerfile>] <contexte_de_constru
 
 - Observez l'historique de construction de l'image avec `docker image history <image>`
 
-- Il lance ensuite la série d'instructions du Dockerfile et indique un hash pour chaque étape. Pourquoi ?
+- Il lance ensuite la série d'instructions du Dockerfile et indique un *hash* pour chaque étape.
+  - C'est le *hash* correspondant à un *layer* de l'image
 
 ---
 

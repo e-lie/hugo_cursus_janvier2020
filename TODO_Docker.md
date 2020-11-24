@@ -41,18 +41,6 @@
 
 - podman / buildah ?
 
-## Sous-commandes Swarm
-
-    swarm init
-    swarm join
-    service create
-    service inspect
-    service ls
-    service rm
-    service scale
-    service ps
-    service update
-
 # Pédagogie
 
 Tu crées des boîtes pour que les sysadmins aient "que" à maintenir une infra Swarm ou Kubernetes et que le travail des devs soit le travaild es devs
@@ -82,13 +70,10 @@ problem-centered rather than content-oriented.
 - ajouts illustrations réseau NAT de Docker
 - **REFAIRE TOUT LE QUIZ**
 
-# - **TEST MICROBLOG AVEC VOLUMES**
 
-- expliquer comment on stocke les images et les conteneurs et les volumes cocnrètement
+- expliquer comment on stocke les images et les conteneurs et les volumes concrètement
 - s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
 
-- dire qqpart syntaxe "owner/image:version"
--
 
 - Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, et chercher plus d'illustrations du overlayfs **ou les créer**.
 
@@ -108,7 +93,6 @@ problem-centered rather than content-oriented.
 
 - rajouter dans slides + TP sur dockerfile plus d'explications et exemples et manips sur VOLUME et sur EXPOSE.
 
-- Inverser TP Dockerfile et TP Volume + réseau ? enfin après dockerfile jour 1 ça donne un sentiment d'avoir appris un truc concret : faire des images
 - séparer cours volume et cours network, td aussi ? 
 
 - Virer ou renforcer slide qui parlait de microservices.
@@ -131,8 +115,6 @@ problem-centered rather than content-oriented.
 - Faire fin moins en queue de poisson pour slide orchestration ou conclusion.
 
 - Revoir comment on fait des variables réutilisables dans le même docker file / dockercompose.
-
-- swarm : Trouver d'autres exemples que restart on failure.
 
 - Updater a v3 et network le docker compose exemple du cours.
 
@@ -185,27 +167,6 @@ COPY \$FOO /quux # COPY $FOO /quux
 ```
 
 https://docs.docker.com/engine/reference/builder/#environment-replacement
-
-### CMD
-
-Aussi éclaircir diffs entre `CMD` et `ENTRYPOINT` (et ne surtout pas confondre avec `RUN`):
-
-> The CMD instruction has three forms:
-> `CMD ["executable","param1","param2"]` (exec form, this is the preferred form)
-> `CMD ["param1","param2"]` (as default parameters to `ENTRYPOINT`)
-> `CMD command param1 param2` (shell form)
-
-> If you would like your container to run the same executable every time, then you should consider using ENTRYPOINT in combination with CMD.
-
-### EXPOSE
-
-The `EXPOSE` instruction informs Docker that the container listens on the specified network ports at runtime.
-The `EXPOSE` instruction **does not actually publish the port**. It functions as **a type of documentation between the person who builds the image and the person who runs the container, about which ports are intended to be published**. To actually publish the port when running the container, use the `-p` flag on docker run to publish and map one or more ports.
-
-<!-- or the `-P` flag to publish all exposed ports and map them to high-order ports -->
-
-**Regardless of the `EXPOSE` settings, you can override them at runtime by using the `-p` flag.**
-
 ## TD Dockerfile
 
 Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
@@ -259,22 +220,6 @@ RUN pip install -r requirements.txt
 
 # DATABASE_URL=mysql+mysqlconnector://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DB}
 
-ENV DATABASE_URL=sqlite:///data/app.db
-VOLUME ["/data"]
-
-COPY app app
-COPY migrations migrations
-COPY microblog.py config.py boot.sh ./
-RUN chmod a+x boot.sh
-
-ENV FLASK_APP microblog.py
-
-RUN chown -R microblog:microblog ./
-USER microblog
-
-EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
-
 ---
 
 docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog -p 3306:3306 --network microblog mysql:5.7
@@ -307,25 +252,11 @@ TP2 microblog pas grinberg
 TP3 microblog volume ça va pas + buggé sqlite
 dire qu'on peut stocker un volume n'importe où
 
-composerize
-
-docker compose up dans le cours !
-
-exemple docker compose !
-
-YAML exemple wordpress
 
 soit parler des vars docerfile et docker compose bien soit ne pas en parler, quel env pour ces vars ? host ? container ?
 
-curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
-
-faire simplement comprendre les volumes en appliquant l'exemple du cours : docker -v /machin, touch, exit, etc.
 
 ---
-
-Mettre mode d'emploi Guacamole et surtout Ctrl+Alt+Shift
-
-faire faire swarm de façon plus clean et debug d'ingress sur scaleway : quelle IP ?
 
 décrire l'install WSL2 !
 

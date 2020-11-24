@@ -15,16 +15,20 @@ weight: 15
 
 - Accédez à votre VM via l'interface Guacamole
 
-- Vérifiez l'installation de Docker en lançant `sudo docker info`. Si Docker n'est pas installé, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/).
+- Pour accéder au copier-coller de Guacamole, il faut appuyer sur **`Ctrl+Alt+Shift`** et utiliser la zone de texte qui s'affiche (réappuyer sur `Ctrl+Alt+Shift` pour revenir à la VM).
+
+<!-- - Vérifiez l'installation de Docker en lançant `sudo docker info`. -->
+- Pour installer Docker, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository), depuis "Install using the repository" jusqu'aux deux commandes `sudo apt-get update` et `sudo apt-get install docker-ce docker-ce-cli containerd.io`.
+  - Docker nous propose aussi une installation en une ligne (*one-liner*), moins sécurisée : `curl -sSL https://get.docker.com | sudo sh` 
 
 - Lancez `sudo docker run hello-world`. Bien lire le message renvoyé (le traduire sur [Deepl](https://www.deepl.com/translator) si nécessaire). Que s'est-il passé ?
 
-- Il manque les droits à l'utilisateur pour exécuter docker sans passer par `sudo`.
+- Il manque les droits pour exécuter Docker sans passer par `sudo` à chaque fois.
 
   - Le daemon tourne toujours en `root`
   - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
-  - Ajoutez-le au groupe avec la commande `usermod -aG <groupe> <user>` (en remplaçant `<groupe>` et `<user>` par ce qu'il faut)
-  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, redémarrez la VM avec `sudo reboot` puis reconnectez-vous à Guacamole pour que la modification sur les groupes prenne effet.
+  - Ajoutez-le au groupe avec la commande `usermod -aG docker <user>` (en remplaçant `<user>` par ce qu'il faut, normalement `stagiaire`)
+  - Pour actualiser la liste de groupes auquel appartient l'utilisateur, redémarrez la VM avec `sudo reboot` puis reconnectez-vous avec Guacamole pour que la modification sur les groupes prenne effet.
 
   <!-- **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)**  -->
 
@@ -75,7 +79,9 @@ Avec l'aide du support et de `--help`, et en notant sur une feuille ou dans un f
 
 ```bash
 docker run debian
-=> Il ne se passe rien car comme debian ne contient pas de processus qui continue de tourner le conteneur s'arrête
+# ou
+docker run --attached debian
+# Il ne se passe rien car comme debian ne contient pas de processus qui continue de tourner le conteneur s'arrête
 ```
 
 {{% /expand %}}
@@ -84,24 +90,31 @@ docker run debian
 
 - Lancez `docker logs` avec le nom ou l'id du conteneur. Vous devriez voir le résultat de la commande `echo` précédente.
 
+{{% expand "Résultat :" %}}
+
 ```bash
 docker logs <5b91aa9952fa> # n'oubliez pas que l'autocomplétion est activée, il suffit d'appuyer sur TAB !
 => Debian container
 ```
+{{% /expand %}}
 
 <!-- - Réessayez en affichant le résultat cette fois-ci avec le mode *attached* -->
 
 - Affichez la liste des conteneurs en cours d'exécution
 
+{{% expand "Solution :" %}}
 ```bash
 docker ps
 ```
+{{% /expand %}}
 
 - Affichez la liste des conteneurs en cours d'exécution et arrêtés.
 
+{{% expand "Solution :" %}}
 ```bash
 docker ps -a
 ```
+{{% /expand %}}
 
 - Lancez un conteneur debian **en mode détaché** avec la commande `sleep 3600`
 
@@ -113,20 +126,24 @@ docker ps -a
 docker stop <conteneur>
 ```
 
-**NB:** On peut désigner un conteneur soit par le nom qu'on lui a donné, soit par le nom généré automatiquement, soit par son empreinte (toutes ces informations sont indiquées dans un `docker ps` ou `docker ps -a`)
+**NB:** On peut désigner un conteneur soit par le nom qu'on lui a donné, soit par le nom généré automatiquement, soit par son empreinte (toutes ces informations sont indiquées dans un `docker ps` ou `docker ps -a`). L'autocomplétion fonctionne avec les deux noms.
 
 - Trouvez comment vous débarrasser d'un conteneur récalcitrant (si nécessaire, relancez un conteneur avec la commande `sleep 3600` en mode détaché).
 
+{{% expand "Solution :" %}}
 ```
 docker kill <conteneur>
 ```
+{{% /expand %}}
 
 - Tentez de lancer deux conteneurs avec le nom `debian_container`
 
+{{% expand "Solution :" %}}
 ```
 docker run debian -d --name debian_container sleep 500
 docker run debian -d --name debian_container sleep 500
 ```
+{{% /expand %}}
 
 Le nom d'un conteneur doit être unique (à ne pas confondre avec le nom de l'image qui est le modèle utilisé à partir duquel est créé le conteneur).
 
@@ -137,7 +154,8 @@ docker run debian -d --name debian2 sleep 500
 ```
 
 - Lancez un conteneur debian en mode interactif (options `-i -t`) avec la commande `/bin/bash` et le nom `debian_interactif`.
-<!-- - Lancez Kitematic pour observer son interface (facultatif) -->
+- Explorer l'intérieur du conteneur : il ressemble à un OS Linux Debian normal.
+
 
 ---
 
@@ -187,7 +205,7 @@ On peut lancer des logiciels plus ambitieux, comme par exemple Funkwhale, une so
 docker run --name funky_conteneur -p 80:80 funkwhale/all-in-one:1.0.1
 ```
 
-Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80, mais il n'y aura hélas pas de musique dedans :(
+Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80 (après quelques secondes à suivre le lancement de l'application dans les logs) ! Mais il n'y aura hélas pas de musique dedans :(
 
 *Attention à ne jamais lancer deux containers connectés au même port sur l'hôte, sinon cela échouera !*
 
@@ -197,25 +215,28 @@ Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80, mais il n'y a
 docker rm -f funky_conteneur
 ```
 
-### Wordpress, MYSQL et les variables d'environnement
+### *Facultatif :* Wordpress, MYSQL et les variables d'environnement
 
-Nous pouvons accéder au Wordpress, mais il n'a pas encore de base MySQL configurée. Ce serait un peu dommage de configurer cette base de données à la main et cela irait contre la logique DevOps. Nous allons configurer cela à partir de variables d'environnement et d'un deuxième conteneur créé à partir de l'image `mysql`.
+- Lancez un conteneur Wordpress joignable sur le port `8080` à partir de l'image officielle de Wordpress du Docker Hub
+- Visitez ce Wordpress dans le navigateur
+
+Nous pouvons accéder au Wordpress, mais il n'a pas encore de base MySQL configurée. Ce serait un peu dommage de configurer cette base de données à la main. Nous allons configurer cela à partir de variables d'environnement et d'un deuxième conteneur créé à partir de l'image `mysql`.
 
 Depuis Ubuntu:
 
-- Il va falloir mettre ces deux conteneurs dans le même réseau, créons ce réseau :
+- Il va falloir mettre ces deux conteneurs dans le même réseau (nous verrons plus tarde ce que cela implique), créons ce réseau :
 ```bash
 docker network create wordpress
 ```
 
 - Cherchez le conteneur `mysql` version 5.7 sur le Docker Hub.
 
-- Utilisez des variables d'environnement pour préciser le mot de passe root, le nom de la base de données et le nom d'utilisateur de la base de données (trouver la documentation sur le Docker Hub).
+- Utilisons des variables d'environnement pour préciser le mot de passe root, le nom de la base de données et le nom d'utilisateur de la base de données (trouver la documentation sur le Docker Hub).
 
 - Il va aussi falloir définir un nom pour ce conteneur
 
 
-{{% expand "Solution :" %}}
+{{% expand "Résultat :" %}}
 
 ```bash
 docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress -p 3306:3306 --network wordpress mysql:5.7
@@ -223,6 +244,8 @@ docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e
 {{% /expand %}}
 
 - inspectez le conteneur MySQL avec `docker inspect`
+
+
 - Faites de même avec la documentation sur le Docker Hub pour préconfigurer l'app Wordpress.
 - En plus des variables d'environnement, il va falloir le mettre dans le même réseau, et exposer un port
 

@@ -100,7 +100,36 @@ Par contre, notre deuxième réseau fonctionne complètement isolé de notre pre
 
 - De même `docker network prune` permet de faire le ménage des réseaux qui ne sont plus utilisés par aucun conteneur.
 
-## Volumes Docker
+---
+
+# Volumes Docker
+
+## Introduction aux volumes
+
+- Pour comprendre ce qu'est un volume, lançons un conteneur en mode interactif et associons-y le dossier `/tmp/data` de l'hôte au dossier `/data` sur le conteneur :
+```bash
+docker run -it -v /tmp/data:/data ubuntu /bin/bash
+```
+
+- Dans le conteneur, navigons dans ce dossier et créons-y un fichier :
+```bash
+cd /data/
+touch testfile
+```
+
+- Sortons ensuite de ce conteneur avec la commande `exit`
+```bash
+exit
+```
+
+- Après être sorti·e du conteneur, listons le contenu du dossier **sur l'hôte** avec la commande suivante ou avec le navigateur de fichiers d'Ubuntu : 
+```bash
+ls /tmp/data/
+```
+
+Le fichier `testfile` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/data:/data`
+
+## L'app `moby-counter` et le volume Redis
 
 Pour ne pas interférer avec la deuxième partie du TP :
 

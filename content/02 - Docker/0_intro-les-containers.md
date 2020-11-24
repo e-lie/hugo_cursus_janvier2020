@@ -107,12 +107,8 @@ Pour la culture, 6 types de _namespaces_ :
 
 > `:(){ : | :& }; :`
 
-Ceci est une _fork bomb_. Que se passe-t-il si on la lance dans un conteneur **non privilégié** ?
-
-`docker run -it --name fork-bomb bash`
-
-On bloque tout Docker, voire tout le système sous-jacent, en l'empêchant de créer de nouveaux processus.
-
+Ceci est une _fork bomb_. Dans un conteneur **non privilégié**, on bloque tout Docker, voire tout le système sous-jacent, en l'empêchant de créer de nouveaux processus.
+<!-- `docker run -it --name fork-bomb bash` -->
 Pour éviter cela il faudrait limiter la création de processus via une option kernel.
 
 Ex: `docker run -it --ulimit nproc=3 --name fork-bomb bash`
@@ -228,9 +224,9 @@ Docker modifie beaucoup la **"logistique"** applicative.
 
 ---
 
-## Infrastructure as Code
+# Infrastructure as Code
 
-# Résumé
+## Résumé
 
 - on décrit en mode code un état du système. Avantages :
   - pas de dérive de la configuration et du système (immutabilité)

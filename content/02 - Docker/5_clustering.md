@@ -90,7 +90,6 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 <!-- Ajout commandes docker swarm init et join, principe du token -->
 - Les nœuds managers sont en fait aussi des workers et font tourner des conteneurs, c'est leur rôles qui varient.
 
----
 
 ## Consensus entre managers Swarm
 
@@ -102,11 +101,12 @@ L'orchestration consiste à automatiser la création et la répartition des cont
 
 ---
 
+
 ## Docker Services et Stacks
 
-- les services : la distribution d'un seul conteneur
+- les **services** : la distribution **d'un seul conteneur en plusieurs exemplaires**
 
-- les stacks : la distribution des applications multiconteneurs basées sur docker-compose
+- les **stacks** : la distribution (en plusieurs exemplaires) **d'un ensemble de conteneurs (app multiconteneurs)** décrits dans un fichier Docker Compose
 
 ---
 
@@ -130,6 +130,37 @@ services:
 networks:
   webnet:
 ```
+
+* Référence pour les options Swarm de Docker Compose : <https://docs.docker.com/compose/compose-file/#deploy>
+* Le mot-clé `deploy` est lié à l'usage de Swarm
+  * options intéressantes :
+    * `update_config` : pour pouvoir rollback si l'update fail
+    <!-- * `mode` :  -->
+    * `placement` : pouvoir choisir le nœud sur lequel sera déployé le service
+    * `replicas` : nombre d'exemplaires du conteneur
+    * `resources` : contraintes d'utilisation de CPU ou de RAM sur le nœud
+
+---
+
+## Sous-commandes Swarm
+
+- `swarm init` : Activer Swarm et devenir manager d'un cluster d'un seul nœud
+- `swarm join` : Rejoindre un cluster Swarm en tant que nœud manager ou worker
+
+- `service create` : Créer un service (= un conteneur en plusieurs exemplaires)
+- `service inspect` : Infos sur un service
+- `service ls` : Liste des services
+- `service rm` : Supprimer un service
+- `service scale` : Modifier le nombre de conteneurs qui fournissent un service
+- `service ps` : Liste et état des conteneurs qui fournissent un service
+- `service update` : Modifier la définition d'un service
+
+- `docker stack deploy` : Déploie une stack (= fichier Docker compose) ou update une stack existante
+- `docker stack ls ` : Liste les stacks
+- `docker stack ps` : Liste l'état du déploiement d'une stack
+- `docker stack rm` : Supprimer une ou des stacks
+- `docker stack services` : Liste les services qui composent une stack
+
 
 ---
 

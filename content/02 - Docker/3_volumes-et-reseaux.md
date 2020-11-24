@@ -112,7 +112,7 @@ C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounte
 Exemple :
 
 ```bash
-docker run -it -v  /tmp/data:/data  ubuntu /bin/bash
+docker run -it -v /tmp/data:/data ubuntu /bin/bash
 
 cd /data/
 touch testfile

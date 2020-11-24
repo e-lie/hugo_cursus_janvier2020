@@ -10,6 +10,8 @@ weight: 40
 
 - Pour faciliter tout cela et dans l'optique d'**Infrastructure as Code**, Docker introduit un outil nommé **docker-compose** qui permet de décrire de applications multiconteneurs grâce à des fichiers **YAML**.
 
+- Pour bien comprendre qu'il ne s'agit que de convertir des options de commande Docker en YAML, un site vous permet de convertir une commande `docker run` en fichier Docker Compose : <https://www.composerize.com/>
+
 ---
 
 # A quoi ça ressemble, YAML ?
@@ -47,6 +49,8 @@ weight: 40
 - des listes (tirets)
 - des paires **clé: valeur**
 - Un peu comme du JSON, avec cette grosse différence que le JSON se fiche de l'alignement et met des accolades et des points-virgules
+
+- **les extensions Docker et YAML dans VSCode vous aident à repérer des erreurs**
 
 ---
 
@@ -159,6 +163,8 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - `rm` enlève les contenants à l'arrêt. N'oubliez pas d'utiliser l'argument `-v` pour supprimer tous les volumes gérés par Docker.
 
+- `down` détruit tous les conteneurs définis dans le fichier Compose, ainsi que les réseaux
+
 ---
 
 ## Le "langage" de Docker Compose
@@ -166,6 +172,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 - N'hésitez pas à passer du temps à explorer les options et commandes de `docker-compose`.
 - [La documentation du langage (DSL) des compose-files](https://docs.docker.com/compose/compose-file/) est essentielle.
 - Cette documentation indique aussi les différences entre les mots-clés supportés dans la version 2 et la version 3 des fichiers Docker Compose.
+- il est aussi possible d'utiliser des variables d'environnement dans Docker Compose : se référer au [mode d'emploi](https://docs.docker.com/compose/compose-file/#variable-substitution) pour les subtilités de fonctionnement
 
 
 ## Visualisation des applications microservice complexes
