@@ -12,7 +12,9 @@ weight: 35
 
 ## Portainer
 
-- Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec Docker.
+<!-- - Pour visualiser aisément notre environnement docker au fur et à mesure de nos TPs nous allons charger une interface web d'administration docker appelée `portainer` et qui s'installe elle-même avec Docker. -->
+
+Si vous aviez déjà créé le conteneur Portainer, vous pouvez le relancer en faisant `docker start portainer`, sinon créez-le comme suit :
 
 ```bash
 docker volume create portainer_data
@@ -23,14 +25,12 @@ docker run --detach --name portainer \
     portainer/portainer-ce
 ```
 
-Si vous aviez déjà créé le conteneur Portainer, vous pouvez le relancer en faisant `docker start portainer`
+<!-- - Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus. -->
 
-- Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
-
-- Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
+<!-- - Visitez ensuite la page [http://localhost:9000](http://localhost:9000) pour accéder à l'interface.
 - Créez votre user admin avec le formulaire.
 - Explorez l'interface de Portainer.
-- Créez un conteneur
+- Créez un conteneur -->
 
 ## Docker networking
 

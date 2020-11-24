@@ -3,49 +3,6 @@ title: 5 - Orchestration et clustering
 weight: 50
 ---
 
-
-# Docker Machine
-<!-- faire plus court -->
-## C'est l'outil de gestion d'hôtes Docker
-
-- Il est capable de créer des serveurs Docker "à la volée"
-<!-- 
-  - chez différents fournisseurs de cloud
-  - en local avec VirtualBox pour tester son application en mode production et/ou distribué.
-
-- L'intérêt de `docker-machine` est d'être **parfaitement intégré** dans l'outil de CLI Docker.
-
-- Il sert également de base pour créer un Swarm Docker et distribuer les conteneurs entre plusieurs hôtes. -->
-
-<!-- --- -->
-
-- Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
-
-- Il permet également de changer le contexte de la ligne de commande Docker pour basculer sur l'un ou l'autre serveur avec les variables d'environnement adéquates.
-
-- Il permet également de se connecter à une machine en ssh en une simple commande.
-
----
-
-
-Exemple :
-
-```bash
- docker-machine create  --driver digitalocean \
-      --digitalocean-ssh-key-fingerprint 41:d9:ad:ba:e0:32:73:58:4f:09:28:15:f2:1d:ae:5c \
-      --digitalocean-access-token "a94008870c9745febbb2bb84b01d16b6bf837b4e0ce9b516dbcaf4e7d5ff2d6" \
-      hote-digitalocean
-```
-
-Pour basculer `eval $(docker env hote-digitalocean);`
-
-- `docker run -d nginx:latest` créé ensuite un conteneur **sur le droplet digitalocean** précédemment créé.
-
-- `docker ps -a` affiche le conteneur en train de tourner à distance.
-- `wget $(docker-machine ip hote-digitalocean)` va récupérer la page nginx.
-
----
-
 # Orchestration
 
 - Un des intérêts principaux de Docker et des conteneurs en général est de :
@@ -258,6 +215,43 @@ networks:
 - `docker service create --name monservice --secret my_secret_data redis:alpine`
   => monte le contenu secret dans `/var/run/my_secret_data`
 
+---
+
+## Docker Machine
+<!-- faire plus court -->
+- C'est l'outil de gestion d'hôtes Docker
+- Il est capable de créer des serveurs Docker "à la volée"
+<!-- 
+  - chez différents fournisseurs de cloud
+  - en local avec VirtualBox pour tester son application en mode production et/ou distribué.
+
+- L'intérêt de `docker-machine` est d'être **parfaitement intégré** dans l'outil de CLI Docker.
+
+- Il sert également de base pour créer un Swarm Docker et distribuer les conteneurs entre plusieurs hôtes. -->
+
+<!-- --- -->
+
+- Concrètement, `docker-machine` permet de **créer automatiquement des machines** avec le **Docker Engine** et **ssh** configuré et de gérer les **certificats TLS** pour se connecter à l'API Docker des différents serveurs.
+
+- Il permet également de changer le contexte de la ligne de commande Docker pour basculer sur l'un ou l'autre serveur avec les variables d'environnement adéquates.
+
+- Il permet également de se connecter à une machine en ssh en une simple commande.
+
+Exemple :
+
+```bash
+ docker-machine create  --driver digitalocean \
+      --digitalocean-ssh-key-fingerprint 41:d9:ad:ba:e0:32:73:58:4f:09:28:15:f2:1d:ae:5c \
+      --digitalocean-access-token "a94008870c9745febbb2bb84b01d16b6bf837b4e0ce9b516dbcaf4e7d5ff2d6" \
+      hote-digitalocean
+```
+
+Pour basculer `eval $(docker env hote-digitalocean);`
+
+- `docker run -d nginx:latest` créé ensuite un conteneur **sur le droplet digitalocean** précédemment créé.
+
+- `docker ps -a` affiche le conteneur en train de tourner à distance.
+- `wget $(docker-machine ip hote-digitalocean)` va récupérer la page nginx.
 
 ---
 
@@ -265,10 +259,10 @@ networks:
 
 ![](../../images/kubernetes.png)
 
-- Les **pods** kubernetes servent à grouper des conteneurs en unités d'application (microservices ou non) fortement couplées
+- Les **pods** Kubernetes servent à grouper des conteneurs en unités d'application (microservices ou non) fortement couplées (un peu comme les *stacks* Swarm)
 
-- Les **services** sont des groupes de pods exposés à l'extérieur
-- Les **deployments** sont une abstraction pour scaler ou mettre à jours des groupes de **pods**.
+- Les **services** sont des groupes de pods exposés à l'extérieur (un peu comme les *services* Swarm)
+- Les **deployments** sont une abstraction pour scaler ou mettre à jours des groupes de **pods** (un peu comme les *tasks* dans Swarm).
 
 <!-- - Ces derniers tendent à se rapprocher d'une VM du point de vue de l'application. -->
 

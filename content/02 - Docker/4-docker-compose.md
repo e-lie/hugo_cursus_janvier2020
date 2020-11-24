@@ -149,23 +149,21 @@ networks:
 
 Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec Compose. La plupart se passent d'explications et ont des équivalents Docker directs, mais il vaut la peine d'en être conscient·e :
 
-- `up` démarre tous les conteneurs définis dans le fichier compose et agrège la sortie des logs. Normalement, vous voudrez utiliser l'argument -d pour exécuter Compose en arrière-plan.
-- `build` reconstruit toutes les images créées à partir de Dockerfiles. La commande up ne construira pas une image à moins qu'elle n'existe pas, donc utilisez cette commande à chaque fois que vous avez besoin de mettre à jour une image (quand vous avez édité un Dockerfile).
+- `up` démarre tous les conteneurs définis dans le fichier compose et agrège la sortie des logs. Normalement, vous voudrez utiliser l'argument `-d` pour exécuter Compose en arrière-plan.
 
----
+- `build` reconstruit toutes les images créées à partir de Dockerfiles. La commande up ne construira pas une image à moins qu'elle n'existe pas, donc utilisez cette commande à chaque fois que vous avez besoin de mettre à jour une image (quand vous avez édité un Dockerfile). On peut aussi faire `docker-compose up --build`
 
 - `ps` fournit des informations sur le statut des conteneurs gérés par Compose.
 
-- `run` fait tourner un conteneur pour exécuter une commande unique. Cela aura aussi pour effet de faire tourner tout conteneur lié, à moins que l'argument --no-deps ne soit donné.
+- `run` fait tourner un conteneur pour exécuter une commande unique. Cela aura aussi pour effet de faire tourner tout conteneur décrit dans `depends_on`, à moins que l'argument `--no-deps` ne soit donné.
 
 - `logs` affiche les logs. De façon générale la sortie des logs est colorée et agrégée pour les conteneurs gérés par Compose.
+
 - `stop` arrête les conteneurs sans les enlever.
 
 - `rm` enlève les contenants à l'arrêt. N'oubliez pas d'utiliser l'argument `-v` pour supprimer tous les volumes gérés par Docker.
 
 - `down` détruit tous les conteneurs définis dans le fichier Compose, ainsi que les réseaux
-
----
 
 ## Le "langage" de Docker Compose
 
@@ -174,6 +172,7 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 - Cette documentation indique aussi les différences entre les mots-clés supportés dans la version 2 et la version 3 des fichiers Docker Compose.
 - il est aussi possible d'utiliser des variables d'environnement dans Docker Compose : se référer au [mode d'emploi](https://docs.docker.com/compose/compose-file/#variable-substitution) pour les subtilités de fonctionnement
 
+---
 
 ## Visualisation des applications microservice complexes
 

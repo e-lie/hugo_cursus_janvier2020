@@ -297,10 +297,20 @@ Portainer est un portail web pour gérer une installation Docker via une interfa
 
 ```bash
 docker volume create portainer_data
-docker run --name portainer -d -p 8000:8000 -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+docker run --detach --name portainer \
+    -p 9000:9000 \
+    -v portainer_data:/data \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    portainer/portainer-ce
 ```
 
-- Naviguez sur l'adresse IP publique de votre serveur Docker sur le port 9000. Pour installer Portainer, il faut choisir l'option "local" lors de la configuration et choisir un mot de passe.
+- Remarque sur la commande précédente : pour que Portainer puisse fonctionner et contrôler Docker lui-même depuis l'intérieur du conteneur il est nécessaire de lui donner accès au socket de l'API Docker de l'hôte grâce au paramètre `--mount` ci-dessus.
+
+- Visitez ensuite la page [http://localhost:9000](http://localhost:9000) ou l'adresse IP publique de votre serveur Docker sur le port 9000 pour accéder à l'interface.
+- il faut choisir l'option "local" lors de la configuration
+- Créez votre user admin et choisir un mot de passe avec le formulaire.
+- Explorez l'interface de Portainer.
+- Créez un conteneur.
 
 <!-- ## Installer Docker Desktop for Windows
 

@@ -4,7 +4,7 @@ draft: false
 weight: 75
 ---
 
-## Utiliser Traefik pour le routage
+## Exercice 1 - Utiliser Traefik pour le routage
 
 Traefik est un reverse proxy très bien intégré à Docker. Il permet de configurer un routage entre un point d'entrée (ports `80` et `443` de l'hôte) et des containers Docker, grâce aux informations du daemon Docker et aux `labels` sur chaque containers.
 Nous allons nous baser sur le guide d'introduction [Traefik - Getting started](https://doc.traefik.io/traefik/getting-started/quick-start/).
@@ -101,7 +101,7 @@ Ensuite, en remplaçant le nom de domaine `example.com` (utilisez votre nom de d
 
 {{% /expand %}}
 
-### Swarm avec Traefik
+## Exercice 2 - Swarm avec Traefik
 
 - Avec l'aide de la [documentation Traefik sur Docker Swarm](https://doc.traefik.io/traefik/routing/providers/docker/#configuration-examples), configurez Traefik avec Swarm.
 

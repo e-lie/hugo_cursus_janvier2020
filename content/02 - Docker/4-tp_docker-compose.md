@@ -183,7 +183,7 @@ networks:
     driver: bridge
 ```
 
-- Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant deux fois ce bout de code **_(attention aux indentations !)_** :
+- Il faut aussi mettre nos deux services `identidock` et `dnmonster` sur le même réseau en ajoutant **deux fois** ce bout de code où c'est nécessaire **_(attention aux indentations !)_** :
 
 ```yaml
 networks:
@@ -248,7 +248,8 @@ networks:
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré. -->
 
-Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad CodiMD avec sa base de données.
+- Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad CodiMD avec sa base de données.
+- Vérifiez que le pad est bien accessible sur le port donné.
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
 
@@ -450,3 +451,7 @@ Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_
 
 
 <!-- Galera automagic docker-compose : https://gist.github.com/lucidfrontier45/497341c4b848dfbd6dfb -->
+
+### _Facultatif :_ Utiliser Traefik
+
+Vous pouvez désormais faire [l'exercice 1 du TP7](../7-tp-traefik) pour configurer un serveur web qui permet d'accéder à vos services via des domaines.
