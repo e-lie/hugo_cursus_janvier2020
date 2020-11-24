@@ -5,7 +5,22 @@ weight: 55
 
 <!-- - Cloner l'application exemple ici : [https://gitlab.com/e-lie/getstarted_docker.git](https://gitlab.com/e-lie/getstarted_docker.git) -->
 
-## Introduction à Swarm
+# Introduction à Swarm
+
+## Créer un service
+
+A l'aide de `docker service create`, créer un service à partir de l'image `tutum/hello-world` accessible sur le port 80 et avec 5 répliques.
+
+
+{{% expand "Solution :" %}}
+`docker service create --name hello --replicas 5 --publish published=80,target=80 tutum/hello-world`
+{{% /expand %}}
+
+Accédez à votre service et actualisez plusieurs fois la page. Les informations affichées changent. Pourquoi ?
+
+- Lancez une commande `service scale` pour changer le nombre de *replicas* de votre service et observez le changement avec `docker service ps hello`
+
+## La stack `example-voting-app`
 
 - Cloner l'application `example-voting-app` ici : [https://github.com/dockersamples/example-voting-app](https://github.com/dockersamples/example-voting-app)
 
@@ -26,32 +41,37 @@ weight: 55
 
 - Scaler la stack en ajoutant des _replicas_ du front-end lié au vote avec l'aide de `docker service --help`. Accédez à ce front-end et vérifier que cela a bien fonctionné en actualisant plusieurs fois.
 
-- Trouver la commande pour promouvoir (_promote_) un worker en manager
-
-- Puis déchoir (_demote_) le manager pour le sortir du cluster (drain) : `docker node update --availability drain <node-name>`
 <!-- - Comment ne pas exposer les ports de tous nos hôtes à tout l'internet ? -->
 
 <!-- --publish mode=host,target=80,published=8080 -->
 
-### Introduction à Kubernetes
 
-Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver les équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.
+## Clustering entre ami·es
 
-## Clustering
+### Avec un service
 
-- En créant un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), créer un cluster de 3 machines avec Docker Swarm. Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm. Vous pouvez aussi vous grouper par 2 ou 3 pour créer un cluster à partir de vos VM respectives (vous aurez sans doute à modifier l'IP externe par rapport aux instructions notées lors de l'étape `docker swarm init`).
+- Se grouper par 2 ou 3 pour créer un cluster à partir de vos VM respectives (il faut utiliser une commande Swarm pour récupérer les instructions nécessaires).
+- Si ce n'est pas possible ou que vos collègues ne sont pas disponibles, vous pouvez créer un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), il faut s'y connecter avec vos identifiants Docker Hub.
+- Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm.
 
-- Déchoir et promouvoir l'un de vos nœuds de `manager` à `worker` et vice-versa.
+- Lancez le service suivant : 
+`docker service create --name whoami --replicas 5 --publish published=80,target=80 traefik/whoami`
 
-- Cloner de nouveau le dépôt de l'application `example-voting-app`avec `git clone https://github.com/dockersamples/example-voting-app` puis déployez la stack de votre choix.
+- Accédez au service depuis un node, et depuis l'autre. Actualisez plusieurs fois la page. Les informations affichées changent. Lesquelles, et pourquoi ?
+
+### Avec la stack `example-voting-app`
+
+- Si besoin, cloner de nouveau le dépôt de l'application `example-voting-app`avec `git clone https://github.com/dockersamples/example-voting-app` puis déployez la stack de votre choix.
+
+- Ajouter dans le Compose file des instructions pour scaler différemment deux services (3 *replicas* pour le service _front_ par exemple). N'oubliez pas de redéployer votre Compose file.
+
+- puis spécifier quelques options d'orchestration exclusives à Docker Swarm : que fait `mode: global` ?  N'oubliez pas de redéployer votre Compose file.
 
 - Avec Portainer ou avec [docker-swarm-visualizer](https://github.com/dockersamples/docker-swarm-visualizer), explorer le cluster ainsi créé (le fichier `docker-stack.yml` de l'app `example-voting-app` contient déjà un exemplaire de `docker-swarm-visualizer`).
 
-### _Facultatif_ : Clustering entre ami·es
+- Trouver la commande pour déchoir et promouvoir l'un de vos nœuds de `manager` à `worker` et vice-versa.
 
-- Si ce n'est pas déjà fait, se grouper par 2 ou 3 pour créer un cluster à partir de vos VM respectives (vous aurez sans doute à modifier l'IP externe par rapport aux instructions notées lors de l'étape `docker swarm init`).
-
-- Avec Portainer ou avec [docker-swarm-visualizer](https://github.com/dockersamples/docker-swarm-visualizer), explorer le cluster ainsi créé (le fichier `docker-stack.yml` de l'app `example-voting-app` contient déjà un exemplaire de `docker-swarm-visualizer`).
+- Puis sortir un nœud du cluster (`drain`) : `docker node update --availability drain <node-name>`
 
 ## _Facultatif_ : débugger la config Docker de `example-voting-app`
 
@@ -83,10 +103,10 @@ Quelqu'un a abandonné le dépôt Docker Hub lié à cette app et la personne qu
 
 {{% /expand %}}
 
-## _Facultatif_ : Scaler une autre stack
+### Introduction à Kubernetes
 
-- Prendre une stack Docker Compose du TP 4 et scalez-la (3 _replicas_) avec Swarm.
-- Ajouter dans le Docker Compose des instructions pour scaler différemment deux services (1 _replica_ pour la base de données et 3 pour le service _front_ par exemple), puis pour spécifier quelques options d'orchestration exclusives à Docker Swarm.
+Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver les équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.
+
 
 <!--
 ## Installons Portainer
