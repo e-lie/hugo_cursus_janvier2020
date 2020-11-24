@@ -18,6 +18,8 @@ weight: 60
 - Les tests à l'intérieur des conteneurs peuvent aussi être faits de façon plus poussée, avec par exemple Ansible comme source de healthcheck ou comme suite pour les tests.
 - Dans une autre catégorie, Gitpod base son workflow sur des images Docker permettant de configurer un environnement de développement
 
+![](../../images/devops/gitlab_workflow_example.png)
+![](../../images/devops/pipeline_status.png)
 
 ## Gérer les logs des conteneurs
 
@@ -26,6 +28,8 @@ Avec Elasticsearch, Filebeat et Kibana… grâce aux labels sur les conteneurs D
 ## Gérer le reverse proxy
 
 Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
+
+![](../../images/docker/traefik-architecture.png)
 
 ## Monitorer des conteneurs
 
@@ -49,7 +53,10 @@ Présentation d'un workflow Docker, du développement à la production -->
 ### Sécurité / durcissement
 
 - **un conteneur privilégié est _root_ sur la machine !**
+
 - des _cgroups_ correct : `ulimit -a`
+
+
 - par défaut les *user namespaces* ne sont pas utilisés !
   - exemple de durcissement conseillé : <https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b>
 
@@ -69,6 +76,8 @@ htop
 
 - La sécurité de Docker c'est aussi celle de la chaîne de dépendance, des images, des packages installés dans celles-ci : on fait confiance à trop de petites briques dont on ne vérifie pas la provenance ou la mise à jour
   - [Clair](https://github.com/quay/clair) : l'analyse statique d'images Docker
+
+- [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) : protéger la *socket* Docker quand on a besoin de la partager à des conteneurs comme Traefik ou Portainer
 
     <!-- - alpine par exemple c'est uclibc donc un glibc recodé par un seul mec : y a des erreurs de compilation sur par exemple compilation d'une JVAPP java et on sait pas pourquoi : du coup l'argument de dire "c'est le même binaire de A à Z", à relativiser car alpine a pas du tout les mêmes binaires par exemplee t donc plus fragile -->
 

@@ -455,3 +455,7 @@ Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_
 ### _Facultatif :_ Utiliser Traefik
 
 Vous pouvez désormais faire [l'exercice 1 du TP7](../7-tp-traefik) pour configurer un serveur web qui permet d'accéder à vos services via des domaines.
+
+### *Facultatif :* du monitoring avec *cAdvisor* et *Prometheus*
+
+Suivre ce tutoriel pour du monitoring des conteneurs Docker : <https://prometheus.io/docs/guides/cadvisor/>

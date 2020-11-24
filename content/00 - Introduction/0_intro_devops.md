@@ -244,6 +244,10 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 - A chaque étape le code passe dans un **Pipeline** de validation automatique.
 
+
+![](../../images/devops/gitlab_workflow_example.png)
+
+
 ---
 
 # Infrastructure as code

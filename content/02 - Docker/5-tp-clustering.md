@@ -51,8 +51,10 @@ Accédez à votre service et actualisez plusieurs fois la page. Les informations
 ### Avec un service
 
 - Se grouper par 2 ou 3 pour créer un cluster à partir de vos VM respectives (il faut utiliser une commande Swarm pour récupérer les instructions nécessaires).
-- Si ce n'est pas possible ou que vos collègues ne sont pas disponibles, vous pouvez créer un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), il faut s'y connecter avec vos identifiants Docker Hub.
-- Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm.
+- Si grouper plusieurs des VM n'est pas possible, vous pouvez créer un cluster multi-nodes très simplement avec l'interface du site [Play With Docker](https://labs.play-with-docker.com/), il faut s'y connecter avec vos identifiants Docker Hub.
+- Vous pouvez faire `docker swarm --help` pour obtenir des infos manquantes, ou faire `docker swarm leave --force` pour réinitialiser votre configuration Docker Swarm si besoin.
+
+- N'hésitez pas à regarder dans les logs avec `systemctl status docker` comment se passe l'élection du nœud *leader*, à partir du moment où vous avez plus d'un manager.
 
 - Lancez le service suivant : 
 `docker service create --name whoami --replicas 5 --publish published=80,target=80 traefik/whoami`
@@ -135,3 +137,8 @@ docker service create \
 ### _Facultatif :_ Utiliser Traefik avec Swarm
 
 Vous pouvez désormais faire [l'exercice 2 du TP 7](../7-tp-traefik) pour configurer un serveur web qui permet d'accéder à vos services Swarm via des domaines spécifiques.
+
+
+### *Facultatif :* du monitoring de cluster Docker Swarm avec *Prometheus*
+
+Suivre ce tutoriel pour du monitoring d'un cluster Docker Swarm : <https://prometheus.io/docs/guides/dockerswarm>
