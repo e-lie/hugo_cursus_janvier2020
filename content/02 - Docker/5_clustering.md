@@ -161,6 +161,11 @@ networks:
 - `docker stack rm` : Supprimer une ou des stacks
 - `docker stack services` : Liste les services qui composent une stack
 
+- `docker node inspect` : Informations détaillées sur un nœud
+- `docker node ls` : Liste les nœuds
+- `docker node ps` : Liste les tâches en cours sur un nœud
+- `docker node promote` : Transforme un nœud worker en manager
+- `docker node demote` : Transforme un nœud manager en worker
 
 ---
 
