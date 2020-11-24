@@ -127,6 +127,18 @@ CMD ["echo 'Conteneur démarré'"]
 ENTRYPOINT ["/usr/bin/python3"]
 ```
 
+## `CMD` et `ENTRYPOINT`
+
+* Ne surtout pas confondre avec `RUN` qui exécute une commande Bash uniquement pendant la construction de l'image.
+
+L'instruction `CMD` a trois formes :
+* `CMD ["executable","param1","param2"]` (*exec form*, forme à préférer)
+* `CMD ["param1","param2"]` (combinée à une instruction `ENTRYPOINT`)
+* `CMD command param1 param2` (*shell form*)
+
+
+Si l'on souhaite que notre container lance le même exécutable à chaque fois, alors on peut opter pour l'usage d'`ENTRYPOINT` en combination avec `CMD`.
+
 ---
 
 ## Instruction `ENV`
