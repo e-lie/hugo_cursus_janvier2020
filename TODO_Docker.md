@@ -298,3 +298,9 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 
 - dire de faire passer la commande docker run wordpress à rallonge à la moulinette composerize
 - dans tp4 faire faire wordpress docker compose avec config sauvée du tp2
+
+# Notes MSF
+
+Si bien amené, expliquer comment construire une image à partir d'un conteneur modifié "à la main" docker diff et docker commit ou truc du genre, puis expliquer que dockerfile ne fait qu'automatiser tout ça
+
+expliquer plus par écrit cette notion de ligne dockerfile = layer et images = groupe de layers
