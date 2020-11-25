@@ -94,7 +94,7 @@ Comment ?
 
 - Problèmes historiques posé par trop de spécification et validation humaine :
   - Lenteur de livraison du logiciel (une version par an ?) donc aussi difficulté de fixer les bugs et problèmes de sécurité a temps
-  - Le Travail du développeur est dominé par des `process` formels : ennuyeux et abstrait
+  - Le travail des développeur·euses est dominé par des `process` formels : ennuyeux et abstrait
   - difficulté commerciale : comment répondre à la concurence s'il faut 3 ans pour lancer un produit logiciel.
 
 ##### Solution : développer de façon agile c'est à dire **itérative**
@@ -134,7 +134,7 @@ On peut donc constater que les opérations traditionnelles implique une culture 
 
 - On s'organise à l'avance.
 - On vérifie plusieurs fois chaque chose.
-- On ne fait pas confiance au code que nous donnent les développeurs.
+- On ne fait pas confiance au code que nous donnent les développeur·euses.
 - On suit des procédures pour limiter les risques.
 - On surveille l'état du système (on parle de monitoring)
 - Et on reçoit même des SMS la nuit si ya un problème :S
@@ -149,12 +149,12 @@ Les opérations "traditionnelles":
 
 ### L'objectif technique idéal du DevOps : Intégration et déploiement continus (CI/CD)
 
-Du côté des développeurs avec l'agilité on a déjà depuis des années une façon d'automatiser pleins d'opérations sur le code à chaque fois qu'on valide une modification.
+Du côté des développeur·euses avec l'agilité on a déjà depuis des années une façon d'automatiser pleins d'opérations sur le code à chaque fois qu'on valide une modification.
 
 - Chaque modification du code est validée dans le gestionnaire de version **Git**.
 - Ensuite est envoyée sur le dépot de code commun.
 - Des tests logiciels se lancent automatiquement pour s'assurer qu'il n'y a pas de bugs ou de failles.
-- Le développeurs est averti des problèmes.
+- Les développeur·euses sont avertis des problèmes.
 
 C'est ce qu'on appelle l'intégration continue.
 
@@ -173,9 +173,9 @@ Dans le cadre d'un produit logiciel, les administrateurs systèmes sont rassembl
 
 ## Culture de la polyvalence
 
-- Les développeurs peuvent plus facilement créer un environnement réaliste pour jouer avec et comprendre comment fonctionne l'infrastructure de production (ils progressent dans l'administration système et la compréhension des enjeux opérationnels).
+- Les développeur·euses peuvent plus facilement créer un environnement réaliste pour jouer avec et comprendre comment fonctionne l'infrastructure de production (ils progressent dans l'administration système et la compréhension des enjeux opérationnels).
 
-- Les adminsys apprennent à programmer leurs opérations de façon puissante il deviennent donc plus proche de la logique des développeurs. (grace à l'Infrastructure as Code)
+- Les adminsys apprennent à programmer leurs opérations de façon puissante il deviennent donc plus proche de la logique des développeur·euses. (grace à l'Infrastructure as Code)
 
 ---
 
@@ -185,7 +185,7 @@ Par abus de langage on dit un ou une DevOps pour parler d'un métier spécifique
 
 Vous pouvez retenir :
 
-## Un DevOps c'est un **Administrateur Système** qui **programme ses outils**.
+## Un·e DevOps c'est un·e **Administrateur·ice Système** qui **programme ses outils**.
 
 ---
 
@@ -201,7 +201,7 @@ Il faut connaître les nouvelles bonnes pratiques et les nouveaux outils cités 
 
 - Un profil ? Un hybride de dev et d'ops...
 - Une méthode ? Infra-as-Code, _continuous integration and delivery_ (CI/CD), conteneurisation
-- Une façon de virer des adminsys...
+- Une façon de virer des adminsys... ?
 
 ---
 
@@ -244,9 +244,7 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 - A chaque étape le code passe dans un **Pipeline** de validation automatique.
 
-
 ![](../../images/devops/gitlab_workflow_example.png)
-
 
 ---
 
@@ -256,7 +254,7 @@ C'est ce qu'on appelle le IaaS (Infrastructure as a service)
 
 - Plutôt que d'appliquer des commandes puis d'oublier si on les a appliqué, On **décrit** le système d'exploitation (l'état du linux) dans un fichier et on utilise un système qui applique cette configuration explicite à tout moment.
 
-- Permet aux Ops/AdminSys de travailler comme des développeurs (avec une usine logicielle et ses outils)
+- Permet aux Ops/AdminSys de travailler comme des développeur·euses (avec une usine logicielle et ses outils)
 
 # Infrastructure As Code
 
@@ -323,7 +321,7 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 3. Difficultés du travail collaboratif dans de grandes équipes avec plusieurs culture (Dev vs Ops) lorsque les rythmes et les modes de travail diffèrent
 
 - L'IaC permet de tout gérer avec git et des commits.
-- L'IaC permet aux Ops qui ne le faisait pas de se mettre au code et aux développeur de se confronter plus facilement.
+- L'IaC permet aux Ops qui ne le faisait pas de se mettre au code et aux développeur·euses de se confronter plus facilement.
 - L'IaC permet d'accélérer la transformation des infrastructures pour l'aligner sur la livraison logicielle quotidienne (idéalement ;) )
 
 ---

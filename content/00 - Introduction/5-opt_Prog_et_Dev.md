@@ -39,7 +39,7 @@ title: Introduction au DevOps
 
 - ## Il s'agit de **répondre à un besoin**.
 
-- ## Le besoin est généralement défini par un client ou un chef produit qui n'est pas dans la tête du développeur
+- ## Le besoin est généralement défini par un·e client·e ou un·e chef·fe produit qui n'est pas dans la tête du/de la développeur·euse
 
 - Il faut **définir** et redéfinir le besoin client **explicitement**
 
@@ -53,7 +53,7 @@ title: Introduction au DevOps
 
 - ## Il faut des outils comme **git** qui permet de **gérer plein de versions différentes** du logiciel à la fois et les **combiner**. Cf module sur l'usine logicielle semaine 3.
 
-- Il y a plusieurs métiers dans une équipe de dév (développeur, architecte, chef produit, testeur )
+- Il y a plusieurs métiers dans une équipe de dév (développeur·euse, architecte, chef·fe produit, testeur·se )
 
 ---
 
@@ -77,7 +77,7 @@ Pour répondre à ce problème, le mouvement du développement agile propose de 
 
 - Revenir à une méthode de développement plus **spontanée** et **artisanale**
 - Mais faire des **petites itérations**...
-- **Valider à chaque itération** avec le reste de l'équipe et donc le chef produit.
+- **Valider à chaque itération** avec le reste de l'équipe et donc le/la chef·fe produit.
 
 ---
 
@@ -127,7 +127,7 @@ On n'accumule pas de retard et on réagit vite à la demande. Pour ça il faut q
 
 - ## Ajouter des fonctionnalités pour être compétitif (se développer) -> vélocité
 
-- Les détails de l'infrastructure sont secondaires (il faut que ça fonctionne mais ce n'est pas le travail du développeur).
+- Les détails de l'infrastructure sont secondaires (il faut que ça fonctionne mais ce n'est pas le travail du/de la développeur·euse).
 
 ---
 

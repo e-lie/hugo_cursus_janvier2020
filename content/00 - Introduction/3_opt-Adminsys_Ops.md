@@ -107,7 +107,7 @@ La difficulté principale pour les Obs c'est qu'un système informatique est:
 
 - ## On vérifie plusieurs fois chaque chose.
 
-- ## On ne fait pas confiance au code que nous donnent les développeurs.
+- ## On ne fait pas confiance au code que nous donnent les développeur·euses.
 
 - ## On suit des procédures pour limiter les risques.
 
