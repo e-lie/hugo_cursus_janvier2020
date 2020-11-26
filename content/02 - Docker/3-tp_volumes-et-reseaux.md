@@ -32,7 +32,7 @@ docker run --detach --name portainer \
 - Explorez l'interface de Portainer.
 - Créez un conteneur -->
 
-## Docker networking
+# Partie 1 : Docker networking
 
 Pour expérimenter avec le réseau, nous allons lancer une petite application nodejs d'exemple (moby-counter) qui fonctionne avec une file (_queue_) redis (comme une base de données mais pour stocker des paires clé/valeur simples).
 
@@ -102,7 +102,7 @@ Par contre, notre deuxième réseau fonctionne complètement isolé de notre pre
 
 ---
 
-# Volumes Docker
+# Partie 2 : Volumes Docker
 
 ## Introduction aux volumes
 
@@ -129,7 +129,7 @@ ls /tmp/data/
 
 Le fichier `testfile` a été crée par le conteneur au dossier que l'on avait connecté grâce à `-v /tmp/data:/data`
 
-## L'app `moby-counter` et le volume Redis
+## L'app `moby-counter`, Redis et les volumes
 
 Pour ne pas interférer avec la deuxième partie du TP :
 
@@ -145,33 +145,29 @@ Passons à l'exploration des volumes:
 
 ```bash
 docker network create moby-network
-docker container run -d --name redis --network moby-network redis
-docker container run -d --name moby-counter --network moby-network -p 8000:80 russmckendrick/moby-counter
+docker run -d --name redis --network moby-network redis
+docker run -d --name moby-counter --network moby-network -p 8000:80 russmckendrick/moby-counter
 ```
 
-- Visitez votre application dans le navigateur. Faites un motif reconnaissable en cliquant.
+- Visitez votre application dans le navigateur. **Faites un motif reconnaissable en cliquant.**
+
+<!-- - Recréez le conteneur `redis` dans le réseau `moby-network` : 
+```bash
+docker run -d --name redis --network moby-network redis
+```
+
+- Rechargez la page. Que s'est-il passé ? -->
+
+### Récupérer un volume d'un conteneur supprimé
 
 - supprimez le conteneur `redis` : `docker rm --force redis`
 
 - Visitez votre application dans le navigateur. Elle est maintenant déconnectée de son backend.
 
-- Recréez le conteneur `redis` dans le réseau `moby-network`
-
-- Rechargez la page. Que s'est-il passé ?
-
-- Supprimez le conteneur `redis` avec `docker rm --force redis`
-- Lancez `docker volume prune` pour faire le ménage et supprimer les volumes non utilisés
-
-### Récupérer un volume d'un conteneur supprimé
-
-- Faites de nouveau un motif reconnaissable dans l'application web
-
-- Puis, **supprimez à nouveau** le conteneur redis.
-
 - Avons-nous vraiment perdu les données de notre conteneur précédent ? Non !
   Le Dockerfile pour l'image officielle Redis ressemble à ça :
 
-```Dockerfile
+{{< highlight Dockerfile "hl_lines=28" >}}
 FROM alpine:3.5
 
 RUN addgroup -S redis && adduser -S -G redis redis
@@ -204,9 +200,9 @@ RUN ln -s usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
 ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 6379
 CMD [ "redis-server" ]
-```
+{{< / highlight >}}
 
-Notez que, vers la fin du fichier, il y a deux instructions VOLUME et WORKDIR ; cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
+Notez que, vers la fin du fichier, il y a une instruction `VOLUME` ; cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
 
 Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
 
@@ -217,7 +213,7 @@ Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qu
 
 - Visitez la page de l'application. Normalement un motif de logos _moby_ d'une précédente session devrait s'afficher (après un délai)
 
-- Affichez le contenu du volume avec la commande : `docker container exec redis ls -lhat /data`
+- Affichez le contenu du volume avec la commande : `docker exec redis ls -lha /data`
 
 ### Bind mounting
 
