@@ -1,6 +1,6 @@
 ---
 title: 'TP2 - Déployer des conteneurs'
-draft: true
+draft: false
 ---
 
 La première partie de ce TP va consister à créer des objets kubernetes pour déployer notre Stack monster_icon.

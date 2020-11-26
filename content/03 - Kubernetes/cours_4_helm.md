@@ -1,6 +1,6 @@
 ---
 title: Cours 4 - Helm le gestionnaire de paquets Kubernetes
-draft: true
+draft: false
 ---
 
 

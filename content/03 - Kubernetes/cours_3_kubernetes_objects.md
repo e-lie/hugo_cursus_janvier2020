@@ -1,6 +1,6 @@
 ---
 title: Cours 3 - Kubernetes Objects
-draft: true
+draft: false
 ---
 
 <!-- 
