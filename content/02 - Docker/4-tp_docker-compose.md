@@ -90,8 +90,6 @@ if __name__ == '__main__':
 ```Dockerfile
 FROM python:3.7
 
-# Ajouter tout le contexte
-ADD . .
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 RUN pip install Flask uWSGI requests redis
 WORKDIR /app
@@ -134,7 +132,7 @@ Une fois dans le conteneur lancez:
 - A la racine de notre projet `identidock` (à côté du Dockerfile), créez un fichier de déclaration de notre application appelé `docker-compose.yml` avec à l'intérieur :
 
 ```yml
-version: "2"
+version: "3.7"
 services:
   identidock:
     build: .
@@ -162,7 +160,7 @@ dnmonster:
 Le `docker-compose.yml` doit pour l'instant ressembler à ça :
 
 ```yml
-version: "2"
+version: "3.7"
 services:
   identidock:
     build: .
@@ -202,7 +200,7 @@ redis:
 {{% expand "`docker-compose.yml` final :" %}}
 
 ```yaml
-version: "2"
+version: "3.7"
 services:
   identidock:
     build: .

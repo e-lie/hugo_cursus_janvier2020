@@ -167,7 +167,7 @@ docker run -d --name redis --network moby-network redis
 - Avons-nous vraiment perdu les données de notre conteneur précédent ? Non !
   Le Dockerfile pour l'image officielle Redis ressemble à ça :
 
-{{< highlight Dockerfile "hl_lines=28" >}}
+{{< highlight Dockerfile "hl_lines=26" >}}
 FROM alpine:3.5
 
 RUN addgroup -S redis && adduser -S -G redis redis

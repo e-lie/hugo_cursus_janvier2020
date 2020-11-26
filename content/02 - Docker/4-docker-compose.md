@@ -117,8 +117,6 @@ services:
       - MYSQL_DATABASE=wordpress
       - MYSQL_USER=wordpress
       - MYSQL_PASSWORD=monwordpress
-    ports:
-      - "3306:3306"
     networks:
     - wordpress
     image: "mysql:5.7"
@@ -143,7 +141,7 @@ networks:
   wordpress:
 
 volumes:
-    wordpress_config:
+  wordpress_config:
 ```
 
 ---
@@ -181,6 +179,6 @@ Les commandes suivantes sont couramment utilisées lorsque vous travaillez avec 
 
 - Certaines applications microservice peuvent avoir potentiellement des dizaines de petits conteneurs spécialisés. Le service devient alors difficile à lire dans le compose file.
 
-- Il est possible de visualiser l'architecture d'un fichier Docker Compose en utilisant docker-compose-viz (https://github.com/pmsipilot/docker-compose-viz]
+- Il est possible de visualiser l'architecture d'un fichier Docker Compose en utilisant [docker-compose-viz](https://github.com/pmsipilot/docker-compose-viz)
 
 - Cet outil peut être utilisé dans un cadre d'intégration continue pour produire automatiquement la documentation pour une image en fonction du code.
