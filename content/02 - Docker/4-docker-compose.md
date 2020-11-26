@@ -141,6 +141,9 @@ services:
 
 networks:
   wordpress:
+
+volumes:
+    wordpress_config:
 ```
 
 ---
