@@ -304,3 +304,19 @@ traefik bis : https://blog.mikesir87.io/2018/07/letting-traefik-run-on-worker-no
 Si bien amené, expliquer comment construire une image à partir d'un conteneur modifié "à la main" docker diff et docker commit ou truc du genre, puis expliquer que dockerfile ne fait qu'automatiser tout ça
 
 expliquer plus par écrit cette notion de ligne dockerfile = layer et images = groupe de layers
+
+volume nommé cours dire clairement !
+
+
+flask lance qd meme en production malgré dev server supposé
+
+backup de volume volumes-from à virer
+
+healthcheck direct dans microblog pas app à part, rajouter param toutes les 10s
+
+rajouter prompt shell dans exemple volume
+
+dire pattern tagger images chaque jour et CI
+Dire qu'on s'en fiche cache des images et que des qu'une image étiquetée alors on perd pas les layers. Ex tag avec date
+
+parler du dossier /var/lib/docker et de findmnt
