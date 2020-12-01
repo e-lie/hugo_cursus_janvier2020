@@ -10,7 +10,7 @@ theme = "hugo-theme-learn"
 home = [ "HTML", "RSS", "JSON" ]
 
 [params]
-editURL = "https://github.com/ketsapiwiq/hp_cursus_octobre2020"
+editURL = "https://github.com/ketsapiwiq/hp_cursus_devops"
 
 
 # [menu.shortcuts]
