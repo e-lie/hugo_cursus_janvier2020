@@ -3,16 +3,16 @@ title: Cours 3 - Kubernetes Objects
 draft: false
 ---
 
-<!-- 
+<!-- Pas relu ! -->
 ## Principes d'orchestration
 
 #### Haute disponibilité
 
-Faire en sorte qu'un service ai un "uptime" élevé.
+Faire en sorte qu'un service ait un "uptime" élevé.
 On veut que le service soit tout le temps accessible même lorsque certaines ressources manquent c'est à dire :
 
 - tombent en panne
-- sont sorties du service pour mise à jours, maintenance ou modification
+- sont sorties du service pour mise à jour, maintenance ou modification
 
 Pour cela on doit avoir des ressources multiples ...
 
@@ -97,9 +97,12 @@ Cependant le DNS n'a pas été pensé pour ça:
 
 On peut compléter Swarm avec d'autre découvertes de services comme:
   - **Consul**: (Hashicorp): Assez simple d'installation et fournit avec une sympathique interface web.
-  - **Etcd** : A prouvé ses performances aux plus grandes échelle mais un peu plus complexe. (à la base de kubernetes mais côté control plane et non pas application)
+  - **Etcd** : A prouvé ses performances aux plus grandes échelle mais un peu plus complexe. (à la base de Kubernetes mais côté control plane et non pas application)
 
-- Kubernetes propose un service discovery extrêment flexible grace aux `deployments` et `services` -->
+- Kubernetes propose un service discovery extrêment flexible grace aux `deployments` et `services` 
+  
+  
+  <!-- Fin de la partie décommentée à relire -->
 
 
 ## L'API et les Objets Kubernetes
@@ -114,7 +117,7 @@ Vous pouvez également écrire des porgramment qui utilisent directement l’API
 
 ### La commande `apply`
 
-Kubernetes encourage le principe de l'infrastructure as code : il est recommandé d'utiliser une description YAML et versionnée des objets et configurations kubernetes plutôt que la CLI.
+Kubernetes encourage le principe de l'infrastructure as code : il est recommandé d'utiliser une description YAML et versionnée des objets et configurations Kubernetes plutôt que la CLI.
 
 Pour cela la commande de base est `kubectl apply -f object.yaml`.
 
@@ -173,7 +176,7 @@ Remarques de syntaxe:
 #### Description multiressources
 
 - On peut mettre plusieurs ressources à la suite dans un fichier k8s :  permet de décrire une installation complexe en un seul fichier
-  - exemple la dashboard kubernetes [https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml](https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml)
+  - exemple la dashboard Kubernetes [https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml](https://github.com/kubernetes/dashboard/blob/master/aio/deploy/recommended.yaml)
 
 - L'ordre n'importe pas car les ressources sont décrites déclarativement c'est-à-dire que:
   - Les dépendances entre les ressources sont déclarées
@@ -218,7 +221,7 @@ A notre que `kubectl kustomize .` permet de visualiser l'ensemble de modificatio
 
 ### Les namespaces
 
-Tous les objets kubernetes sont rangés dans différents espaces de travails isolés appelés `namespaces`.
+Tous les objets Kubernetes sont rangés dans différents espaces de travail isolés appelés `namespaces`.
 
 Cette isolation permet 3 choses:
   - ne voir que ce qui concerne une tache particulière (diminuer la charge cognitive lorsqu'on opère un cluster)

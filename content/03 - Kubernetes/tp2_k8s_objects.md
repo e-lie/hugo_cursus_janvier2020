@@ -3,7 +3,7 @@ title: 'TP2 - Déployer des conteneurs'
 draft: false
 ---
 
-La première partie de ce TP va consister à créer des objets kubernetes pour déployer notre Stack monster_icon.
+La première partie de ce TP va consister à créer des objets Kubernetes pour déployer notre Stack monster_icon.
 
 Mais d'abord créons une application d'exemple Wordpress Mysql
 
@@ -28,13 +28,20 @@ Nous voudrions déployer notre stack monster stack. Nous allons commencer par cr
   - forwardant le port de l'application avec `kc port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
 - Monitorez les processus avec `kc top pods`.
 
-#### Installer kubematic
+<!-- #### Installer Kubematic
 
-Kubematic est une interface graphique sympatique pour kubernetes.
+Kubematic est une interface graphique sympatique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'éviter la configuration correcte d'une dashboard pour le moment. En plus est plus agréable à utiliser.
 
-Elle est très récente et ne dispose par de paquet ubuntu/debian. Vous pouvez l'installer en suivant [ce tutoriel](https://thenewstack.io/install-the-kubernetic-desktop-gui-on-ubuntu-linux-19-10/)
+Elle est très récente et ne dispose par de paquet ubuntu/debian. Vous pouvez l'installer en suivant [ce tutoriel](https://thenewstack.io/install-the-kubernetic-desktop-gui-on-ubuntu-linux-19-10/) -->
+#### Installer Lens
+
+Lens est une interface graphique sympatique pour Kubernetes.
+
+Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'éviter la configuration correcte d'une dashboard pour le moment. En plus est plus agréable à utiliser.
+
+Vous pouvez l'installer à cette adresse : <https://k8slens.dev>
 
 #### Ajoutons dnmonster ?
 
@@ -148,7 +155,7 @@ metadata:
     <labels>
 ```
 
-Ce fichier exprime un objet déploiement vide. Les objets dans kubernetes sont hautement dynamiques. Pour les associer et les manipuler on leur associe des `label` c'est à dire des étiquettes avec lesquelles on peut les retrouver ou les matcher précisément. C'est grace à des label que k8s associe les pods aux replicasets.
+Ce fichier exprime un objet déploiement vide. Les objets dans Kubernetes sont hautement dynamiques. Pour les associer et les manipuler on leur associe des `label` c'est à dire des étiquettes avec lesquelles on peut les retrouver ou les matcher précisément. C'est grace à des label que k8s associe les pods aux replicasets.
 
 - Ajoutez le label `app: monsterstack` à cet objet Deployment.
 

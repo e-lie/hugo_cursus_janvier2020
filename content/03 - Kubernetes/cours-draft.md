@@ -43,8 +43,7 @@ Pour remédier à cela on peut définir des healthchecks spécifiques dans le ma
 Chaque pod a une ip (le kubernetes networking model)
 
 
-
-## Architecture de Kubernetes - Les composants de kubernetes
+## Architecture de Kubernetes - Les composants de Kubernetes
 
 Control plane
     - kube-proxy

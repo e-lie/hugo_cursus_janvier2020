@@ -133,3 +133,53 @@ super tp pour sécuriser la stack elastic sur k8s avec cilium : http://docs.cili
 * a project is a group of namespaces: https://rancher.com/docs/rancher/v2.x/en/cluster-admin/projects-and-namespaces/
 
 
+
+- Ajout part sécurité avec le TP de rootme en mode simplifié : guider la partie reverse shell ou faire en mode démo
+- Faire une partie des slides qu'il y a dans ressources
+
+- AJouts schemas networks avec appui sur cours lexsi
+
+- me faire kubernetes the hard way 
+
+- parler de Autoscaling des pods et des clusters
+
+
+- smoketest : https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/13-smoke-test.md
+
+- check https://github.com/projectcontour/contour
+
+
+- mettre la bd d'initiation à K8s de Google ?
+
+
+- comprendre différentes CNI et cce qui est mis en prod
+
+
+- ajouter un tuto CRD
+
+
+## Idées TD :
+- https://github.com/dockersamples/k8s-wordsmith-demo
+- https://github.com/microservices-demo/microservices-demo
+- reprendre éléments de tutos katakoda officiels : https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
+- https://kubernetes.io/docs/tutorials/configuration/configure-redis-using-configmap/
+- https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+- k8s elastic + petclinic : https://www.elastic.co/fr/blog/kubernetes-observability-tutorial-k8s-cluster-setup-demo-app-deployment
+- https://github.com/michaelhyatt/k8s-o11y-workshop (voir ci dessus)
+- istio + bookinfo : https://istio.io/latest/docs/examples/bookinfo/ https://www.digitalocean.com/community/tutorials/an-introduction-to-service-meshes
+---
+
+- schémas pods et nodes : https://kubernetes.io/docs/tutorials/kubernetes-basics/explore/explore-intro/
+
+
+- parler des PersistentVolumeClaims et des plugins
+
+- tuto rolling update
+
+
+- tuto rancher
+
+
+- kustomization
+
+- on fait un docker stack deploy --orchestrator=kubernetes de transition ?

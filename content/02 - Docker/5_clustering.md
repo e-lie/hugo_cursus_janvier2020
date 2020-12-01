@@ -12,12 +12,15 @@ weight: 50
 
 - A partir d'une certaine échelle, il n'est plus question de gérer les serveurs et leurs conteneurs à la main.
 
----
+Les nœuds d’un cluster sont les machines (serveurs physiques, machines virtuelles, etc.) qui font tourner vos applications (composées de conteneurs).
+
 L'orchestration consiste à automatiser la création et la répartition des conteneurs à travers un cluster de serveurs. Cela peut permettre de :
 
 - déployer de nouvelles versions d'une application progressivement.
 - faire grandir la quantité d'instances de chaque application facilement.
 - voire dans le cas de l'auto-scaling de faire grossir l'application automatiquement en fonction de la demande.
+
+
 
 ---
 

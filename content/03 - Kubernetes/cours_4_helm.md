@@ -47,13 +47,13 @@ Helm utilise automatiquement votre fichier kubeconfig pour se connecter.
 
 Voici quelques commandes de bases pour Helm :
 
-- `helm install my-chart` : permet d’installer le chart my-chart. Le nom de release est généré aléatoirement dans votre cluster kubernetes.
+- `helm install my-chart` : permet d’installer le chart my-chart. Le nom de release est généré aléatoirement dans votre cluster Kubernetes.
 
 - `helm upgrade my-release my-chart` : permet de mettre à jour notre release avec une nouvelle version.
 
 - `helm ls`: Permet de lister les Charts installés sur votre Cluster
 
-- `helm delete my-release`: Permet de désinstaller la release my-release de kubernetes
+- `helm delete my-release`: Permet de désinstaller la release `my-release` de Kubernetes
 
 ### La configuration d'un Chart: des templates jinja d'objets Kubernetes
 

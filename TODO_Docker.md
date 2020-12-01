@@ -363,3 +363,6 @@ rdpress pas mysql port public tp1 et 4
 - ajouter des screens pour ensuite config elasticsearch
 
 - partie réseau trop dense pour devs !
+
+
+- + docker stack deploy --orchestrator=kubernetes comme ouverture ?
