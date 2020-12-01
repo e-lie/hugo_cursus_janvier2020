@@ -160,7 +160,7 @@ docker run -d --name redis --network moby-network redis
 
 ### Récupérer un volume d'un conteneur supprimé
 
-- supprimez le conteneur `redis` : `docker rm --force redis`
+- supprimez le conteneur `redis` : `docker stop redis` puis `docker rm redis`
 
 - Visitez votre application dans le navigateur. Elle est maintenant déconnectée de son backend.
 
@@ -211,7 +211,7 @@ Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qu
 - Créez un nouveau conteneur redis en le rattachant au volume redis "caché" que vous avez retrouvé (en copiant l'id du volume anonyme) :
   `docker container run -d --name redis -v <volume_id>:/data --network moby-network redis:alpine`
 
-- Visitez la page de l'application. Normalement un motif de logos _moby_ d'une précédente session devrait s'afficher (après un délai)
+- Visitez la page de l'application. Normalement un motif de logos _moby_ d'une précédente session devrait s'afficher (après un délai pouvant aller jusqu'à plusieurs minutes)
 
 - Affichez le contenu du volume avec la commande : `docker exec redis ls -lha /data`
 

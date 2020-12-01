@@ -261,7 +261,8 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 
 - Les **pods** Kubernetes servent à grouper des conteneurs en unités d'application (microservices ou non) fortement couplées (un peu comme les *stacks* Swarm)
 
-- Les **services** sont des groupes de pods exposés à l'extérieur (un peu comme les *services* Swarm)
+- Les **services** sont des groupes de pods exposés à l'extérieur
+- 
 - Les **deployments** sont une abstraction pour scaler ou mettre à jours des groupes de **pods** (un peu comme les *tasks* dans Swarm).
 
 <!-- - Ces derniers tendent à se rapprocher d'une VM du point de vue de l'application. -->
@@ -286,8 +287,8 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 
 - Swarm plus intégré avec la CLI et le workflow Docker.
 - Swarm est plus fluide, moins structurant mais moins automatique que Kubernetes.
-- Swarm groupe les containers entre eux par **stack** mais c'est un groupement assez léger à l'aide d'un serveur DNS.
-- Kubernetes au contraire crée des **pods** avec une meilleure cohésion qui sont toujours déployés ensemble
+- Swarm groupe les containers entre eux par **stack**.
+- Kubernetes au contraire crée des **pods** avec une meilleure isolation.
   - Kubernetes a une meilleure fault tolerance que Swarm
   - attention au contre-sens : un service Swarm est un seul conteneur répliqué, un service Kubernetes est un groupe de conteneurs (pod) répliqué, plus proche des Docker Stacks.
 
@@ -296,7 +297,7 @@ Pour basculer `eval $(docker env hote-digitalocean);`
 ## Comparaison Swarm et Kubernetes
 
 - Kubernetes a plus d'outils intégrés. Il s'agit plus d'un écosystème qui couvre un large panel de cas d'usage.
-- Swarm a un mauvais monitoring et le stockage distribué n'est pas intégré de façon standard.
+<!-- - Swarm a un mauvais monitoring et le stockage distribué n'est pas intégré de façon standard. -->
 - Swarm est beaucoup plus simple à mettre en œuvre qu'une stack Kubernetes.
 - Swarm serait donc mieux pour les clusters moyen et Kubernetes pour les très gros
 

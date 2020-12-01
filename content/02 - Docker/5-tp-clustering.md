@@ -7,13 +7,15 @@ weight: 55
 
 # Introduction à Swarm
 
+Initialisez Swarm avec `docker swarm init`.
+
 ## Créer un service
 
-A l'aide de `docker service create`, créer un service à partir de l'image `tutum/hello-world` accessible sur le port 80 et avec 5 répliques.
+A l'aide de `docker service create`, créer un service à partir de l'image `traefik/whoami` accessible sur le port `9999` et connecté au port `80` et avec 5 répliques.
 
 
 {{% expand "Solution :" %}}
-`docker service create --name hello --replicas 5 --publish published=80,target=80 tutum/hello-world`
+`docker service create --name whoami --replicas 5 -p 9999:80 traefik/whoami`
 {{% /expand %}}
 
 Accédez à votre service et actualisez plusieurs fois la page. Les informations affichées changent. Pourquoi ?
@@ -87,12 +89,12 @@ Première étape, regarder les logs !
 {{% expand "Indice 2 :" %}}
 Deuxième étape, vérifier sur le dépôt GitHub officiel de l'app si quelqu'un a déjà répertorié ce bug : <https://github.com/dockersamples/example-voting-app/issues/>
 {{% /expand %}}
-
+<!-- 
 {{% expand "Indice 3 :" %}}
 Hmm, ce serait [ce satané _commit_](https://github.com/dockersamples/example-voting-app/pull/159) qui serait à la source de toute cela !
-{{% /expand %}}
+{{% /expand %}} -->
 
-{{% expand "Indice 4 :" %}}
+{{% expand "Indice 3 :" %}}
 Ce commentaire semble contenir la clé du mystère au chocolat : <https://github.com/dockersamples/example-voting-app/issues/162#issuecomment-609521466>
 
 {{% /expand %}}
@@ -107,7 +109,7 @@ Quelqu'un a abandonné le dépôt Docker Hub lié à cette app et la personne qu
 
 ### Introduction à Kubernetes
 
-Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver les équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.
+Le fichier `kube-deployment.yml` de l'app [`example-voting-app`](https://github.com/dockersamples/example-voting-app) décrit la même app pour un déploiement dans Kubernetes plutôt que dans Docker Compose ou Docker Swarm. Tentez de retrouver quelques équivalences entre Docker Compose / Swarm et Kubernetes en lisant attentivement ce fichier qui décrit un déploiement Kubernetes.
 
 
 <!--
@@ -139,6 +141,6 @@ docker service create \
 Vous pouvez désormais faire [l'exercice 2 du TP 7](../7-tp-traefik) pour configurer un serveur web qui permet d'accéder à vos services Swarm via des domaines spécifiques.
 
 
-### *Facultatif :* du monitoring de cluster Docker Swarm avec *Prometheus*
+<!-- ### *Facultatif :* du monitoring de cluster Docker Swarm avec *Prometheus*
 
-Suivre ce tutoriel pour du monitoring d'un cluster Docker Swarm : <https://prometheus.io/docs/guides/dockerswarm>
+Suivre ce tutoriel pour du monitoring d'un cluster Docker Swarm : <https://prometheus.io/docs/guides/dockerswarm> -->

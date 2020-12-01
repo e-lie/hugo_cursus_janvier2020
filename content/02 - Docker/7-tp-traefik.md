@@ -37,7 +37,7 @@ services:
 
 - Explorez le dashboard Traefik accessible sur le port indiqué dans le fichier Docker Compose.
 
-- Ajouter des labels à l'app web que vous souhaitez desservir grâce à Traefik à partir de l'exemple de la doc Traefik, grâce aux labels ajoutés dans le `docker-compose.yml`.
+- Ajouter des labels à l'app web que vous souhaitez desservir grâce à Traefik à partir de l'exemple de la doc Traefik, grâce aux labels ajoutés dans le `docker-compose.yml` (attention à l'indentation).
   {{% expand "Solution :" %}}
 
 ```yaml

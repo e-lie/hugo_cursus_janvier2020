@@ -131,3 +131,5 @@ super tp pour sécuriser la stack elastic sur k8s avec cilium : http://docs.cili
 
 # Rancher
 * a project is a group of namespaces: https://rancher.com/docs/rancher/v2.x/en/cluster-admin/projects-and-namespaces/
+
+

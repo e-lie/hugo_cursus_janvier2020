@@ -320,3 +320,46 @@ dire pattern tagger images chaque jour et CI
 Dire qu'on s'en fiche cache des images et que des qu'une image étiquetée alors on perd pas les layers. Ex tag avec date
 
 parler du dossier /var/lib/docker et de findmnt
+
+parler du dockerignore et de l'utilité de scinder en deux la partie requirements de la partie install de package et de copie fichiers app
+
+supprimer l'histoire du ip a / tee et faire plutot en demo
+
+fin du tp3 docker network plus de prune
+
+faire d'autre noms que tmp data et data et de la meilleure semantique
+v
+
+TP 3 Volume : 
+* volume DE redis
+* creeez volume pas clair
+
+peut ne pas marcher, pas éteindre redis violemment ? plusieurs minutes
+
+wo
+rdpress pas mysql port public tp1 et 4
+
+
+- faire exemple avec conf nginx et mount un seul fichier
+
+
+- faire tp plus concret sur gestion utilisateurs dans une iamge et mieux parler commande USER
+
+- traefik identidock network marche pas
+
+- restart policy health
+
+- rajoute r lens et rancher et k3s
+
+- dire service kubernetes est pas un service swarm wesh j'ai dit l'inverse
+
+- refaires lides swarm vs k8s parce que pas ouf
+- dire qu'essentiel est que k8s vvocab, raj exemple comparaison docker vote, dire que faut faire Lens ou Portainer comme avec Portainer
+
+- parler du script nginx proxy
+
+- pas dire "swarm couple les trucs avec un trux leger comme dns"
+
+- ajouter des screens pour ensuite config elasticsearch
+
+- partie réseau trop dense pour devs !

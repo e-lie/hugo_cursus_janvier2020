@@ -242,11 +242,12 @@ networks:
 
 ## D'autres services
 
-### Un pad CodiMD
+### Exercice de *google-fu* : un pad CodiMD
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré. -->
 
-- Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad CodiMD avec sa base de données.
+- Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad CodiMD avec sa base de données. Je vous conseille de toujours chercher **dans la documentation officielle** ou le repository officiel (souvent sur Github) en premier. Attention, CodiMD avant s'appelait **HackMD**.
+
 - Vérifiez que le pad est bien accessible sur le port donné.
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
@@ -311,9 +312,11 @@ networks:
     driver: bridge
 ```
 
-### _Facultatif :_ Ajouter un nœud Elasticsearch
+Il suffit ensuite de se rendre sur Kibana (port `5601`) et de configurer l'index en tapant `*` dans le champ indiqué, de valider et de sélectionner le champ `@timestamp`, puis de valider. L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie Discover à gauche (l'icône boussole 🧭) pour lire vos logs.
 
-Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
+<!-- ### _Facultatif :_ Ajouter un nœud Elasticsearch
+
+Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier. -->
 
 
 <!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
