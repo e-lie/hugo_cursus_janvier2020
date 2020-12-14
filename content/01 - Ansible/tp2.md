@@ -296,6 +296,7 @@ server {
         virtualenv_python: python3
     
     - name: Change permissions of app directory recursively
+      file:
         path: /home/flask/hello
         state: directory
         owner: "flask"
