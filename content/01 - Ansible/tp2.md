@@ -27,6 +27,9 @@ lxc launch ubuntu_ansible app2
 
 ```
 $ lxc list # pour récupérer l'adresse ip puis
+```
+
+```
 
 [all:vars]
 ansible_user=<user>
