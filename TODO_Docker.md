@@ -366,3 +366,23 @@ rdpress pas mysql port public tp1 et 4
 
 
 - + docker stack deploy --orchestrator=kubernetes comme ouverture ?
+
++ CRD K8s avec Docker Stack ? Impossible de retrouver la def
+
+- Istio comme résean network ?
+
+- Parler de weavenet et direqu'en fait vrai bail et puis pareil que du k8s conseillé
+
+
+- trouver outil en ligne pour faire quick polls qd formation àdistance
+
+
+- pas dire que swarm moins losen up sur les pods isolated: In k8s, by default, pods are non-isolated; they accept traffic from any source.
+
+
+- trouver comment évaluer acquis à la fin : QCM par mail ou quiz !!!
+
+## Ressources
+- https://medium.com/google-cloud/init-process-for-containers-d03a471fa0cc
+
+
