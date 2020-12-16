@@ -16,7 +16,8 @@ weight: 100
 ##### Ansible pour des thématiques sépcifiques
 
 - Ratan2017 - Practical Network Automation: Leverage the power of Python and Ansible to optimize your network
-- Madhu, Akash2017 - Security automation with Ansible 2 
+- Madhu, Akash2017 - Security automation with Ansible 2
+- https://iac.goffinet.org/ansible-network/
 
 ##### Cheatsheet
 
