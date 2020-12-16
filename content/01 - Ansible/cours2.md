@@ -224,7 +224,7 @@ L'élévation de privilège est nécessaire lorsqu'on a besoin d'être `root` po
 <!--  - Par défaut la méthode d'élévation est `become_method: sudo`. Il n'est donc pas besoin de le préciser à moins de vouloir l'expliciter.
 `su` est aussi possible ainsi que d'autre méthodes fournies par les "become plugins" exp `runas`). -->
 
-### Variables Ansible
+# Variables Ansible
 
 Ansible utilise en arrière plan un dictionnaire contenant de nombreuses variables.
 
