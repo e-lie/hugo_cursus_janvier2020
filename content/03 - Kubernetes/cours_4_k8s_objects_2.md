@@ -1,13 +1,13 @@
 ---
 title: Cours 4 - Objets Kubernetes - Partie 2
-draft: true
+draft: famse
 ---
-
-<!-- FIXME:  MANQUE LES STATEFULSET -->
 
 ## D'autres objets k8s
 
 ### StatefulSets
+
+<!-- TODO: préciser usage -->
 
 On utilise les `Statefulsets` pour répliquer un ensemble de pods dont l'état est important : par exemple, des pods dont le rôle est d'être une base de données, manipulant des données sur un disque.
 
