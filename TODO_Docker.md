@@ -386,3 +386,5 @@ rdpress pas mysql port public tp1 et 4
 - https://medium.com/google-cloud/init-process-for-containers-d03a471fa0cc
 
 
+## TP 
+https://github.com/dockersamples/k8s-wordsmith-demo

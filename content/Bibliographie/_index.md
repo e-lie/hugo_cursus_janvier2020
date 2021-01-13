@@ -17,7 +17,7 @@ draft: false
 
 - Jeff Geerling - Ansible for DevOps - Leanpub
 
-##### Pour aller plus loin :
+##### Pour aller plus loin
 
 - Keating2017 - Mastering Ansible - Second Edition - Packt
 
@@ -29,7 +29,7 @@ draft: false
 
 - McKendrick, Gallagher 2017 Mastering Docker - Second Edition
 
-### Pour aller plus loin :
+### Pour aller plus loin
 
 - Miell,Sayers2019 - Docker in Practice
 
@@ -57,15 +57,59 @@ draft: false
 
 ## Kubernetes
 
-- Kubernetes Up and Running - O Reilly 2019
+- Kubernetes Up and Running, O'Reilly 2019
 
-##### Pour aller plus loin :
+### Ressources
 
-- Luksa2018 - Kubernetes in Action
+- [Awesome Kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
+<!-- https://www.objectif-libre.com/fr/blog/2018/07/05/comparatif-solutions-reseaux-kubernetes/#Flannel
+https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/ -->
 
-##### Cheatsheet
+### Pour aller plus loin
 
-- [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
+- Luksa, Kubernetes in Action, 2018
+
+### Cheatsheets
+
+- <https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/>
+
+
+
+<!-- ## AKS
+
+https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
+https://docs.microsoft.com/fr-fr/azure/aks/
+https://github.com/microsoft/kubernetes-learning-path
+
+### HPA
+https://docs.microsoft.com/fr-fr/azure/aks/tutorial-kubernetes-scale
+
+### Stockage
+https://docs.microsoft.com/fr-fr/azure/aks/azure-files-dynamic-pv
+https://docs.microsoft.com/fr-fr/azure/aks/azure-disks-dynamic-pv
+https://docs.microsoft.com/fr-fr/azure/aks/concepts-storage
+
+### CRD
+https://github.com/Azure/azure-service-operator
+
+### Network
+https://docs.microsoft.com/fr-fr/azure/aks/internal-lb
+https://docs.microsoft.com/fr-fr/azure/aks/load-balancer-standard
+https://docs.microsoft.com/fr-fr/azure/aks/http-application-routing
+https://docs.microsoft.com/fr-fr/azure/aks/concepts-network
+https://blog.crossplane.io/azure-secure-connectivity-for-aks-azure-db/
+https://docs.microsoft.com/fr-fr/azure/mysql/concepts-aks
+
+### Terraform
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
+https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
+https://docs.microsoft.com/fr-fr/azure/aks/ingress-basic#create-an-ingress-controller
+https://registry.terraform.io/modules/Azure/appgw-ingress-k8s-cluster/azurerm/latest
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
+
+### Demo
+https://github.com/Microsoft/RockPaperScissorsLizardSpock -->
+
 
 <!-- ## Jenkins
 

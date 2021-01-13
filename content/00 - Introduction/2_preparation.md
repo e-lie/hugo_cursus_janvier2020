@@ -1,6 +1,7 @@
 ---
 title: Préparation
 weight: 20
+draft: true
 ---
 
 ## Importez une machine Linux

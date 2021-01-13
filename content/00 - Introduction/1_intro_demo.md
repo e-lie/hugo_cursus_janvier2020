@@ -1,7 +1,7 @@
 ---
 title: Démo
 weight: 10
-draft: no
+draft: true
 ---
 
 # Un peu de logistique

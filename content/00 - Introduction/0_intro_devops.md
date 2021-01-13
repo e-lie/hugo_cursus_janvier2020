@@ -14,7 +14,7 @@ weight: 1
 
 Hadrien Pélissier
 
-- Ingénieur sécurité / DevOps / développeur Python et Elixir
+- Ingénieur DevOps (Ansible / Docker / Kubernetes / Gitlab CI) / sécurité / développeur Python et Elixir
 - Formateur DevOps et sécurité informatique
 
 ## A propos de vous

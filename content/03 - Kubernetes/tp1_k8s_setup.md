@@ -16,25 +16,25 @@ Au cours de ce TP nous allons passer rapidement en revue deux manières de mettr
 **Microk8s** est une version de développement de Kubernetes développée par Canonical (Ubuntu) qui peut être utilisée en local ou en mode cluster de plusieurs noeuds. Elle n'utilise pas de machine virtuelle contrairement à la solution de dev plus classique **Minikube**.
 
 - Pour installer microk8s la méthode recommandée est d'utiliser snap : `sudo snap install microk8s --edge --classic`
-- Il faut ensuite ajouter notre utilisateur (`elk-master`) au groupe sudo avec : `sudo usermod -a -G microk8s $USER`
+- Il faut ensuite ajouter notre utilisateur (`votreprenom`) au groupe sudo avec : `sudo usermod -a -G microk8s $USER`
 - Déconnectez vous et reconnectez vous de la session pour que les modifications de groupe soient prises en compte.
 
 - Vérifiez que `microk8s` fonctionne avec `microk8s.status --wait-ready`
 
-Microk8s inclue tous les outils pour démarrer avec Kubernetes:
+Microk8s inclut tous les outils pour démarrer avec Kubernetes :
 
 - Tous les composants du control plane Kubernetes et `kubelet`.
 - une version interne du client `kubectl`
-- D'autre composants non nécessaires mais importants peuvent être installés sous forme d'addons:
-  - ingress pour le loadbalancing
-  - coredns pour le dns
+- D'autre composants non nécessaires mais importants peuvent être installés sous forme d'addons :
+  - `Ingress` pour le loadbalancing
+  - `coredns` pour le DNS
   - le dashboard Kubernetes
 
 La liste complète est ici : <https://microk8s.io/docs/addons#list>
 
 Pour utiliser le client `kubectl` interne de `microk8s` on lance `microk8s.kubectl`:
 
-- La façon classique de tester la connectivité à un cluster est de lister les noeuds (serveurs) avec : `microk8s.kubectl get nodes`
+- La façon classique de tester la connectivité à un cluster est de lister les nœuds (serveurs) avec : `microk8s.kubectl get nodes`
 
 Cependant nous allons installer et configurer une version externe de `kubectl` pour pouvoir également :
 
@@ -52,7 +52,7 @@ Configurons maintenant `kubectl` pour se connecter au cluster microk8s.
 
 La configuration par défaut de `kubectl` se trouve dans le fichier `~/.kube/config`
 
-- Créons la bonne configuration en écrasant se fichier avec la config de microk8s: `microk8s.config > ~/.kube/config`
+- Créons la bonne configuration en écrasant ce fichier avec la config de microk8s: `cat microk8s.config > ~/.kube/config`
 - Ouvrons la configuration YAML pour observer: `gedit ~/.kube/config`
 - Testons la connexion avec la commande classique `kubectl get nodes`
 
@@ -70,7 +70,7 @@ echo "source <(kubectl completion bash)" >> ${HOME}/.bashrc
 
 ### Explorons notre cluster k8s
 
-Notre cluster k8s est plein d'objets divers, organisés entre eux de façon dynamique pour décrire des applications, tâches de calcul, services et droits d'accès. La première étape consiste à explorer un peu le cluster s:
+Notre cluster k8s est plein d'objets divers, organisés entre eux de façon dynamique pour décrire des applications, tâches de calcul, services et droits d'accès. La première étape consiste à explorer un peu le cluster :
 
 - Listez les nodes pour récupérer le nom de l'unique node (`kubectl get nodes`) puis affichez ses caractéristiques avec `kubectl describe node/<votrenode>`.
 
@@ -87,7 +87,7 @@ service/kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   2m34s
 
 Il semble qu'il n'y a qu'une ressource dans notre cluster. Il s'agit du service d'API Kubernetes pour qu'on puisse communiquer avec le cluster.
 
-En réalité il y en a généralement d'autres cachés dans les autres `namespaces`. En effet les éléments interne de Kubernetes tournent eux-mêmes sous forme de service et de daemon Kubernetes. Les *namespaces* sont des groupes qui servent à isoler les ressources de façon logique et en terme de droits (avec le *Role-Based Access Control* (RBAC) de Kubernetes).
+En réalité il y en a généralement d'autres cachés dans les autres `namespaces`. En effet les éléments internes de Kubernetes tournent eux-mêmes sous forme de service et de daemon Kubernetes. Les *namespaces* sont des groupes qui servent à isoler les ressources de façon logique et en termes de droits (avec le *Role-Based Access Control* (RBAC) de Kubernetes).
 
 Pour vérifier cela on peut :
 
@@ -103,50 +103,55 @@ Un cluster Kubernetes a généralement un namespace appelé `default` dans leque
 
 - Pour avoir des informations sur un namespace : `kubectl describe namespace/kube-system`
 
+### Déployer une application
+<!-- TODO: TEST THIS -->
+
 Nous allons maintenant déployer une première application conteneurisée. Le déploiement est plus complexe qu'avec Docker (et Swarm), en particulier car il est séparé en plusieurs objets et plus configurable.
 
-- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment microbot --image=dontrebootme/microbot:v1`.
+- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment microbot --image=monachus/rancher-demo`.
+<!-- - Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment microbot --image=dontrebootme/microbot:v1`. -->
 
 Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/microbot`.
 
-- Agrandissons ce déploiement avec `kubectl scale deployment microbot --replicas=2`
-- `kubectl describe deployment/microbot` permet de constater que le service est bien passé à 2 replicas.
+- Agrandissons ce déploiement avec `kubectl scale deployment microbot --replicas=5`
+- `kubectl describe deployment/microbot` permet de constater que le service est bien passé à 5 replicas.
 
 A ce stade le déploiement n'est pas encore accessible de l'extérieur du cluster pour cela nous devons l'exposer en tant que service :
 
-- `kubectl expose deployment microbot --type=NodePort --port=80 --name=microbot-service`
+<!-- - `kubectl expose deployment microbot --type=LoadBalancer --port=8080 --name=microbot-service` -->
+- `kubectl expose deployment microbot --type=NodePort --port=8080 --name=microbot-service`
 
 - affichons la liste des services pour voir le résultat: `kubectl get services`
 
-Le service permet d'exposer un déploiement soit par port soit grâce à un loadbalancer. Nous verrons cela plus en détail dans le TP2. Ici notre service est exposé par port : la commande précédent affiche `80:<3xxxx>/TCP` dans la colonne ports. Copier le numéro de port de droite du type `32564`.
+Le service permet d'exposer un déploiement soit par port soit grâce à un loadbalancer. Nous verrons cela plus en détail dans le TP2. Ici notre service est exposé par port : la commande précédente affiche `8080:<3xxxx>/TCP` dans la colonne ports. Copier le numéro de port de droite, du type `32564`.
 
-Pour voir notre application visitez : `localhost:<3xxxx>`. Un étrange robot cylindrique noir s'affiche.
+Pour voir notre application visitez : `localhost:<3xxxx>`. Sauriez-vous expliquer ce qu'elle fait ?
 
 <!-- Quelle syntaxe pour préciser container port ? -->
 
 #### Simplifier les lignes de commande k8s
 
-- Pour gagner du temps on dans les commandes Kubernetes on définit généralement un alias: `alias kc='kubectl'`. Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
+- Pour gagner du temps on dans les commandes Kubernetes on définit généralement un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile`). Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
 
-- Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abbrégés :
+- Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :
   - `services` devient `svc`
   - `deployments` devient `deploy`
   - etc.
 
 <!-- mettre plutôt un lien officiel -->
-La liste complète : [https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202](https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202)
+La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202>
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
 ### Dashboard Kubernetes
 
-Kubernetes possède un dashboard officielle pour visualiser et contrôler les ressources. Ce dashboard est distribuée dans `microk8s` sous forme d'un addon à activer.
+Kubernetes possède un dashboard officiel pour visualiser et contrôler les ressources. Ce dashboard est distribué dans `microk8s` sous forme d'un addon à activer.
 
 - Activer le dashboard: `microk8s.enable dashboard`
 - Pour afficher le dashboard la méthode recommandée est de créer un forward du trafic local vers le pod de le dashboard avec `kc port-forward -n kube-system service/kubernetes-dashboard 10443:443`.
 - Chargez la page : `https://localhost:10443`
 
-Nous allons nous connecter par token : Kubernetes gère en interne des identités appelées `serviceaccounts` pour lesquelles il génère des tokens d'identification c'est à dire des ressources de type `secret`.
+Nous allons nous connecter par token : Kubernetes gère en interne des identités appelées `serviceaccounts` pour lesquelles il génère des tokens d'identification, c'est-à-dire des ressources de type `secret`.
 
 - Listons les secrets du namespace `kube-system` : `kc -n kube-system get secret`
 - Parsons ce résultat avec des commandes Unix pour récupérer le nom de secret du token : `token_name=$(kc -n kube-system get secret | grep default-token | cut -d " " -f1)`
@@ -161,14 +166,26 @@ namespace:  11 bytes
 token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InhuNUhNMUZtZksydXhFSVJsRmZGcS1RdXJEZHNNc1dpdmNuVzdsWEVqbE0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLXpiN3R3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJiYmQ1Zjg0Ni1lMjJiLTRlMzMtOTMyNy1hZjY0N2QxNTBkZGUiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.i8E4vGD1asP9Eicz2dSxRQmUPzQXbVFhnJXtvZuCS7NM72frGC8Cbz2uSpq-pNdOGqtiH2VLhl4Yh1YCj_pCD5D-CwiccqaubB5tbuTUMdua2vzxKi965HkNaD2-fqI7lVIv-SasZ-LACZXRj7IXXmma2BO6au1CjVD1FOwtrMYSgYY8pAg8e23esCPpW7bRsxwBtq5qzwsRF2rxUdoot0sG7T4CiWbOY19J9YXnWfC19K4Hehd8DIBhjHM5Zwpp0TZO0YlucFJTtLtDQ-1wvnh6Z00q5074yeikZTIKLz8usUhqvnmFdcNJ646eeKKCeh9HWmLG9W646EGFGgf9qQ
 ```
 
-- Copiez le gros bloc de texte `token` et collez le dans la page `https://localhost:10443`
+- Copiez le gros bloc de texte `token` et collez-le dans la page `https://localhost:10443`
 
+<!-- TODO: TEst dashboard -->
 Observons le dashboard : **démo**.
 
-## Mettre en place un cluster K8s dans le cloud avec DigitalOcean
+<!-- TODO: TEst install -->
+#### Installer Lens
 
-- Clonez le projet modèle : [https://github.com/e-lie/cursus_janvier2020_tp1_k8s](https://github.com/e-lie/cursus_janvier2020_tp1_k8s)
-- récupérez un token et ssh_key_fingerprint du TP4 Ansible.
+Lens est une interface graphique sympatique pour Kubernetes.
+
+Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
+
+Vous pouvez l'installer à cette adresse : <https://k8slens.dev>
+
+
+<!-- FIXME: Ajout cluster K8S cloud : scaleway? -->
+<!-- ## Mettre en place un cluster K8s dans le cloud avec DigitalOcean
+
+- Clonez le projet modèle : <https://github.com/Uptime-Formation/cursus_janvier2020_tp1_k8s>
+- récupérez un token depuis votre compte de cloud.
 - renommez `secrets.auto.tfvars` sans le .dist et complétez.
 - Complétez le code terraform de `digitalocean_k8s.tf` pour changer `k8s-tp-cluster` par `k8s-<votre_nom>-tp-cluster`
 - Lancez la création du cluster depuis le dossier terraform avec `terraform init` et `terraform apply`.
@@ -177,7 +194,7 @@ La création prend 5 minutes. un fichier de sortie terraform `kubeconfig_do` a �
 
 ## Merger la configuration kubectl
 
-- Ouvrez avec gedit les fichier les fichiers `kubeconfig_do` et `~/.kube/config`.
+- Ouvrez avec `gedit` les fichiers `kubeconfig_do` et `~/.kube/config`.
 - fusionnez dans `~/.kube/config` les éléments des listes YAML de:
   - `clusters`
   - `contexts`
@@ -191,7 +208,7 @@ La création prend 5 minutes. un fichier de sortie terraform `kubeconfig_do` a �
 - Lancez `kc cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par digital ocean.
 - Déployez l'application `microbot` comme dans la partie précédente avec `microk8s`
 - Pour visitez l'application vous devez trouver l'IP publique d'un des noeuds du cluster:
-  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques.
+  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->
 
 
 <!--   
