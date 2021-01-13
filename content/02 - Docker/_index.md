@@ -9,6 +9,6 @@ chapter: true
 
 # Docker
 
-Administrer des applications multiconteneurs
+Créer et manipuler des conteneurs
 
 {{% children  %}}

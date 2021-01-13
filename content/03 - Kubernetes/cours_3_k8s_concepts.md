@@ -23,14 +23,14 @@ Pour cela on doit avoir des ressources multiples...
 Il faut que les ressources disponibles prennent automatiquement le relais des ressources indisponibles.
 Pour cela on utilise généralement:
 
-    - des "load balancers" : aiguillages réseau intelligents
-    - des "healthchecks" : une vérification de la santé des applications
+- des "load balancers" : aiguillages réseau intelligents
+- des "healthchecks" : une vérification de la santé des applications
 
 Mais aussi :
 
-    - des réseaux de secours
-    - des IP flottantes qui fonctionnent comme des load balancers
-    - etc.
+- des réseaux de secours
+- des IP flottantes qui fonctionnent comme des load balancers
+- etc.
 
 Nous allons voir que Kubernetes intègre automatiquement les principes de load balancing et de healthcheck dans l'orchestration de conteneurs
 

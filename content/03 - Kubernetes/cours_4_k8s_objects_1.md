@@ -175,13 +175,13 @@ En général on ne les manipule pas directement.
 
 ### Les Deployments
 
-Plutôt que d'utiliser les replicasets il est recommander d'utiliser un objet de plus haut niveau : les `deployments`.
+Plutôt que d'utiliser les replicasets il est recommander d'utiliser un objet de plus haut niveau : les *deployments*.
 
 De la même façon que les ReplicaSets gèrent les pods, les Deployments gèrent les ReplicaSet.
 
 Un déploiement sert surtout à gérer le déploiement d'une nouvelle version d'un pod.
 
-Un `deployment` est un peu l'équivalent d'un `service` docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`.
+Un *deployment* est un peu l'équivalent d'un *service* docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`.
 
 Exemple :
 
@@ -213,7 +213,7 @@ spec:
 
 - Pour les afficher : `kubectl get deployments`
 
-- La commande `kubectl run` sert à créer un `deployment` à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
+- La commande `kubectl run` sert à créer un *deployment* à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
 
 ### Les Services
 
