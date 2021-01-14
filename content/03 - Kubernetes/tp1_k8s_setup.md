@@ -5,56 +5,40 @@ draft: false
 
 Au cours de ce TP nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :
 
-- Un cluster de développement avec `microk8s`
-- Un cluster managed loué chez le provider Digital Ocean
+- Un cluster de développement avec `minikube`
+- Un cluster managed loué chez un provider (scaleway, azure ou google cloud)
 <!-- - cluster installé et géré manuellement grâce à Ansible (sur des VPS digital ocean) -->
 
-## Découverte de Kubernetes avec microk8s
+## Découverte de Kubernetes
 
-### Installer microk8s
+### Installer le client CLI `kubectl`
 
-**Microk8s** est une version de développement de Kubernetes développée par Canonical (Ubuntu) qui peut être utilisée en local ou en mode cluster de plusieurs noeuds. Elle n'utilise pas de machine virtuelle contrairement à la solution de dev plus classique **Minikube**.
+kubectl est le point d'entré universel pour contrôler tous les type de cluster kubernetes. 
+C'est un client en ligne de commande qui communique en REST avec l'API d'un cluster.
 
-- Pour installer microk8s la méthode recommandée est d'utiliser snap : `sudo snap install microk8s --edge --classic`
-- Il faut ensuite ajouter notre utilisateur (`votreprenom`) au groupe sudo avec : `sudo usermod -a -G microk8s $USER`
-- Déconnectez vous et reconnectez vous de la session pour que les modifications de groupe soient prises en compte.
+Nous allons explorer kubectl au fur et à mesure des TPs. Cependant à noter que :
 
-- Vérifiez que `microk8s` fonctionne avec `microk8s.status --wait-ready`
+- `kubectl` peut gérer plusieurs clusters/configurations et switcher entre ces configurations
+- `kubectl` est nécessaire pour le client graphique `Lens` que nous utiliserons plus tard.
 
-Microk8s inclut tous les outils pour démarrer avec Kubernetes :
+La méthode d'installation importe peu. Pour installer kubectl sur Ubuntu nous ferons simplement: `sudo snap install kubectl --classic`.
 
-- Tous les composants du control plane Kubernetes et `kubelet`.
-- une version interne du client `kubectl`
-- D'autre composants non nécessaires mais importants peuvent être installés sous forme d'addons :
-  - `Ingress` pour le loadbalancing
-  - `coredns` pour le DNS
-  - le dashboard Kubernetes
+- Faites `kubectl version` pour afficher la version du client kubectl.
+### Installer Minikube
 
-La liste complète est ici : <https://microk8s.io/docs/addons#list>
+**Minikube** est la version de développement de Kubernetes (en local) la plus répendue. Elle est maintenue par la cloud native foundation et très proche de kubernetes upstream. Elle permet de simuler un ou plusieurs noeuds de cluster sous forme de conteneurs docker ou de machines virtuelles.
 
-Pour utiliser le client `kubectl` interne de `microk8s` on lance `microk8s.kubectl`:
+- Pour installer minikube la méthode recommandée est indiquée ici: https://minikube.sigs.k8s.io/docs/start/
 
-- La façon classique de tester la connectivité à un cluster est de lister les nœuds (serveurs) avec : `microk8s.kubectl get nodes`
+Nous utiliserons classiquement `docker` comme runtime pour minikube (les noeuds k8s seront des conteneurs simulant des serveurs). Ceci est, bien sur, une configuration de développement. Elle se comporte cependant de façon très proche d'un véritable cluster.
 
-Cependant nous allons installer et configurer une version externe de `kubectl` pour pouvoir également :
+- Pour lancer le cluster faites simplement: `minikube start` (il est également possible de préciser le nombre de coeurs de calcul, la mémoire et et d'autre paramètre pour adapter le cluster à nos besoins.)
 
-- apprendre comment configurer ce client
-- nous connecter à un cluster dans le cloud
+Minikube configure automatiquement kubectl (dans le fichier `~/.kube/config`) pour qu'on puisse se connecter au cluster de développement.
 
-### Installer le client Kubernetes `kubectl`
+- Testez la connexion avec `kubectl get nodes`.
 
-- Télécharger la clé des packages google : `curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
-- Ajouter le dépôt officiel Kubernetes pour Ubuntu : `echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list`
-- Mettre à jour les dépôts et installer **`kubectl`** : `sudo apt update && sudo apt install -y kubectl`
-- Pour vérifier l'installation lancez : `kubectl version --short`
-
-Configurons maintenant `kubectl` pour se connecter au cluster microk8s.
-
-La configuration par défaut de `kubectl` se trouve dans le fichier `~/.kube/config`
-
-- Créons la bonne configuration en écrasant ce fichier avec la config de microk8s: `cat microk8s.config > ~/.kube/config`
-- Ouvrons la configuration YAML pour observer: `gedit ~/.kube/config`
-- Testons la connexion avec la commande classique `kubectl get nodes`
+Affichez à nouveau la version `kubectl version`. Cette fois ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`.
 
 ##### Bash completion
 
@@ -76,7 +60,7 @@ Notre cluster k8s est plein d'objets divers, organisés entre eux de façon dyna
 
 La commande `get` est générique et peut être utilisée pour récupérer la liste de tous les types de ressources.
 
-De même la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type `node/elkmaster` car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
+De même la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type `node/minikube` car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
 
 - Pour afficher tous les types de ressources à la fois que l'on utilise : `kubectl get all`
 
@@ -94,8 +78,6 @@ Pour vérifier cela on peut :
 - Afficher les namespaces : `kubectl get namespaces`
 
 Un cluster Kubernetes a généralement un namespace appelé `default` dans lequel les commandes sont lancées et les ressources créées si on ne précise rien. Il a également aussi un namespace `kube-system` dans lequel résident les processus et ressources système de k8s. Pour préciser le namespace on peut rajouter l'argument `-n` à la plupart des commandes k8s.
-
-- activons l'addon de dns de microk8s: `microk8s.enable dns`
 
 - Pour lister les ressources liées au `kubectl get all -n kube-system`.
 
@@ -143,42 +125,13 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
-### Dashboard Kubernetes
-
-Kubernetes possède un dashboard officiel pour visualiser et contrôler les ressources. Ce dashboard est distribué dans `microk8s` sous forme d'un addon à activer.
-
-- Activer le dashboard: `microk8s.enable dashboard`
-- Pour afficher le dashboard la méthode recommandée est de créer un forward du trafic local vers le pod de le dashboard avec `kc port-forward -n kube-system service/kubernetes-dashboard 10443:443`.
-- Chargez la page : `https://localhost:10443`
-
-Nous allons nous connecter par token : Kubernetes gère en interne des identités appelées `serviceaccounts` pour lesquelles il génère des tokens d'identification, c'est-à-dire des ressources de type `secret`.
-
-- Listons les secrets du namespace `kube-system` : `kc -n kube-system get secret`
-- Parsons ce résultat avec des commandes Unix pour récupérer le nom de secret du token : `token_name=$(kc -n kube-system get secret | grep default-token | cut -d " " -f1)`
-- Affichons la valeur du token en le décrivant : `kc -n kube-system describe secret $token_name`
-
-```
-...
-Data
-====
-ca.crt:     1103 bytes
-namespace:  11 bytes
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6InhuNUhNMUZtZksydXhFSVJsRmZGcS1RdXJEZHNNc1dpdmNuVzdsWEVqbE0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZWZhdWx0LXRva2VuLXpiN3R3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImRlZmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJiYmQ1Zjg0Ni1lMjJiLTRlMzMtOTMyNy1hZjY0N2QxNTBkZGUiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06ZGVmYXVsdCJ9.i8E4vGD1asP9Eicz2dSxRQmUPzQXbVFhnJXtvZuCS7NM72frGC8Cbz2uSpq-pNdOGqtiH2VLhl4Yh1YCj_pCD5D-CwiccqaubB5tbuTUMdua2vzxKi965HkNaD2-fqI7lVIv-SasZ-LACZXRj7IXXmma2BO6au1CjVD1FOwtrMYSgYY8pAg8e23esCPpW7bRsxwBtq5qzwsRF2rxUdoot0sG7T4CiWbOY19J9YXnWfC19K4Hehd8DIBhjHM5Zwpp0TZO0YlucFJTtLtDQ-1wvnh6Z00q5074yeikZTIKLz8usUhqvnmFdcNJ646eeKKCeh9HWmLG9W646EGFGgf9qQ
-```
-
-- Copiez le gros bloc de texte `token` et collez-le dans la page `https://localhost:10443`
-
-<!-- TODO: TEst dashboard -->
-Observons le dashboard : **démo**.
-
-<!-- TODO: TEst install -->
 #### Installer Lens
 
 Lens est une interface graphique sympatique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
 
-Vous pouvez l'installer à cette adresse : <https://k8slens.dev>
+Vous pouvez l'installer en suivant les indications à cette adresse : <https://k8slens.dev>
 
 
 <!-- FIXME: Ajout cluster K8S cloud : scaleway? -->

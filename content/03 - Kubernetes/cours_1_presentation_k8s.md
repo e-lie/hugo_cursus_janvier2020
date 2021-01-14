@@ -30,13 +30,17 @@ Il s'agit d'une solution **robuste**, **structurante** et **open source** qui se
 - Kubernetes a une architecture master/worker (cf. cours 2) composés d'un _control plane_ et de noeuds **worker** ou **compute**.
 - Les **pods** Kubernetes servent à grouper des conteneurs fortement couplés en unités d'application <!-- (microservices ou non) -->
 - Les **deployments** sont une abstraction pour **créer ou mettre à jour** (ex : scaler) des groupes de **pods**.
-- Enfin, les **services** sont des groupes de pods (des deployments) exposés à l'extérieur du cluster.
+- Enfin, les **services** sont des groupes de pods (des deployments) exposés à l'intérieur ou à l'extérieur du cluster.
 
 ## Points forts de Kubernetes
 
-- Ces _pods_ tendent à se rapprocher plus d'une VM du point de vue de l'application.
-- Hébergeable de façon identique dans le cloud, on-premise ou en mixte.
-- Kubernetes a un flat networkn ce qui permet de faire des choses plus puissante facilement comme le multi-datacenter.
+- Open source et très actif.
+- Une communauté très visible et présente dans l'évolution de l'informatique.
+- Un standard collectif qui permet une certaine interopérabilité dans le cloud.
+- Les _pods_ tendent à se rapprocher plus d'une VM du point de vue de l'application.
+- Hébergeable de façon quasi-identique dans le cloud, on-premise ou en mixte.
+- Kubernetes a un _flat network_ ce qui permet de faire des choses puissante facilement comme le multi-datacenter.
+- K8s est pensé pour la _scalabilité_ et le _calcul distribué_ qui est sinon très difficile.
 
 
 ## Faiblesses de Kubernetes
