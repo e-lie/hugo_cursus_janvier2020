@@ -55,9 +55,9 @@ Permet depuis sa machine de travail de contrôler le cluster avec une ligne de c
 - Gérer les droits d'accès
 - etc.
 
-Cet utilitaire s'installe avec un gestionnaire de paquet classique mais est souvent fourni directement par une distribution de développement de kubernetes (microk8s ou Docker Desktop, par exemple).
+Cet utilitaire s'installe avec un gestionnaire de paquet classique mais est souvent fourni directement par une distribution de développement de kubernetes.
 
-Nous l'installerons avec `apt` dans le TP1.
+Nous l'installerons avec `snap` dans le TP1.
 
 Pour se connecter, `kubectl` a besoin de l'adresse de l'API Kubernetes, d'un nom d'utilisateur et d'un certificat.
 
@@ -77,9 +77,9 @@ apiVersion: v1
 
 clusters:
 - cluster:
-    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURBVENDQWVtZ0F3SUJBZ0lKQUl5OUpGcjZreVBkTUEwR0NTcUdTSWIzRFFFQkN3VUFNQmN4RlRBVEJnTlYKQkFNTURERXdMakUxTWk0eE9ETXVNVEFlRncweU1<clipped>MVFQUHZhazJkcWlJM1REUFpLOVVPdDh1CnZpMVhObHJsVmZuaE9BdEo2TTJVUDdTUmRSSENzTzl5N3BTNFVtdVlhYldGVW1rRmhRdmdMN1loL1krV01NUHkKR28xN2ordz0KLS0tLS1FTkQgQ0VSVElGSU
-    server: https://127.0.0.1:16443
-  name: microk8s-cluster
+    certificate-authority: /home/jacky/.minikube/ca.crt
+    server: https://172.17.0.2:8443
+  name: minikube
 - cluster:
     certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURKekNDQWcrZ0F3SUJBZ0lDQm5Vd0RRWUpLb1pJaHZjTkFRRUxCUUF3TXpFVk1CTUdBMVVFQ2hNTVJHbG4KYVhSaGJFOWpaV0Z1TVJvd0dBWURWUVFERXhGck9<clipped>3SCsxYmtGOHcxdWI5eHYyemdXU1F3NTdtdz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
     server: https://5ba26bee-00f1-4088-ae11-22b6dd058c6e.k8s.ondigitalocean.com
@@ -87,19 +87,13 @@ clusters:
 
 contexts:
 - context:
-    cluster: microk8s-cluster
-    user: admin
-  name: microk8s
+    cluster: minikube
+    user: minikube
+  name: minikube
 - context:
     cluster: do-lon1-k8s-tp-cluster
     user: do-lon1-k8s-tp-cluster-admin
   name: do-lon1-k8s-tp-cluster
-- context:
-    cluster: microk8s-cluster
-    namespace: kube-system
-    user: admin
-  name: microk8s-system
-
 current-context: do-lon1-k8s-tp-cluster
 
 kind: Config
@@ -109,13 +103,13 @@ users:
 - name: do-lon1-k8s-tp-cluster-admin
   user:
       token: 8b2d33e45b980c8642105ec827f41ad343e8185f6b4526a481e312822d634aa4
-- name: admin
+- name: minikube
   user:
-    password: ZzltdE9PbHR3aTNjUEtFa0Z3V0FGZkZVcEdmaFhnWVZUSTZxdU9venkrbz0K
-    username: admin
+    client-certificate: /home/jacky/.minikube/profiles/minikube/client.crt
+    client-key: /home/jacky/.minikube/profiles/minikube/client.key
 ```
 
-Ce fichier déclare 2 clusters (un local, un distant), 3 contextes et 2 users (un avec mot de passe et login, un avec token).
+Ce fichier déclare 2 clusters (un local, un distant), 2 contextes et 2 users.
 
 ## Installation de développement
 
