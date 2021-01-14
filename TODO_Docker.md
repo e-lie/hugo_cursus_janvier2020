@@ -388,3 +388,8 @@ rdpress pas mysql port public tp1 et 4
 
 ## TP 
 https://github.com/dockersamples/k8s-wordsmith-demo
+
+
+## Notes
+- Dire qu'il y a 2 types de commandes Dockerfile : modif du systeme de fichiers et modifs des metadata
+- donner un exemple de script buildah et comparer avec dockerfile

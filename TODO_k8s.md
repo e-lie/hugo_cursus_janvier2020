@@ -1,5 +1,9 @@
 # TODO
 
+- ajouter secrets and configmaps!!!
+
+- panachage entre TP et cours
+
 # 2 TP de plus sur K8S pur : secrets +  RBAC non ? PVC et storage classes, daemonset... (postgres avec helm ?), HPA ?
 # 1 TP sur Azure (registries ? l'app cheloue ? Terraform ?) + les TP prémâchés de la doc Azure
 
@@ -7,13 +11,23 @@
 
 - imprimer des tas de schémas et de fiches plastifiées sur les concepts de k8s (idéalement qui "s'emboîtent" façon puzzle) et les distribuer dès le début, recréer les chémas avec ça au tableau
 
+# TP registry : https://www.linuxtechi.com/setup-private-docker-registry-kubernetes/
 
 - Faire du docker ?
 - Faire une intro à K8S en commençant par Docker swarm ?
 - Intro DevOps
 - Rappels YAML
-
-
+## Idées TP
+- rbac 
+- multinode avec terraform (ou k3sup ?), ou simplement https://microk8s.io/docs/clustering ?
+- gestion des secrets
+- gestion des configmaps
+- storageclasses
+- ingresses
+- horizontal pod autoscaling avec montée en charge
+- daemonsets
+- statefulsets (chart postgres ?)
+- 
 ---
 
 
@@ -294,7 +308,7 @@ MetalLB aims to redress this imbalance by offering a Network LB implementation t
 
 
 ## Videos
-
+Why you need to use metallb: https://www.youtube.com/watch?v=Ytc24Y0YrXE
 ### Réseau
 
 #### Vidéos de Calico
@@ -314,3 +328,16 @@ https://github.com/oskapt/rancher-demo
 ## Ressources
 
 (https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/).
+
+https://github.com/cyberark/KubiScan
+
+https://github.com/ramitsurana/awesome-kubernetes/blob/master/docs/managed-kubernetes/managed-kubernetes.md
+
+
+## Azure Terraform
+az ad sp create-for-rbac --skip-assignment
+
+
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret
+https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
+https://docs.microsoft.com/fr-fr/azure/developer/terraform/get-started-cloud-shell#authenticate-via-azure-service-principal

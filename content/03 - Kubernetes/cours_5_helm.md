@@ -52,6 +52,9 @@ Helm utilise automatiquement votre fichier `kubeconfig` pour se connecter.
 
 Voici quelques commandes de bases pour Helm :
 
+ <!-- helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm search repo bitnami -->
+
 - `helm install my-chart` : permet d’installer le chart my-chart. Le nom de release est généré aléatoirement dans votre cluster Kubernetes.
 
 - `helm upgrade my-release my-chart` : permet de mettre à jour notre release avec une nouvelle version.

@@ -293,8 +293,27 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 
 ## _Facultatif :_ un Registry privé
 
-- En suivant [les instructions du site officiel](https://docs.docker.com/registry/deploying/), créez votre propre registry.
-- Puis trouvez les commandes pour le configurer et poussez-y une image dessus.
+- En récupérant [la commande indiquée dans la doc officielle](https://docs.docker.com/registry/deploying/), créez votre propre registry.
+- Puis trouvez comment y pousser une image dessus.
+- Enfin, supprimez votre image en local et récupérez-la depuis votre registry.
+
+{{% expand "Solution :" %}}
+```bash
+# Créer le registry
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+# Y pousser une image
+docker tag ubuntu:16.04 localhost:5000/my-ubuntu
+docker push localhost:5000/my-ubuntu
+
+# Supprimer l'image en local
+docker image remove ubuntu:16.04
+docker image remove localhost:5000/my-ubuntu
+
+# Récupérer l'image depuis le registry
+docker pull localhost:5000/my-ubuntu
+```
+{{% /expand %}}
 
 ## _Facultatif :_ Faire parler la vache
 

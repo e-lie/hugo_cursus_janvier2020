@@ -5,9 +5,17 @@ draft: famse
 
 ## D'autres objets k8s
 
+<!-- FIXME: Secrets and configmaps -->
+
 ### StatefulSets
 
-<!-- TODO: préciser usage -->
+<!-- TODO: préciser usage 
+    Stable, unique network identifiers.
+    Stable, persistent storage.
+    Ordered, graceful deployment and scaling.
+    Ordered, automated rolling updates.
+
+-->
 
 On utilise les `Statefulsets` pour répliquer un ensemble de pods dont l'état est important : par exemple, des pods dont le rôle est d'être une base de données, manipulant des données sur un disque.
 
@@ -96,3 +104,13 @@ resources:
 On peut ensuite l'appliquer avec `kubectl apply -k ./`
 
 A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
+
+<!-- 
+Goal: grant a pod access to a secured something?
+don’t put secrets in the container image!
+12-factor says: config comes from the environment
+Kubernetes is the environment
+Manage secrets via the Kubernetes API
+Inject them as virtual volumes into Pods
+late-binding
+tmpfs - never touches disk -->

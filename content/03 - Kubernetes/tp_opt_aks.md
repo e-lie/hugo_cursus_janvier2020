@@ -2,11 +2,14 @@
 draft: true
 ---
 
-## AKS
+## Exercices avec AKS
+- Basique : https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
 
-https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
-https://github.com/Microsoft/RockPaperScissorsLizardSpock
+- Difficile : https://github.com/Microsoft/RockPaperScissorsLizardSpock
 
+- Juste comme il faut, avec des *charts* : https://docs.bitnami.com/kubernetes/get-started-aks/
+
+## Documentation
 ### HPA
 
 https://docs.microsoft.com/fr-fr/azure/aks/tutorial-kubernetes-scale
