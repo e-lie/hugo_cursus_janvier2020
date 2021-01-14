@@ -3,12 +3,12 @@ title: TP1 - Installation et configuration de Kubernetes
 draft: false
 ---
 
-Au cours de ce TP nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :
+Au cours de nos TPs nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :
 
 - Un cluster de développement avec `minikube`
 - Un cluster managed loué chez un provider (scaleway, azure ou google cloud)
 <!-- - cluster installé et géré manuellement grâce à Ansible (sur des VPS digital ocean) -->
-
+Ce TP présente la première option.
 ## Découverte de Kubernetes
 
 ### Installer le client CLI `kubectl`
