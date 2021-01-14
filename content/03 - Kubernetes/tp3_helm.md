@@ -19,10 +19,10 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 ### Utiliser une chart Helm pour installer Mediawiki
 <!-- ### Utiliser une chart Helm pour installer Jenkins -->
 
-<!-- TODO: prendre autre chose que Jenkins -->
+<!-- TODO: prendre autre chose que Jenkins, genre wordpress c'est parfait -->
 - Cherchez Mediawiki sur [https://hub.kubeapps.com](https://hub.kubeapps.com).
 - Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
-- Installer une release `mediawiki-tp` de cette application (ce chart) avec `helm install --template-name mediawiki-tp bitnami/mediawiki`
+- Installer une release `wordpress-tp` de cette application (ce chart) avec `helm install --template-name wordpress-tp bitnami/wordpress`
 - Suivez les instructions affichées
 <!-- - Plutôt que de faire un port-forwarding, nous allons configurer le service k8s de `jenkins-master` pour être en mode `NodePort`. -->
   <!-- - Créez un fichier `config_jenkins.yaml` avec à l'intérieur: -->
@@ -36,7 +36,7 @@ service:
 <!-- - Cherchez le port d'exposition du service avec `kc get services | grep jenkins` -->
 <!-- - Visitez [http://localhost:<node_port>](http://localhost:<node_port>) -->
 <!-- - Récupérez le password d'inititalisation précédemment sauvegardé et collez-le dans le navigateur -->
-- Notre Mediawiki est prêt. Connectez-vous-y avec les identifiants affichés.
+- Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8sen).
 
 - Explorez les différents objets k8s créés par Helm avec Lens.
 

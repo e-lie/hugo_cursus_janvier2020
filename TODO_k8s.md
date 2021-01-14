@@ -2,6 +2,9 @@
 
 - ajouter secrets and configmaps!!!
 
+- On pourrait faire : je donne les ressources pour se co avec Azure CLI, pendant ce temps, cours sur les Dockerfiles, et après pendant leur tp dockerfile je les aide sur la azure cli pour apply le rôle helm et creer un azure container registry et azure file ?
+
+
 - panachage entre TP et cours
 
 # 2 TP de plus sur K8S pur : secrets +  RBAC non ? PVC et storage classes, daemonset... (postgres avec helm ?), HPA ?

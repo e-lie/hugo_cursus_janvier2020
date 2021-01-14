@@ -6,6 +6,7 @@ draft: famse
 ## D'autres objets k8s
 
 <!-- FIXME: Secrets and configmaps -->
+<!-- FIXME: CronJobs -->
 
 ### StatefulSets
 
