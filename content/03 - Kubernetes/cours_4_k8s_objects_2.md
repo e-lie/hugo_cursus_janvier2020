@@ -71,7 +71,7 @@ Cependant quatre rôles génériques existent aussi par défaut :
 - Le rôle `edit` permet à un·e utilisateur·ice de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
-Microk8s n'a pas les fonctionnalités de RBAC activées par defaut. Il faut lancer `microk8s.enable rbac` pour les configurer (mais ne le faites pas pour l'instant pour ne pas perturber le TP).
+<!-- TODO MENTIONNER la commande kc auth can-i (cf kubernetes up and running chap RBAC)>
 
 ### Les fichiers kustomization
 
@@ -100,7 +100,6 @@ resources:
   - mysql-deployment.yaml
   - wordpress-deployment.yaml
 ```
-
 On peut ensuite l'appliquer avec `kubectl apply -k ./`
 
 A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
