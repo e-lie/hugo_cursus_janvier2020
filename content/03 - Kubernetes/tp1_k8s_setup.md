@@ -159,7 +159,7 @@ La création prend 5 minutes. un fichier de sortie terraform `kubeconfig_do` a �
 ## Déployer l'application
 
 - Lancez `kc cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par digital ocean.
-- Déployez l'application `microbot` comme dans la partie précédente avec `microk8s`
+- Déployez l'application `microbot` comme dans la partie précédente avec `minikube`
 - Pour visitez l'application vous devez trouver l'IP publique d'un des noeuds du cluster:
   - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->
 

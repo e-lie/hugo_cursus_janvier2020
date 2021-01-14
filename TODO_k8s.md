@@ -19,7 +19,6 @@
 - Rappels YAML
 ## Idées TP
 - rbac 
-- multinode avec terraform (ou k3sup ?), ou simplement https://microk8s.io/docs/clustering ?
 - gestion des secrets
 - gestion des configmaps
 - storageclasses
