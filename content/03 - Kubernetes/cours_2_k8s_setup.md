@@ -121,8 +121,8 @@ Ce fichier déclare 2 clusters (un local, un distant), 3 contextes et 2 users (u
 
 Pour installer un cluster de développement :
 
-- solution officielle : Minikube tourne dans une VM (pas possible dans notre VM Ubuntu de TP)
-- solution plus légère et puissante : microk8s utilisée en TP
+- solution officielle : Minikube, tourne dans Docker
+- alternative qui possède de nombreux addons : microk8s
 - avec Docker Desktop depuis peu (virtualisé aussi)
 - un cluster léger avec `k3s`, de Rancher
 

@@ -1,6 +1,0 @@
----
-draft: true
----
-
-- DaemonSets
-- HPA

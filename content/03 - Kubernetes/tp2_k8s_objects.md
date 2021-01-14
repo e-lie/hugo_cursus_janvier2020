@@ -3,6 +3,13 @@ title: 'TP2 - Déployer des conteneurs'
 draft: false
 ---
 
+<!-- Alternatives :
+- Wordpress : https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
+
+FIXME: REDIS ?
+TODO: Check si on peut bien créer tout ça dans ce tuto : https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction/tree/master/monster-stack
+   -->
+
 La première partie de ce TP va consister à créer des objets Kubernetes pour déployer notre stack `monster_icon`.
 
 Mais d'abord créons une application d'exemple Wordpress+MySQL.
