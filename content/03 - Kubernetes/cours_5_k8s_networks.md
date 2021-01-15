@@ -19,12 +19,12 @@ Les Services sont de trois types principaux :
 
 - `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
 - 
-![](../../public/images/kubernetes/nodeport.png)
+![](../../images/kubernetes/nodeport.png)
 *Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-![](../../public/images/kubernetes/loadbalancer.png)
+![](../../images/kubernetes/loadbalancer.png)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
 ## Les implémentations du réseau
@@ -61,7 +61,7 @@ Pas de solution de loadbalancing par défaut :
 
 ## Les ingresses
 
-![](../../public/images/kubernetes/ingress.png)
+![](../../images/kubernetes/ingress.png)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
 
