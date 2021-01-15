@@ -46,10 +46,15 @@ Comparaisons :
 - <https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/>
 
 ## Les network policies
-<!-- Schema static/images/kubernetes/ahmetb_networkpolicies.gif ? CREDITER ou refaire -->
+
+![](../../images/kubernetes/ahmetb_networkpolicies.gif)
+*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
+
 **Par défaut, les pods ne sont pas isolés au niveau réseau** : ils acceptent le trafic de n'importe quelle source.
 
 Les pods deviennent isolés en ayant une NetworkPolicy qui les sélectionne. Une fois qu'une NetworkPolicy (dans un certain namespace) inclut un pod particulier, ce pod rejettera toutes les connexions qui ne sont pas autorisées par cette NetworkPolicy.
+
+- Des exemples de Network Policies : [Kubernetes Network Policy Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
 
 ## Le loadbalancing
 
@@ -87,8 +92,6 @@ Envoy et Istio sont des *service meshes*.
 
 - [Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?](https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0)
 
-- [Kubernetes Network Policy Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
-
 - [Determine best networking option - Project Calico](https://docs.projectcalico.org/networking/determine-best-networking)
 
 - [Doc officielle sur les solutions de networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
@@ -100,6 +103,7 @@ Des vidéos assez complètes sur le réseau, faites par Calico :
 - [Kubernetes Services networking](https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4)
 - [Kubernetes networking on Azure](https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2)
 
+Sur MetalLB, les autres vidéos de la chaîne sont très bien :
 - [Why you need to use MetalLB -  Adrian Goins](https://www.youtube.com/watch?v=Ytc24Y0YrXE)
 
 
