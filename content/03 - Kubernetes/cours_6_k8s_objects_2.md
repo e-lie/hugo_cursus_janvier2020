@@ -3,7 +3,7 @@ title: Cours 6 - Objets Kubernetes - Partie 2
 draft: famse
 ---
 
-## D'autres objets k8s
+## Objets k8s, suite
 
 ### StatefulSets
 
@@ -90,3 +90,5 @@ Cependant quatre rôles génériques existent aussi par défaut :
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
 La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
+
+<!-- FIXME: ## Le stockage dans Kubernetes -->

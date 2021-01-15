@@ -228,14 +228,20 @@ Par exemple, considérons un backend de traitement d’image (*stateless*, c'est
 
 L’abstraction du service permet ce découplage : les clients frontend s'addressent à une seule IP avec un seul port dès qu'ils ont besoin d'avoir recours à un backend. Les backends vont recevoir la requête du frontend aléatoirement.
 
-<!-- 
+<!-- Paragraphe aussi présent en haut du cours network -->
 Les Services sont de trois types principaux :
 
-- `ClusterIP`: expose le service sur une IP interne au cluster appelée ClusterIP. Les autres pod peuvent alors accéder au service mais pas l'extérieur.
+- `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
 
-- `NodePort`: expose le service depuis l'IP publique de n'importe lequel des noeuds du cluster en faisant un mapping static avec un port personnalisé, typiquement dans les 30000. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+- `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+- 
+![](../../public/images/kubernetes/nodeport.png)
+*Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 
-- `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés. -->
+- `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
+
+![](../../public/images/kubernetes/loadbalancer.png)
+*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
 <!-- Un 4e type existe, il est moins utilisé :
 - `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
