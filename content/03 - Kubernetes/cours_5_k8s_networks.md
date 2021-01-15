@@ -73,69 +73,43 @@ Un Ingress est un objet pour gérer le **reverse proxy** dans Kubernetes : il a 
 
 Comparaison : <https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b>
 
-
 ## Le mesh networking et les *service meshes*
 Envoy et Istio sont des *service meshes*.
 - Il faut y penser comme des super-ingresses : des proxy qui font beaucoup plus que du reverse proxy
   - en particulier : ajouter des fonctions de monitoring et de sécurité
   <!-- - ils s'adaptent plus ou moins bien à une solution réseau particulière -->
 
-
 ## Ressources sur le réseau
+
+- Documentation officielle : <https://kubernetes.io/fr/docs/concepts/services-networking/service/>
+
+- [An introduction to service meshes - DigitalOcean](ttps://www.digitalocean.com/community/tutorials/an-introduction-to-service-meshes)
+
+- [Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?](https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0)
+
+- [Kubernetes Network Policy Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
+
+- [Determine best networking option - Project Calico](https://docs.projectcalico.org/networking/determine-best-networking)
+
+- [Doc officielle sur les solutions de networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
 
 ### Vidéos
 
+Des vidéos assez complètes sur le réseau, faites par Calico :
+- [Kubernetes Ingress networking](https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5)
 - [Kubernetes Services networking](https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4)
+- [Kubernetes networking on Azure](https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2)
 
----
-
-- Istio : https://www.digitalocean.com/community/tutorials/an-introduction-to-service-meshes
-
-## Videos
-Why you need to use metallb: https://www.youtube.com/watch?v=Ytc24Y0YrXE
-### Réseau
-
-#### Vidéos de Calico
-Kubernetes networking on Azure
-https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2
-
-Kubernetes Services networking
-https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4
-
-Kubernetes Ingress networking
-https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5
+- [Why you need to use MetalLB -  Adrian Goins](https://www.youtube.com/watch?v=Ytc24Y0YrXE)
 
 
-<!-- TODO: Mettre en forme ressources -->
 <!-- 
-
-- Reprendre ça lentement: https://kubernetes.io/fr/docs/concepts/services-networking/service/
-
-- et/ou ça : https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
+Pas confondre ingress et egress comme NetworkPolicy et Ingress resource -->
 
 
-Pas confondre ingress et egress comme NetworkPolicy et Ingress resource
+<!-- - MetalLB is simply a way to use LoadBalancer when not captive from big Google Microsoft or Amazon cloud (no official K8s solution) : https://metallb.universe.tf/  -->
 
-
-Toutes les networking solutions : https://kubernetes.io/docs/concepts/cluster-administration/networking/
-
-From dumb iptables or GCE route stuff to Cilium or Canal (Calico + Flannel)
-
-- Canal deprecated: should configure both (to confirm)
-
-- Is kubenet the default network solution of k8s?
-
-- prendre le gif de https://github.com/ahmetb/kubernetes-network-policy-recipes
-
-- simple official docs are sometimes outdated...
-
-
-- MetalLB is simply a way to use LoadBalancer when not captive from big Google Microsoft or Amazon cloud (no official K8s solution) : https://metallb.universe.tf/ 
-- 
-- 
-- 
-- 
-
+<!-- 
 ## Network Plugins
 Network plugins in Kubernetes come in a few flavors:
 
@@ -155,12 +129,9 @@ Network plugins in Kubernetes come in a few flavors:
 - Rappel layer 2/3 layer 4 layer 7 ?
 
 ---
+ -->
 
-## Pour ressources :
-- https://docs.projectcalico.org/networking/determine-best-networking
-- https://metallb.universe.tf/
-
-
+<!--
 Pitch MetalLB :
 Kubernetes does not offer an implementation of network load-balancers (Services of type LoadBalancer) for bare metal clusters. The implementations of Network LB that Kubernetes does ship with are all glue code that calls out to various IaaS platforms (GCP, AWS, Azure…). If you’re not running on a supported IaaS platform (GCP, AWS, Azure…), LoadBalancers will remain in the “pending” state indefinitely when created.
 

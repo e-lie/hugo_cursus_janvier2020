@@ -70,10 +70,10 @@ Pour définir qui et quelle app a accès à quel secret, on utilise les fonction
 
 Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces.
 
-- Classiquement on crée des `roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission
+- Classiquement on crée des `Roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission
 - La logique de ce système de permissions est d'associer un **objet** (un type de ressource k8s) à un **verbe** (par exemple : `get`, `list`, `create`, `delete`…)
-- On crée ensuite des utilisateurs appelés `serviceaccounts` dans K8s.
-- On lie les roles et serviceaccounts à l'aide d'objets `rolebindings`.
+- On crée ensuite des utilisateurs appelés `ServiceAccounts` dans k8s.
+- On lie les *Roles* et *ServiceAccounts* à l'aide d'objets `RoleBindings`.
 <!-- - TODO: Exemples -->
 
 A côté des rôles crées pour les utilisateur·ices et processus du cluster, il existe des modèles de rôles prédéfinis qui sont affichables avec :
