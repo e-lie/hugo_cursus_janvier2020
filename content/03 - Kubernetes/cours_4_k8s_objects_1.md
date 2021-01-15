@@ -124,7 +124,6 @@ Un Pod représente une unité de déploiement : un petit nombre de conteneurs qu
 - peuvent se parler sur localhost
 - peuvent se parler en IPC
 - ont un nom différent et des logs différents
-- peuvent avoir des secrets communs ou non
 
 Chaque Pod est destiné à exécuter une instance unique d’un workload donné. Si vous désirez mettre à l’échelle votre workload, vous devez multiplier le nombre de Pods.
 
@@ -233,11 +232,11 @@ Les Services sont de trois types principaux :
 
 - `ClusterIP`: expose le service sur une IP interne au cluster appelée ClusterIP. Les autres pod peuvent alors accéder au service mais pas l'extérieur.
 
-- `NodePort`: expose le service depuis l'IP publique de n'importe lequel des noeuds du cluster en faisant un mapping static avec un port personnalisé typiquement dans les 30000. Cela permet d'accéder aux pods interne répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+- `NodePort`: expose le service depuis l'IP publique de n'importe lequel des noeuds du cluster en faisant un mapping static avec un port personnalisé, typiquement dans les 30000. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
 
-- `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigés sont automatiquement créés.
+- `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-Un 4e type existe, il est moins utilisé :
-- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place.
+<!-- Un 4e type existe, il est moins utilisé :
+- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
 
 <!-- - On peut aussi créer des services *headless* en spécifiant `ClusterIP: none` pour les communications internes au cluster, non basées sur les IP. -->

@@ -1,18 +1,50 @@
 ---
-title: Cours 5 - Helm, le gestionnaire de paquets Kubernetes
+title: Cours 7 - Helm, le gestionnaire de paquets Kubernetes
 draft: false
 ---
 
+
 Nous avons vu que dans Kubernetes la configuration de nos services / applications se fait généralement via de multiples fichiers YAML.
 
-Quand on a une seule application cela reste gérable mais dès qu’on a plusieurs environnements, applications et services, on se retrouve vite submergé de fichiers de centaines, voire de milliers, de lignes qui sont, de plus, assez semblables. 
-C'est donc "trop" déclaratif, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
+### Les fichiers kustomization
 
+Il est courant de décrire un ensemble de resources dans le même fichier, séparées par `---`.
+Mais on pourrait préférer rassembler plusieurs fichiers dans un même dossier et les appliquer d'un coup.
+
+Pour cela K8s propose le concept de `kustomization`.
+
+Exemple:
+
+```yaml
+k8s-mysql/
+├── kustomization.yaml
+├── mysql-deployment.yaml
+└── wordpress-deployment.yaml
+```
+
+`kustomization.yaml`
+
+```yaml
+secretGenerator:
+  - name: mysql-pass
+    literals:
+      - password=YOUR_PASSWORD
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+```
+On peut ensuite l'appliquer avec `kubectl apply -k ./`
+
+A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
+
+### Helm
+
+Quand on a une seule application cela reste gérable avec des kustomizations ou sans, mais dès qu’on a plusieurs environnements, applications et services, on se retrouve vite submergé·es de fichiers de centaines, voire de milliers, de lignes qui sont, de plus, assez semblables. 
+C'est donc "trop" déclaratif, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
 
 Pour pallier ce problème, il existe l'utilitaire Helm, qui produit les fichiers de déploiement que l'on souhaite.
 
-Helm est le package manager recommandé par Kubernetes, c'est aussi le seul sur le marché.
-<!-- - car son unique concurrent, KPM de CoreOS, n’est plus maintenu depuis juillet 2017. -->
+Helm est le package manager recommandé par Kubernetes, il utilise les fonctionnalités de templating du langage Go.
 
 Helm permet donc de déployer des applications / stacks complètes en utilisant un système de templating et de dépendances, ce qui permet d’éviter la duplication et d'avoir ainsi une arborescence cohérente pour nos fichiers de configuration.
 
@@ -21,11 +53,9 @@ Mais Helm propose également :
   - la possibilité de mettre les Charts dans un répertoire distant (Git, disque local ou partagé…), et donc de distribuer ces Charts publiquement.
   - un système facilitant les Updates et Rollbacks de vos applications.
 
-Il existe des sortes de *stores* d'applications Kubernetes packagées avec Helm, le plus gros d'entre eux est : [Kubeapps Hub](https://hub.kubeapps.com/)
+Il existe des sortes de *stores* d'applications Kubernetes packagées avec Helm, le plus gros d'entre eux est [Kubeapps Hub](https://hub.kubeapps.com/), maintenu par l'entreprise Bitnami qui fournit de nombreuses Charts assez robustes.
 
-<!-- 
-Nous verrons qu'un chart helm est un peu l'équivalent d'un role Ansible dans l'écosystème Kubernetes. -->
-
+Si vous connaissez Ansible, un chart Helm est un peu l'équivalent d'un rôle Ansible dans l'écosystème Kubernetes.
 
 ### Concepts
 
@@ -33,7 +63,7 @@ Les quelques concepts centraux de Helm :
 
 - Un package Kubernetes est appelé **Chart** dans Helm.
 
-- Une Chart contient un lot d’informations nécessaires pour créer une application Kubernetes :
+- Un Chart contient un lot d’informations nécessaires pour créer une application Kubernetes :
   - la **Config** contient les informations dynamiques concernant la configuration d’une **Chart**
   - Une **Release** est une instance existante sur le cluster, combinée avec une **Config** spécifique.
 
@@ -52,8 +82,9 @@ Helm utilise automatiquement votre fichier `kubeconfig` pour se connecter.
 
 Voici quelques commandes de bases pour Helm :
 
- <!-- helm repo add bitnami https://charts.bitnami.com/bitnami
-$ helm search repo bitnami -->
+- `helm repo add bitnami https://charts.bitnami.com/bitnami`: ajouter un repo contenant des charts
+
+- `helm search repo bitnami` : rechercher un chart en particulier
 
 - `helm install my-chart` : permet d’installer le chart my-chart. Le nom de release est généré aléatoirement dans votre cluster Kubernetes.
 

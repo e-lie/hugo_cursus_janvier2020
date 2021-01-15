@@ -141,6 +141,26 @@ super tp pour sécuriser la stack elastic sur k8s avec cilium : http://docs.cili
 * APT the future of k8s attacks
 * favs github
 
+# Ressources K8S
+
+https://codelabs.developers.google.com/codelabs/cloud-orchestrate-with-kubernetes/#0
+
+## TP
+
+### Gitlab
+* https://rancher.com/blog/2019/connecting-gitlab-autodevops-authorized-cluster-endpoints/
+* https://docs.gitlab.com/12.8/runner/install/kubernetes.html
+* https://docs.gitlab.com/charts/installation/index.html
+* https://blog.kubernauts.io/ci-cd-with-rancher-pipelines-and-self-hosted-gitlab-b17248294fda
+
+https://medium.com/@abenahmed1/pipeline-de-ci-cd-simplifi%C3%A9-dans-un-cluster-kubernetes-avec-gitlab-et-rancher-602a01029bae
+
+Il y a aussi Rancher's own CI/CD pipeline: https://rancher.com/docs/rancher/v2.x/en/project-admin/pipelines/
+
+
+NOTE: Gitlab operator? https://docs.gitlab.com/charts/installation/operator.html
+
+
 # Rancher
 * a project is a group of namespaces: https://rancher.com/docs/rancher/v2.x/en/cluster-admin/projects-and-namespaces/
 
@@ -206,33 +226,6 @@ super tp pour sécuriser la stack elastic sur k8s avec cilium : http://docs.cili
 - trouver outil en ligne pour faire quick polls qd formation àdistance
 - donner olein d'apps d'exemple pour toutes les propriétés intéressantes + parler des CRD via ELasticsearches par exemple ? ou des prometheuses ou etcd operators
 
-- Ingresses : Envoy-based comme Istio (qui est bien plus), standard official K8s ingress based on nginx, or Traefik or HAProxy for example https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
-Ne pas confondre avec network solutions comme Cilium qui sont un bunch of other things (?)
-
-- Reprendre ça lentement: https://kubernetes.io/fr/docs/concepts/services-networking/service/
-
-- et/ou ça : https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
-
-- enseigner NetworkPolicy et la networking solution qui le suit : By default, pods are non-isolated; they accept traffic from any source. Pods become isolated by having a NetworkPolicy that selects them. Once there is any NetworkPolicy in a namespace selecting a particular pod, that pod will reject any connections that are not allowed by any NetworkPolicy. 
-
-Pas confondre ingress et egress comme NetworkPolicy et Ingress resource
-
-
-Toutes les networking solutions : https://kubernetes.io/docs/concepts/cluster-administration/networking/
-
-From dumb iptables or GCE route stuff to Cilium or Canal (Calico + Flannel)
-
-- Canal deprecated: should configure both (to confirm)
-
-- Is kubenet the default network solution of k8s?
-
-- prendre le gif de https://github.com/ahmetb/kubernetes-network-policy-recipes
-
-- simple official docs are sometimes outdated...
-
-
-- MetalLB is simply a way to use LoadBalancer when not captive from big Google Microsoft or Amazon cloud (no official K8s solution) : https://metallb.universe.tf/
-
 
 - Idée TP HPA : https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
 
@@ -241,51 +234,16 @@ From dumb iptables or GCE route stuff to Cilium or Canal (Calico + Flannel)
 
 - https://github.com/hobby-kube/guide
 
+
 - network policy tp : https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/
   - à combne avec calico / cilium / weavenet tuto : https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/
   - avec les example policies à copier coller (dont schema) : https://github.com/ahmetb/kubernetes-network-policy-recipes
-
-
-## Network Plugins
-Network plugins in Kubernetes come in a few flavors:
-
-* CNI plugins: adhere to the Container Network Interface (CNI) specification, designed for interoperability.
-* Kubenet plugin: implements basic cbr0 using the bridge and host-local CNI plugins
-
----
-
-- **Network policies** : Faire un petit tableau avec Cilium / Calico / Kubenet etc et ce qu'ils font et si CNI ou non
-- Dire que pas confondre avec **services meshes** Istio / Pilot etc.
-- Ni avec **ingress controllers** !!! https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b
-
-
-- Service Topology enables a service to route traffic based upon the Node topology of the cluster : https://kubernetes.io/docs/concepts/services-networking/service-topology/
 
 
 - Ne pas arrêter de répéter que tout est alpha dans k8s et les third party stuff et que l'écosystème change tout le temps. par contre bcp d'entreprises dedans et ne sera pas abandonné, et c'est en fait si on trouve l'expression déclarative des objets + les API CRD qui fait qu'on trouve un intérêt à K8s fondamentalement.
 
 - Se baser sur https://victorops.com/blog/how-to-use-vanilla-kubernetes
 
-- Rappel layer 2/3 layer 4 layer 7 ?
-
-Ressource vidéo : Kubernetes Services networking https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4
-
----
-
-## Explain nodeport-vs-loadbalancer-vs-ingress (schémas à recréer/créditer)
-https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
-
----
-
-## Pour ressources :
-- https://docs.projectcalico.org/networking/determine-best-networking
-- https://metallb.universe.tf/
-- Bitnami Helm : https://github.com/bitnami/charts/tree/master/bitnami
-- BKPR : https://github.com/bitnami/kube-prod-runtime
-- Istio : https://www.digitalocean.com/community/tutorials/an-introduction-to-service-meshes
-
-- Vitess : A database clustering system for horizontal scaling of MySQL : https://vitess.io
--  metlallb ? nginx ingress ??
 
 - https://www.youtube.com/watch?v=iqVt5mbvlJ0 + github
 
@@ -302,27 +260,6 @@ https://github.com/GoogleCloudPlatform/kubernetes-workshops/tree/master/advanced
 ---
 - https://12factor.net/fr/
 
-Pitch MetalLB :
-Kubernetes does not offer an implementation of network load-balancers (Services of type LoadBalancer) for bare metal clusters. The implementations of Network LB that Kubernetes does ship with are all glue code that calls out to various IaaS platforms (GCP, AWS, Azure…). If you’re not running on a supported IaaS platform (GCP, AWS, Azure…), LoadBalancers will remain in the “pending” state indefinitely when created.
-
-Bare metal cluster operators are left with two lesser tools to bring user traffic into their clusters, “NodePort” and “externalIPs” services. Both of these options have significant downsides for production use, which makes bare metal clusters second class citizens in the Kubernetes ecosystem.
-
-MetalLB aims to redress this imbalance by offering a Network LB implementation that integrates with standard network equipment, so that external services on bare metal clusters also “just work” as much as possible.
-
-
-## Videos
-Why you need to use metallb: https://www.youtube.com/watch?v=Ytc24Y0YrXE
-### Réseau
-
-#### Vidéos de Calico
-Kubernetes networking on Azure
-https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2
-
-Kubernetes Services networking
-https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4
-
-Kubernetes Ingress networking
-https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5
 
 
 ## Apps de demo
@@ -344,3 +281,16 @@ az ad sp create-for-rbac --skip-assignment
 https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/service_principal_client_secret
 https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs
 https://docs.microsoft.com/fr-fr/azure/developer/terraform/get-started-cloud-shell#authenticate-via-azure-service-principal
+
+
+## TP
+### Un tp dockerfile to registry to running?
+https://www.katacoda.com/courses/kubernetes/deploy-service-from-source
+
+## Demo app
+https://github.com/instana/robot-shop
+https://github.com/microservices-demo/microservices-demo/tree/master/deploy/kubernetes/helm-chart/templates
+
+## Notes
+
+- Prler de Hobbykube et BKPR

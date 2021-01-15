@@ -3,7 +3,7 @@ title: 'Cours Kubernetes'
 draft: true
 ---
 
-
+<!-- TODO: Intégrer au cours -->
 
 
 ### Namespaces

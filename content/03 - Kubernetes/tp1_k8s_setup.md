@@ -133,35 +133,42 @@ Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et n
 
 Vous pouvez l'installer en suivant les indications à cette adresse : <https://k8slens.dev>
 
+## Mettre en place un cluster K8s dans le cloud avec un provider type DigitalOcean ou Scaleway
 
-<!-- FIXME: Ajout cluster K8S cloud : scaleway? -->
-<!-- ## Mettre en place un cluster K8s dans le cloud avec DigitalOcean
+- Créez un compte (ou récupérez un accès) sur [DigitalOcean](https://cloud.digitalocean.com/) ou [Scaleway](https://console.scaleway.com/)
+- Créez un cluster Kubernetes avec [l'interface DigitalOcean](https://cloud.digitalocean.com/kubernetes/clusters/new) ou bien [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
 
-- Clonez le projet modèle : <https://github.com/Uptime-Formation/cursus_janvier2020_tp1_k8s>
-- récupérez un token depuis votre compte de cloud.
+La création prend environ 5 minutes.
+
+- Sur DigitalOcean, il vous est proposé dans l'étape 3 ou sur la page de votre cluster Kubernetes de télécharger le fichier `kubeconfig`. (*download the cluster configuration file*, ou bien *Download Config File*).
+- De même, sur Scaleway, sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
+
+Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
+
+<!-- - Clonez le projet modèle : <https://github.com/Uptime-Formation/cursus_janvier2020_tp1_k8s> -->
+<!-- - récupérez un token depuis votre compte de cloud (Scaleway ou).
 - renommez `secrets.auto.tfvars` sans le .dist et complétez.
 - Complétez le code terraform de `digitalocean_k8s.tf` pour changer `k8s-tp-cluster` par `k8s-<votre_nom>-tp-cluster`
-- Lancez la création du cluster depuis le dossier terraform avec `terraform init` et `terraform apply`.
-
-La création prend 5 minutes. un fichier de sortie terraform `kubeconfig_do` a été ajouté en local. Il contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
+- Lancez la création du cluster depuis le dossier terraform avec `terraform init` et `terraform apply`. -->
 
 ## Merger la configuration kubectl
 
-- Ouvrez avec `gedit` les fichiers `kubeconfig_do` et `~/.kube/config`.
+- Ouvrez avec `gedit` les fichiers `kubeconfig` et `~/.kube/config`.
 - fusionnez dans `~/.kube/config` les éléments des listes YAML de:
   - `clusters`
   - `contexts`
   - `users`
-- mettez la clé `current-context:` à `do-lon1-<nom_cluster>` (compléter avec votre valeur)
+- mettez la clé `current-context:` à `<nom_cluster>` (compléter avec votre valeur)
 
-- Testons la connection avec `kc get nodes`.
+- Testons la connection avec `kubectl get nodes`.
 
 ## Déployer l'application
 
-- Lancez `kc cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par digital ocean.
+- Lancez `kubectl cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par le provider.
 - Déployez l'application `microbot` comme dans la partie précédente avec `minikube`
-- Pour visitez l'application vous devez trouver l'IP publique d'un des noeuds du cluster:
-  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->
+- Pour visitez l'application vous devez trouver l'IP publique d'un des nœuds du cluster en listant les objets de type `Service`, ou sur la page du fournisseur de cloud.
+ 
+<!--  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->
 
 
 <!--   

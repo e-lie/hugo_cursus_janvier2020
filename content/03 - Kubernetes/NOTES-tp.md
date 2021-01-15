@@ -7,7 +7,7 @@ draft: true
 
 ## Kubernetes Objects
 
-
+<!-- TODO: Intégrer l'utile dans TODO_k8s.md et jeter le reste -->
 
 
 

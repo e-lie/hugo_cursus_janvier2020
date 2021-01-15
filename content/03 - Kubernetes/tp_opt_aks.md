@@ -109,3 +109,4 @@ https://docs.microsoft.com/fr-fr/azure/mysql/concepts-aks
 
 https://docs.microsoft.com/fr-fr/azure/aks/
 https://github.com/microsoft/kubernetes-learning-path
+K8s Networking in Azure: https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2

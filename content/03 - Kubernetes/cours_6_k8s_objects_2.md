@@ -1,28 +1,23 @@
 ---
-title: Cours 4 - Objets Kubernetes - Partie 2
+title: Cours 6 - Objets Kubernetes - Partie 2
 draft: famse
 ---
 
 ## D'autres objets k8s
 
-<!-- FIXME: Secrets and configmaps -->
-<!-- FIXME: CronJobs -->
-
 ### StatefulSets
-
-<!-- TODO: préciser usage 
-    Stable, unique network identifiers.
-    Stable, persistent storage.
-    Ordered, graceful deployment and scaling.
-    Ordered, automated rolling updates.
-
--->
 
 On utilise les `Statefulsets` pour répliquer un ensemble de pods dont l'état est important : par exemple, des pods dont le rôle est d'être une base de données, manipulant des données sur un disque.
 
 Un objet `StatefulSet` représente un ensemble de pods dotés d'identités uniques et de noms d'hôtes stables. Quand on supprime un StatefulSet, par défaut les volumes liés ne sont pas supprimés.
 
 Les StatefulSets utilisent un nom en commun suivi de numéros qui se suivent. Par exemple, un StatefulSet nommé `web` comporte des pods nommés `web-0`, `web-1` et` web-2`. Par défaut, les pods StatefulSet sont déployés dans l'ordre et arrêtés dans l'ordre inverse (`web-2`, `web-1` puis `web-0`).
+
+En général, on utilise des StatefulSets quand on veut :
+- des identifiants réseau stables et uniques
+- du stockage stable et persistant
+- des déploiements et du scaling contrôlés et dans un ordre défini
+- des rolling updates dans un ordre défini et automatisées
 
 ### DaemonSets
 
@@ -46,6 +41,28 @@ Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod
 ### Jobs
 
 Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod normal, votre tâche de migration de base de données se déroulera en boucle, en repeuplant continuellement la base de données.
+
+### CronJobs
+
+Comme des jobs, mais se lance à un intervalle régulier, comme avec `cron`.
+
+### Les ConfigMaps 
+
+D'après les recommandations de développement [12factor](https://12factor.net/fr), la configuration de nos programmes doit venir de l'environnement. L'environnement est ici Kubernetes.
+
+Les objets ConfigMaps permettent d'injecter dans des pods des fichiers de configuration en tant que volumes.
+
+### les Secrets
+
+Les Secrets se manipulent comme des objets ConfigMaps, mais sont faits pour stocker des mots de passe, des clés privées, des certificats, des tokens, ou tout autre élément de config dont la confidentialité doit être préservée.
+Un secret se créé avec l'API Kubernetes, puis c'est au pod de demander à y avoir accès.
+
+Il y a 3 façons de donner un accès à un secret :
+- le secret est un fichier que l'on monte en tant que volume dans un conteneur (pas nécessairement disponible à l'ensemble du pod). Il est possible de ne jamais écrire ce secret sur le disque (volume `tmpfs`).
+- le secret est une variable d'environnement du conteneur.
+- cas spécifique aux registres : le secret est récupéré par kubelet quand il pull une image.
+
+Pour définir qui et quelle app a accès à quel secret, on utilise les fonctionnalités dites "RBAC" de Kubernetes.
 
 ### Role-Based Access Control
 
@@ -72,45 +89,4 @@ Cependant quatre rôles génériques existent aussi par défaut :
 - Le rôle `edit` permet à un·e utilisateur·ice de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
-<!-- TODO: MENTIONNER la commande kc auth can-i (cf kubernetes up and running chap RBAC)>
-
-### Les fichiers kustomization
-
-Il est courant de décrire un ensemble de resources dans le même fichier, séparées par `---`.
-Mais on pourrait préférer rassembler plusieurs fichiers dans un même dossier et les appliquer d'un coup.
-
-Pour cela K8s propose le concept de `kustomization`.
-
-Exemple:
-
-```yaml
-k8s-mysql/
-├── kustomization.yaml
-├── mysql-deployment.yaml
-└── wordpress-deployment.yaml
-```
-
-`kustomization.yaml`
-
-```yaml
-secretGenerator:
-  - name: mysql-pass
-    literals:
-      - password=YOUR_PASSWORD
-resources:
-  - mysql-deployment.yaml
-  - wordpress-deployment.yaml
-```
-On peut ensuite l'appliquer avec `kubectl apply -k ./`
-
-A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
-
-<!-- 
-Goal: grant a pod access to a secured something?
-don’t put secrets in the container image!
-12-factor says: config comes from the environment
-Kubernetes is the environment
-Manage secrets via the Kubernetes API
-Inject them as virtual volumes into Pods
-late-binding
-tmpfs - never touches disk -->
+La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.

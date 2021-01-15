@@ -145,5 +145,5 @@ Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps
 
 - Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
 - AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
-- DigitalOcean : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
+- DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
 

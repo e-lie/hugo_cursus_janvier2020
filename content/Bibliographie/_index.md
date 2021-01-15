@@ -65,6 +65,24 @@ draft: false
 <!-- https://www.objectif-libre.com/fr/blog/2018/07/05/comparatif-solutions-reseaux-kubernetes/#Flannel
 https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/ -->
 
+<!-- Why you need to use metallb: https://www.youtube.com/watch?v=Ytc24Y0YrXE
+### Réseau
+
+#### Vidéos de Calico
+Kubernetes networking on Azure
+https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2
+
+Kubernetes Services networking
+https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4
+
+Kubernetes Ingress networking
+https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5
+ -->
+
+
+<!-- - Bitnami Helm : https://github.com/bitnami/charts/tree/master/bitnami
+- BKPR : https://github.com/bitnami/kube-prod-runtime
+- Vitess : A database clustering system for horizontal scaling of MySQL : https://vitess.io -->
 ### Pour aller plus loin
 
 - Luksa, Kubernetes in Action, 2018
