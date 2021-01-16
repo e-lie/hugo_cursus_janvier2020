@@ -3,11 +3,9 @@ draft: true
 ---
 
 ## Exercices avec AKS
-- Basique : https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
 
-- Difficile : https://github.com/Microsoft/RockPaperScissorsLizardSpock
 
-- Juste comme il faut, avec des *charts* : https://docs.bitnami.com/kubernetes/get-started-aks/
+Avec des *charts* : https://docs.bitnami.com/kubernetes/get-started-aks/
 
 
 ### Bitnami Helm Wordpress avec AKS
@@ -110,3 +108,8 @@ https://docs.microsoft.com/fr-fr/azure/mysql/concepts-aks
 https://docs.microsoft.com/fr-fr/azure/aks/
 https://github.com/microsoft/kubernetes-learning-path
 K8s Networking in Azure: https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2
+
+## Autres idées d'exercices
+- Basique : https://docs.microsoft.com/fr-fr/azure/aks/kubernetes-walkthrough
+
+- Difficile : https://github.com/Microsoft/RockPaperScissorsLizardSpock

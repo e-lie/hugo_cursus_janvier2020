@@ -5,6 +5,26 @@ draft: famse
 
 ## Objets k8s, suite
 
+
+
+### Le stockage dans Kubernetes
+
+#### StorageClasses 
+Le stockage dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
+- dans le cloud, ce sont les différentes offres du fournisseur,
+- dans un cluster auto-hébergé c'est par exemple :
+  - un disque dur local ou distant (NFS)
+  - ou bien une solution de stockage distribué
+    - les plus connues sont Ceph et GlusterFS
+
+#### PersistentVolumeClaims et PersistentVolumes
+Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : une demande de volume (persistant). Si un des objets *StorageClass* est en capacité de le fournir, alors un *PersistentVolume* est créé et lié à ce conteneur : il devient disponible en tant que volume monté dans le conteneur.
+
+
+- les *StorageClasses* fournissent du stockage
+- les conteneurs demandent du volume avec les *PersistentVolumeClaims*
+- les *StorageClasses* répondent aux *PersistentVolumeClaims* en créant des objets *PersistentVolumes* : le conteneur peut accéder à son volume.
+
 ### StatefulSets
 
 On utilise les `Statefulsets` pour répliquer un ensemble de pods dont l'état est important : par exemple, des pods dont le rôle est d'être une base de données, manipulant des données sur un disque.
@@ -21,7 +41,7 @@ En général, on utilise des StatefulSets quand on veut :
 
 ### DaemonSets
 
-Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod sur chaque nœud du cluster. En général, la motivation pour répliquer un Pod sur chaque nœud est de faire atterrir une sorte d'agent ou de démon sur chaque nœud, et l'objet Kubernetes pour y parvenir est le DaemonSet. Par exemple pour des besoins de monitoring.
+Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod sur chaque nœud du cluster. En général, la motivation pour répliquer un Pod sur chaque nœud est de faire atterrir une sorte d'agent ou de démon sur chaque nœud, et l'objet Kubernetes pour y parvenir est le DaemonSet. Par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
 
 ### Deployments, DaemonSets, StatefulSets
 
@@ -64,7 +84,7 @@ Il y a 3 façons de donner un accès à un secret :
 
 Pour définir qui et quelle app a accès à quel secret, on utilise les fonctionnalités dites "RBAC" de Kubernetes.
 
-### Role-Based Access Control
+### Le Role-Based Access Control, les Roles et les RoleBindings
 
 <!-- TODO: add ABAC? https://kubernetes.io/docs/reference/access-authn-authz/abac/ -->
 
@@ -91,4 +111,3 @@ Cependant quatre rôles génériques existent aussi par défaut :
 
 La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
 
-<!-- FIXME: ## Le stockage dans Kubernetes -->

@@ -6,7 +6,7 @@ title: Cours 5 - Le réseau dans Kubernetes
 Les solutions réseau dans Kubernetes ne sont pas standard.
 Il existe plusieurs façons d'implémenter le réseau.
 
-## Les services
+## Les objets Services
 
 <!-- FIXME: SCHEMAS
 
@@ -64,7 +64,7 @@ Pas de solution de loadbalancing par défaut :
 - soit on se base sur ce que le fournisseur de cloud propose,
 - soit on configure [*MetalLB*](https://metallb.universe.tf/), seule alternative en dehors des fournisseurs de cloud
 
-## Les ingresses
+## Les objets Ingresses
 
 ![](../../images/kubernetes/ingress.png)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*

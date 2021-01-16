@@ -104,3 +104,9 @@ Cependant le DNS n'a pas été pensé pour ça :
 <!-- - (Kubernetes l'utilise en interne pour son control pane, mais pas pour ses applications) -->
 
 <!-- - Kubernetes propose un service discovery extrêmement flexible grâce aux `deployments` et aux `services`. -->
+
+<!-- FIXME: ROLLOUT POLICIES / Deployment strategies: 
+https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
+
+https://blog.container-solutions.com/kubernetes-deployment-strategies
+-->
