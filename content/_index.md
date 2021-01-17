@@ -1,5 +1,5 @@
 ---
-title: {{ .Site.Title }}
+title: "{{ .Site.Title }}"
 ---
 
 # {{ .Site.Title }}
