@@ -33,7 +33,8 @@
 
   <ul>
     {{ range .Site.RegularPages }}
-      <li><a href="#{{ substr .RelPermalink 1 -1 }}">{{ .Title }}</a></li>
+      <li><a href="#{{ .Page.File.UniqueID }}">{{ .Title }}</a></li>
+      <!-- <li><a href="#{{ substr .RelPermalink 1 -1 }}">{{ .Title }}</a></li> -->
     {{ end }}
   </ul>
 

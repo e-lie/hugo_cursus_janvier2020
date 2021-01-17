@@ -11,6 +11,7 @@ home = [ "HTML", "RSS", "JSON" ]
 
 [params]
 editURL = "https://github.com/ketsapiwiq/hp_cursus_devops"
+globalTitle = "Kubernetes - Janvier 2021"
 
 
 # [menu.shortcuts]

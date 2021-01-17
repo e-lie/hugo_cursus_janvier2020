@@ -1,9 +1,11 @@
 ---
-title: "{{ .Site.Title }}"
+title: {{< param globalTitle >}}
 ---
 
-# {{ .Site.Title }}
+# {{< param globalTitle >}}
 
 Supports de formation : Elie Gavoty et Hadrien Pélissier</br>
-Conçus initialement dans le cadre d'un cursus <a href="https://uptime-formation.fr">Uptime Formation</a>.</br>
-Sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr">licence CC-BY-NC-SA</a>
+
+Conçus initialement dans le cadre d'un cursus [Uptime Formation](https://uptime-formation.fr)</a>.</br>
+
+Sous [licence CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr)</a>
