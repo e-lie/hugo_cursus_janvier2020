@@ -1,6 +1,7 @@
 ---
 title: Cours 3 - Concepts de Kubernetes
 draft: false
+weight: 30
 ---
 
 ## Principes d'orchestration

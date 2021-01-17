@@ -1,6 +1,7 @@
 ---
 title: Cours 6 - Objets Kubernetes - Partie 2
-draft: famse
+draft: false
+weight: 60
 ---
 
 ## Objets k8s, suite

@@ -1,6 +1,7 @@
 ---
 title: 'TP 4 - Déployer Wordpress avec Helm'
 draft: false
+weight: 71
 ---
 
 Helm est un gestionnaire de paquet k8s qui permet d'installer des paquets sans faire des copier-coller pénibles de YAML :
