@@ -111,4 +111,12 @@ Cependant quatre rôles génériques existent aussi par défaut :
 
 La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
 
-<!-- FIXME: CRD et Operators -->
+### Les CRD et Operators
+
+Les *CustomResourcesDefinition* sont l'objet le plus *méta* de Kubernetes : inventés par Red Hat pour ses *Operators*, ils permettent de définir un nouveau type d'objet dans Kubernetes.
+Combinés à des Operators (du code d'API en Go), ils permettent d'étendre Kubernetes pour gérer de nouveaux objets qui eux-même interagissent avec des objets Kubernetes.
+
+Exemples :
+- la chart officielle de la suite Elastic (ELK) définit des objets de type `elasticsearch`
+- KubeVirt permet de rajouter des objets de type VM pour les piloter depuis Kubernetes
+- Azure propose des objets correspondant à ses ressources du cloud Azure, pour pouvoir créer et paramétrer des ressources Azure directement via la logique de Kubernetes

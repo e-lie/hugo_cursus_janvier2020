@@ -308,3 +308,6 @@ https://github.com/microservices-demo/microservices-demo/tree/master/deploy/kube
 ## Notes
 
 - Prler de Hobbykube et BKPR
+
+
+## Todo: parler de ce que devrait fait une CD de Gitlab : se connecter à un bastion, git pull, puis kubectl apply

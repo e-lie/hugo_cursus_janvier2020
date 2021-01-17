@@ -6,8 +6,7 @@ draft: false
 <!-- Alternatives :
 - Wordpress : https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
-FIXME: REDIS ?
-TODO: Check si on peut bien créer tout ça dans ce tuto : https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction/tree/master/monster-stack
+<!-- FIXME: oups la correction marche mais le TP non...
    -->
 
 <!-- La première partie de ce TP va consister à créer des objets Kubernetes pour déployer un Wordpress avec stockage et base de données. -->
@@ -399,7 +398,6 @@ spec:
   - supprimez la section `env` inutile
 - Enfin mettez le nombre de `replicas` à `3`. -->
 
-<!-- TODO: FIXME: developper -->
 Enfin, configurons un troisième deployment `redis` :
 
 `redis.yaml`: 
@@ -461,8 +459,8 @@ Ajoutez le code suivant au début de chaque fichier déploiement. Complétez pou
     <!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) -->
     - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`)
     - le port par le port du service
-    <!-- - FIXME: not true -->
-    - les selectors `app` et `partie` par ceux du déploiement correspondant.
+    <!-- - pourquoi pas selector = celui du deployment? -->
+    - les selectors `app` et `partie` par ceux du ReplicaSet correspondant.
 
 Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 

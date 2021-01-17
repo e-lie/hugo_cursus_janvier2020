@@ -105,8 +105,18 @@ Cependant le DNS n'a pas été pensé pour ça :
 
 <!-- - Kubernetes propose un service discovery extrêmement flexible grâce aux `deployments` et aux `services`. -->
 
-<!-- FIXME: ROLLOUT POLICIES / Deployment strategies: 
-https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
+### Les stratégies de déploiement
 
-https://blog.container-solutions.com/kubernetes-deployment-strategies
--->
+Il existe deux types de stratégies de *rollout* native à Kubernetes :
+- `Recreate` : arrêter les pods avec l'ancienne version en même temps et créer les nouveaux simultanément
+- `RollingUpdate` : mise à jour continue, arrêt des anciens pods les uns après les autres et création des nouveaux au fur et à mesure (paramétrable)
+
+Mais il existe un panel de stratégies plus large pour updater ses apps :
+- *blue/green* : publier une nouvelle version à côté de l'ancienne puis changer de trafic
+- *canary* : diffuser une nouvelle version à un sous-ensemble d'utilisateurs, puis procéder à un déploiement complet
+- *A/B testing*: diffusion d'une nouvelle version à un sous-ensemble d'utilisateurs de manière précise (en-têtes HTTP, cookie, région, etc.).
+  - pas possible par défaut avec Kubernetes, implique une infrastructure plus avancée avec reverse proxy (Istio, Traefik, nginx/haproxy personnalisé, etc.).
+
+
+Traduit avec www.DeepL.com/Translator (version gratuite)
+*Source :* <https://blog.container-solutions.com/kubernetes-deployment-strategies>
