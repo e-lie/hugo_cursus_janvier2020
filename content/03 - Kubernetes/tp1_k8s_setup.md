@@ -1,7 +1,7 @@
 ---
 title: TP1 - Installation et configuration de Kubernetes
 draft: false
-weight: 25
+weight: 2025
 ---
 
 Au cours de nos TPs nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :

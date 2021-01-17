@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "TP 2 - Déployer Wordpress rapidement"
-weight: 45
+weight: 2045
 ---
 
 ## Déployer Wordpress et MySQL avec du stockage et des Secrets

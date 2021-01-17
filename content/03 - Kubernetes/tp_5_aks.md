@@ -1,7 +1,7 @@
 ---
 draft: false
 title: TP 5 - Cloud Azure
-weight: 72
+weight: 2072
 ---
 
 Nous allons déployer une application dans Azure à l'aide de *charts* Helm : https://docs.bitnami.com/kubernetes/get-started-aks/

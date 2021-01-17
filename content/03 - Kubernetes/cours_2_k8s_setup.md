@@ -1,7 +1,7 @@
 ---
 title: Cours 2 - Mettre en place un cluster Kubernetes
 draft: false
-weight: 20
+weight: 2020
 ---
 
 

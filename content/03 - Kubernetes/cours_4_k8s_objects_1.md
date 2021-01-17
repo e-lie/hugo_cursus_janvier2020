@@ -1,7 +1,7 @@
 ---
 title: Cours 4 - Objets Kubernetes - Partie 1
 draft: false
-weight: 40
+weight: 2040
 ---
 
 ## L'API et les Objets Kubernetes
