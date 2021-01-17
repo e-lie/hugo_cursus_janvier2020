@@ -120,3 +120,6 @@ Exemples :
 - la chart officielle de la suite Elastic (ELK) définit des objets de type `elasticsearch`
 - KubeVirt permet de rajouter des objets de type VM pour les piloter depuis Kubernetes
 - Azure propose des objets correspondant à ses ressources du cloud Azure, pour pouvoir créer et paramétrer des ressources Azure directement via la logique de Kubernetes
+
+
+![](../../images/kubernetes/k8s_crd.png)
