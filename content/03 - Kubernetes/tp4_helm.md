@@ -1,5 +1,5 @@
 ---
-title: 'TP3 - Déployer Wordpress avec Helm'
+title: 'TP 4 - Déployer Wordpress avec Helm'
 draft: false
 ---
 

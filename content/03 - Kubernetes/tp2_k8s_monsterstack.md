@@ -1,5 +1,5 @@
 ---
-title: 'TP2 - Déployer des conteneurs'
+title: 'TP 3 - Déployer des conteneurs de A à Z'
 draft: false
 ---
 
@@ -10,51 +10,62 @@ FIXME: REDIS ?
 TODO: Check si on peut bien créer tout ça dans ce tuto : https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction/tree/master/monster-stack
    -->
 
-La première partie de ce TP va consister à créer des objets Kubernetes pour déployer une stack d'exemple : `monster_stack`.
+<!-- La première partie de ce TP va consister à créer des objets Kubernetes pour déployer un Wordpress avec stockage et base de données. -->
+Ce TP va consister à créer des objets Kubernetes pour déployer une stack d'exemple : `monster_stack`.
 Elle est composée :
 - d'un front-end en Flask (Python),
 - d'un backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères),
 - et d'une base de données servant de cache pour ces images, Redis.
 
+Vous pouvez utiliser au choix votre environnement Cloud ou Minikube.
  
 ### Rappel : Installer Lens
 
-Lens est une interface graphique sympatique pour Kubernetes.
+Lens est une interface graphique sympathique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
 
 Vous pouvez l'installer en lançant ces commandes :
 ```bash
-curl -fsSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
+sudo apt-get update; sudo apt-get install libxss-dev
+curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
 chmod +x ~/Lens.AppImage
 ~/Lens.AppImage
 ```
 
-### Déploiement de pods
+
+
+<!-- ## Partie 1 : Installer un Wordpress avec base MySQL
+
+Suivons ensemble ce tutoriel : <https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/> -->
+
+
+
+## Déploiement de la stack `monsterstack`
 
 Les pods sont des ensembles de conteneurs toujours gardés ensembles.
 
-Nous voudrions déployer notre stack `monster_app`. Nous allons commencer par créer un pod avec seulement notre conteneur `monster_icon`.
+Nous voudrions déployer notre stack `monster_app`. Nous allons commencer par créer un pod avec seulement notre conteneur `monstericon`.
 
 - Créez un projet vide `monster_app_k8s`.
 
 
 - Créez le fichier de déploiement suivant:
 
-`monster-icon.yaml`
+`monstericon.yaml`
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monster-icon 
+  name: monstericon 
   labels:
     <labels>
 ```
 
 Ce fichier exprime un objet déploiement vide. 
 
-- Ajoutez le label `app: monster-app` à cet objet `Deployment`.
+- Ajoutez le label `app: monsterstack` à cet objet `Deployment`.
 
 - Pour le moment notre déploiement n'est pas défini car il n'a pas de section `spec:`.
   
@@ -66,7 +77,7 @@ spec:
     spec:
 ```
 
-Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle de pod lançant un conteneur Nginx :
+Remplissons la section `spec` de notre pod `monstericon` à partir d'un modèle de pod lançant un conteneur Nginx :
 ```yaml
         containers:
         - name: nginx
@@ -76,9 +87,9 @@ Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle
 ```
 <!-- - Récupérez  et collez la à la suite. Ainsi nous décrivons comme précédemment les pods que nous voulons mettre dans notre deploiement. -->
 
-- Remplacez le nom du conteneur par `monster-icon`, et l'image de conteneur par `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
+- Remplacez le nom du conteneur par `monstericon`, et l'image de conteneur par `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
 
-<!-- - Complétez en mettant `monster-icon-pod` pour le nom du déploiement,  pour le conteneur (les `_` sont interdits dans les noms/hostnames), et `app: monster-app` pour le label (à 2 endroits) -->
+<!-- - Complétez en mettant `monstericon-pod` pour le nom du déploiement,  pour le conteneur (les `_` sont interdits dans les noms/hostnames), et `app: monsterstack` pour le label (à 2 endroits) -->
   
 - Complétez le port en mettant le port de production de notre application, `9090`
 
@@ -87,8 +98,8 @@ Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle
 ```yaml
     metadata:
       labels:
-        app: monster-app
-        partie: monster-icon
+        app: monsterstack
+        partie: monstericon
 ```
 
 A ce stade nous avons décrit les pods de notre déploiement avec leurs labels (un label commun à tous les objets de l'app, un label plus spécifique à la sous-partie de l'app).
@@ -98,8 +109,8 @@ Maintenant il s'agit de rajouter quelques options pour paramétrer notre déploi
 ```yaml
   selector:
     matchLabels:
-      app: monster-app
-      partie: monster-icon
+      app: monsterstack
+      partie: monstericon
   strategy:
     type: Recreate
 ```
@@ -108,10 +119,10 @@ Cette section indique les labels à utiliser pour repérer les pods de ce déplo
 
 Puis est précisée la stratégie de mise à jour (rollout) des pods pour le déploiement : `Recreate` désigne la stratégie la plus brutale de suppression complète des pods puis de redéploiement.
 
-Enfin, juste avant la ligne `selector:` et à la hauteur du mot-clé `strategy:`, ajouter `replicas: 3`. Kubernetes crééra 3 pods identiques lors du déploiement `monster-icon`.
+Enfin, juste avant la ligne `selector:` et à la hauteur du mot-clé `strategy:`, ajouter `replicas: 3`. Kubernetes crééra 3 pods identiques lors du déploiement `monstericon`.
 
 
-<!-- - Copiez la définition d'un deployment issue du cours (ici initialement pour un déploiement de Nginx) dans un fichier `monster-icon-pod.yaml` :
+<!-- - Copiez la définition d'un deployment issue du cours (ici initialement pour un déploiement de Nginx) dans un fichier `monstericon-pod.yaml` :
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -138,31 +149,31 @@ spec:
             - containerPort: 80
 ``` -->
 
-<!--  expand "Le fichier `monster-icon.yaml` jusqu'à présent :" -->
-Le fichier `monster-icon.yaml` jusqu'à présent :
+<!--  expand "Le fichier `monstericon.yaml` jusqu'à présent :" -->
+Le fichier `monstericon.yaml` jusqu'à présent :
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monster-icon
+  name: monstericon
   labels:
-    app: monster-app
+    app: monsterstack
 spec:
   template:
     spec:
       containers:
-      - name: monster-icon
+      - name: monstericon
         image: tecpi/monster_icon:0.1
         ports:
         - containerPort: 9090
     metadata:
       labels:
-        app: monster-app
-        partie: monster-icon
+        app: monsterstack
+        partie: monstericon
   selector:
     matchLabels:
-      app: monster-app
-      partie: monster-icon
+      app: monsterstack
+      partie: monstericon
   strategy:
     type: Recreate
   replicas: 3
@@ -177,7 +188,7 @@ spec:
 <!-- - en faisant `describe` sur l'un des pods, on peut constater que les annotations ont bien été transmises à chaque pod de notre déploiement. -->
 <!-- - En lançant `kubectl logs <pod>` (utiliser l'autocomplete avec `<TAB>`), vérifiez que les pods s'initialisent bien. -->
 
-<!-- - Appliquez votre fichier avec : `kubectl apply -f monster-icon-pod.yaml`
+<!-- - Appliquez votre fichier avec : `kubectl apply -f monstericon-pod.yaml`
 - Vérifiez que l'application fonctionne bien en :
   - lançant `kubectl get deployments` pour vérifier que le déploiement du pod a bien été demandé au cluster
   - forwardant le port de l'application avec `kubectl port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
@@ -224,9 +235,9 @@ Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 
       value: "DEV"
 ``` -->
 
-- Lancer `kubectl apply -f monster-icon.yaml` pour appliquer.
+- Lancer `kubectl apply -f monstericon.yaml` pour appliquer.
 - Avec `kubectl get pods --watch`, observons en direct la stratégie de déploiement `type: Recreate`
-- Avec `kubectl describe deployment monster-icon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
+- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
 
 
 <!-- - Ajoutez le conteneur au pod `monster-pod`. -->
@@ -239,7 +250,7 @@ Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 
 <!-- TODO: Test this -->
 <!-- - Changez le port pour `5000`. -->
 <!-- - Appliquez les modifications en recréant le pod avec `apply`. -->
-<!-- - vérifiez avec `kubectl logs monster-pod monster-icon` que le programme est lancé en mode DEV. En DEV l'application est servie sur `0.0.0.0:5000` c'est à dire sur toute les interfaces. -->
+<!-- - vérifiez avec `kubectl logs monster-pod monstericon` que le programme est lancé en mode DEV. En DEV l'application est servie sur `0.0.0.0:5000` c'est à dire sur toute les interfaces. -->
 <!-- - C'est important car nous voulons essayer d'y accéder depuis le pod `dnmonster`. -->
 
 
@@ -248,7 +259,7 @@ Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 
 
 <!-- L'icône n'apparait toujours pas.
 
-- pour debugger, connectez-vous au conteneur monster-icon dans le pod avec `kubectl exec -it monster-pod -c monster-icon -- bash`
+- pour debugger, connectez-vous au conteneur monstericon dans le pod avec `kubectl exec -it monster-pod -c monstericon -- bash`
   - lancez `wget http://dnmonster:8080` effectivement dnmonster n'est pas accessible car les deux conteneurs partage la même interface et la même IP.
   - deconnectez vous avec `exit` et connectez vous à `dnmonster`.
   - lancez `wget http://localhost:5000` : la page se télécharge => les différents processus du conteneur sont bien accessibles sur localhost.
@@ -263,19 +274,19 @@ Conclusion: un Pod a été conçu pour héberger les différents processus d'une
 
 <!-- Pour déployer notre stack de microservices nous allons utiliser des **services k8s**. Mais d'abord, passons à l'échelle supérieure avec les déploiements. -->
 
-`monster-icon.yaml` final :
+`monstericon.yaml` final :
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monster-icon
+  name: monstericon
   labels:
-    app: monster-app
+    app: monsterstack
 spec:
   template:
     spec:
       containers:
-      - name: monster-icon
+      - name: monstericon
         image: tecpi/monster_icon:0.1
         ports:
         - containerPort: 9090
@@ -294,12 +305,12 @@ spec:
             memory: "50Mi"
     metadata:
       labels:
-        app: monster-app
-        partie: monster-icon
+        app: monsterstack
+        partie: monstericon
   selector:
     matchLabels:
-      app: monster-app
-      partie: monster-icon
+      app: monsterstack
+      partie: monstericon
   strategy:
     type: Recreate
   replicas: 5
@@ -361,11 +372,11 @@ kind: Deployment
 metadata:
   name: dnmonster 
   labels:
-    app: monster-app
+    app: monsterstack
 spec:
   selector:
     matchLabels:
-      app: monster-app
+      app: monsterstack
       partie: dnmonster
   strategy:
     type: Recreate
@@ -373,7 +384,7 @@ spec:
   template:
     metadata:
       labels:
-        app: monster-app
+        app: monsterstack
         partie: dnmonster
     spec:
       containers:
@@ -435,7 +446,7 @@ kind: Service
 metadata:
   name: <nom_service>
   labels:
-    app: monster-app
+    app: monsterstack
 spec:
   ports:
     - port: <port>
@@ -448,25 +459,25 @@ spec:
 
 Ajoutez le code suivant au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
     <!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) -->
-    - le nom du service et le nom de la `partie` par le nom de notre programme (`monster-icon`, `dnmonster` et `redis`)
+    - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`)
     - le port par le port du service
     <!-- - FIXME: not true -->
     - les selectors `app` et `partie` par ceux du déploiement correspondant.
 
-Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monster-icon`.
+Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 
 Appliquez vos trois fichiers.
 
 - Listez les services avec `kubectl get services`.
 <!-- - Récupérez le port de monstericon. -->
-- Visitez votre application dans le navigateur avec `minikube service <nom-du-service-monster-icon>`.
+- Visitez votre application dans le navigateur avec `minikube service <nom-du-service-monstericon>`.
 
 ### Rassemblons les trois objets avec une kustomisation.
 
 Une kustomization permet de résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir le lancer facilement:
 
 - Créez un dossier `monster_stack` pour ranger les trois fichiers:
-    - monster-icon.yaml
+    - monstericon.yaml
     - dnmonster.yaml
     - redis.yaml
   
@@ -474,7 +485,7 @@ Une kustomization permet de résumer un objet contenu dans de multiples fichiers
 
 ```yaml
 resources:
-    - monster-icon.yaml
+    - monstericon.yaml
     - dnmonster.yaml
     - redis.yaml
 ```
@@ -483,7 +494,8 @@ resources:
 
 ### Ajoutons un loadbalancer ingress pour exposer notre application sur le port standard
 
-Installons le contrôleur Ingress Nginx avec `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`.
+Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+<!-- Installons le contrôleur Ingress Nginx avec `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`. -->
 
 Il s'agit d'une implémentation de loadbalancer dynamique basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
@@ -512,13 +524,7 @@ spec:
 
 Vous pouvez normalement accéder à l'application sur `http://localhost/monstericon`
 
-### Correction
+### Solution
 
 Le dépôt Git des solutions est accessible ici : <https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction>
-
-
-
-### Facultatif : Installer un Wordpress avec base MySQL
-
-Suivez ce tutoriel : <https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/>
 
