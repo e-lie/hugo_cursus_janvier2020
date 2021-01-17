@@ -6,13 +6,13 @@ draft: false
 ## Linux
 
 - Shotts 2012 - The Linux Command Line - A complete introduction
-- Yao 2014 - Linux command line - a beginner's guide
+- Yao 2014 - Linux command line - A beginner's guide
 
 ### Ressources
 
 - OpenClassrooms - Reprenez le contrôle à l'aide de Linux ! https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-l-aide-de-linux
 
-<!-- ## Ansible
+## Ansible
 
 
 - Jeff Geerling - Ansible for DevOps - Leanpub
@@ -23,7 +23,7 @@ draft: false
 
 ##### Cheatsheet
 
-- [https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide) -->
+- [https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide)
 
 ## Docker
 
@@ -218,7 +218,7 @@ https://github.com/Microsoft/RockPaperScissorsLizardSpock -->
 
 ## DevOps
 
-- Krief2019 - Learning DevOps - The complete guide (Azure Devops, Jenkins, Kubernetes, Terraform, Ansible, sécurité)
+- Krief - Learning DevOps - The complete guide (Azure Devops, Jenkins, Kubernetes, Terraform, Ansible, sécurité) - 2019
 - The DevOps Handbook
 
 <!-- ### Sécurité et DevOps
