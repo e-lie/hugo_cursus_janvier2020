@@ -123,7 +123,8 @@ Mais nous pouvons quand même lancer une commande dans notre environnement de de
 `kubectl port-forward svc/microbot-service 8080:8080 --address 0.0.0.0`
 
 Vous pouvez désormais accéder à votre app via :
-`http://votreprenom.lab.doxx.fr:8080`
+`http://localhost:8080`
+<!-- `http://votreprenom.lab.doxx.fr:8080` -->
 
 Minikube intègre aussi une façon d'accéder à notre service : c'est la commande `minikube service microbot-service`
 

@@ -345,15 +345,74 @@ spec:
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
 
-- copiez `monster-icon.yaml` en `dnmonster.yaml`
-- modifiez tous les `monstericon` en `dnmonster` avec un copier et remplacer.
+- créez `dnmonster.yaml` et collez-y le code suivant :
+
+`dnmonster.yaml` :
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dnmonster 
+  labels:
+    app: monsterstack
+spec:
+  selector:
+    matchLabels:
+      app: monsterstack
+      partie: dnmonster
+  strategy:
+    type: Recreate
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: monsterstack
+        partie: dnmonster
+    spec:
+      containers:
+      - image: amouat/dnmonster:1.0
+        name: dnmonster
+        ports:
+        - containerPort: 8080
+```
+<!-- - modifiez tous les `monstericon` en `dnmonster` avec un copier et remplacer.
 - Changeons également la section `containers` pour qu'elle s'adapte au conteneur `dnmonster`.
   - changez le port en `8080`
   - supprimez la section `env` inutile
-- Enfin mettez le nombre de `replicas` à `3`.
+- Enfin mettez le nombre de `replicas` à `3`. -->
 
 <!-- TODO: FIXME: developper -->
-Enfin, configurons un troisième deployment `redis`.
+Enfin, configurons un troisième deployment `redis` :
+
+`redis.yaml`: 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis 
+  labels:
+    app: monsterstack
+spec:
+  selector:
+    matchLabels:
+      app: monsterstack
+      partie: redis
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: monsterstack
+        partie: redis
+    spec:
+      containers:
+      - image: redis:latest
+        name: redis
+        ports:
+        - containerPort: 6379
+```
+
 On pourrait à la place mettre un deuxième conteneur `redis` dans le même pod que `dnmonster`. Pourquoi dans le même pod ? La philosophie est que ces deux conteneurs seraient toujours déployés et mis à l'échelle ensemble.
 Ici, Redis est un service de cache, donc c'est logique de pouvoir scaler les services Redis et `dnmonster` indépendamment.
 
@@ -399,17 +458,17 @@ Appliquez vos trois fichiers.
 Une kustomization permet de résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir le lancer facilement:
 
 - Créez un dossier `monster_stack` pour ranger les trois fichiers:
-    - monster-icon-deployment.yaml
-    - dnmonster-deployment.yaml
-    - redis-deployment.yaml
+    - monster-icon.yaml
+    - dnmonster.yaml
+    - redis.yaml
   
 - Créez également un fichier `kustomization.yaml` avec à l'intérieur:
 
 ```yaml
 resources:
-    - monster-icon-deployment.yaml
-    - dnmonster-deployment.yaml
-    - redis-deployment.yaml
+    - monster-icon.yaml
+    - dnmonster.yaml
+    - redis.yaml
 ```
 
 - Essayez d'exécuter la kustomization avec `kubectl apply -k .` depuis le dossier `monster_stack`.
@@ -447,7 +506,7 @@ Vous pouvez normalement accéder à l'application sur `http://localhost/monsteri
 
 ### Correction
 
-Le dépôt Git de correction est accessible ici : <https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction>
+Le dépôt Git des solutions est accessible ici : <https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction>
 
 
 
