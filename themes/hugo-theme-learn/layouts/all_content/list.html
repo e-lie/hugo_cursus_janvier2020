@@ -9,7 +9,7 @@
 
     <!-- /* Bulma */ -->
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
-    <link href="{{" css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+    <link href="{{"css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 
     <style>
         body {
