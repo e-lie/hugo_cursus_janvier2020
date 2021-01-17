@@ -1,3 +1,16 @@
+## Déroulement
+1. Cours Devops
+2. Cours K8S début
+3. TP1 K8S
+4. Cours K8S plus
+5. TP2 K8S
+6. Cours Dockerfile + volumes
+7. TP Dockerfile + Volumes
+8. Cours K8S jusqu'à Helm
+9. TP HElm
+10. Cours K8S qui reste
+11. TP K8S AKS azure
+
 # TODO
 
 - ajouter secrets and configmaps!!!

@@ -10,13 +10,11 @@ FIXME: REDIS ?
 TODO: Check si on peut bien créer tout ça dans ce tuto : https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction/tree/master/monster-stack
    -->
 
-La première partie de ce TP va consister à créer des objets Kubernetes pour déployer notre stack `monster_icon`.
-
-Mais d'abord créons une application d'exemple Wordpress+MySQL.
-
-### Installer un Wordpress+MySQL d'exemple
-
-Suivez ce tutoriel : <https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/>
+La première partie de ce TP va consister à créer des objets Kubernetes pour déployer une stack d'exemple : `monster_stack`.
+Elle est composée :
+- d'un front-end en Flask (Python),
+- d'un backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères),
+- et d'une base de données servant de cache pour ces images, Redis.
 
 ### Pods
 
@@ -29,7 +27,7 @@ Nous voudrions déployer notre stack `monster_stack`. Nous allons commencer par 
 <!-- FIXME: uploader `monster_icon`  sur le docker hub -->
 - Complétez-la avec l'image de conteneur `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
 - Complétez en mettant `monster-pod` pour le nom du pod et `monster-icon` pour le conteneur (les `_` sont interdits dans les noms/hostnames)
-- Complétez le port en mettant le port de production de notre application, `9090` <!-- FIXME: What? (cf docker stack lancement par défaut du conteneur) -->
+- Complétez le port en mettant le port de production de notre application, `9090`
 - Vérifiez que l'application fonctionne bien en :
   - lançant `kc get pods` pour vérifier que le conteneur du pod tourne
   - lançant `kc logs <pod>`
@@ -154,9 +152,9 @@ spec:
 
 Pour répliquer notre application nous pourrions créer plusieurs instances de pod à la main. Mais bien sur ce n'est pas du tout la philosophie de l'orchestration et ce serait vite complètement contreproductif.
 
-Kubernetes utilise les `ReplicaSets` pour gérer la multiplication d'un même type de pod. Ces ReplicaSets ne sont pas faits pour être créés à la main mais grâce à un objet de type `Deployment`.
+<!-- Kubernetes utilise les `ReplicaSets` pour gérer la multiplication d'un même type de pod. Ces ReplicaSets ne sont pas faits pour être créés à la main mais grâce à un objet de type `Deployment`.
 
-Les déploiements emballent des `ReplicaSets` et servent à gérer le déploiement et l'update de versions de l'application à l'aide d'une *rollout policy* (stratégie de mise à jour).
+Les déploiements emballent des `ReplicaSets` et servent à gérer le déploiement et l'update de versions de l'application à l'aide d'une *rollout policy* (stratégie de mise à jour). -->
 
 - Créez le fichier de déploiement suivant:
 
@@ -269,8 +267,10 @@ Maintenant nous allons également créer un déploiement pour `dnmonster`:
   - supprimez la section `env` inutile
 - Enfin mettez le nombre de `replicas` à `5`.
 
-<!-- TODO: test -->
-<!-- Avec le même procédé, configurez le déploiement redis. -->
+<!-- TODO: FIXME: developper -->
+Enfin, configurons un troisième deployment `redis`.
+On pourrait à la place mettre un deuxième conteneur `redis` dans le même pod que `dnmonster`. Pourquoi dans le même pod ? La philosophie est que ces deux conteneurs seraient toujours déployés et mis à l'échelle ensemble.
+Ici, Redis est un service de cache, donc c'est logique de pouvoir scaler les services Redis et `dnmonster` indépendamment.
 
 #### Exposer notre stack avec des services
 
@@ -365,3 +365,7 @@ Vous pouvez normalement accéder à l'application sur `http://localhost/monsteri
 Le dépôt Git de correction est accessible ici : <https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction>
 
 
+
+### Facultatif : Installer un Wordpress avec base MySQL
+
+Suivez ce tutoriel : <https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/>

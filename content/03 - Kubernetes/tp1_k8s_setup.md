@@ -6,9 +6,10 @@ draft: false
 Au cours de nos TPs nous allons passer rapidement en revue deux manières de mettre en place Kubernetes :
 
 - Un cluster de développement avec `minikube`
-- Un cluster managed loué chez un provider (scaleway, azure ou google cloud)
-<!-- - cluster installé et géré manuellement grâce à Ansible (sur des VPS digital ocean) -->
-Ce TP présente la première option.
+- Un cluster managed loué chez un provider (Scaleway, DigitalOcean, Azure ou Google Cloud)
+
+Nous allons d'abord passer par la première option.
+
 ## Découverte de Kubernetes
 
 ### Installer le client CLI `kubectl`
@@ -32,17 +33,19 @@ La méthode d'installation importe peu. Pour installer kubectl sur Ubuntu nous f
 
 Nous utiliserons classiquement `docker` comme runtime pour minikube (les noeuds k8s seront des conteneurs simulant des serveurs). Ceci est, bien sur, une configuration de développement. Elle se comporte cependant de façon très proche d'un véritable cluster.
 
+- Si Docker n'est pas installé, installer Docker avec la commande en une seule ligne : `curl -fsSL https://get.docker.com | sh`, puis ajoutez-vous au groupe Docker avec `sudo usermod -a -G docker <votrenom>`, et faites `sudo reboot` pour que cela prenne effet.
+
 - Pour lancer le cluster faites simplement: `minikube start` (il est également possible de préciser le nombre de coeurs de calcul, la mémoire et et d'autre paramètre pour adapter le cluster à nos besoins.)
 
 Minikube configure automatiquement kubectl (dans le fichier `~/.kube/config`) pour qu'on puisse se connecter au cluster de développement.
 
 - Testez la connexion avec `kubectl get nodes`.
 
-Affichez à nouveau la version `kubectl version`. Cette fois ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`.
+Affichez à nouveau la version `kubectl version`. Cette fois-ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`.
 
 ##### Bash completion
 
-Pour permettre au client `kubectl` de compléter le nom des commandes et ressources avec `<Tab>` il est utile d'installer l'autocomplétion pour Bash :
+Pour permettre à `kubectl` de compléter le nom des commandes et ressources avec `<Tab>` il est utile d'installer l'autocomplétion pour Bash :
 
 ```bash
 sudo apt install bash-completion
@@ -52,26 +55,28 @@ source <(kubectl completion bash)
 echo "source <(kubectl completion bash)" >> ${HOME}/.bashrc
 ```
 
+**Vous pouvez désormais appuyer sur `<Tab>` pour compléter vos commandes `kubectl`, c'est très utile !**
+
 ### Explorons notre cluster k8s
 
 Notre cluster k8s est plein d'objets divers, organisés entre eux de façon dynamique pour décrire des applications, tâches de calcul, services et droits d'accès. La première étape consiste à explorer un peu le cluster :
 
-- Listez les nodes pour récupérer le nom de l'unique node (`kubectl get nodes`) puis affichez ses caractéristiques avec `kubectl describe node/<votrenode>`.
+- Listez les nodes pour récupérer le nom de l'unique node (`kubectl get nodes`) puis affichez ses caractéristiques avec `kubectl describe node/minikube`.
 
 La commande `get` est générique et peut être utilisée pour récupérer la liste de tous les types de ressources.
 
-De même la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type `node/minikube` car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
+De même, la commande `describe` peut s'appliquer à tout objet k8s. On doit cependant préfixer le nom de l'objet par son type (ex : `node/minikube` ou `nodes minikube`) car k8s ne peut pas deviner ce que l'on cherche quand plusieurs ressources ont le même nom.
 
 - Pour afficher tous les types de ressources à la fois que l'on utilise : `kubectl get all`
 
 ```
 NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-service/kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   2m34s
+service/kubernetes   ClusterIP   10.96.0.1   <none>        443/TCP   2m34s
 ```
 
-Il semble qu'il n'y a qu'une ressource dans notre cluster. Il s'agit du service d'API Kubernetes pour qu'on puisse communiquer avec le cluster.
+Il semble qu'il n'y a qu'une ressource dans notre cluster. Il s'agit du service d'API Kubernetes, pour qu'on puisse communiquer avec le cluster.
 
-En réalité il y en a généralement d'autres cachés dans les autres `namespaces`. En effet les éléments internes de Kubernetes tournent eux-mêmes sous forme de service et de daemon Kubernetes. Les *namespaces* sont des groupes qui servent à isoler les ressources de façon logique et en termes de droits (avec le *Role-Based Access Control* (RBAC) de Kubernetes).
+En réalité il y en a généralement d'autres cachés dans les autres `namespaces`. En effet les éléments internes de Kubernetes tournent eux-mêmes sous forme de services et de daemons Kubernetes. Les *namespaces* sont des groupes qui servent à isoler les ressources de façon logique et en termes de droits (avec le *Role-Based Access Control* (RBAC) de Kubernetes).
 
 Pour vérifier cela on peut :
 
@@ -102,25 +107,46 @@ A ce stade le déploiement n'est pas encore accessible de l'extérieur du cluste
 
 <!-- - `kubectl expose deployment microbot --type=LoadBalancer --port=8080 --name=microbot-service` -->
 - `kubectl expose deployment microbot --type=NodePort --port=8080 --name=microbot-service`
+<!-- Doesn't work with minikube expose: --port=8765 --target-port=9376 -->
 
 - affichons la liste des services pour voir le résultat: `kubectl get services`
 
-Le service permet d'exposer un déploiement soit par port soit grâce à un loadbalancer. Nous verrons cela plus en détail dans le TP2. Ici notre service est exposé par port : la commande précédente affiche `8080:<3xxxx>/TCP` dans la colonne ports. Copier le numéro de port de droite, du type `32564`.
+Un service permet d'exposer un déploiement soit par port soit grâce à un loadbalancer.
 
-Pour voir notre application visitez : `localhost:<3xxxx>`. Sauriez-vous expliquer ce qu'elle fait ?
+Pour exposer cette application sur le port de notre choix, nous devrions avoir recours à un LoadBalancer. 
 
-<!-- Quelle syntaxe pour préciser container port ? -->
+Nous verrons cela plus en détail dans le TP2. 
+
+Nous ne verrons pas ça ici (il faudrait utiliser l'addon MetalLB de Minikube). 
+
+Mais nous pouvons quand même lancer une commande dans notre environnement de dev :
+`kubectl port-forward svc/microbot-service 8080:8080 --address 0.0.0.0`
+
+Vous pouvez désormais accéder à votre app via :
+`http://votreprenom.lab.doxx.fr:8080`
+
+Minikube intègre aussi une façon d'accéder à notre service : c'est la commande `minikube service microbot-service`
+
+<!-- Ici notre service est exposé par port : la commande précédente affiche `8080:<3xxxx>/TCP` dans la colonne ports. -->
+<!-- Copier le numéro de port de droite, du type `32564`. -->
+
+<!-- Pour voir notre application visitez : `localhost:80`. -->
+
+<!-- L'application devrait s'être ouverte dans votre navigateur, sinon vous pouvez lancer `minikube service microbot-service --url` pour en obtenir l'URL. -->
+
+Sauriez-vous expliquer ce que l'app fait ?
+
 
 #### Simplifier les lignes de commande k8s
 
-- Pour gagner du temps on dans les commandes Kubernetes on définit généralement un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile`). Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
+- Pour gagner du temps on dans les commandes Kubernetes on définit généralement un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile` en faisant `echo "alias kc='kubectl'" >> ~/.bash_profile`, puis en faisant `source ~/.bash_profile`).
+- Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
 
 - Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :
   - `services` devient `svc`
   - `deployments` devient `deploy`
   - etc.
 
-<!-- mettre plutôt un lien officiel -->
 La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202>
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.

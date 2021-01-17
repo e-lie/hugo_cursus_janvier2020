@@ -1,6 +1,6 @@
 ---
-title: TP 3 - Volumes et réseaux
-weight: 35
+title: TP 3 - Réseaux
+weight: 31
 ---
 
 <!--
@@ -353,4 +353,4 @@ Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à
 
 ### _Facultatif :_ Packagez votre propre app
 
-Vous possédez tous les ingrédients pour packager l'app de votre choix désormais ! Récupérez une image de base et basez vous sur un Dockerfile existant s'il vous inspire, et lancez-vous !
+Vous possédez tous les ingrédients pour packager l'app de votre choix désormais ! Récupérez une image de base, basez-vous sur un Dockerfile existant s'il vous inspire, et lancez-vous !

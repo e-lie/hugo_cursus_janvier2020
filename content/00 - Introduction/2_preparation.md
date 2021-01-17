@@ -1,18 +1,41 @@
 ---
 title: Préparation
 weight: 20
-draft: true
+draft: false
 ---
-
+<!-- 
 ## Importez une machine Linux
 
 - Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
 - Configurez-la avec 7Go de RAM si possible
 - Le login est `osboxes` et le mot de passe `osboxes.org`
 - Démarrez la machine
-<!-- - Pour mettre la VM en Azerty : -->
-- Faites les mises à jour (`sudo apt update` et `sudo apt upgrade`)
+- Faites les mises à jour (`sudo apt update` et `sudo apt upgrade`) -->
 
+# Un peu de logistique
+
+- **Les supports de présentation et les TD sont disponibles à l'adresse <https://cours.hadrienpelissier.fr>**
+
+- Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
+
+
+⚠️ **Pour l'anglais, si un texte ne vous paraît pas clair, quelques liens :**
+
+- Pour les textes : https://www.deepl.com/translator
+- Pour les pages web : https://translate.google.com/
+- Pour les mots : https://linguee.fr/
+
+## Se connecter au lab via Apache Guacamole
+
+- Les TP sont réalisables dans une VM disponible depuis votre navigateur, en allant sur <https://lab.hadrienpelissier.fr>
+
+- Se connecter avec `votreprenom` (en minuscules) et le mot de passe donné.
+
+- Puis cliquez sur la machine `vnc-votreprenom` (si besoin, le mot de passe dans la VM est le même que celui pour accéder au lab)
+
+- Ouvrez un autre onglet et cliquez aussi sur la machine appelée `vnc-formateur-...`
+
+- Pour faire un **copier-coller** depuis l'extérieur à votre VM, il faut appuyer sur les touches `Ctrl+Alt+Maj`, puis coller ce que l'on veut dans le presse-papier, et refermer la sidebar avec `Ctrl+Alt+Maj`.
 ## Installer quelques logiciels
 
 - Installez VSCode avec le gestionnaire de paquet `snap install code --classic`
@@ -23,16 +46,16 @@ draft: true
 ## Explorer l'éditeur VSCode : Démo
 
 ---
-
+<!-- 
 ## Comment installer une machine virtuelle
 
 - Un ordinateur "simulé" dans un ordinateur
   - VirtualBox est un logiciel permettant ce genre de chose
-- Parti pris : Ubuntu avec Gnome
+- Parti pris : Ubuntu avec Gnome -->
 
 ---
 
-## Installer une machine virtuelle
+<!-- ## Installer une machine virtuelle
 
 ![](../../images/vbox1.png)
 
@@ -158,4 +181,4 @@ votre_login@machine:~$ █
 - Le terminal permet de taper des commandes pour interagir "directement" avec l'OS
 - Des commandes comme dans "passer commande"
 - Certaines affichent des choses, d'autres changent des états
-- Vous pouvez ouvrir d'autres TTy / consoles avec Ctrl+Alt+F1, F2, F3, ..
+- Vous pouvez ouvrir d'autres TTy / consoles avec Ctrl+Alt+F1, F2, F3, .. -->
