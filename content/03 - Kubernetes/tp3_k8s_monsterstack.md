@@ -494,6 +494,7 @@ resources:
 ### Ajoutons un loadbalancer ingress pour exposer notre application sur le port standard
 
 Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
+<!-- FIXME: 404... -->
 <!-- Installons le contrôleur Ingress Nginx avec `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`. -->
 
 Il s'agit d'une implémentation de loadbalancer dynamique basée sur nginx configurée pour s'interfacer avec un cluster k8s.
@@ -514,14 +515,16 @@ spec:
         - path: /monstericon
           backend:
             serviceName: monstericon
-            servicePort: 5000
+            servicePort: 9090
 ```
 
 - Ajoutez ce fichier à notre `kustomization.yaml`
 
 - Relancez la kustomization.
 
-Vous pouvez normalement accéder à l'application sur `http://localhost/monstericon`
+<!-- Vous pouvez normalement accéder à l'application sur `http://localhost/monstericon` -->
+<!-- FIXME: poor workflow -->
+Vous pouvez normalement accéder à l'application en faisant `minikube service monstericon --url` et en ajoutant `/monstericon` pour y accéder.
 
 ### Solution
 

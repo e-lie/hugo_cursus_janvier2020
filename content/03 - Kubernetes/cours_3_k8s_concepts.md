@@ -118,6 +118,4 @@ Mais il existe un panel de stratégies plus large pour updater ses apps :
 - *A/B testing*: diffusion d'une nouvelle version à un sous-ensemble d'utilisateurs de manière précise (en-têtes HTTP, cookie, région, etc.).
   - pas possible par défaut avec Kubernetes, implique une infrastructure plus avancée avec reverse proxy (Istio, Traefik, nginx/haproxy personnalisé, etc.).
 
-
-Traduit avec www.DeepL.com/Translator (version gratuite)
 *Source :* <https://blog.container-solutions.com/kubernetes-deployment-strategies>
