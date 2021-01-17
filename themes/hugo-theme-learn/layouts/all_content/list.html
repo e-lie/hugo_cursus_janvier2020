@@ -6,8 +6,18 @@
 
   <title>Exporter tout le contenu</title>
 
+  <!-- /* Bulma */ -->
+  <link href="{{"css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+
   <style>
-    
+    body {
+  
+        margin: 50px !important;
+      }
+      
+      img {
+        max-width: 60% !important;
+      }
   </style>
 
 </head>
