@@ -1,5 +1,5 @@
 ---
-title: "Bienvenue !"
+title: "Uptime Formation"
 ---
 
 # {{< param globalTitle >}}
