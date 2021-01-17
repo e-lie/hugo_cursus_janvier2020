@@ -1,5 +1,5 @@
 ---
-title: {{< param globalTitle >}}
+title: "{{< param globalTitle >}}"
 ---
 
 # {{< param globalTitle >}}
