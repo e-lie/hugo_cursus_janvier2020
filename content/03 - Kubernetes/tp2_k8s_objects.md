@@ -133,7 +133,7 @@ spec:
             - containerPort: 80
 ``` -->
 
-{{% expand "Le fichier `monster-icon.yaml` jusqu'à présent : %}}
+{{% expand "Le fichier `monster-icon.yaml` jusqu'à présent :" %}}
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
