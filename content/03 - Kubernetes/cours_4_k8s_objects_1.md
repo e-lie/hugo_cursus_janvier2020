@@ -165,7 +165,7 @@ spec:
 
 ### Les ReplicaSet
 
-Un ReplicatSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
+Un ReplicaSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
 <!-- Un peu comme le paramètre `replicas:` d'un service docker mais en plus précis. -->
 
 - `kubectl get rs` pour afficher la liste des replicas.
@@ -213,6 +213,10 @@ spec:
 - Pour les afficher : `kubectl get deployments`
 
 - La commande `kubectl run` sert à créer un *deployment* à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
+
+
+![](../../images/wiki-ciscolinux-co-uk-russiandolls.png)
+*Les poupées russes Kubernetes : un Deployment contient un ReplicaSet, qui contient des Pods, qui contiennent des conteneurs*
 
 ### Les Services
 

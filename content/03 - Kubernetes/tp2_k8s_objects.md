@@ -36,7 +36,7 @@ Nous voudrions déployer notre stack `monster_app`. Nous allons commencer par cr
 
 - Créez le fichier de déploiement suivant:
 
-`monster-icon-deployment.yaml`
+`monster-icon.yaml`
 
 ```yaml
 apiVersion: apps/v1
@@ -47,13 +47,13 @@ metadata:
     <labels>
 ```
 
-Ce fichier exprime un objet déploiement vide. Les objets dans Kubernetes sont hautement dynamiques. Pour les associer et les manipuler on leur associe des `label` c'est à dire des étiquettes avec lesquelles on peut les retrouver ou les matcher précisément. C'est grâce à des labels que k8s associe les `pods` aux `ReplicaSets`.
+Ce fichier exprime un objet déploiement vide. 
 
 - Ajoutez le label `app: monster-app` à cet objet `Deployment`.
 
 - Pour le moment notre déploiement n'est pas défini car il n'a pas de section `spec:`.
   
-- La première étape consiste à proposer un modèle de `ReplicaSet` pour notre déploiement. Ajoutez à la suite :
+- La première étape consiste à proposer un modèle de `ReplicaSet` pour notre déploiement. Ajoutez à la suite (`spec:` doit être à la même hauteur que `kind:` et `metadata:`) :
 
 ```yaml
 spec:
@@ -61,7 +61,7 @@ spec:
     spec:
 ```
 
-Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle lançant un conteneur Nginx
+Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle de pod lançant un conteneur Nginx :
 ```yaml
         containers:
         - name: nginx
@@ -72,27 +72,29 @@ Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle
 <!-- - Récupérez  et collez la à la suite. Ainsi nous décrivons comme précédemment les pods que nous voulons mettre dans notre deploiement. -->
 
 - Remplacez le nom du conteneur par `monster-icon`, et l'image de conteneur par `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
-- 
+
 <!-- - Complétez en mettant `monster-icon-pod` pour le nom du déploiement,  pour le conteneur (les `_` sont interdits dans les noms/hostnames), et `app: monster-app` pour le label (à 2 endroits) -->
   
 - Complétez le port en mettant le port de production de notre application, `9090`
 
-- Pour désigner ces pods il faut ajouter un ou plusieurs labels. Ajoutez à la suite au même niveau que la spec du pod :
+- Les objets dans Kubernetes sont hautement dynamiques. Pour les associer et les désigner on leur associe des `labels` c'est-à-dire des étiquettes avec lesquelles on peut les retrouver ou les matcher précisément. C'est grâce à des labels que k8s associe les `pods` aux `ReplicaSets`. Ajoutez à la suite au même niveau que la spec du pod :
 
 ```yaml
     metadata:
       labels:
         app: monster-app
+        partie: monster-icon
 ```
 
-A ce stade nous avons décrit les pods de notre déploiement avec leurs étiquettes.
+A ce stade nous avons décrit les pods de notre déploiement avec leurs labels (un label commun à tous les objets de l'app, un label plus spécifique à la sous-partie de l'app).
 
-Maintenant il s'agit de rajouter quelques options pour paramétrer notre déploiement :
+Maintenant il s'agit de rajouter quelques options pour paramétrer notre déploiement  (à la hauteur de `template:`) :
 
 ```yaml
   selector:
     matchLabels:
       app: monster-app
+      partie: monster-icon
   strategy:
     type: Recreate
 ```
@@ -101,7 +103,7 @@ Cette section indique les labels à utiliser pour repérer les pods de ce déplo
 
 Puis est précisée la stratégie de mise à jour (rollout) des pods pour le déploiement : `Recreate` désigne la stratégie la plus brutale de suppression complète des pods puis de redéploiement.
 
-Enfin, juste avant la ligne `selector:` et à la hauteur du mot-clé `strategy:`, ajouter `replicas: 5`. Kubernetes crééra 5 pods identiques lors du déploiement `monster-icon`.
+Enfin, juste avant la ligne `selector:` et à la hauteur du mot-clé `strategy:`, ajouter `replicas: 3`. Kubernetes crééra 3 pods identiques lors du déploiement `monster-icon`.
 
 
 <!-- - Copiez la définition d'un deployment issue du cours (ici initialement pour un déploiement de Nginx) dans un fichier `monster-icon-pod.yaml` :
@@ -131,6 +133,35 @@ spec:
             - containerPort: 80
 ``` -->
 
+{{% expand "Le fichier `monster-icon.yaml` jusqu'à présent : %}}
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monster-icon
+  labels:
+    app: monster-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: monster-icon
+        image: tecpi/monster_icon:0.1
+        ports:
+        - containerPort: 9090
+    metadata:
+      labels:
+        app: monster-app
+        partie: monster-icon
+  selector:
+    matchLabels:
+      app: monster-app
+      partie: monster-icon
+  strategy:
+    type: Recreate
+  replicas: 3
+```
+{{% /expand %}}
 
 #### Appliquer notre déploiement
 
@@ -138,7 +169,7 @@ spec:
 - Affichez les déploiements avec `kubectl get deploy -o wide`.
 <!-- - Affichez également les replicasets avec `kubectl get replicasets -o wide`. -->
 - Listez également les pods en lançant `kubectl get pods --watch` pour vérifier que les conteneurs tournent.
-- en faisant `describe` sur l'un des pods, on peut constater que les annotations ont bien été transmises à chaque pod de notre déploiement.
+<!-- - en faisant `describe` sur l'un des pods, on peut constater que les annotations ont bien été transmises à chaque pod de notre déploiement. -->
 <!-- - En lançant `kubectl logs <pod>` (utiliser l'autocomplete avec `<TAB>`), vérifiez que les pods s'initialisent bien. -->
 
 <!-- - Appliquez votre fichier avec : `kubectl apply -f monster-icon-pod.yaml`
@@ -163,10 +194,22 @@ Maintenant que nous savons créer un pod nous pouvons ajouter à l'intérieur no
             scheme: HTTP
           initialDelaySeconds: 30 # Attendre 30s avant de tester
           periodSeconds: 10 # Attendre 10s entre chaque essai
-          timeoutSeconds: 5 # Attendre 5s la réponse
+          timeoutSeconds: 5 # Attendre 5s la reponse
+          
 ```
 
 Ainsi, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que Kubernetes sache quand redémarrer un pod.
+
+- Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `image:` :
+```yaml
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "50Mi"
+```
+
+Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 mégaoctets de RAM.
+
 <!-- 
 - Ajoutez une variable d'environnement au conteneur dans le pod avec la syntaxe :
 
@@ -176,8 +219,9 @@ Ainsi, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la
       value: "DEV"
 ``` -->
 
-- Appliquez la configuration avec `apply`
-- Avec `kubectl describe deployment monster-icon-pod`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
+- Lancer `kubectl apply -f monster-icon.yaml` pour appliquer.
+- Avec `kubectl get pods --watch`, observons en direct la stratégie de déploiement `type: Recreate`
+- Avec `kubectl describe deployment monster-icon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
 
 
 <!-- - Ajoutez le conteneur au pod `monster-pod`. -->
@@ -210,32 +254,11 @@ Conclusion: un Pod a été conçu pour héberger les différents processus d'une
 
 <!-- - Supprimez `dnmonster` du pod -->
 
-- Ajoutez le code suivant à la fin de `monster-icon.yaml` : alignez-le avec `image`
 
-```yaml
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "50Mi"
-```
-
-<!-- livenessProbe:
-httpGet:
-    path: /
-    port: 5000
-initialDelaySeconds: 5
-timeoutSeconds: 1
-periodSeconds: 10
-failureThreshold: 3 -->
-
-Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 mégaoctets de RAM.
-
-Lancer `kubectl apply -f monster-icon.yaml` pour appliquer.
 
 <!-- Pour déployer notre stack de microservices nous allons utiliser des **services k8s**. Mais d'abord, passons à l'échelle supérieure avec les déploiements. -->
 
-##### Correction de `monster-icon.yaml`:
-
+`monster-icon.yaml` final :
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -244,20 +267,11 @@ metadata:
   labels:
     app: monster-app
 spec:
-  replicas: 5
-  selector:
-    matchLabels:
-      app: monster-app
-  strategy:
-    type: Recreate
   template:
-    metadata:
-      labels:
-        app: monster-app
     spec:
       containers:
-      - image: tecpi/monster_icon:0.1
-        name: monster-icon
+      - name: monster-icon
+        image: tecpi/monster_icon:0.1
         ports:
         - containerPort: 9090
         readinessProbe:
@@ -268,11 +282,20 @@ spec:
             scheme: HTTP
           initialDelaySeconds: 30 # Attendre 30s avant de tester
           periodSeconds: 10 # Attendre 10s entre chaque essai
-          timeoutSeconds: 5 # Attendre 5s la réponse
+          timeoutSeconds: 5 # Attendre 5s la reponse
         resources:
-            requests:
+          requests:
             cpu: "100m"
             memory: "50Mi"
+    metadata:
+      labels:
+        app: monster-app
+  selector:
+    matchLabels:
+      app: monster-app
+  strategy:
+    type: Recreate
+  replicas: 5
 ```
 
 <!-- #### Déploiements et ReplicaSets
@@ -322,12 +345,12 @@ spec:
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
 
-- copiez `monster-icon-deployment.yaml` en `dnmonster-deployment.yaml`
+- copiez `monster-icon.yaml` en `dnmonster.yaml`
 - modifiez tous les `monstericon` en `dnmonster` avec un copier et remplacer.
 - Changeons également la section `containers` pour qu'elle s'adapte au conteneur `dnmonster`.
   - changez le port en `8080`
   - supprimez la section `env` inutile
-- Enfin mettez le nombre de `replicas` à `5`.
+- Enfin mettez le nombre de `replicas` à `3`.
 
 <!-- TODO: FIXME: developper -->
 Enfin, configurons un troisième deployment `redis`.
