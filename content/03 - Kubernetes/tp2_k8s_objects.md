@@ -23,7 +23,12 @@ Lens est une interface graphique sympatique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
 
-Vous pouvez l'installer en suivant les instructions à cette adresse : <https://k8slens.dev>
+Vous pouvez l'installer en lançant ces commandes :
+```bash
+curl -fsSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
+chmod +x ~/Lens.AppImage
+~/Lens.AppImage
+```
 
 ### Déploiement de pods
 
@@ -133,7 +138,8 @@ spec:
             - containerPort: 80
 ``` -->
 
-{{% expand "Le fichier `monster-icon.yaml` jusqu'à présent :" %}}
+<!--  expand "Le fichier `monster-icon.yaml` jusqu'à présent :" -->
+Le fichier `monster-icon.yaml` jusqu'à présent :
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -161,8 +167,7 @@ spec:
     type: Recreate
   replicas: 3
 ```
-{{% /expand %}}
-
+<!-- /expand -->
 #### Appliquer notre déploiement
 
 - Avec la commande `apply -f` appliquez notre fichier de déploiement.
@@ -290,9 +295,11 @@ spec:
     metadata:
       labels:
         app: monster-app
+        partie: monster-icon
   selector:
     matchLabels:
       app: monster-app
+      partie: monster-icon
   strategy:
     type: Recreate
   replicas: 5
@@ -354,11 +361,11 @@ kind: Deployment
 metadata:
   name: dnmonster 
   labels:
-    app: monsterstack
+    app: monster-app
 spec:
   selector:
     matchLabels:
-      app: monsterstack
+      app: monster-app
       partie: dnmonster
   strategy:
     type: Recreate
@@ -366,7 +373,7 @@ spec:
   template:
     metadata:
       labels:
-        app: monsterstack
+        app: monster-app
         partie: dnmonster
     spec:
       containers:
@@ -413,8 +420,8 @@ spec:
         - containerPort: 6379
 ```
 
-On pourrait à la place mettre un deuxième conteneur `redis` dans le même pod que `dnmonster`. Pourquoi dans le même pod ? La philosophie est que ces deux conteneurs seraient toujours déployés et mis à l'échelle ensemble.
-Ici, Redis est un service de cache, donc c'est logique de pouvoir scaler les services Redis et `dnmonster` indépendamment.
+<!-- On pourrait à la place mettre un deuxième conteneur `redis` dans le même pod que `dnmonster`. Pourquoi dans le même pod ? La philosophie est que ces deux conteneurs seraient toujours déployés et mis à l'échelle ensemble.
+Ici, Redis est un service de cache, donc c'est logique de pouvoir scaler les services Redis et `dnmonster` indépendamment. -->
 
 #### Exposer notre stack avec des services
 
@@ -428,30 +435,31 @@ kind: Service
 metadata:
   name: <nom_service>
   labels:
-    app: monsterstack
+    app: monster-app
 spec:
   ports:
     - port: <port>
   selector:
     app: <app_selector> 
-    tier: <tier_selector>
+    partie: <tier_selector>
   type: <type>
 ---
 ```
 
 Ajoutez le code suivant au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
-    - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`)
-    <!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon`, `dnmonster` et `redis`) -->
+    <!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) -->
+    - le nom du service et le nom de la `partie` par le nom de notre programme (`monster-icon`, `dnmonster` et `redis`)
     - le port par le port du service
-    - les selector app et tier par ceux du déploiement correspondant.
+    <!-- - FIXME: not true -->
+    - les selectors `app` et `partie` par ceux du déploiement correspondant.
 
-Le type sera : `ClusterIP` pour `dnmonster`<!-- et redis--> et `LoadBalancer` pour `monstericon`.
+Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monster-icon`.
 
 Appliquez vos trois fichiers.
 
 - Listez les services avec `kubectl get services`.
-- Récupérez le port de monstericon.
-- Visitez votre application en localhost sur ce port dans le navigateur.
+<!-- - Récupérez le port de monstericon. -->
+- Visitez votre application dans le navigateur avec `minikube service <nom-du-service-monster-icon>`.
 
 ### Rassemblons les trois objets avec une kustomisation.
 

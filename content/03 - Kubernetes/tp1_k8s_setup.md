@@ -158,7 +158,12 @@ Lens est une interface graphique sympatique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
 
-Vous pouvez l'installer en suivant les indications à cette adresse : <https://k8slens.dev>
+Vous pouvez l'installer en lançant ces commandes :
+```bash
+curl -fsSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
+chmod +x ~/Lens.AppImage
+~/Lens.AppImage
+```
 
 ## Mettre en place un cluster K8s dans le cloud avec un provider type DigitalOcean ou Scaleway
 
