@@ -10,6 +10,7 @@
 9. TP HElm
 10. Cours K8S qui reste
 11. TP K8S AKS azure
+12. TP K8S monitoring et deployment policies
 
 # TODO
 

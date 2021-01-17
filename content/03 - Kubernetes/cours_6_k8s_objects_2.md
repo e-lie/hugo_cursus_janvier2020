@@ -111,3 +111,4 @@ Cependant quatre rôles génériques existent aussi par défaut :
 
 La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
 
+<!-- FIXME: CRD et Operators -->

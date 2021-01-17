@@ -126,7 +126,7 @@ Installer un cluster de production Kubernetes à la main est nettement plus comp
 
 - Installer le dæmon `Kubelet` sur tous les noeuds
 - Installer l'outil de gestion de cluster `kubeadm` sur un noeud master
-- Générer les bon certificats avec `kubeadm`
+- Générer les bons certificats avec `kubeadm`
 - Installer un réseau CNI k8s comme `flannel` (d'autres sont possible et le choix vous revient)
 - Déployer la base de données `etcd` avec `kubeadm`
 - Connecter les nœuds worker au master.

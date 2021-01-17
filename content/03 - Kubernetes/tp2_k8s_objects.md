@@ -16,145 +16,23 @@ Elle est composée :
 - d'un backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères),
 - et d'une base de données servant de cache pour ces images, Redis.
 
-### Pods
-
-Les pods sont des ensembles de conteneurs toujours gardés ensembles.
-
-Nous voudrions déployer notre stack `monster_stack`. Nous allons commencer par créer un pod avec seulement notre conteneur `monster_icon`.
-
-- Créez un projet vide `monster_stack_k8s`.
-- Copiez la définition de pod du cours dans un fichier `monster-pod.yaml`.
-<!-- FIXME: uploader `monster_icon`  sur le docker hub -->
-- Complétez-la avec l'image de conteneur `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
-- Complétez en mettant `monster-pod` pour le nom du pod et `monster-icon` pour le conteneur (les `_` sont interdits dans les noms/hostnames)
-- Complétez le port en mettant le port de production de notre application, `9090`
-- Vérifiez que l'application fonctionne bien en :
-  - lançant `kc get pods` pour vérifier que le conteneur du pod tourne
-  - lançant `kc logs <pod>`
-  - forwardant le port de l'application avec `kc port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
-- Monitorez les processus avec `kc top pods`.
-
-<!-- #### Installer Kubematic
-
-Kubematic est une interface graphique sympatique pour Kubernetes.
-
-Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'éviter la configuration correcte d'une dashboard pour le moment. En plus est plus agréable à utiliser.
-
-Elle est très récente et ne dispose par de paquet ubuntu/debian. Vous pouvez l'installer en suivant [ce tutoriel](https://thenewstack.io/install-the-kubernetic-desktop-gui-on-ubuntu-linux-19-10/) -->
-
-<!-- 
-#### Installer Lens
+ 
+### Rappel : Installer Lens
 
 Lens est une interface graphique sympatique pour Kubernetes.
 
 Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
 
-Vous pouvez l'installer à cette adresse : <https://k8slens.dev> -->
+Vous pouvez l'installer en suivant les instructions à cette adresse : <https://k8slens.dev>
 
-<!-- #### Ajoutons `dnmonster`
+### Déploiement de pods
 
-Maintenant que nous savons créer un pod nous pouvons ajouter à l'intérieur notre service `dnmonster` de backend d'icône. Les deux services sont peu couplés mais cela ne semble pas a priori stupide de les déployer et scaler ensemble. -->
+Les pods sont des ensembles de conteneurs toujours gardés ensembles.
 
+Nous voudrions déployer notre stack `monster_app`. Nous allons commencer par créer un pod avec seulement notre conteneur `monster_icon`.
 
-- Ajoutez une variable d'environnement au conteneur dans le pod avec la syntaxe :
+- Créez un projet vide `monster_app_k8s`.
 
-```yaml
-    env:
-    - name: CONTEXT
-      value: "DEV"
-```
-
-<!-- - Ajoutez le conteneur au pod `monster-pod`. -->
-- Appliquez la configuration avec `apply`
-- Quel est le problème ? => le pod est la plus petite unité de déploiement de k8s. Les conteneurs dans un pod sont toujours déployés ou détruits ensembles. En bref, un pod est immutable.
-<!-- - C'est un peu un problème si l'on veut déployer une nouvelle version de `dnmonster` indépendemment de `monster_icon`. Poursuivons malgré tout. -->
-- Détruisez d'abord le pod avec `kc delete ...` (-f ou nom du pod)
-
-
-<!-- TODO: Test this -->
-- Changez le port pour `5000`.
-- Appliquez les modifications en recréant le pod avec `apply`.
-- vérifiez avec `kc logs monster-pod monster-icon` que le programme est lancé en mode DEV. En DEV l'application est servie sur `0.0.0.0:5000` c'est à dire sur toute les interfaces.
-<!-- - C'est important car nous voulons essayer d'y accéder depuis le pod `dnmonster`. -->
-
-
-- Recréez le pod avec `apply`.
-- Lorsque `kc get pods | grep monster-pod` affiche `2/2`, refaites le port-forward et chargez l'application dans le navigateur.
-
-<!-- FIXME: WTF?? faire un autre déploiement du coup ?-->
-<!-- L'icône n'apparait toujours pas.
-
-- pour debugger, connectez-vous au conteneur monster-icon dans le pod avec `kc exec -it monster-pod -c monster-icon -- bash`
-  - lancez `wget http://dnmonster:8080` effectivement dnmonster n'est pas accessible car les deux conteneurs partage la même interface et la même IP.
-  - deconnectez vous avec `exit` et connectez vous à `dnmonster`.
-  - lancez `wget http://localhost:5000` : la page se télécharge => les différents processus du conteneur sont bien accessibles sur localhost.
-
-C'est un problème car notre application a été conçue en mode microservice et le nom de domaine de `dnmonster` est écrit en dur dans notre code. Nous pourrions modifier l'application pour se connecter à l'autre sur localhost mais ce serait du travail inutile.
-
-Conclusion: un Pod a été conçu pour héberger les différents processus d'une même instance d'exécution (par exemple le processus principal et un processus du nettoyage des fichiers de cache ou un processus de monitoring du premier processus) et non pas les différents microservices d'une application distribuée comme pour monsterstack. -->
-
-<!-- - Supprimez `dnmonster` du pod -->
-
-- Ajoutez le code suivant à la fin de `monster-pod.yaml` : alignez le avec `image`
-
-```yaml
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "50Mi"
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 5000
-        initialDelaySeconds: 5
-        timeoutSeconds: 1
-        periodSeconds: 10
-        failureThreshold: 3
-```
-
-Notre pod aura alors **la garantie** de disposer d'un dixième de CPU et de 50 mégaoctets de RAM. De plus, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que Kubernetes sache quand redémarrer un pod.
-
-Pour déployer notre stack de microservices nous allons utiliser des **services k8s**. Mais d'abord, passons à l'échelle supérieure avec les déploiements.
-
-##### Correction de `monster-pod.yaml`:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: monster-pod
-spec:
-  containers:
-    - image: tecpi/monster_icon:0.1
-      name: monster-icon
-      ports:
-        - containerPort: 9090
-          name: http
-          protocol: TCP
-      env:
-        - name: CONTEXT
-          value: "DEV"
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "50Mi"
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 5000
-        initialDelaySeconds: 5
-        timeoutSeconds: 1
-        periodSeconds: 10
-        failureThreshold: 3
-```
-
-#### Déploiements et ReplicaSets
-
-Pour répliquer notre application nous pourrions créer plusieurs instances de pod à la main. Mais bien sur ce n'est pas du tout la philosophie de l'orchestration et ce serait vite complètement contreproductif.
-
-<!-- Kubernetes utilise les `ReplicaSets` pour gérer la multiplication d'un même type de pod. Ces ReplicaSets ne sont pas faits pour être créés à la main mais grâce à un objet de type `Deployment`.
-
-Les déploiements emballent des `ReplicaSets` et servent à gérer le déploiement et l'update de versions de l'application à l'aide d'une *rollout policy* (stratégie de mise à jour). -->
 
 - Créez le fichier de déploiement suivant:
 
@@ -164,14 +42,14 @@ Les déploiements emballent des `ReplicaSets` et servent à gérer le déploieme
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monstericon 
+  name: monster-icon 
   labels:
     <labels>
 ```
 
 Ce fichier exprime un objet déploiement vide. Les objets dans Kubernetes sont hautement dynamiques. Pour les associer et les manipuler on leur associe des `label` c'est à dire des étiquettes avec lesquelles on peut les retrouver ou les matcher précisément. C'est grâce à des labels que k8s associe les `pods` aux `ReplicaSets`.
 
-- Ajoutez le label `app: monsterstack` à cet objet `Deployment`.
+- Ajoutez le label `app: monster-app` à cet objet `Deployment`.
 
 - Pour le moment notre déploiement n'est pas défini car il n'a pas de section `spec:`.
   
@@ -183,46 +61,230 @@ spec:
     spec:
 ```
 
-- Récupérez la section `spec` de notre pod `monster-pod` et collez la à la suite. Ainsi nous décrivons comme précédemment les pods que nous voulons mettre dans notre deploiement.
+Remplissons la section `spec` de notre pod `monster-icon` à partir d'un modèle lançant un conteneur Nginx
+```yaml
+        containers:
+        - name: nginx
+          image: nginx:1.7.9
+          ports:
+            - containerPort: 80
+```
+<!-- - Récupérez  et collez la à la suite. Ainsi nous décrivons comme précédemment les pods que nous voulons mettre dans notre deploiement. -->
 
-- Pour désigner ces pods et les associer à un ReplicaSet il faut ajouter des labels. Ajoutez à la suite au même niveau que la spec du pod :
+- Remplacez le nom du conteneur par `monster-icon`, et l'image de conteneur par `tecpi/monster_icon:0.1`, cela récupérera l'image préalablement uploadée sur le Docker Hub (à la version 0.1)
+- 
+<!-- - Complétez en mettant `monster-icon-pod` pour le nom du déploiement,  pour le conteneur (les `_` sont interdits dans les noms/hostnames), et `app: monster-app` pour le label (à 2 endroits) -->
+  
+- Complétez le port en mettant le port de production de notre application, `9090`
+
+- Pour désigner ces pods il faut ajouter un ou plusieurs labels. Ajoutez à la suite au même niveau que la spec du pod :
 
 ```yaml
     metadata:
       labels:
-        app: monsterstack
-        tier: monstericon
+        app: monster-app
 ```
-
-- Pour créer un ReplicaSet il faut aussi préciser le nombre de replicas. Ajoutez au même niveau d'indentation que `template:` une ligne `replicas: 3`
 
 A ce stade nous avons décrit les pods de notre déploiement avec leurs étiquettes.
 
-Maintenant il s'agit de rajouter quelques options pour paramétrer notre ReplicaSet :
+Maintenant il s'agit de rajouter quelques options pour paramétrer notre déploiement :
 
 ```yaml
-  replicas: 3
   selector:
     matchLabels:
-      app: monsterstack
-      tier: monstericon
+      app: monster-app
   strategy:
     type: Recreate
 ```
 
-Cette section indique le nombre de réplicas de notre pod et les labels à utiliser pour repérer les pods du ReplicaSet parmi les autres.
+Cette section indique les labels à utiliser pour repérer les pods de ce déploiement parmi les autres.
 
-Enfin est précisée la stratégie de mise à jour (rollout) des pods pour le déploiement : `Recreate` désigne la stratégie la plus brutale de suppression complète des pods puis de redéploiement.
+Puis est précisée la stratégie de mise à jour (rollout) des pods pour le déploiement : `Recreate` désigne la stratégie la plus brutale de suppression complète des pods puis de redéploiement.
+
+Enfin, juste avant la ligne `selector:` et à la hauteur du mot-clé `strategy:`, ajouter `replicas: 5`. Kubernetes crééra 5 pods identiques lors du déploiement `monster-icon`.
+
+
+<!-- - Copiez la définition d'un deployment issue du cours (ici initialement pour un déploiement de Nginx) dans un fichier `monster-icon-pod.yaml` :
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.7.9
+          ports:
+            - containerPort: 80
+``` -->
 
 
 #### Appliquer notre déploiement
 
 - Avec la commande `apply -f` appliquez notre fichier de déploiement.
-- Affichez les déploiements avec `kc get deploy -o wide`.
-- Affichez également les replicasets avec `kc get replicasets -o wide`.
-- Listez également les pods et faites `describe` sur l'un des pods monstericon. On peut constater que les annotations ont bien été transmises à chaque pod de notre déploiement.
+- Affichez les déploiements avec `kubectl get deploy -o wide`.
+<!-- - Affichez également les replicasets avec `kubectl get replicasets -o wide`. -->
+- Listez également les pods en lançant `kubectl get pods --watch` pour vérifier que les conteneurs tournent.
+- en faisant `describe` sur l'un des pods, on peut constater que les annotations ont bien été transmises à chaque pod de notre déploiement.
+<!-- - En lançant `kubectl logs <pod>` (utiliser l'autocomplete avec `<TAB>`), vérifiez que les pods s'initialisent bien. -->
 
-##### Correction du déploiement monstericon
+<!-- - Appliquez votre fichier avec : `kubectl apply -f monster-icon-pod.yaml`
+- Vérifiez que l'application fonctionne bien en :
+  - lançant `kubectl get deployments` pour vérifier que le déploiement du pod a bien été demandé au cluster
+  - forwardant le port de l'application avec `kubectl port-forward <pod> 19090:<port_interne>` puis en vous connectant à `localhost:19090`
+- Monitorez les processus avec `kubectl top pods`. -->
+
+
+<!-- #### Ajoutons `dnmonster`
+
+Maintenant que nous savons créer un pod nous pouvons ajouter à l'intérieur notre service `dnmonster` de backend d'icône. Les deux services sont peu couplés mais cela ne semble pas a priori stupide de les déployer et scaler ensemble. -->
+
+
+- Ajoutons un healthcheck de type `readinessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `readinessProbe` doit être à la hauteur du `i` de `image:`) :
+```yaml
+        readinessProbe:
+          failureThreshold: 5 # Reessayer 5 fois
+          httpGet:
+            path: /
+            port: 9090
+            scheme: HTTP
+          initialDelaySeconds: 30 # Attendre 30s avant de tester
+          periodSeconds: 10 # Attendre 10s entre chaque essai
+          timeoutSeconds: 5 # Attendre 5s la réponse
+```
+
+Ainsi, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que Kubernetes sache quand redémarrer un pod.
+<!-- 
+- Ajoutez une variable d'environnement au conteneur dans le pod avec la syntaxe :
+
+```yaml
+    env:
+    - name: CONTEXT
+      value: "DEV"
+``` -->
+
+- Appliquez la configuration avec `apply`
+- Avec `kubectl describe deployment monster-icon-pod`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
+
+
+<!-- - Ajoutez le conteneur au pod `monster-pod`. -->
+<!-- - Appliquez la configuration avec `apply` -->
+<!-- - Quel est le problème ? => le pod est la plus petite unité de déploiement de k8s. Les conteneurs dans un pod sont toujours déployés ou détruits ensembles. En bref, un pod est immutable. -->
+<!-- - C'est un peu un problème si l'on veut déployer une nouvelle version de `dnmonster` indépendemment de `monster_icon`. Poursuivons malgré tout. -->
+<!-- - Détruisez d'abord le pod avec `kubectl delete ...` (-f ou nom du pod) -->
+
+
+<!-- TODO: Test this -->
+<!-- - Changez le port pour `5000`. -->
+<!-- - Appliquez les modifications en recréant le pod avec `apply`. -->
+<!-- - vérifiez avec `kubectl logs monster-pod monster-icon` que le programme est lancé en mode DEV. En DEV l'application est servie sur `0.0.0.0:5000` c'est à dire sur toute les interfaces. -->
+<!-- - C'est important car nous voulons essayer d'y accéder depuis le pod `dnmonster`. -->
+
+
+<!-- - Recréez le pod avec `apply`. -->
+<!-- - Lorsque `kubectl get pods | grep monster-pod` affiche `2/2`, refaites le port-forward et chargez l'application dans le navigateur. -->
+
+<!-- L'icône n'apparait toujours pas.
+
+- pour debugger, connectez-vous au conteneur monster-icon dans le pod avec `kubectl exec -it monster-pod -c monster-icon -- bash`
+  - lancez `wget http://dnmonster:8080` effectivement dnmonster n'est pas accessible car les deux conteneurs partage la même interface et la même IP.
+  - deconnectez vous avec `exit` et connectez vous à `dnmonster`.
+  - lancez `wget http://localhost:5000` : la page se télécharge => les différents processus du conteneur sont bien accessibles sur localhost.
+
+C'est un problème car notre application a été conçue en mode microservice et le nom de domaine de `dnmonster` est écrit en dur dans notre code. Nous pourrions modifier l'application pour se connecter à l'autre sur localhost mais ce serait du travail inutile.
+
+Conclusion: un Pod a été conçu pour héberger les différents processus d'une même instance d'exécution (par exemple le processus principal et un processus du nettoyage des fichiers de cache ou un processus de monitoring du premier processus) et non pas les différents microservices d'une application distribuée comme pour monsterstack. -->
+
+<!-- - Supprimez `dnmonster` du pod -->
+
+- Ajoutez le code suivant à la fin de `monster-icon.yaml` : alignez-le avec `image`
+
+```yaml
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "50Mi"
+```
+
+<!-- livenessProbe:
+httpGet:
+    path: /
+    port: 5000
+initialDelaySeconds: 5
+timeoutSeconds: 1
+periodSeconds: 10
+failureThreshold: 3 -->
+
+Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 mégaoctets de RAM.
+
+Lancer `kubectl apply -f monster-icon.yaml` pour appliquer.
+
+<!-- Pour déployer notre stack de microservices nous allons utiliser des **services k8s**. Mais d'abord, passons à l'échelle supérieure avec les déploiements. -->
+
+##### Correction de `monster-icon.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monster-icon
+  labels:
+    app: monster-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: monster-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: monster-app
+    spec:
+      containers:
+      - image: tecpi/monster_icon:0.1
+        name: monster-icon
+        ports:
+        - containerPort: 9090
+        readinessProbe:
+          failureThreshold: 5 # Reessayer 5 fois
+          httpGet:
+            path: /
+            port: 9090
+            scheme: HTTP
+          initialDelaySeconds: 30 # Attendre 30s avant de tester
+          periodSeconds: 10 # Attendre 10s entre chaque essai
+          timeoutSeconds: 5 # Attendre 5s la réponse
+        resources:
+            requests:
+            cpu: "100m"
+            memory: "50Mi"
+```
+
+<!-- #### Déploiements et ReplicaSets
+
+Pour répliquer notre application nous pourrions créer plusieurs instances de pod à la main. Mais bien sur ce n'est pas du tout la philosophie de l'orchestration et ce serait vite complètement contreproductif. -->
+
+<!-- Kubernetes utilise les `ReplicaSets` pour gérer la multiplication d'un même type de pod. Ces ReplicaSets ne sont pas faits pour être créés à la main mais grâce à un objet de type `Deployment`.
+
+Les déploiements emballent des `ReplicaSets` et servent à gérer le déploiement et l'update de versions de l'application à l'aide d'une *rollout policy* (stratégie de mise à jour). -->
+
+
+<!-- ##### Correction du déploiement monstericon
 
 ```yaml
 apiVersion: apps/v1
@@ -254,7 +316,7 @@ spec:
         ports:
         - containerPort: 5000
           name: monstericon
-```
+``` -->
 
 #### Déploiement semblable pour dnmonster
 
@@ -305,7 +367,7 @@ Le type sera : `ClusterIP` pour `dnmonster`<!-- et redis--> et `LoadBalancer` po
 
 Appliquez vos trois fichiers.
 
-- Listez les services avec `kc get services`.
+- Listez les services avec `kubectl get services`.
 - Récupérez le port de monstericon.
 - Visitez votre application en localhost sur ce port dans le navigateur.
 
@@ -327,7 +389,7 @@ resources:
     - redis-deployment.yaml
 ```
 
-- Essayez d'exécuter la kustomization avec `kc apply -k .` depuis le dossier `monster_stack`.
+- Essayez d'exécuter la kustomization avec `kubectl apply -k .` depuis le dossier `monster_stack`.
 
 ### Ajoutons un loadbalancer ingress pour exposer notre application sur le port standard
 
@@ -369,3 +431,4 @@ Le dépôt Git de correction est accessible ici : <https://github.com/Uptime-For
 ### Facultatif : Installer un Wordpress avec base MySQL
 
 Suivez ce tutoriel : <https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/>
+
