@@ -1,6 +1,7 @@
 ---
-title: TP4 - Stratégies de déploiement (rollouts) et monitoring
+title: TP opt. - Stratégies de déploiement (rollouts) et monitoring
 draft: true
+weight: 2078
 ---
 
 <!-- https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/

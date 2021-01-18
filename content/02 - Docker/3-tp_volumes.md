@@ -192,6 +192,13 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 - Rendez-vous dans votre répertoire racine en tapant `cd`.
 - Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`.
 
+- Si vous n'aviez pas encore le repo `microblog` :
+```bash
+git clone https://github.com/uptime-formation/microblog/
+cd microblog
+git checkout tp2-dockerfile
+```
+
 - Lire le `Dockerfile` de l'application `microblog`.
 
 Un volume Docker apparaît comme un dossier à l'intérieur du conteneur.
@@ -238,7 +245,7 @@ CMD ["./boot.sh"]
 {{% /expand %}}
 
 - Créez un volume nommé appelé `microblog_db`, et lancez un conteneur l'utilisant, créez un compte et écrivez un message.
-- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé. -->
+- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
 ---
 <!-- 

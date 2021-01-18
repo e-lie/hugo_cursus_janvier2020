@@ -1,13 +1,14 @@
 ---
-draft: true
-title: "TD supp. - StatefulSets et bases de données"
+draft: false
+title: "TD opt. - StatefulSets et bases de données"
+weight: 2075
 ---
 
 ## Avec la chart PostgreSQL HA
 
 En lançant la [chart PostgreSQL HA de Bitnami](https://github.com/bitnami/charts/tree/master/bitnami/postgresql-ha), et en lisant les logs des conteneurs, observez comment fonctionne les StatefulSets, par exemple avec Lens. Scalez les StatefulSets postgres.
 
-## A la main, avec MySQL, des init containers et des ConfigMaps
+## Facultatif : A la main, avec MySQL, des init containers et des ConfigMaps
 - Suivre ce tutoriel pas à pas : <https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/>
 
 

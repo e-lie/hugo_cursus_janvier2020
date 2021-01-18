@@ -1,16 +1,4 @@
-## Déroulement
-1. Cours Devops
-2. Cours K8S début
-3. TP1 K8S
-4. Cours K8S plus
-5. TP2 K8S
-6. Cours Dockerfile + volumes
-7. TP Dockerfile + Volumes
-8. Cours K8S jusqu'à Helm
-9. TP HElm
-10. Cours K8S qui reste
-11. TP K8S AKS azure
-12. TP K8S monitoring et deployment policies
+
 
 # TODO
 
@@ -308,6 +296,23 @@ https://github.com/microservices-demo/microservices-demo/tree/master/deploy/kube
 ## Notes
 
 - Prler de Hobbykube et BKPR
-
+- https://toolkit.fluxcd.io/get-started/
+- https://github.com/stefanprodan/podinfo
 
 ## Todo: parler de ce que devrait fait une CD de Gitlab : se connecter à un bastion, git pull, puis kubectl apply
+
+TODO: add commandes pour basculer de namespace, le créer et l'ajouter dans son kubeconfig
+
+TODO: Inglressa vec dns ou joli minikube (jour 2)
+
+TODO: Jour 1 kustomization + secrets + liveliness et eventuellement configmaps
+
+TODO: --watch
+
+TODO/ livelinessprobe mysql
+TODO: readinessprobe avec podinfo ou l'app python qui se kill
+
+clusterip: none?
+
+TODO: Ressource should u microservices et should u crd + 
+

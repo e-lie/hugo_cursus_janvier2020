@@ -161,10 +161,10 @@ Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et n
 
 Vous pouvez l'installer en lançant ces commandes :
 ```bash
-sudo apt-get update; sudo apt-get install libxss-dev
+sudo apt-get update; sudo apt-get install -y libxss-dev
 curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
 chmod +x ~/Lens.AppImage
-~/Lens.AppImage
+~/Lens.AppImage &
 ```
 
 ## Mettre en place un cluster K8s dans le cloud avec un provider type DigitalOcean ou Scaleway

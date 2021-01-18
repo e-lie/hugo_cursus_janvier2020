@@ -4,11 +4,15 @@ draft: false
 weight: 2051
 ---
 
+<!-- TODO: FAIRE une suite du TP 2 juste après le cours réseau en créant les objets Ingress pour la stack Wordpress et la stack Wordsmith -->
+<!-- TODO: ajouter readinessprobe à wordpress ou wordsmith plutot ? -->
+
 <!-- Alternatives :
 - Wordpress : https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
 <!-- FIXME: oups la correction marche mais le TP non...
    -->
+   <!-- TODO: simplifier ce TP? -->
 
 <!-- La première partie de ce TP va consister à créer des objets Kubernetes pour déployer un Wordpress avec stockage et base de données. -->
 Ce TP va consister à créer des objets Kubernetes pour déployer une stack d'exemple : `monster_stack`.
@@ -27,10 +31,10 @@ Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et n
 
 Vous pouvez l'installer en lançant ces commandes :
 ```bash
-sudo apt-get update; sudo apt-get install libxss-dev
+sudo apt-get update; sudo apt-get install -y libxss-dev
 curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
 chmod +x ~/Lens.AppImage
-~/Lens.AppImage
+~/Lens.AppImage &
 ```
 
 

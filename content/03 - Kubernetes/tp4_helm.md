@@ -61,3 +61,5 @@ service:
 - Notre Jenkins est prêt.
 
 - Explorez les différents objets k8s créés par Helm avec Lens. -->
+
+<!-- TODO: Facultatif : Packagez l'app `monsterstack` avec Helm -->

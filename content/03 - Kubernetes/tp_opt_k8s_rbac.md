@@ -1,16 +1,17 @@
 ---
-title: TP opt. - Les rôles et le RBAC
-draft: true
+title: TP opt. - Le RBAC
+draft: false
+weight: 2090
 ---
 
+## Les rôles et le RBAC
 
 1. Configurer Minikube pour activer RBAC.
 ```bash
-minikube start --kubernetes-version=v1.7.0 --extra-config=apiserver.Authorization.Mode=RBAC
+minikube start --extra-config=apiserver.Authorization.Mode=RBAC
 
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 ```
-
 
 2. Créer trois connexions à minikube dans `~/.kube/config` :
 - une en mode `cluster-admin`,

@@ -6,6 +6,9 @@ weight: 2045
 
 ## Déployer Wordpress et MySQL avec du stockage et des Secrets
 
+<!-- TODO: FAIRE une suite du TP 2 juste après le cours réseau en créant les objets Ingress pour la stack Wordpress et la stack Wordsmith -->
+<!-- TODO: ajouter readinessprobe à wordpress ou wordsmith plutot ? -->
+
 Nous allons suivre ce tutoriel pas à pas : https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
 Il faut :
@@ -16,9 +19,10 @@ Il faut :
 <!-- - ne pas oublier de relancer les déploiements qui sont restés bloqués à cause de la ressource manquante -->
 <!-- generatorOptions:
  disableNameSuffixHash: true -->
-On peut ensuite observer les différents objets créés, et optimiser le process avec un fichier `kustomzation.yaml` plus complet.
+On peut ensuite observer les différents objets créés, et optimiser le process avec un fichier `kustomization.yaml` plus complet.
 
 - Entrez dans un des pods, et de l'intérieur, lisez le secret qui lui a été rendu accessible.
+<!-- - TODO: pas ouf car env, faut faire ça avec un volume -->
 
 <!-- - https://cloud.google.com/kubernetes-engine/docs/tutorials/persistent-disk/
 - https://github.com/GoogleCloudPlatform/kubernetes-workshops/blob/master/state/local.md
