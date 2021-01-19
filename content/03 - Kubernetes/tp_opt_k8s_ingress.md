@@ -21,4 +21,4 @@ https://www.scaleway.com/en/docs/using-a-load-balancer-to-expose-your-kubernetes
 Pour les DNS, 3 solutions :
 - en local, éditer `/etc/hosts`
 - sur Internet, ne pas l'utiliser et faire un Ingress avec l'adresse IP comme hostname
-- sur Internet, utiliser <https://netlib.re> pour configurer le DNS
+- sur Internet, utiliser <https://netlib.re> pour configurer un DNS avec un domaine en `netlib.re`
