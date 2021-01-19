@@ -1,6 +1,7 @@
 ---
 title: Cours 4 - Objets Kubernetes - Partie 1
 draft: false
+weight: 2040
 ---
 
 ## L'API et les Objets Kubernetes
@@ -165,7 +166,7 @@ spec:
 
 ### Les ReplicaSet
 
-Un ReplicatSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
+Un ReplicaSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
 <!-- Un peu comme le paramètre `replicas:` d'un service docker mais en plus précis. -->
 
 - `kubectl get rs` pour afficher la liste des replicas.
@@ -214,6 +215,10 @@ spec:
 
 - La commande `kubectl run` sert à créer un *deployment* à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
 
+
+![](../../images/kubernetes/wiki-ciscolinux-co-uk-russiandolls.png)
+*Les poupées russes Kubernetes : un Deployment contient un ReplicaSet, qui contient des Pods, qui contiennent des conteneurs*
+
 ### Les Services
 
 Dans Kubernetes, un service est un objet qui :
@@ -234,14 +239,14 @@ Les Services sont de trois types principaux :
 - `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
 
 - `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
-- 
+<!-- 
 ![](../../images/kubernetes/nodeport.png)
-*Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
+*Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas* -->
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-![](../../images/kubernetes/loadbalancer.png)
-*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
+<!-- ![](../../images/kubernetes/loadbalancer.png)
+*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)* -->
 
 <!-- Un 4e type existe, il est moins utilisé :
 - `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->

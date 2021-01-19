@@ -1,9 +1,11 @@
 ---
-draft: true
+title: Conclusion
+weight: 2100
+draft: false
 ---
 
 <!-- A supprimer de l'intro si ici -->
-<!-- ## Points forts de Kubernetes
+## Points forts de Kubernetes
 
 - Open source et très actif.
 - Une communauté très visible et présente dans l'évolution de l'informatique.
@@ -32,4 +34,23 @@ draft: true
   - Pas de solution de loadbalancing par défaut : soit on se base sur le fournisseur de cloud, soit on configure [*MetalLB*](https://metallb.universe.tf/) -->
 
   <!-- - Pas de solution de **reverse proxy (ingress)** standard
-    - …même si l'ingress **Nginx** est très utilisé et plus ou moins officiel et que **Traefik** est optimisé pour k8s -->
+    - …même si l'ingress **Nginx** est très utilisé et plus ou moins officiel et que **Traefik** est optimisé pour k8s
+
+
+## Pour approfondir
+
+### Monitoring et logging
+Avec Prometheus et la suite Elastic.
+
+### Déploiement continu
+- Exemple de workflow de déploiement continu (CD)
+  - par exemple avec Gitlab (possiblement auto-hébergé dans K8s)
+  - se connecter à un bastion
+  - `git pull`
+  - puis `kubectl apply`
+
+### Exemple de stack avancée
+La Bitnami Kubernetes Production Runtime (BKPR).
+- Monitoring avec Prometheus et Grafana
+- Logging avec Elasticsearch, Kibana et Fluentd
+- HTTPS ingress avec Nginx, ExternalDNS, Cert-Manager et oauth2_proxy

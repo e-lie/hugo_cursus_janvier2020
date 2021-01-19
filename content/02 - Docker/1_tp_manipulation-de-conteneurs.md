@@ -1,13 +1,7 @@
 ---
 title: "TP 1 - Installer Docker et jouer avec"
-weight: 15
+weight: 1015
 ---
-
-⚠️ **Pour l'anglais, si un texte ne vous paraît pas clair, quelques liens :**
-
-- Pour les textes : https://www.deepl.com/translator
-- Pour les pages web : https://translate.google.com/
-- Pour les mots : https://linguee.fr/
 
 # Premier TD : on installe Docker et on joue avec
 

@@ -1,6 +1,6 @@
 ---
-title: TP 3 - Volumes et réseaux
-weight: 35
+title: TP 3 - Réseaux
+weight: 1031
 ---
 
 <!--
@@ -256,76 +256,6 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 
 **_Généralement, il faut faire beaucoup plus attention au prune de volumes (données à perdre) qu'au `prune` de conteneurs (rien à perdre car immutable et en général dans le registry)._**
 
-### Facultatif : utiliser `VOLUME` avec `microblog`
-
-- Rendez-vous dans votre répertoire racine en tapant `cd`.
-- Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`.
-
-- Lire le `Dockerfile` de l'application `microblog`.
-
-Un volume Docker apparaît comme un dossier à l'intérieur du conteneur.
-Nous allons faire apparaître le volume Docker comme un dossier à l'emplacement `/data` sur le conteneur.
-
-- Pour que l'app Python soit au courant de l'emplacement de la base de données, ajoutez à votre `Dockerfile` une variable d'environnement `DATABASE_URL` ainsi (cette variable est lue par le programme Python) :
-
-```Dockerfile
-ENV DATABASE_URL=sqlite:////data/app.db
-```
-
-- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application. 
-
-{{% expand "Indice :" %}}
-
-Dans le conteneur, le chemin de la base de données est :
-`/data/app.db`
-
-{{% /expand %}}
-
-{{% expand "Solution :" %}}
-
-Voici le `Dockerfile` complet :
-```Dockerfile
-FROM python:3-alpine
-
-COPY ./requirements.txt /requirements.txt
-RUN pip3 install -r requirements.txt
-ENV FLASK_APP microblog.py
-
-COPY ./ /microblog
-WORKDIR /microblog
-
-ENV APP_ENVIRONMENT PROD
-
-EXPOSE 5000
-
-ENV DATABASE_URL=sqlite:////data/app.db
-VOLUME ["/data"]
-
-CMD ["./boot.sh"]
-```
-
-{{% /expand %}}
-
-- Créez un volume nommé appelé `microblog_db`, et lancez un conteneur l'utilisant, créez un compte et écrivez un message.
-- Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé. -->
-
----
-<!-- 
-La ligne de code Python qui nous permet de déterminer comment l'app utilise le volume du Dockerfile est la suivante :
-
-`config.py` :
-
-```python
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
- 'sqlite:///' + os.path.join(basedir, 'data/app.db')
-
-``` -->
-
-<!-- , la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté. -->
-
-
-
-<!-- Marquer solution -->
 
 <!-- ### Facultatif : `microblog` avec MySQL
 
@@ -353,4 +283,4 @@ Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à
 
 ### _Facultatif :_ Packagez votre propre app
 
-Vous possédez tous les ingrédients pour packager l'app de votre choix désormais ! Récupérez une image de base et basez vous sur un Dockerfile existant s'il vous inspire, et lancez-vous !
+Vous possédez tous les ingrédients pour packager l'app de votre choix désormais ! Récupérez une image de base, basez-vous sur un Dockerfile existant s'il vous inspire, et lancez-vous !

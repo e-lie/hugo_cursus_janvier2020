@@ -1,6 +1,7 @@
 ---
 title: Cours 7 - Helm, le gestionnaire de paquets Kubernetes
 draft: false
+weight: 2070
 ---
 
 
@@ -94,9 +95,9 @@ Voici quelques commandes de bases pour Helm :
 
 - `helm delete my-release`: Permet de désinstaller la release `my-release` de Kubernetes
 
-### La configuration d'un Chart: des templates jinja d'objets Kubernetes
+### La configuration d'un Chart: des templates d'objets Kubernetes
 
 Visitons un exemple de Chart : [minecraft](https://github.com/helm/charts/tree/master/stable/minecraft/templates)
 
-On constate que Helm rassemble des fichiers de descriptions d'objets k8s avec des variables (Jinja) à l'intérieur, ce qui permet de factoriser le code et de gérer puissamment la différence entre les versions.
+On constate que Helm rassemble des fichiers de descriptions d'objets k8s avec des variables (moteur de templates de Go) à l'intérieur, ce qui permet de factoriser le code et de gérer puissamment la différence entre les versions.
 

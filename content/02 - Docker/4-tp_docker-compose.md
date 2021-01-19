@@ -1,7 +1,7 @@
 ---
 title: "TP 4 - Créer une application multiconteneur"
 draft: false
-weight: 45
+weight: 1045
 ---
 
 ## Articuler deux images avec Docker compose
@@ -197,7 +197,7 @@ redis:
     - identinet
 ```
 
-{{% expand "`docker-compose.yml` final :" %}}
+`docker-compose.yml` final :
 
 ```yaml
 version: "3.7"
@@ -223,8 +223,6 @@ networks:
   identinet:
     driver: bridge
 ```
-
-{{% /expand %}}
 
 - Lancez l'application et vérifiez que le cache fonctionne en chercheant les `cache miss` dans les logs de l'application.
 

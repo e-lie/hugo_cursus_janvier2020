@@ -1,7 +1,7 @@
 ---
 title: "4 - Créer une application multiconteneur"
 visible: true
-weight: 40
+weight: 1040
 ---
 
 # Docker Compose

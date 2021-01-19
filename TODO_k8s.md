@@ -1,3 +1,5 @@
+
+
 # TODO
 
 - ajouter secrets and configmaps!!!
@@ -294,3 +296,24 @@ https://github.com/microservices-demo/microservices-demo/tree/master/deploy/kube
 ## Notes
 
 - Prler de Hobbykube et BKPR
+- https://toolkit.fluxcd.io/get-started/
+- https://github.com/stefanprodan/podinfo
+
+## Todo: parler de ce que devrait fait une CD de Gitlab : se connecter à un bastion, git pull, puis kubectl apply
+
+TODO: add commandes pour basculer de namespace, le créer et l'ajouter dans son kubeconfig
+
+TODO: Inglressa vec dns ou joli minikube (jour 2)
+
+TODO: Jour 1 kustomization + secrets + liveliness et eventuellement configmaps
+
+TODO: --watch
+
+TODO/ livelinessprobe mysql
+TODO: readinessprobe avec podinfo ou l'app python qui se kill
+
+clusterip: none?
+
+TODO: Ressource should u microservices et should u crd + 
+
+TODO: Purge sensible tp from git

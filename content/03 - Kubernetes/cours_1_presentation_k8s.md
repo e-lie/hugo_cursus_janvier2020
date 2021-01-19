@@ -1,6 +1,7 @@
 ---
 title: Cours 1 - Présentation de Kubernetes
 draft: false
+weight: 2010
 ---
 
 Kubernetes est la solution dominante d'orchestration de conteneurs développée en Open Source au sein de la Cloud Native Computing Foundation.
@@ -115,13 +116,54 @@ Un écosystème Kubernetes fait par l'entreprise Rancher et axé sur la légère
 
 Une version de Kubernetes configurée et optimisée par Red Hat pour être utilisée dans son écosystème. Tout est intégré donc plus guidé, avec l'inconvénient d'être un peu captif·ve de l'écosystème et des services vendus par Red Hat.
 
-<!-- ### Apache Mesos
+## Concurrents
+### Apache Mesos
 
-Mesos est une solution plus générale que Kubernetes pour exécuter des applications distribuées. En combinant **Mesos** avec son "application Framework" **Marathon** on obtient une solution équivalente sur de nombreux points à Kubernetes.
+Mesos est une solution plus générale que Kubernetes pour exécuter des applications distribuées. En combinant **Mesos** avec son "application framework" **Marathon** on obtient une solution équivalente sur de nombreux points à Kubernetes.
 
 Elle est cependant moins standard :
     - Moins de ressources disponibles pour apprendre, intégrer avec d'autre solution etc.
     - Peu vendu en tant que service par les principaux cloud provider.
     - Plus chère à mettre en oeuvre.
 
-Comparaison d'architecture : [Mesos VS kubernetes](https://www.baeldung.com/mesos-kubernetes-comparison) -->
+Comparaison d'architecture : [Mesos vs. Kubernetes](https://www.baeldung.com/mesos-kubernetes-comparison)
+
+## Parenthèse : Le YAML
+
+Kubernetes décrit ses ressources en YAML. A quoi ça ressemble, YAML ?
+
+```yaml
+- marché:
+    lieu: Marché de la Place
+    jour: jeudi
+    horaire:
+      unité: "heure"
+      min: 12
+      max: 20
+    fruits:
+      - nom: pomme
+        couleur: "verte"
+        pesticide: avec
+
+      - nom: poires
+        couleur: jaune
+        pesticide: sans
+    légumes:
+      - courgettes
+      - salade
+      - potiron
+```
+
+---
+
+## Syntaxe
+
+- Alignement ! (**2 espaces** !!)
+- ALIGNEMENT !! (comme en python)
+- **ALIGNEMENT !!!** (le défaut du YAML, pas de correcteur syntaxique automatique, c'est bête mais vous y perdrez forcément du temps !)
+
+- des listes (tirets)
+- des paires **clé: valeur**
+- Un peu comme du JSON, avec cette grosse différence que le JSON se fiche de l'alignement et met des accolades et des points-virgules
+
+- **les extensions Kubernetes et YAML dans VSCode vous aident à repérer des erreurs**

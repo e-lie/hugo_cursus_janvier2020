@@ -1,6 +1,7 @@
 ---
 draft: false
 title: Cours 5 - Le réseau dans Kubernetes
+weight: 2050
 ---
 
 Les solutions réseau dans Kubernetes ne sont pas standard.
@@ -8,8 +9,7 @@ Il existe plusieurs façons d'implémenter le réseau.
 
 ## Les objets Services
 
-<!-- FIXME: SCHEMAS
-
+<!-- 
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
  -->
 
@@ -18,7 +18,7 @@ Les Services sont de trois types principaux :
 - `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
 
 - `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
-- 
+
 ![](../../images/kubernetes/nodeport.png)
 *Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 

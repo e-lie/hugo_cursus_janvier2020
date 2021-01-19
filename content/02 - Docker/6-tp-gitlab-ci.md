@@ -1,7 +1,7 @@
 ---
 title: TP 6 (bonus) - Intégration continue avec Gitlab
 draft: false
-weight: 65
+weight: 1065
 ---
 
 ## Créer une pipeline de build d'image Docker avec les outils CI/CD Gitlab

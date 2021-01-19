@@ -1,6 +1,7 @@
 ---
-title: 'TP3 - Déployer Jenkins avec Helm'
+title: 'TP 4 - Déployer Wordpress avec Helm'
 draft: false
+weight: 2071
 ---
 
 Helm est un gestionnaire de paquet k8s qui permet d'installer des paquets sans faire des copier-coller pénibles de YAML :
@@ -16,11 +17,11 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Suivez le Quickstart : <https://helm.sh/docs/intro/quickstart/>
 
-### Utiliser une chart Helm pour installer Mediawiki
+### Utiliser une chart Helm pour installer Wordpress
 <!-- ### Utiliser une chart Helm pour installer Jenkins -->
 
 <!-- TODO: prendre autre chose que Jenkins, genre wordpress c'est parfait -->
-- Cherchez Mediawiki sur [https://hub.kubeapps.com](https://hub.kubeapps.com).
+- Cherchez Wordpress sur [https://hub.kubeapps.com](https://hub.kubeapps.com) (vous pouvez prendre une autre chart si le cœur vous en dit).
 - Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
 - Installer une release `wordpress-tp` de cette application (ce chart) avec `helm install --template-name wordpress-tp bitnami/wordpress`
 - Suivez les instructions affichées
@@ -60,3 +61,5 @@ service:
 - Notre Jenkins est prêt.
 
 - Explorez les différents objets k8s créés par Helm avec Lens. -->
+
+<!-- TODO: Facultatif : Packagez l'app `monsterstack` avec Helm -->
