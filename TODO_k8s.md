@@ -316,3 +316,4 @@ clusterip: none?
 
 TODO: Ressource should u microservices et should u crd + 
 
+TODO: Purge sensible tp from git
