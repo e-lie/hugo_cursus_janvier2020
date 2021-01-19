@@ -1,5 +1,5 @@
 ---
-title: TP4 - Stratégies de déploiement et monitoring
+title: TP7 - Stratégies de déploiement et monitoring
 draft: no
 ---
 
@@ -14,7 +14,7 @@ https://github.com/ContainerSolutions/k8s-deployment-strategies -->
 
 Pour comprendre les stratégies de déploiement et mise à jour d'application dans Kubernetes (deployment and rollout strategies) nous allons installer puis mettre à jour une application d'exemple et observer comment sont gérées les requêtes vers notre application en fonction de la stratégie de déploiement choisie.
 
-Pour cette observation nous avons besoin d'un outil de monitoring et nous utiliserons donc une des stack les plus populaires et intégrée avec kubernetes : Prometheus et Grafana. Prometheus est un projet de la Cloud Native Computing Foundation.
+Pour cette observation on peut utiliser un outil de monitoring. Nous utiliserons ce TP comme prétexte pour installer une des stack les plus populaires et intégrée avec kubernetes : Prometheus et Grafana. Prometheus est un projet de la Cloud Native Computing Foundation.
 
 Prometheus est un serveur de métriques c'est à dire qu'il enregistre des informations précises (de petite taille) sur différents aspects d'un système informatique et ce de façon périodique en effectuant généralement des requêtes vers les composants du système (metrics scraping).
 
@@ -75,7 +75,9 @@ docker build -t uptime-formation/goprom .
 ```
 {{% /expand %}}
 
-- Allez dans le dossier de la première stratégie `recreate` et appliquez le fichier `app-v1.yml`.
+- Allez dans le dossier de la première stratégie `recreate` et ouvrez le fichier `app-v1.yml`. Notez que `image:` est à `uptime-formation/goprom` et qu'un paramètre `imagePullPolicy` est défini à `Never`. Ainsi l'image sera récupéré dans le registry local du docker de minikube ou sont stockées les images buildées localement plutôt que récupéré depuis un registry distant.
+
+- Appliquez ce déploiement kubernetes:
 
 {{% expand "réponse:" %}}
 
@@ -115,10 +117,27 @@ minikube service goprom-metrics
 {{% /expand %}}
 
 - Pour tester le service `prometheus-server` nous avons besoin de le mettre en mode NodePort (et non ClusterIP par défaut). Modifiez le service dans Lens pour changer son type.
-- Exposez le service avec Minikube.
-- Vérifiez que prometheus récupère bien les métriques de l'application avec la requête PromQL : `sum(rate(http_requests_total{app="my-app"}[5m])) by (version)`.
+- Exposez le service avec Minikube (n'oubliez pas de préciser le namespace monitoring).
+- Vérifiez que prometheus récupère bien les métriques de l'application avec la requête PromQL : `sum(rate(http_requests_total{app="goprom"}[5m])) by (version)`.
 
 - Quelle est la section des fichiers de déploiement qui indique à prometheus ou récupérer les métriques ?
+
+
+{{% expand "réponse:" %}}
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+...
+spec:
+...
+  template:
+    metadata:
+...
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9101"
+```
+{{% /expand %}}
 
 ### Installer et configurer Grafana pour visualiser les requêtes
 
@@ -175,7 +194,7 @@ Access: Server
 Créer une dashboard avec un Graphe. Utilisez la requête prometheus (champ query suivante):
 
 ```
-sum(rate(http_requests_total{app="my-app"}[5m])) by (version)
+sum(rate(http_requests_total{app="goprom"}[5m])) by (version)
 ```
 
 Pour avoir un meilleur aperçu de la version de l'application accédée au fur et à mesure du déploiement, ajoutez `{{version}}` dans le champ `legend`.
@@ -187,11 +206,16 @@ Ce TP est basé sur l'article suivant: https://blog.container-solutions.com/kube
 
 Maintenant que l'environnement a été configuré :
   - Lisez l'article.
-  - Testez les différentes stratégies de déploiement en:
-    - appliquant le fichier `app-v1.yml` pour chaque stratégies.
-    - lançant la commande suivante pour effectuer des requêtes sur l'application: 
-    - appliquant le fichier `app-v2.yml`  correspondant.
-    - Observez à chaque fois le graphique dans `graphana`.
+  - Vous pouvez testez les différentes stratégies de déploiement en lisant leur README.md.
+  - En résumé, pour les plus simple, on peut:
+    - appliquer le fichier `app-v1.yml` pour une stratégie.
+    - lançer la commande suivante pour effectuer des requêtes régulières sur l'application: `service=$(minikube service goprom --url) ; while sleep 0.1; do curl "$service"; done`
+    - Dans un second terminal (pendant que les requêtes tournent) appliquer le fichier `app-v2.yml`  correspondant.
+    - Observez la réponse aux requêtes dans le terminal ou avec un graphique adapté dans `graphana` (Il faut configurer correctement le graphique pour observer de façon lisible la transition entre v1 et v2). Un aperçu en image des histogrammes du nombre de requêtes en fonction des versions 1 et 2 est disponible dans chaque dossier de stratégie.
     - supprimez le déploiement+service avec `delete -f` ou dans Lens.
 
-Un aperçu en image des histogrammes du nombre de requêtes en fonction des versions 1 et 2 est disponible dans chaque dossier de stratégie.
+Par exemple pour la stratégie **recreate** le graphique donne: ![](../../images/prometheus/grafana-recreate.png)
+
+
+<!-- TODO trouver comment exporter les bonnes dashboard grafana pour les réimporter plus + comprendre un peu mieux promQL -->
+
