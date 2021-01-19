@@ -38,7 +38,7 @@ Il s'agit d'une solution **robuste**, **structurante** et **open source** qui se
 - Open source et très actif.
 - Une communauté très visible et présente dans l'évolution de l'informatique.
 - Un standard collectif qui permet une certaine interopérabilité dans le cloud.
-- Les _pods_ tendent à se rapprocher plus d'une VM du point de vue de l'application.
+- Les _pods_ tendent à se rapprocher plus d'une VM du point de vue de l'application (ressources de calcul garanties, une ip joignable sur le réseau local, multiprocess).
 - Hébergeable de façon quasi-identique dans le cloud, on-premise ou en mixte.
 - Kubernetes a un _flat network_ ce qui permet de faire des choses puissante facilement comme le multi-datacenter.
 - K8s est pensé pour la _scalabilité_ et le _calcul distribué_.
