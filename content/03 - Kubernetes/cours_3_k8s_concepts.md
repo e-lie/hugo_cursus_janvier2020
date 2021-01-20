@@ -61,7 +61,7 @@ L'objectif est de permettre la haute disponibilité : on veut que notre service 
 
 Fournir à l'application une façon d'indiquer qu'elle est disponible, c'est-à-dire :
 
-- qu'elle est démarrée (_liveliness_)
+- qu'elle est démarrée (_liveness_)
 - qu'elle peut répondre aux requêtes (_readiness_).
 
 <!-- #### Exemple: le load balancing de Swarm

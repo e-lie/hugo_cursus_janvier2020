@@ -56,8 +56,8 @@ Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod
 -  Les **DaemonSets** doivent être utilisés :
    - lorsqu'au moins une copie de votre application doit être exécutée sur tous les nœuds du cluster (ou sur un sous-ensemble de ces nœuds).
 -  Les **StatefulSets** doivent être utilisés :
-  - lorsque l'ordre de création des replicas et le nom des pods est pas important
-  - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
+    - lorsque l'ordre de création des replicas et le nom des pods est important
+    - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
 
 ### Jobs
 

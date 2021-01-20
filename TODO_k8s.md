@@ -305,15 +305,31 @@ TODO: add commandes pour basculer de namespace, le créer et l'ajouter dans son 
 
 TODO: Inglressa vec dns ou joli minikube (jour 2)
 
-TODO: Jour 1 kustomization + secrets + liveliness et eventuellement configmaps
+TODO: Jour 1 kustomization + secrets + liveness et eventuellement configmaps
 
 TODO: --watch
 
-TODO/ livelinessprobe mysql
+TODO/ livenessprobe mysql
 TODO: readinessprobe avec podinfo ou l'app python qui se kill
 
 clusterip: none?
 
-TODO: Ressource should u microservices et should u crd + 
+TODO: Ressource et cours should u microservices (et bonnes pratiquesde dockernetrypoint qui reboot) et should u crd + 
+
+TODO: paradigme k8s de pas orchestrer mais chaos, a ses limites (ajotus statefulsets)
 
 TODO: Purge sensible tp from git
+
+TODO: Ajout initcontainers : https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/
+
+TODO: clarifier specs pods et deployments, clarifier accès aux specs
+
+TODO: artifacthub
+
+TODO: gros tp de helm avec postgres ha, wiki, blog, registry, monstersstack et even gitlab avec runner ??, et les ingresses qui vont bien 
+
+TODO: tuto bkpr
+
+TODO: tuto registry as helm: harbour, docker-registry, else?
+
+TODO: tuto helm cert manager / lego / let's encrypt
