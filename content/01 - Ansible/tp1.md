@@ -74,7 +74,7 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-## Explorer LXD 
+<!-- ## Explorer LXD 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
@@ -218,7 +218,7 @@ lxc launch centos_ansible centos1
 
 - Déverrouillez cette clé ssh avec `ssh-add ~/.ssh/id_stagiaire` et le mot de passe `devops101` (le ssh-agent doit être démarré dans le shell pour que cette commande fonctionne si ce n'est pas le cas `eval $(ssh-agent)`).
 
-- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+- Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`. -->
 
 
 ## Créer un projet de code Ansible
@@ -259,11 +259,12 @@ roles_path = ./roles
 host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
 ```
 
-- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
+- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`.
+<!-- - Il faut pour cela lister les conteneurs lxc lancés.
 
 ```
 lxc list # récupérer l'ip de la machine
-```
+``` -->
 
 Créez et complétez le fichier `inventory.cfg` d'après ce modèle:
 
@@ -305,8 +306,8 @@ centos1 ansible_host=<ip>
 
 En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
-
-## Installons nginx avec quelques modules et commandes ad-hoc
+<!-- TODO: faire plus court pour adhoc pour pouvoir explorer --check et become: et autres avec les playbooks plutôt -->
+<!-- ## Installons nginx avec quelques modules et commandes ad-hoc
 
 - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
 
@@ -402,4 +403,4 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-```
+``` -->

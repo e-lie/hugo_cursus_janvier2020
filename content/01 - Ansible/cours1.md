@@ -4,93 +4,6 @@ draft: false
 weight: 10
 ---
 
-## Plan
- 
-### Module 1 : Installer ansible, configurer la connexion et commandes ad hoc ansible
-
-#### Installation
-- créer un lab avec LXD
-- configurer SSH et python pour utiliser ansible
-#### configurer ansible
-- /etc ou ansible.cfg
-- configuration de la connexion
-- connexion SSH et autres plugins de connection
-- versions de Python et d'Ansible
-#### L'inventaire ansible
-- gérer des groupes de machines
-- L'inventaire est la source d'information principale pour Ansible
-#### Ansible ad-hoc et les modules de base
-- la commande `ansible` et ses options
-- explorer les nombreux modules d'Ansible
-- idempotence des modules
-- exécuter correctement des commandes shell avec Ansible
-- le check mode pour controller l'état d'une ressource
-#### TP1: Installation, configuration et prise en main avec des commandes ad-hoc
-
-
-### Module 2 : Les playbooks pour déployer une application web
-
-#### syntaxe yaml des playbooks
-- structure d'un playbook
-#### modules de déploiement et configuration
-- Templates de configuration avec Jinja2
-- gestion des paquets, utilisateurs et fichiers, etc.
-#### Variable et structures de controle
-- explorer les variables
-- syntaxe jinja des variables et lookups
-- facts et variables spéciales
-- boucles et conditions
-#### Idempotence d'un playbook
-- handlers
-- contrôler le statut de retour des tâches
-- gestion de l'idempotence des commandes Unix
-#### debugging de playbook
-- verbosite
-- directive de debug
-- gestion des erreurs à l'exécution
-#### TP2: Écriture d'un playbook simple de déploiement d'une application web flask en python.
-
-
-### Module 3 : Structurer un projet, utiliser les roles
-
-#### Complexifier notre lab en ajoutant de nouvelles machines dans plusieurs groupes.
-- modules de provisionning de machines pour Ansible
-- organisation des variables de l'inventaire
-- la commande ansible-inventory
-#### Les roles 
-- Ansible Galaxy pour installer des roles.
-- Architecture d'un role et bonnes pratiques de gestion des roles.
-#### Écrire un role et organiser le projet
-- Imports et includes réutiliser du code.
-- Bonne pratiques d'organisation d'un projet Ansible
-- Utiliser des modules personnalisés et des plugins pour étendre Ansible
-- gestion de version du code Ansible
-#### TP3: Transformation de notre playbook en role et utilisation de roles ansible galaxy pour déployer une infrastructure multitiers.
-
-
-
-### Module 4 : Orchester Ansible dans un contexte de production
-
-#### Intégration d'Ansible
-- Intégrer ansible dans le cloud un inventaire dynamique et Terraform
-- Différents type d'intégration Ansible
-#### Orchestration
-- Stratégies : Parallélisme de l'exécution
-- Délégation de tâche
-- Réalisation d'un rolling upgrade de notre application web grace à Ansible
-- Inverser des tâches Ansible - stratégies de rollback
-- Exécution personnalisée avec des tags
-#### Sécurité
-- Ansible Vault : gestion des secrets pour l'infrastructure as code
-- desctiver les logs des taches sensibles
-- Renforcer le mode de connexion ansible avec un bastion SSH
-#### Exécution d'Ansible en production
-- Intégration et déploiement avec Gitlab
-- Gérer une production Ansible découvrir TOWER/AWX
-- Tester ses roles et gérer de multiples versions
-#### TP4: Refactoring de notre code pour effectuer un rolling upgrade et déploiement dans le cloud + AWX
-
-
 ## Présentation d'Ansible
 
 ### Ansible
@@ -99,7 +12,7 @@ Ansible est un **gestionnaire de configuration** et un **outil de déploiement e
 
 Il fait donc également partie de façon centrale du mouvement **DevOps** car il s'apparente à un véritable **couteau suisse** de l'automatisation des infrastructures.
 
-### histoire
+### Histoire
 
 Ansible a été créé en **2012** (plus récent que ses concurrents Puppet et Chef) autour d'une recherche de **simplicité** et du principe de configuration **agentless**.
 
@@ -214,7 +127,7 @@ Pour voir l'ensemble des fichier installé par un paquet `pip3` :
 
 Pour tester la connexion aux serveurs on utilise la commande ad hoc suivante. `ansible all -m ping`
 
-
+<!-- 
 ### Faire des lab DevOps : Vagrant+virtualbox, LXD ou Terraform et le cloud.
 
 Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles, les créer et les détruires rapidement.
@@ -227,7 +140,7 @@ Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pi
 - seulement sur linux
 
 Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
-Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
+Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean. -->
 
 ### Les inventaires statiques
 
@@ -237,11 +150,11 @@ Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules An
 - La méthode connexion est précisée soit globalement soit pour chaque machine.
 - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
 
-exemple:
+Exemple :
+<!-- # ansible_connection=lxd -->
 
 ```ini
 [all:vars]
-# ansible_connection=lxd
 ansible_ssh_user=elie
 ansible_python_interpreter=/usr/bin/python3
 
@@ -320,7 +233,7 @@ Il est également à noter que la plupart des arguments sont facultatifs.
 Exemple et bonne pratique: toujours préciser `state: present` même si cette valeur est presque toujours le défaut implicite.
 
 
-### La console `ansible-console`
+<!-- ### La console `ansible-console`
 
 Pour exécuter des commandes ad-hoc ansible propose aussi un interpréteur spécifique avec la commande `ansible-console`:
 
@@ -349,7 +262,7 @@ app2 | SUCCESS => {
 
 - Une fois loggué sur un groupe de serveur, on peut y exécuter les même commandes qu'avec `ansible` an fournissant les arguments à la suite.
 
-- Exemple: `systemd name=nginx state=started`
+- Exemple: `systemd name=nginx state=started` -->
 
 
 ## Commençons le TP1
