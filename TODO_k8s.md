@@ -310,7 +310,7 @@ TODO: Jour 1 kustomization + secrets + liveness et eventuellement configmaps
 TODO: --watch
 
 TODO/ livenessprobe mysql
-TODO: readinessprobe avec podinfo ou l'app python qui se kill
+TODO: readinessprobe avec podinfo ou l'app python qui se kill + readiness probe type exec + initcontainer
 
 clusterip: none?
 
@@ -333,3 +333,7 @@ TODO: tuto bkpr
 TODO: tuto registry as helm: harbour, docker-registry, else?
 
 TODO: tuto helm cert manager / lego / let's encrypt
+
+TODO: parler des retours d'expérience de mise en place de k8s grâce aux pages là dessus dans la doc de k8s
+
+Ajouter dans kubeconfig Parler des namespaces dans les contexts

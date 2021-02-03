@@ -206,7 +206,7 @@ Ce TP est basé sur l'article suivant: https://blog.container-solutions.com/kube
 
 Maintenant que l'environnement a été configuré :
   - Lisez l'article.
-  - Vous pouvez testez les différentes stratégies de déploiement en lisant leur README.md.
+  - Vous pouvez testez les différentes stratégies de déploiement en lisant leur `README.md`.
   - En résumé, pour les plus simple, on peut:
     - appliquer le fichier `app-v1.yml` pour une stratégie.
     - lançer la commande suivante pour effectuer des requêtes régulières sur l'application: `service=$(minikube service goprom --url) ; while sleep 0.1; do curl "$service"; done`
