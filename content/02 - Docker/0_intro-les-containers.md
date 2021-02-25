@@ -91,7 +91,7 @@ Pour la culture, 6 types de _namespaces_ :
 
 ### Les _cgroups_ : derniers détails pour une vraie isolation
 
-- Après este à s'occuper de limiter la capacité d'un conteneur à agir sur les ressources matérielles :
+- Après, il reste à s'occuper de limiter la capacité d'un conteneur à agir sur les ressources matérielles :
 
   - usage de la mémoire
   - du disque
@@ -103,7 +103,7 @@ Pour la culture, 6 types de _namespaces_ :
 
 ---
 
-# Bloquer le système hôte depuis un simple conteneur
+### Exemple : bloquer le système hôte depuis un simple conteneur
 
 > `:(){ : | :& }; :`
 
