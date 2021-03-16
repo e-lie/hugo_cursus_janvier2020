@@ -1,7 +1,7 @@
-+++
-title = "Cours 1 - Presentation Reveal"
-outputs = ["Reveal"]
-+++
+---
+title: "Cours 1 - Presentation Reveal"
+outputs: ["Reveal"]
+---
 
 ## Présentation d'Ansible
 
