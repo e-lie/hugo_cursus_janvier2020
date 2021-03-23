@@ -1,7 +1,7 @@
 ---
 title: Terraform
 weight: 6
-pre: "<i class='fab fa-adn'></i> - "
+pre: "<i class='fas fa-cubes'></i> - "
 chapter: true
 ---
 
