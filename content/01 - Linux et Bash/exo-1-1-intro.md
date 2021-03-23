@@ -1,7 +1,7 @@
 ---
 draft: false
 weight: 5
-title: Intro Linux - feuille d'exercice n.0
+title: Exercices - partie 1 
 ---
 
 # Feuille d'exercices

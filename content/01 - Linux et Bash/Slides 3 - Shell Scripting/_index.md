@@ -1,7 +1,8 @@
 ---
-title: Shell Scripting
+title: Slides 3 - Shell Scripting
 draft: false
-weight: 40
+weight: 1
+outputs: ["reveal"]
 ---
 
 # Bash Scripting

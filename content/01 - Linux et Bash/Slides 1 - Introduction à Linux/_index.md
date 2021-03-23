@@ -1,9 +1,10 @@
 ---
-title: Introduction à Linux
+title: "Slides 1 - Introduction à Linux"
 weight: 1
+outputs: ["reveal"]
 ---
 
-<!-- # Introduction à Linux -->
+# Introduction à Linux
 
 <!-- _Become a Command Line padawan in one day!_ -->
 

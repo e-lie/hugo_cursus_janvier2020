@@ -1,7 +1,8 @@
 ---
-title: Administration Linux
+title: Slides 2 - Administration Linux
 draft: false
-weight: 10
+weight: 1
+outputs: ["reveal"]
 ---
 
 # Administration Linux

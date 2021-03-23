@@ -11,6 +11,9 @@ home = [ "HTML", "RSS", "JSON" ]
 editURL = "https://github.com/ketsapiwiq/hp_cursus_devops"
 globalTitle = "Kubernetes - Janvier 2021"
 
+[params.reveal_hugo]
+custom_theme = "reveal-hugo/themes/robot-lung.css"
+
 # [menu.shortcuts]
 
 [markup.goldmark.renderer]
