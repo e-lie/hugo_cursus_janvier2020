@@ -99,7 +99,7 @@ Ansible est un **gestionnaire de configuration** et un **outil de déploiement e
 
 Il fait donc également partie de façon centrale du mouvement **DevOps** car il s'apparente à un véritable **couteau suisse** de l'automatisation des infrastructures.
 
-### histoire
+### Histoire
 
 Ansible a été créé en **2012** (plus récent que ses concurrents Puppet et Chef) autour d'une recherche de **simplicité** et du principe de configuration **agentless**.
 
@@ -214,7 +214,7 @@ Pour voir l'ensemble des fichier installé par un paquet `pip3` :
 
 Pour tester la connexion aux serveurs on utilise la commande ad hoc suivante. `ansible all -m ping`
 
-
+<!-- 
 ### Faire des lab DevOps : Vagrant+virtualbox, LXD ou Terraform et le cloud.
 
 Pour faire des labs on veut pouvoir décrire un ensemble de machines virtuelles, les créer et les détruires rapidement.
@@ -227,7 +227,7 @@ Nous utiliserons une alternative linux assez différentes: des conteneurs LXC pi
 - seulement sur linux
 
 Il est également très indiqué de faire des labs dans le cloud en louant des machines à la volée.
-Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean.
+Pour cela nous intégrerons `Terraform` et `Ansible` avec le provider DigitalOcean. -->
 
 ### Les inventaires statiques
 
@@ -237,11 +237,15 @@ Il s'agit d'une liste de machines sur lesquelles vont s'exécuter les modules An
 - La méthode connexion est précisée soit globalement soit pour chaque machine.
 - Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
 
-exemple:
+- Classées par groupe et sous groupes pour être désignables collectivement (exp executer telle opération sur)
+- La méthode connexion est précisée soit globalement soit pour chaque machine.
+- Des variables peuvent être définies pour chaque machine ou groupe pour contrôler dynamiquement par la suite la configuration ansible.
+
+Exemple :
+<!-- # ansible_connection=lxd -->
 
 ```ini
 [all:vars]
-# ansible_connection=lxd
 ansible_ssh_user=elie
 ansible_python_interpreter=/usr/bin/python3
 
@@ -320,7 +324,7 @@ Il est également à noter que la plupart des arguments sont facultatifs.
 Exemple et bonne pratique: toujours préciser `state: present` même si cette valeur est presque toujours le défaut implicite.
 
 
-### La console `ansible-console`
+<!-- ### La console `ansible-console`
 
 Pour exécuter des commandes ad-hoc ansible propose aussi un interpréteur spécifique avec la commande `ansible-console`:
 
@@ -349,7 +353,7 @@ app2 | SUCCESS => {
 
 - Une fois loggué sur un groupe de serveur, on peut y exécuter les même commandes qu'avec `ansible` an fournissant les arguments à la suite.
 
-- Exemple: `systemd name=nginx state=started`
+- Exemple: `systemd name=nginx state=started` -->
 
 
 ## Commençons le TP1

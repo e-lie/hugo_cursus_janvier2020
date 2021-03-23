@@ -1,7 +1,7 @@
 ---
-title: 'Docker Administration'
+title: "Docker"
 pre: "<i class='fab fa-docker'></i> - "
-weight: 3
+weight: 1003
 chapter: true
 draft: true
 ---
@@ -10,4 +10,6 @@ draft: true
 
 # Docker
 
-Administrer des applications multiconteneurs
+Créer et manipuler des conteneurs
+
+{{% children  %}}

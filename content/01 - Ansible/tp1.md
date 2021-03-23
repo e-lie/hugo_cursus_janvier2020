@@ -74,7 +74,7 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-## Explorer LXD 
+<!-- ## Explorer LXD 
 
 LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
 
@@ -259,11 +259,12 @@ roles_path = ./roles
 host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
 ```
 
-- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`. Il faut pour cela lister les conteneurs lxc lancés.
+- Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`.
+<!-- - Il faut pour cela lister les conteneurs lxc lancés.
 
 ```
 lxc list # récupérer l'ip de la machine
-```
+``` -->
 
 Créez et complétez le fichier `inventory.cfg` d'après ce modèle:
 
@@ -305,6 +306,8 @@ centos1 ansible_host=<ip>
 
 En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
+<!-- TODO: faire plus court pour adhoc pour pouvoir explorer --check et become: et autres avec les playbooks plutôt -->
+<!-- ## Installons nginx avec quelques modules et commandes ad-hoc
 
 ## Installons nginx avec quelques modules et commandes ad-hoc
 
@@ -402,4 +405,4 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-```
+``` -->

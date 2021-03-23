@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Exporter tout le contenu</title>
+
+    <!-- /* Bulma */ -->
+    {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+    <link href="{{"css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+
+    <style>
+        body {
+
+            margin: 50px !important;
+        }
+
+        img {
+            max-width: 60% !important;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <p><a href="/">Retour au site</a></p>
+
+
+    <h2><b>Uptime Formation - {{ .Site.Title }}</b></h2>
+    <p>
+        Supports de formation : Elie Gavoty et Hadrien Pélissier
+        Conçus initialement dans le cadre d'un cursus <a href="https://uptime-formation.fr">Uptime Formation</a>.
+        Sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr">licence CC-BY-NC-SA</a> - {{ .Site.Title }}
+    </p>
+    <hr />
+
+    <h3>Table des matières :</h3>
+
+    <ul>
+        {{ range .Site.RegularPages }}
+        <li><a href="#{{ .Page.File.UniqueID }}">{{ .Title }}</a></li>
+        <!-- <li><a href="#{{ substr .RelPermalink 1 -1 }}">{{ .Title }}</a></li> -->
+        {{ end }}
+    </ul>
+
+
+    <div id="body">
+        {{ with .Site.GetPage "/" }}
+        {{ range .Sections.ByWeight }}
+        {{/* We don't want a menu item for specific pages listed here */}}
+        {{ if (and (ne .Title "Posts") (ne .Title "Test Page")) }}
+        <div class="section" id="{{ .Page.File.UniqueID }}">
+            <h1 class="title">
+                {{ .Title }}
+            </h1>
+            <div class="content">
+                {{ .Content }}
+            </div>
+            {{ partial "content_recursive.html" . }}
+        </div>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+    </div>
+
+
+
+</body>
+
+</html>

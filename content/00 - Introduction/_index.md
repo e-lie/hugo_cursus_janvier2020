@@ -1,5 +1,5 @@
 ---
-title: Introduction DevOps
+title: Introduction
 weight: 1
 pre: "<i class='fas fa-rocket'></i> - "
 chapter: true
@@ -10,4 +10,3 @@ chapter: true
 # DevOps
 
 Le nouveau paradigme de l'informatique
-

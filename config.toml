@@ -1,4 +1,4 @@
-baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
+baseURL = "https://cours.hadrienpelissier.fr/"
 languageCode = "fr-FR"
 title = "Formations Uptime"
 theme = ["hugo-theme-learn", "reveal-hugo"]
@@ -8,7 +8,8 @@ theme = ["hugo-theme-learn", "reveal-hugo"]
 home = [ "HTML", "RSS", "JSON" ]
 
 [params]
-editURL = "https://github.com/e-lie/hugo_cursus_janvier2020"
+editURL = "https://github.com/ketsapiwiq/hp_cursus_devops"
+globalTitle = "Kubernetes - Janvier 2021"
 
 # [menu.shortcuts]
 
