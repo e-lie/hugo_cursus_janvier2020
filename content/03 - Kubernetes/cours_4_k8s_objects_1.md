@@ -15,6 +15,9 @@ On définit des objets généralement via l’interface en ligne de commande et 
 
 Vous pouvez également écrire des programmes qui utilisent directement l’API Kubernetes pour interagir avec le cluster et définir ou modifier l’état souhaité. **Kubernetes est complètement automatisable !**
 
+
+
+
 ### La commande `apply`
 
 Kubernetes encourage le principe de l'infrastructure-as-code : il est recommandé d'utiliser une description YAML et versionnée des objets et configurations Kubernetes plutôt que la CLI.
@@ -26,6 +29,47 @@ La commande inverse `kubectl delete -f object.yaml` permet de détruire un objet
 Lorsqu'on vient d'appliquer une description on peut l'afficher dans le terminal avec `kubectl apply -f myobj.yaml view-last-applied`
 
 Globalement Kubernetes garde un historique de toutes les transformations des objets : on peut explorer, par exemple avec la commande `kubectl rollout history deployment`.
+
+
+
+## Parenthèse : Le YAML
+
+Kubernetes décrit ses ressources en YAML. A quoi ça ressemble, YAML ?
+
+```yaml
+- marché:
+    lieu: Marché de la Place
+    jour: jeudi
+    horaire:
+      unité: "heure"
+      min: 12
+      max: 20
+    fruits:
+      - nom: pomme
+        couleur: "verte"
+        pesticide: avec
+
+      - nom: poires
+        couleur: jaune
+        pesticide: sans
+    légumes:
+      - courgettes
+      - salade
+      - potiron
+```
+
+---
+## Syntaxe
+
+- Alignement ! (**2 espaces** !!)
+- ALIGNEMENT !! (comme en python)
+- **ALIGNEMENT !!!** (le défaut du YAML, pas de correcteur syntaxique automatique, c'est bête mais vous y perdrez forcément du temps !)
+
+- des listes (tirets)
+- des paires **clé: valeur**
+- Un peu comme du JSON, avec cette grosse différence que le JSON se fiche de l'alignement et met des accolades et des points-virgules
+
+- **les extensions Kubernetes et YAML dans VSCode vous aident à repérer des erreurs**
 
 ### Syntaxe de base d'une description YAML Kubernetes
 

@@ -117,13 +117,13 @@ Ce fichier déclare 2 clusters (un local, un distant), 2 contextes et 2 users.
 Pour installer un cluster de développement :
 
 - solution officielle : Minikube, tourne dans Docker par défaut (ou dans des VMs)
-- alternative qui possède de nombreux addons : microk8s
+- solution très pratique et vanilla: kind 
 - avec Docker Desktop depuis peu (dans une VM aussi)
-- un cluster léger avec `k3s`, de Rancher
+- un cluster léger avec `k3s`, de Rancher (simple et utilisable en production/edge)
 
 ## Installer un cluster de production avec `kubeadm`
 
-Installer un cluster de production Kubernetes à la main est nettement plus complexe que mettre en place un cluster Docker Swarm.
+Installer et opérer un cluster de production Kubernetes "à la main" est très complexe.
 
 - Installer le dæmon `Kubelet` sur tous les noeuds
 - Installer l'outil de gestion de cluster `kubeadm` sur un noeud master

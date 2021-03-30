@@ -18,6 +18,7 @@ draft: false
 
 ## Faiblesses de Kubernetes
 
+<!-- TODO à améliorer -->
 
 - Une difficulté à manier tout ce qui est *stateful*, comme des bases de données
   - …même si les Operators et les CRD (Custom Resources Definitions) permettent de combler cette lacune dans la logique *stateless* de k8s
@@ -36,6 +37,33 @@ draft: false
   <!-- - Pas de solution de **reverse proxy (ingress)** standard
     - …même si l'ingress **Nginx** est très utilisé et plus ou moins officiel et que **Traefik** est optimisé pour k8s
 
+## Comparer Kubernetes
+
+### Docker Swarm
+
+- Docker Swarm est la solution d'orchestration et de clustering intégrée avec la CLI et le workflow docker.
+- Swarm est plus facile mais moins puissant pour l'automatisation que Kubernetes
+- Swarm groupe les containers entre eux par **stack** mais c'est un groupement assez lâche.
+- Kubernetes au contraire créé des **pods**, avec une meilleure cohésion qui sont toujours déployés ensembles puis les scale avec des **deployments** et **services**.
+  - => Kubernetes à une meilleure fault tolerance que Swarm
+  - point vocabulaire : un service Swarm est un seul conteneur répliqué, un service Kubernetes est un pod (groupes de conteneurs) exposé à l'extérieur.
+- Kubernetes a plus d'outils intégrés. Il s'agit plus d'un écosystème qui couvre un large panel de cas d'usage.
+- Dans un contexte on premise, Swarm est beaucoup plus simple à mettre en œuvre et à maintenir qu'une stack Kubernetes.
+
+### Apache Mesos
+
+Mesos est une autre solution pour exécuter des applications distribuées. En combinant **Mesos** avec son "application framework" **Marathon** on obtient une solution équivalente sur de nombreux points à Kubernetes.
+
+Elle est cependant moins standard :
+    - Moins de ressources disponibles pour apprendre, intégrer avec d'autre solution etc.
+    - Peu vendu en tant que service par les principaux cloud provider.
+    - plutôt pour les gros projets alors que kubernetes peu être intéressant pour les petits projets.
+    - Plus chère à mettre en oeuvre.
+
+Comparaison d'architecture : [Mesos vs. Kubernetes](https://www.baeldung.com/mesos-kubernetes-comparison)
+
+
+---
 
 ## Pour approfondir
 
