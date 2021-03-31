@@ -1,7 +1,7 @@
 ---
-title: 'TP 3 - Déployer des conteneurs de A à Z'
+title: '09 - TP 3 - Déployer des conteneurs de A à Z'
 draft: false
-weight: 2051
+weight: 2055
 ---
 
 <!-- TODO: FAIRE une suite du TP 2 juste après le cours réseau en créant les objets Ingress pour la stack Wordpress et la stack Wordsmith -->

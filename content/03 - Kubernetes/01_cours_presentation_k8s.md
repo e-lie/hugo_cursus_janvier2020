@@ -1,5 +1,5 @@
 ---
-title: Cours 1 - Présentation de Kubernetes
+title: 01 - Cours - Présentation de Kubernetes
 draft: false
 weight: 2010
 ---
@@ -113,7 +113,7 @@ Cependant aux vues des transformations humaines et techniques précédentes, l'o
   - chaque service a des problématiques très limitées (gestion des factures = un logiciel qui fait que ça)
   - les services communiquent par le réseaux selon différents modes/API (REST, gRPC, job queues, GraphQL)
 
-Nous verrons un exemple d'application microservice à la fin de la formation.
+<!-- Nous verrons un exemple d'application microservice à la fin de la formation. -->
 
 Les microservices permettent justement le DevOps car:
   - ils peuvent être déployés séparéments

@@ -1,6 +1,6 @@
 ---
-title: 'TP5 - Monitoring et sécurité'
-draft: false
+title: 'TP4 - Persistence dans Kubernetes'
+draft: true
 ---
 
 ## Installer l'opérateur rook pour le stockage réseau

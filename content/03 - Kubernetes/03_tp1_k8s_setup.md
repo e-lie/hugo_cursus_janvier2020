@@ -1,5 +1,5 @@
 ---
-title: TP1 - Installation et configuration de Kubernetes
+title: 03 - TP1 - Installation et configuration de Kubernetes
 draft: false
 weight: 2025
 ---
@@ -94,20 +94,20 @@ Un cluster Kubernetes a généralement un namespace appelé `default` dans leque
 ### Déployer une application
 <!-- TODO: TEST THIS -->
 
-Nous allons maintenant déployer une première application conteneurisée. Le déploiement est plus complexe qu'avec Docker (et Swarm), en particulier car il est séparé en plusieurs objets et plus configurable.
+Nous allons maintenant déployer une première application conteneurisée. Le déploiement est un peu plus complexe qu'avec Docker, en particulier car il est séparé en plusieurs objets et plus configurable.
 
-- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment microbot --image=monachus/rancher-demo`.
-<!-- - Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment microbot --image=dontrebootme/microbot:v1`. -->
+- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment rancher-demo --image=monachus/rancher-demo`.
+<!-- - Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment rancher-demo --image=dontrebootme/rancher-demo:v1`. -->
 
-Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/microbot`.
+Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/rancher-demo`.
 
-- Agrandissons ce déploiement avec `kubectl scale deployment microbot --replicas=5`
-- `kubectl describe deployment/microbot` permet de constater que le service est bien passé à 5 replicas.
+- Agrandissons ce déploiement avec `kubectl scale deployment rancher-demo --replicas=5`
+- `kubectl describe deployment/rancher-demo` permet de constater que le service est bien passé à 5 replicas.
 
 A ce stade le déploiement n'est pas encore accessible de l'extérieur du cluster pour cela nous devons l'exposer en tant que service :
 
-<!-- - `kubectl expose deployment microbot --type=LoadBalancer --port=8080 --name=microbot-service` -->
-- `kubectl expose deployment microbot --type=NodePort --port=8080 --name=microbot-service`
+<!-- - `kubectl expose deployment rancher-demo --type=LoadBalancer --port=8080 --name=rancher-demo-service` -->
+- `kubectl expose deployment rancher-demo --type=NodePort --port=8080 --name=rancher-demo-service`
 <!-- Doesn't work with minikube expose: --port=8765 --target-port=9376 -->
 
 - affichons la liste des services pour voir le résultat: `kubectl get services`
@@ -121,20 +121,20 @@ Nous verrons cela plus en détail dans le TP2.
 Nous ne verrons pas ça ici (il faudrait utiliser l'addon MetalLB de Minikube). 
 
 Mais nous pouvons quand même lancer une commande dans notre environnement de dev :
-`kubectl port-forward svc/microbot-service 8080:8080 --address 0.0.0.0`
+`kubectl port-forward svc/rancher-demo-service 8080:8080 --address 0.0.0.0`
 
 Vous pouvez désormais accéder à votre app via :
 `http://localhost:8080`
 <!-- `http://votreprenom.lab.doxx.fr:8080` -->
 
-Minikube intègre aussi une façon d'accéder à notre service : c'est la commande `minikube service microbot-service`
+Minikube intègre aussi une façon d'accéder à notre service : c'est la commande `minikube service rancher-demo-service`
 
 <!-- Ici notre service est exposé par port : la commande précédente affiche `8080:<3xxxx>/TCP` dans la colonne ports. -->
 <!-- Copier le numéro de port de droite, du type `32564`. -->
 
 <!-- Pour voir notre application visitez : `localhost:80`. -->
 
-<!-- L'application devrait s'être ouverte dans votre navigateur, sinon vous pouvez lancer `minikube service microbot-service --url` pour en obtenir l'URL. -->
+<!-- L'application devrait s'être ouverte dans votre navigateur, sinon vous pouvez lancer `minikube service rancher-demo-service --url` pour en obtenir l'URL. -->
 
 Sauriez-vous expliquer ce que l'app fait ?
 
@@ -199,7 +199,7 @@ Ce fichier contient la **configuration kubectl** adaptée pour la connexion à n
 ## Déployer l'application
 
 - Lancez `kubectl cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par le provider.
-- Déployez l'application `microbot` comme dans la partie précédente avec `minikube`
+- Déployez l'application `rancher-demo` comme dans la partie précédente avec `minikube`
 - Pour visitez l'application vous devez trouver l'IP publique d'un des nœuds du cluster en listant les objets de type `Service`, ou sur la page du fournisseur de cloud.
  
 <!--  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->

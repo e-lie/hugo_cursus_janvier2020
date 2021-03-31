@@ -1,5 +1,5 @@
 ---
-title: Cours 4 - Objets Kubernetes - Partie 1
+title: 05 - Cours - Objets Kubernetes - Partie 1
 draft: false
 weight: 2040
 ---
@@ -208,14 +208,7 @@ spec:
           protocol: TCP
 ```
 
-### Les ReplicaSet
 
-Un ReplicaSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
-<!-- Un peu comme le paramètre `replicas:` d'un service docker mais en plus précis. -->
-
-- `kubectl get rs` pour afficher la liste des replicas.
-
-En général on ne les manipule pas directement.
 
 ### Les Deployments
 
@@ -296,3 +289,12 @@ Les Services sont de trois types principaux :
 - `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
 
 <!-- - On peut aussi créer des services *headless* en spécifiant `ClusterIP: none` pour les communications internes au cluster, non basées sur les IP. -->
+
+### Les ReplicaSet
+
+Un ReplicaSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
+<!-- Un peu comme le paramètre `replicas:` d'un service docker mais en plus précis. -->
+
+- `kubectl get rs` pour afficher la liste des replicas.
+
+En général on ne les manipule pas directement.

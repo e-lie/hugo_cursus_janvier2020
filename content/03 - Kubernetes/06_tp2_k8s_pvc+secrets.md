@@ -1,6 +1,6 @@
 ---
 draft: false
-title: "TP 2 - Déployer Wordpress rapidement"
+title: "06 - TP 2 - Déployer Wordpress rapidement"
 weight: 2045
 ---
 

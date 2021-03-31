@@ -1,6 +1,6 @@
 ---
 draft: false
-title: Cours 5 - Le réseau dans Kubernetes
+title: 07 - Cours - Le réseau dans Kubernetes
 weight: 2050
 ---
 

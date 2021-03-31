@@ -1,5 +1,5 @@
 ---
-title: Cours 6 - Objets Kubernetes - Partie 2
+title: 10 - Cours - Objets Kubernetes - Partie 2
 draft: false
 weight: 2060
 ---

@@ -1,5 +1,5 @@
 ---
-title: Cours 7 - Helm, le gestionnaire de paquets Kubernetes
+title: 11 - Cours - Helm, le gestionnaire de paquets Kubernetes
 draft: false
 weight: 2070
 ---

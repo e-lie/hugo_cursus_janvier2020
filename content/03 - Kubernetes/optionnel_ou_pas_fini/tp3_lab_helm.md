@@ -1,6 +1,6 @@
 ---
 title: 'TP3 - Installer un cluster et déployer avec avec Helm'
-draft: false
+draft: true
 ---
 
 ## Installer un cluster lab de 3 noeuds

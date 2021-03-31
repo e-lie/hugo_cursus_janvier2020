@@ -1,5 +1,5 @@
 ---
-title: Cours 2 - Mettre en place un cluster Kubernetes
+title: 02 - Cours - Mettre en place un cluster Kubernetes
 draft: false
 weight: 2020
 ---
@@ -49,7 +49,7 @@ Par exemple, lorsque vous utilisez l’API Kubernetes pour créer un objet `Depl
 
 ## Le client `kubectl`
 
-Permet depuis sa machine de travail de contrôler le cluster avec une ligne de commande qui ressemble un peu à celle de Docker (cf. TP1 et TP2):
+...Permet depuis sa machine de travail de contrôler le cluster avec une ligne de commande qui ressemble un peu à celle de Docker (cf. TP1 et TP2):
 
 - Lister les ressources
 - Créer et supprimer les ressources

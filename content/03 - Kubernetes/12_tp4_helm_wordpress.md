@@ -1,5 +1,5 @@
 ---
-title: 'TP 4 - Déployer Wordpress avec Helm'
+title: '12 - TP 4 - Déployer Wordpress avec Helm'
 draft: false
 weight: 2071
 ---

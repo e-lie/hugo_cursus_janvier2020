@@ -1,5 +1,5 @@
 ---
-title: Cours 3 - Concepts de Kubernetes
+title: 04 - Cours - Concepts de Kubernetes
 draft: false
 weight: 2030
 ---
@@ -22,16 +22,10 @@ Pour cela on doit avoir des ressources multiples...
 - Plusieurs accès réseau
 
 Il faut que les ressources disponibles prennent automatiquement le relais des ressources indisponibles.
-Pour cela on utilise généralement:
+Pour cela on utilise en particulier:
 
 - des "load balancers" : aiguillages réseau intelligents
 - des "healthchecks" : une vérification de la santé des applications
-
-Mais aussi :
-
-- des réseaux de secours
-- des IP flottantes qui fonctionnent comme des load balancers
-- etc.
 
 Nous allons voir que Kubernetes intègre automatiquement les principes de load balancing et de healthcheck dans l'orchestration de conteneurs
 

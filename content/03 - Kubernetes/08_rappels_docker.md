@@ -1,7 +1,7 @@
 ---
-title: "Rappels Docker"
+title: "08 - Rappels Docker"
 draft: false
-weight: 2059
+weight: 2051
 ---
 
 ## Les Dockerfiles
