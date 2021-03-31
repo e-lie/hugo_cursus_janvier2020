@@ -221,13 +221,13 @@ On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour pas
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application sur le port standard
 
-Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
-<!-- FIXME: 404... -->
-<!-- Installons le contrôleur Ingress Nginx avec `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`. -->
+- Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
-Ajoutez également l'objet de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
+- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utilisez l'ingress à la place pour afficher la page
+
+- Ajoutez également l'objet `Ingress` de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -246,13 +246,11 @@ spec:
             servicePort: 5000
 ```
 
-- Ajoutez ce fichier à notre `kustomization.yaml`
+- Ajoutez ce fichier à notre `kustomization.yaml` et appliquez le. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
 
-- Relancez la kustomization.
+- Allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`.
 
-<!-- Vous pouvez normalement accéder à l'application sur `http://localhost/monstericon` -->
-<!-- FIXME: poor workflow -->
-Vous pouvez normalement accéder à l'application en faisant `minikube service monstericon --url` et en ajoutant `/monstericon` pour y accéder.
+- Visitez la page `http://192.x.x.x/monstericon` pour constater que notre Ingress (reverse proxy) est bien fonctionnel.
 
 ### Solution
 
