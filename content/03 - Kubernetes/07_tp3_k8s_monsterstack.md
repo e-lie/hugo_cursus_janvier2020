@@ -1,7 +1,7 @@
 ---
 title: '09 - TP 3 - Déployer des conteneurs de A à Z'
 draft: false
-weight: 2055
+weight: 2042
 ---
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices plutôt simple : `monsterstack`.

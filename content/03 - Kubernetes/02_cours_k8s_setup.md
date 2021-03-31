@@ -4,9 +4,7 @@ draft: false
 weight: 2020
 ---
 
-
 ## Architecture de Kubernetes - Partie 1 
-
 
 ##### Kubernetes master
 

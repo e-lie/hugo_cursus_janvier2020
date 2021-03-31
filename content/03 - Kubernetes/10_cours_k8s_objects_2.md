@@ -1,14 +1,11 @@
 ---
-title: 10 - Cours - Objets Kubernetes - Partie 2
+title: 10 - Cours - Quelques Objets Kubernetes Avancés.
 draft: false
 weight: 2060
 ---
 
-## Objets k8s, suite
 
-
-
-### Le stockage dans Kubernetes
+## Le stockage dans Kubernetes
 
 #### StorageClasses 
 Le stockage dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
