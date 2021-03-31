@@ -154,7 +154,7 @@ Un Pod représente une unité de déploiement : un petit nombre de conteneurs qu
 - peuvent se parler en IPC
 - ont un nom différent et des logs différents
 
-Chaque Pod est destiné à exécuter une instance unique d’un workload donné. Si vous désirez mettre à l’échelle votre workload, vous devez multiplier le nombre de Pods.
+Chaque Pod est destiné à exécuter une instance unique d’un workload donné. Si vous désirez mettre à l’échelle votre workload, vous devez multiplier le nombre de Pods avec un déploiement.
 
 Pour plus de détail sur la philosophie des pods, vous pouvez consulter [ce bon article](https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/).
 
@@ -181,19 +181,19 @@ Pour monitorer rapidement les ressources consommées par un ensemble de processu
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nom_pod
+  name: rancher-demo-pod
 spec:
   containers:
     - image: monachus/rancher-demo:latest
-      name: nom_conteneur
+      name: rancher-demo-container
       ports:
         - containerPort: 8080
           name: http
           protocol: TCP
-    - image: monachus/rancher-demo:latest
-      name: nom_conteneur2
+    - image: redis
+      name: redis-container
       ports:
-        - containerPort: 8080
+        - containerPort: 6379
           name: http
           protocol: TCP
 ```
