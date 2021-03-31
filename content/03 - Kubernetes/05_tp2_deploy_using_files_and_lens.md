@@ -51,12 +51,12 @@ spec:
         name: <name>
         ports:
         - containerPort: <port>
-          name: rancher-demo-http
+          name: demo-http
 ```
 
 - Appliquez ce nouvel objet avec kubectl.
 - Inspectez le déploiement dans Lens.
-- Changez le nom d'un conteneur et réappliquez: Cette fois le déploiement ce charge créer un nouveau pod avec les bonnes caractéristiques et de supprimer l'ancien.
+- Changez le nom d'un conteneur et réappliquez: Cette fois le déploiement se charge créer un nouveau pod avec les bonnes caractéristiques et de supprimer l'ancien.
 - Changez le nombre de réplicats.
 
 ## Ajoutons un service en mode NodePort
@@ -81,3 +81,5 @@ spec:
 - Appliquez ce nouvel objet avec kubectl.
 - Inspectez le service dans Lens.
 - Visitez votre application avec `minikube service rancher-demo-service`.
+- Changez le label du déploiement (2 fois `app: rancher-demo` à remplacer dans le fichier ) et réappliquer.
+- Constatez que l'application n'est plus accessible dans le navigateur

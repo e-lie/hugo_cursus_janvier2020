@@ -7,7 +7,7 @@ weight: 2050
 Les solutions réseau dans Kubernetes ne sont pas standard.
 Il existe plusieurs façons d'implémenter le réseau.
 
-## Les objets Services
+## Rappel, les objets Services
 
 <!-- 
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
