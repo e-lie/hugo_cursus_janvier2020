@@ -92,56 +92,44 @@ Un cluster Kubernetes a généralement un namespace appelé `default` dans leque
 - Pour avoir des informations sur un namespace : `kubectl describe namespace/kube-system`
 
 ### Déployer une application
-<!-- TODO: TEST THIS -->
 
 Nous allons maintenant déployer une première application conteneurisée. Le déploiement est un peu plus complexe qu'avec Docker, en particulier car il est séparé en plusieurs objets et plus configurable.
 
 - Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment rancher-demo --image=monachus/rancher-demo`.
-<!-- - Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment rancher-demo --image=dontrebootme/rancher-demo:v1`. -->
 
 Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/rancher-demo`.
 
+- Notez la liste des événements sur ce déploiement en bas de la description.
+- De la même façon que dans la partie précédente, listez les `pods` avec `kubectl`. Combien y en a-t-il ?
+
 - Agrandissons ce déploiement avec `kubectl scale deployment rancher-demo --replicas=5`
 - `kubectl describe deployment/rancher-demo` permet de constater que le service est bien passé à 5 replicas.
+  - Observez à nouveau la liste des évènements, le scaling y est enregistré...
+  - Listez les pods pour constater
 
-A ce stade le déploiement n'est pas encore accessible de l'extérieur du cluster pour cela nous devons l'exposer en tant que service :
+A ce stade impossible d'afficher l'application : le déploiement n'est pas encore accessible de l'extérieur du cluster. Pour régler cela nous devons l'exposer grace à un service :
 
-<!-- - `kubectl expose deployment rancher-demo --type=LoadBalancer --port=8080 --name=rancher-demo-service` -->
 - `kubectl expose deployment rancher-demo --type=NodePort --port=8080 --name=rancher-demo-service`
-<!-- Doesn't work with minikube expose: --port=8765 --target-port=9376 -->
 
-- affichons la liste des services pour voir le résultat: `kubectl get services`
+- Affichons la liste des services pour voir le résultat: `kubectl get services`
 
-Un service permet d'exposer un déploiement soit par port soit grâce à un loadbalancer.
+Un service permet de créer un point d'accès unique exposant notre déploiement. Ici nous utilisons le type Nodeport car nous voulons que le service soit accessible de l'extérieur par l'intermédiaire d'un forwarding de port.
 
-Pour exposer cette application sur le port de notre choix, nous devrions avoir recours à un LoadBalancer. 
+Avec minikube ce forwarding de port doit être concrêtisé avec la commande `minikube service rancher-demo-service`. Normalement la page s'ouvre automatiquement et nous voyons notre application.
 
-Nous verrons cela plus en détail dans le TP2. 
+Une autre méthode pour accéder à un service (quel que soit sont type) en mode développement est de forwarder le traffic par l'intermédiaire de kubectl (et des composants kube-proxy installés sur chaque noeuds du cluster).
 
-Nous ne verrons pas ça ici (il faudrait utiliser l'addon MetalLB de Minikube). 
+- Pour cela on peut par exemple lancer: `kubectl port-forward svc/rancher-demo-service 8080:8080 --address 127.0.0.1`
+- Vous pouvez désormais accéder à votre app via via kubectl sur: `http://localhost:8080`
 
-Mais nous pouvons quand même lancer une commande dans notre environnement de dev :
-`kubectl port-forward svc/rancher-demo-service 8080:8080 --address 0.0.0.0`
+Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à service de type un LoadBalancer. Mais minikube ne propose pas par défaut de loadbalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
 
-Vous pouvez désormais accéder à votre app via :
-`http://localhost:8080`
-<!-- `http://votreprenom.lab.doxx.fr:8080` -->
-
-Minikube intègre aussi une façon d'accéder à notre service : c'est la commande `minikube service rancher-demo-service`
-
-<!-- Ici notre service est exposé par port : la commande précédente affiche `8080:<3xxxx>/TCP` dans la colonne ports. -->
-<!-- Copier le numéro de port de droite, du type `32564`. -->
-
-<!-- Pour voir notre application visitez : `localhost:80`. -->
-
-<!-- L'application devrait s'être ouverte dans votre navigateur, sinon vous pouvez lancer `minikube service rancher-demo-service --url` pour en obtenir l'URL. -->
-
-Sauriez-vous expliquer ce que l'app fait ?
-
+- Sauriez-vous expliquer ce que l'app fait ?
+- Pour le comprendre ou confirmer diminuez le nombre de réplicats à l'aide de la commande utilisée précédement pour passer à 5 réplicats. Qu se passe-t-il ?
 
 #### Simplifier les lignes de commande k8s
 
-- Pour gagner du temps on dans les commandes Kubernetes on définit généralement un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile` en faisant `echo "alias kc='kubectl'" >> ~/.bash_profile`, puis en faisant `source ~/.bash_profile`).
+- Pour gagner du temps on dans les commandes Kubernetes on peut définir un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile` en faisant `echo "alias kc='kubectl'" >> ~/.bash_profile`, puis en faisant `source ~/.bash_profile`).
 - Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
 
 - Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :
@@ -153,125 +141,53 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
-#### Installer Lens
+## Mettre en place un cluster K8s managé un provider de cloud : l'exemple de Scaleway
 
-Lens est une interface graphique sympatique pour Kubernetes.
+Je vais louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
 
-Elle se connecte en utilisant la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard bien plus agréable à utiliser.
-
-Vous pouvez l'installer en lançant ces commandes :
-```bash
-sudo apt-get update; sudo apt-get install -y libxss-dev
-curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
-chmod +x ~/Lens.AppImage
-~/Lens.AppImage &
-```
-
-## Mettre en place un cluster K8s dans le cloud avec un provider type DigitalOcean ou Scaleway
-
-- Créez un compte (ou récupérez un accès) sur [DigitalOcean](https://cloud.digitalocean.com/) ou [Scaleway](https://console.scaleway.com/)
-- Créez un cluster Kubernetes avec [l'interface DigitalOcean](https://cloud.digitalocean.com/kubernetes/clusters/new) ou bien [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
+- Créez un compte (ou récupérez un accès) sur [Scaleway](https://console.scaleway.com/).
+- Créez un cluster Kubernetes avec [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
 
 La création prend environ 5 minutes.
 
-- Sur DigitalOcean, il vous est proposé dans l'étape 3 ou sur la page de votre cluster Kubernetes de télécharger le fichier `kubeconfig`. (*download the cluster configuration file*, ou bien *Download Config File*).
-- De même, sur Scaleway, sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
+- Sur la page décrivant votre cluster, un gros bouton en bas de la page vous incite à télécharger ce même fichier `kubeconfig` (*Download Kubeconfig*).
 
 Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
 
-<!-- - Clonez le projet modèle : <https://github.com/Uptime-Formation/cursus_janvier2020_tp1_k8s> -->
-<!-- - récupérez un token depuis votre compte de cloud (Scaleway ou).
-- renommez `secrets.auto.tfvars` sans le .dist et complétez.
-- Complétez le code terraform de `digitalocean_k8s.tf` pour changer `k8s-tp-cluster` par `k8s-<votre_nom>-tp-cluster`
-- Lancez la création du cluster depuis le dossier terraform avec `terraform init` et `terraform apply`. -->
-
 ## Merger la configuration kubectl
 
-- Ouvrez avec `gedit` les fichiers `kubeconfig` et `~/.kube/config`.
+- Ouvrez avec `gedit` ou `VSCode` les fichiers `kubeconfig` de scaleway et `~/.kube/config`.
 - fusionnez dans `~/.kube/config` les éléments des listes YAML de:
   - `clusters`
   - `contexts`
   - `users`
-- mettez la clé `current-context:` à `<nom_cluster>` (compléter avec votre valeur)
+- Listez les contextes avec `kubectl config get-contexts` et affichez les contexte courant avec `kubectl config current-context`.
+- Changez de contexte avec `kubectl config use-context <nom_contexte>`.
 
 - Testons la connection avec `kubectl get nodes`.
 
 ## Déployer l'application
 
 - Lancez `kubectl cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par le provider.
-- Déployez l'application `rancher-demo` comme dans la partie précédente avec `minikube`
-- Pour visitez l'application vous devez trouver l'IP publique d'un des nœuds du cluster en listant les objets de type `Service`, ou sur la page du fournisseur de cloud.
- 
-<!--  - relancez `terraform apply -auto-approve > output` et utilisez un editeur de texte pour chercher les ip publiques. -->
+- Créez un namespace à votre nom avec `kubectl create namespace <nom_namespace>`.
+- Déployez l'application `rancher-demo` comme dans la partie précédente mais cette fois installez la dans votre namespace plutôt que le namespace par défaut en ajoutant l'argument `-n <nom_namespace>` à vos commandes.
+- Pour visiter l'application vous devez trouver:
+  - l'IP publique d'un des nœuds du cluster en listant les nodes avec `kubectl get nodes` puis détaillant un node avec pour avoir l'IP avec `kubectl describe node/<nom_d_un_node> | grep ExternalIP`
+  - Le nodeport du service dans les ~30000 avec `kubectl get svc -n <nom_namespace>` et chercher le nombre qui est à côté de `8080`.
 
+Dans le contexte d'un cloud provider, on peut cette fois créer des services de type `LoadBalancer` qui entraineront le provisionning d'un loadbalancr au niveau du provider (et donc des frais supplémentaires pour chaque service). L'application dispose alors d'une vraie IP externe en haute disponibilité (si un noeud tombe toujours accessible).
 
-<!--   
-### Accéder à la dashboard kubernetes
+#### Installer Lens
 
-Les roles et les secrets
+Lens est une interface graphique sympatique pour Kubernetes.
 
-<!-- https://alexanderzeitler.com/articles/enabling-the-kubernetes-dashboard-for-digitalocean-kubernetes/ -->
+Elle se connecte en utilisant kubectl et la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard très puissant et agréable à utiliser.
 
+Vous pouvez l'installer en lançant ces commandes :
 
-<!-- wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-
-ATTENTION PROBLEME de permission car déploie dans un autre namespace que le tuto précédent :/
-
-kubectl apply -f recommended.yamlwget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-
-ATTENTION PROBLEME de permission car déploie dans un autre namespace que le tuto précédent :/
-
-kubectl apply -f recommended.yaml
-
-kubectl proxy
-
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
-
-kubectl get secret
-
-kubernetes-dashboard-token-2ddd2
-
-kubectl  -n kubernetes-dashboard describe kubernetes-dashboard-token-2ddd2
-
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Im96ZmwxV2MwUHc3SFE3T3A0VGxVVmlYN09xOTFpWUdfSzBmaTVwcTJLZzgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi0yZGRkMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImU1YTY3YTkwLWQ5NzEtNGY3Ni05NzViLTA0M2NjMzNhMzFjYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.fCR3b-zfNyehCBCzuEzUe2Dd0PmDiHbY3OPMKUJXNsIKv18iVbmSCEbKv2nAj3tbmPDb3JkRl_OjbVFVpHY6K0rybrwLOlroWvSCOAkWLV_4b0NtsJw0wrGsPeJz9arPjJFmZ_-Ol3s3Jgts30GQBLOh_CNwRcBix3ijHEN71CII-EZoBkTVpYHksmnYeBOmH0zqscZYf2UJ-kWE5LRk8OsJmZsHynO2lWBIG-hn5NWXQbGLc1M_2N9xmOQ_1zajvhfaErElctMME-1gx92bVGzpMDpCOAZH42AZm7LIZMIFW11Nt169YesFclgV2GRUk6anms8Hclo019KIaTp2EQ
-
-kubectl proxy
-
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
-
-kubectl get secret
-
-kubernetes-dashboard-token-2ddd2
-
-kubectl  -n kubernetes-dashboard describe kubernetes-dashboard-token-2ddd2
-
-token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Im96ZmwxV2MwUHc3SFE3T3A0VGxVVmlYN09xOTFpWUdfSzBmaTVwcTJLZzgifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi0yZGRkMiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImU1YTY3YTkwLWQ5NzEtNGY3Ni05NzViLTA0M2NjMzNhMzFjYSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDprdWJlcm5ldGVzLWRhc2hib2FyZCJ9.fCR3b-zfNyehCBCzuEzUe2Dd0PmDiHbY3OPMKUJXNsIKv18iVbmSCEbKv2nAj3tbmPDb3JkRl_OjbVFVpHY6K0rybrwLOlroWvSCOAkWLV_4b0NtsJw0wrGsPeJz9arPjJFmZ_-Ol3s3Jgts30GQBLOh_CNwRcBix3ijHEN71CII-EZoBkTVpYHksmnYeBOmH0zqscZYf2UJ-kWE5LRk8OsJmZsHynO2lWBIG-hn5NWXQbGLc1M_2N9xmOQ_1zajvhfaErElctMME-1gx92bVGzpMDpCOAZH42AZm7LIZMIFW11Nt169YesFclgV2GRUk6anms8Hclo019KIaTp2EQ -->
-
-
-<!-- 
-## Installer un cluster manuellement avec `kubeadm`
-
-Votre cluster comprendra les ressources matérielles suivantes :
-
-- Un noeud "master" : Le noeud master est responsable de la gestion de l'état du cluster. Il exécute Etcd, qui stocke les données de cluster parmi les composants qui planifient les charges de travail sur les noeuds de travail.
-
-- Deux noeuds "worker" : Les noeuds de travail sont les serveurs où vos "workloads" (c'est-à-dire les applications et services conteneurisés) s'exécuteront. Un travailleur continuera à exécuter votre charge de travail une fois qu'il y est affecté, même si le maître tombe en panne une fois la planification terminée. La capacité d'un cluster peut être augmentée par l'ajout de travailleurs.
-
-
-### Provisionner les machines avec Terraform et digital ocean
-
-
-### Générer un inventaire dynamique avec Ansible Terraform Provider
-
-
-```ini
-[k8s_masters]
-master ansible_host=<master_ip> ansible_user=root
-
-[k8s_workers]
-worker1 ansible_host=<worker_1_ip> ansible_user=root
-worker2 ansible_host=<worker_2_ip> ansible_user=root
-
-[all:vars]
-ansible_python_interpreter=/usr/bin/python3
-``` -->
+```bash
+sudo apt-get update; sudo apt-get install -y libxss-dev
+curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
+chmod +x ~/Lens.AppImage
+~/Lens.AppImage &
+```

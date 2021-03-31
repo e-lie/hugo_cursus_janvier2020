@@ -121,9 +121,18 @@ Pour installer un cluster de développement :
 - avec Docker Desktop depuis peu (dans une VM aussi)
 - un cluster léger avec `k3s`, de Rancher (simple et utilisable en production/edge)
 
-## Installer un cluster de production avec `kubeadm`
+## Commander un cluster en tant que service (*managed cluster*) dans le cloud
 
-Installer et opérer un cluster de production Kubernetes "à la main" est très complexe.
+Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps des solutions de cluster gérées par eux :
+
+- Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
+- AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
+- DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
+
+Pour la qualité supérieure on recommande souvent Google GKE pour la meilleure expérience Kubernetes.
+
+## Installer un cluster de production on premise avec `kubeadm`
+
 
 - Installer le dæmon `Kubelet` sur tous les noeuds
 - Installer l'outil de gestion de cluster `kubeadm` sur un noeud master
@@ -134,17 +143,24 @@ Installer et opérer un cluster de production Kubernetes "à la main" est très 
 
 L'installation est décrite dans la [documentation officielle](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
-## Installer un cluster complètement à la main
+Opérer et maintenir un cluster de production Kubernetes "à la main" est très complexe et une tâche à ne pas prendre à la légère. De nombreux éléments doivent être installés et géré par les opérateurs.
 
-On peut également installer Kubernetes de façon encore plus manuelle soit pour déployer une configuration vraiment spécifique ou simplement pour mieux comprendre ses rouages et composants.
+- Mise à jour et passage de version de kubernetes qui doit être fait très régulièrement car une version n'est supportée que 2 ans.
+- Choix d'une configuration réseau et de sécurité adaptée.
+- Installation probable de système de stockage distribué comme Ceph à maintenir également dans le temps
+- Etc.
+
+## Kubespray
+
+En réalité utiliser `kubeadm` directement en ligne de commande n'est pas la meilleure approche car cela ne respecte pas l'infrastructure as code et rend difficile la maintenance/maj du cluster par la suite.
+
+Le projet kubespray est un installer de cluster kubernetes utilisant Ansible et kubeadm. C'est probablement l'une des méthodes les plus populaires pour véritablement gérer un cluster de production on premise.
+
+Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance (comme avec kubeadm)
+
+## Installer un cluster complètement à la main pour s'exercer
+
+On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
 
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
-
-## Commander un cluster en tant que service (*managed cluster*) dans le cloud
-
-Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps des solutions de cluster gérées par eux :
-
-- Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
-- AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
-- DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
 
