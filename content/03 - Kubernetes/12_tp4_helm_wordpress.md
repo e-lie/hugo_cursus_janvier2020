@@ -1,5 +1,5 @@
 ---
-title: '12 - TP 4 - Déployer Wordpress avec Helm'
+title: '12 - TP 5 - Déployer Wordpress avec Helm'
 draft: false
 weight: 2071
 ---
@@ -40,6 +40,10 @@ service:
 - Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8sen).
 
 - Explorez les différents objets k8s créés par Helm avec Lens.
+
+- Allons voir le code du chart Wordpress.
+
+
 
 <!-- - Cherchez Jenkins sur [https://hub.kubeapps.com](https://hub.kubeapps.com).
 - Prenez la version de **codecentric** et ajoutez le dépot avec la première commande à droite (ajouter le dépot et déployer une release).

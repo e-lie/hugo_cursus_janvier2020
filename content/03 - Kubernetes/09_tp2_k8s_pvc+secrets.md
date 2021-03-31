@@ -44,7 +44,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: standard
-provisioner: provisioner: k8s.io/minikube-hostpath
+provisioner: docker.io/hostpath
 reclaimPolicy: Retain
 ```
 
