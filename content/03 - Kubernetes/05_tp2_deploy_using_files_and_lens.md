@@ -75,11 +75,13 @@ spec:
     - port: <port>
   selector:
     app: <app_selector> 
-  type: <type>
+  type: NodePort
 ```
 
 - Appliquez ce nouvel objet avec kubectl.
 - Inspectez le service dans Lens.
-- Visitez votre application avec `minikube service rancher-demo-service`.
-- Changez le label du déploiement (2 fois `app: rancher-demo` à remplacer dans le fichier ) et réappliquer.
-- Constatez que l'application n'est plus accessible dans le navigateur
+- Visitez votre application avec `minikube service rancher-demo-service`, le nombre de réplicat devrait apparaître.
+- Changez les labels du template et du selector dans le **déploiement** (2 fois `app: rancher-demo` à remplacer dans le fichier ) et supprimez le déploiement et réappliquez.
+- Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
+
+=> Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
