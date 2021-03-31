@@ -1,7 +1,7 @@
 ---
-title: 05 - Cours - Objets Kubernetes - Partie 1
+title: 04 - Cours - Objets Kubernetes - Partie 1
 draft: false
-weight: 2040
+weight: 2030
 ---
 
 ## L'API et les Objets Kubernetes
@@ -14,9 +14,6 @@ On définit des objets généralement via l’interface en ligne de commande et 
 - en décrivant un objet dans un fichier YAML ou JSON et en le passant au client `kubectl apply -f monpod.yml`
 
 Vous pouvez également écrire des programmes qui utilisent directement l’API Kubernetes pour interagir avec le cluster et définir ou modifier l’état souhaité. **Kubernetes est complètement automatisable !**
-
-
-
 
 ### La commande `apply`
 
@@ -75,7 +72,7 @@ Kubernetes décrit ses ressources en YAML. A quoi ça ressemble, YAML ?
 
 Les description YAML permettent de décrire de façon lisible et manipulable de nombreuses caractéristiques des ressources Kubernetes (un peu comme un *Compose file* par rapport à la CLI Docker).
 
-#### Exemples
+#### Exemple
 
 Création d'un service simple :
 
@@ -96,24 +93,11 @@ spec:
   type: NodePort
 ```
 
-Création d'un "compte utiliseur" `ServiceAccount`
-
-```yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kubernetes-dashboard
-```
-
 Remarques de syntaxe :
 
 - Toutes les descriptions doivent commencer par spécifier la version d'API (minimale) selon laquelle les objets sont censés être créés
 - Il faut également préciser le type d'objet avec `kind`
 - Le nom dans `metadata:\n name: value` est également obligatoire.
-
 - On rajoute généralement une description longue démarrant par `spec:`
 
 
@@ -132,7 +116,7 @@ Remarques de syntaxe :
 - On peut sauter des lignes dans le YAML et rendre plus lisible les descriptions
 - On sépare les différents objets par `---`
 
-## Objets de base
+# Objets de base
 
 ### Les namespaces
 
@@ -191,7 +175,7 @@ Pour monitorer rapidement les ressources consommées par un ensemble de processu
 
 ##### Un manifeste de Pod
 
-`kuard-pod.yaml`
+`rancher-demo-pod.yaml`
 
 ```yaml
 apiVersion: v1
@@ -200,25 +184,107 @@ metadata:
   name: nom_pod
 spec:
   containers:
-    - image: tecpi/pod_image:0.1
+    - image: monachus/rancher-demo:latest
       name: nom_conteneur
+      ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+    - image: monachus/rancher-demo:latest
+      name: nom_conteneur2
       ports:
         - containerPort: 8080
           name: http
           protocol: TCP
 ```
 
+## Rappel sur quelques concepts
+
+### Haute disponibilité
+
+- Faire en sorte qu'un service ait un "uptime" élevé.
+
+On veut que le service soit tout le temps accessible même lorsque certaines ressources manquent :
+
+- elles tombent en panne
+- elles sont sorties du service pour mise à jour, maintenance ou modification
+
+Pour cela on doit avoir des ressources multiples...
+
+- Plusieurs serveurs
+- Plusieurs versions des données
+- Plusieurs accès réseau
+
+Il faut que les ressources disponibles prennent automatiquement le relais des ressources indisponibles.
+Pour cela on utilise en particulier:
+
+- des "load balancers" : aiguillages réseau intelligents
+- des "healthchecks" : une vérification de la santé des applications
+
+Nous allons voir que Kubernetes intègre automatiquement les principes de load balancing et de healthcheck dans l'orchestration de conteneurs
 
 
-### Les Deployments
+### Répartition de charge (load balancing)
 
-Plutôt que d'utiliser les replicasets il est recommander d'utiliser un objet de plus haut niveau : les *deployments*.
+- Un load balancer : une sorte d'**"aiguillage" de trafic réseau**, typiquement HTTP(S) ou TCP.
+- Un aiguillage **intelligent** qui se renseigne sur plusieurs critères avant de choisir la direction.
 
-De la même façon que les ReplicaSets gèrent les pods, les Deployments gèrent les ReplicaSet.
+Cas d'usage :
 
-Un déploiement sert surtout à gérer le déploiement d'une nouvelle version d'un pod.
+- Éviter la surcharge : les requêtes sont réparties sur différents backends pour éviter de les saturer.
 
-Un *deployment* est un peu l'équivalent d'un *service* docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`.
+L'objectif est de permettre la haute disponibilité : on veut que notre service soit toujours disponible, même en période de panne/maintenance.
+
+- Donc on va dupliquer chaque partie de notre service et mettre les différentes instances derrière un load balancer.
+
+- Le load balancer va vérifier pour chaque backend s'il est disponible (**healthcheck**) avant de rediriger le trafic.
+- Répartition géographique : en fonction de la provenance des requêtes on va rediriger vers un datacenter adapté (+ proche).
+
+### Healthchecks
+
+Fournir à l'application une façon d'indiquer qu'elle est disponible, c'est-à-dire :
+
+- qu'elle est démarrée (_liveness_)
+- qu'elle peut répondre aux requêtes (_readiness_).
+
+### Application microservices
+
+- Une application composée de nombreux petits services communiquant via le réseau. Le calcul pour répondre à une requête est décomposé en différente parties distribuées entre les services. Par exemple:
+- un service est responsable de la gestion des **clients** et un autre de la gestion des **commandes**.
+- Ce mode de développement implique souvent des architectures complexes pour être mis en oeuvre et kubernetes est pensé pour faciliter leur gestion à grande échelle.
+
+- Imaginez devoir relancer manuellement des services vitaux pour une application en hébergeant des centaines d'instances : c'est en particulier à ce moment que kubernetes devient indispensable.
+##### 2 exemples d'application microservices:
+
+- https://github.com/microservices-patterns/ftgo-application -> fonctionne avec le très bon livre `Microservices pattern` visible sur le readme.
+- https://github.com/GoogleCloudPlatform/microservices-demo -> Exemple d'application microservice de référence de Google pour Kubernetes.
+
+
+## L'architecture découplée des services Kubernetes
+
+![](../../images/kubernetes/deploy-decoupled-pattern.png)
+
+Comme nous l'avons vu dans le TP1, déployer une application dans kubernetes demande plusieurs étapes. En réalité en plus des **pods** l'ensemble de la gestion d'un service applicatif se décompose dans Kubernetes en 3 à 4 objets articulés entre eux:
+
+- **replicatset**
+- **deployment**
+- **service**
+- **(ingress)**
+
+### Les Deployments (deploy)
+
+Les déploiements sont les objets effectivement créés manuellement lorsqu'on déploie une application. Ce sont des objets de plus haut niveau que les **pods** et **replicaset** et les pilote pour gérer un déploiement applicatif.
+
+![](../../images/kubernetes/wiki-ciscolinux-co-uk-russiandolls.png)
+*Les poupées russes Kubernetes : un Deployment contient un ReplicaSet, qui contient des Pods, qui contiennent des conteneurs*
+
+S'il c'est nécessaire d'avoir ces trois types de ressources c'est parce que Kubernetes respecte un principe de découplage des responsabilités.
+
+La responsabilité d'un déploiement est de gérer la coexistence et le **tracking de versions** multiples d'une application et d'effectuer des montées de version automatiques en haute disponibilité en suivant une **RolloutStrategy** (CF. TP optionnel).
+
+Ainsi lors des changements de version, un seul **deployment** gère automatiquement de multiples **replicasets** contenant chacun **une version** de l'application => Le découplage est nécessaire.
+
+Un *deployment* implique la création d'un ensemble de Pods désignés par une étiquette `label` et regroupé dans un **Replicaset**.
 
 Exemple :
 
@@ -252,15 +318,23 @@ spec:
 
 - La commande `kubectl run` sert à créer un *deployment* à partir d'un modèle. Il vaut mieux utilisez `apply -f`.
 
+### Les ReplicaSets (rs)
 
-![](../../images/kubernetes/wiki-ciscolinux-co-uk-russiandolls.png)
-*Les poupées russes Kubernetes : un Deployment contient un ReplicaSet, qui contient des Pods, qui contiennent des conteneurs*
+Dans notre modèle, les **ReplicaSet** servent à gérer et sont responsables pour:
+
+- la réplication (avoir le bon nombre d'instances et le scaling)
+- la santé et le redémarrage automatique des pods de l'application (Self-Healing)
+
+- `kubectl get rs` pour afficher la liste des replicas.
+
+En général on ne les manipule pas directement (c'est déconseillé) même s'il est possible de les modifier et de les créer avec un fichier de ressource. Pour créer des groupes de conteneurs on utilise soit un **Deployment** soit d'autres formes de workloads (**DaemonSet**, **StatefulSet**, **Job**) adaptés à d'autres cas.
 
 ### Les Services
 
-Dans Kubernetes, un service est un objet qui :
-- rassemble un ensemble de pods (grâce à des tags)
-- et configure une politique permettant d’y accéder depuis l'intérieur ou l'extérieur du cluster.
+Dans Kubernetes, un **service** est un objet qui :
+- Désigne un ensemble de pods (grâce à des tags) généralement géré par un déploiement.
+- Fournit un endpoint réseau pour les requêtes à destination de ces pods.
+- Configure une politique permettant d’y accéder depuis l'intérieur ou l'extérieur du cluster.
 
 <!-- Un service k8s est en particulier adapté pour implémenter une architecture micro-service. -->
 
@@ -273,28 +347,60 @@ L’abstraction du service permet ce découplage : les clients frontend s'addres
 <!-- Paragraphe aussi présent en haut du cours network -->
 Les Services sont de trois types principaux :
 
-- `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
+- `ClusterIP`: expose le service **sur une IP interne** au cluster. Les autres pods peuvent alors accéder au service de l'intérieur du cluster, mais il n'est pas l'extérieur.
 
-- `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
-<!-- 
-![](../../images/kubernetes/nodeport.png)
-*Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas* -->
+- `NodePort`: expose le service depuis l'IP de **chacun des noeuds du cluster** en ouvrant un port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
+
+![](../../images/kubernetes/nodeport.png?width=400px)
+*Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-<!-- ![](../../images/kubernetes/loadbalancer.png)
-*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)* -->
+![](../../images/kubernetes/loadbalancer.png?width=400px)
+*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
 <!-- Un 4e type existe, il est moins utilisé :
 - `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
 
 <!-- - On peut aussi créer des services *headless* en spécifiant `ClusterIP: none` pour les communications internes au cluster, non basées sur les IP. -->
 
-### Les ReplicaSet
+## Les autres types de Workloads Kubernetes
 
-Un ReplicaSet ou `rs` est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
-<!-- Un peu comme le paramètre `replicas:` d'un service docker mais en plus précis. -->
+![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
 
-- `kubectl get rs` pour afficher la liste des replicas.
 
-En général on ne les manipule pas directement.
+En plus du déploiement d'un application, Il existe pleins d'autre raisons de créer un ensemble de Pods:
+
+- Le **DaemonSet**: Faire tourner un agent ou démon sur chaque nœud, par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
+- Le **Job** : Effectuer une tache unique de durée limitée et ponctuelle, par exemple de nettoyage d'un volume ou la préparation initiale d'une application, etc.
+- Le **CronJob** : Effectuer une tache unique de durée limitée et récurrente, par exemple de backup ou de régénération de certificat, etc.
+
+De plus même pour faire tourner une application, les déploiements ne sont pas toujours suffisants. En effet ils sont peu adaptés à des applications statefull comme les bases de données de toutes sortes qui ont besoin de persister des données critiques. Pour celà on utilise un **StatefulSet** que nous verrons dans un cours suivant.
+
+Étant donné les similitudes entre les DaemonSets, les StatefulSets et les Deployments, il est important de comprendre un peu précisément quand les utiliser.
+
+Les **Deployments** (liés à des ReplicaSets) doivent être utilisés :
+
+  - lorsque votre application est complètement découplée du nœud
+  - que vous pouvez en exécuter plusieurs copies sur un nœud donné sans considération particulière
+  - que l'ordre de création des replicas et le nom des pods n'est pas important
+  - lorsqu'on fait des opérations *stateless*
+
+Les **DaemonSets** doivent être utilisés :
+  - lorsqu'au moins une copie de votre application doit être exécutée sur tous les nœuds du cluster (ou sur un sous-ensemble de ces nœuds).
+
+Les **StatefulSets** doivent être utilisés :
+  - lorsque l'ordre de création des replicas et le nom des pods est important
+  - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
+
+### Jobs
+
+Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod dans un deployment:
+
+- Dès que la migration se finit le processus du pod s'arrête.
+- Le **replicaset** qui détecte que l'"application" s'est arrêter va tenter de la redémarrer en recréant le pod.
+- Votre tâche de migration de base de données se déroulera donc en boucle, en repeuplant continuellement la base de données.
+
+### CronJobs
+
+Comme des jobs, mais se lancent à un intervalle régulier, comme les `cron` sur les systèmes unix.

@@ -40,33 +40,6 @@ En général, on utilise des StatefulSets quand on veut :
 - des déploiements et du scaling contrôlés et dans un ordre défini
 - des rolling updates dans un ordre défini et automatisées
 
-### DaemonSets
-
-Une autre raison de répliquer un ensemble de Pods est de programmer un seul Pod sur chaque nœud du cluster. En général, la motivation pour répliquer un Pod sur chaque nœud est de faire atterrir une sorte d'agent ou de démon sur chaque nœud, et l'objet Kubernetes pour y parvenir est le DaemonSet. Par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
-
-### Deployments, DaemonSets, StatefulSets
-
-Étant donné les similitudes entre les DaemonSets, les StatefulSets et les Deployments, il est important de comprendre quand les utiliser.
-
-- Les **Deployments** (liés à des ReplicaSets) doivent être utilisés :
-  - lorsque votre application est complètement découplée du nœud
-  - que vous pouvez en exécuter plusieurs copies sur un nœud donné sans considération particulière
-  - que l'ordre de création des replicas et le nom des pods n'est pas important
-  - lorsqu'on fait des opérations *stateless*
--  Les **DaemonSets** doivent être utilisés :
-   - lorsqu'au moins une copie de votre application doit être exécutée sur tous les nœuds du cluster (ou sur un sous-ensemble de ces nœuds).
--  Les **StatefulSets** doivent être utilisés :
-    - lorsque l'ordre de création des replicas et le nom des pods est important
-    - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
-
-### Jobs
-
-Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod normal, votre tâche de migration de base de données se déroulera en boucle, en repeuplant continuellement la base de données.
-
-### CronJobs
-
-Comme des jobs, mais se lance à un intervalle régulier, comme avec `cron`.
-
 ### Les ConfigMaps 
 
 D'après les recommandations de développement [12factor](https://12factor.net/fr), la configuration de nos programmes doit venir de l'environnement. L'environnement est ici Kubernetes.

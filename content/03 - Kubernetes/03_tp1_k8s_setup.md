@@ -177,6 +177,17 @@ Ce fichier contient la **configuration kubectl** adaptée pour la connexion à n
 
 Dans le contexte d'un cloud provider, on peut cette fois créer des services de type `LoadBalancer` qui entraineront le provisionning d'un loadbalancr au niveau du provider (et donc des frais supplémentaires pour chaque service). L'application dispose alors d'une vraie IP externe en haute disponibilité (si un noeud tombe toujours accessible).
 
+
+## Au délà de la ligne de commande...
+
+#### Accéder à la dashboard Kubernetes
+
+Le moyen le plus classique pour avoir une vue d'ensemble des ressources d'un cluster est d'utiliser la Dashboard officielle. Cette Dashboard est généralement installée par défaut lorsqu'on loue un cluster chez un provider.
+
+On peut aussi l'installer dans minikube.
+
+=> Démonstration
+
 #### Installer Lens
 
 Lens est une interface graphique sympatique pour Kubernetes.
@@ -186,8 +197,11 @@ Elle se connecte en utilisant kubectl et la configuration `~/.kube/config` par d
 Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
-sudo apt-get update; sudo apt-get install -y libxss-dev
-curl -fSL https://github.com/lensapp/lens/releases/download/v4.0.6/Lens-4.0.6.AppImage -o ~/Lens.AppImage
-chmod +x ~/Lens.AppImage
-~/Lens.AppImage &
+## Install Lens
+curl -LO https://github.com/lensapp/lens/releases/download/v4.1.4/Lens-4.1.4.amd64.deb
+sudo dpkg -i Lens-4.1.4.amd64.deb
 ```
+
+- Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
+- Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement
+- Explorons ensemble les ressources dans les différentes rubriques et namespaces

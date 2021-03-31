@@ -10,7 +10,7 @@ weight: 2010
 
 ## Concrêtement : Architecture de Kubernetes
 
-![](../../images/Kubernetes/k8s_archi1.png?width=800px)
+![](../../images/kubernetes/k8s_archi1.png?width=800px)
 
 - Kubernetes rassemble en un cluster et fait coopérer un groupe de serveurs appelés **noeuds**(nodes).
 
@@ -28,7 +28,7 @@ weight: 2010
 ## Philosophie derrière Kubernetes et le mouvement "Cloud Native"
 ### Historique et popularité
 
-![](../../images/Kubernetes/k8s_logo.png)
+![](../../images/kubernetes/k8s_logo.png)
 
 Kubernetes est un logiciel développé originellement par Google et basé sur une dizaine d'années d'expérience de déploiement d'applications énormes (distribuées) sur des clusters de machines.
 
@@ -88,7 +88,7 @@ Les conteneurs sont souvent comparés à l'innovation du porte conteneur pour le
 
 #### Objectifs du DevOps
 
-- Rapidité (celerity) de déploiement logiciel (organisation agile du développement et livraison jusqu'à plusieurs fois par jour)
+- Rapidité (velocity) de déploiement logiciel (organisation agile du développement et livraison jusqu'à plusieurs fois par jour)
   - Implique l'automatisation du déploiement et ce qu'on appelle la CI/CD c'est à dire une infrastructure de déploiement continu à partir de code.
 - Passage à l'échelle (horizontal scaling) des logiciels et des équipes de développement (nécessaire pour les entreprises du cloud qui doivent servir pleins d'utilisateurs)
 - Meilleure organisation des équipes
@@ -129,7 +129,7 @@ Les microservices permettent justement le DevOps car:
 
 Au delà de ces trois éléments, l'écosystème d'objets de Kubernetes est vaste et complexe
 
-![](../../images/Kubernetes/k8s_objects_hierarchy.png?width=600px)
+![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
 
 
 ## Kubernetes entre Cloud et auto-hébergement
@@ -149,7 +149,7 @@ Quelques variantes connues de Kubernetes:
 
 - Google Kubernetes Engine (**GKE**) (Google Cloud Plateform): L'écosystème Kubernetes développé par Google. Très populaire car très flexible tout en étant l'implémentation de référence de Kubernetes.
 - Azure Kubernetes Services (**AKS**) (Microsoft Azure): Un écosystème Kubernetes axé sur l'intégration avec les services du cloud Azure (stockage, registry, réseau, monitoring, services de calcul, loadbalancing, bases de données…).
-- Elastic Kubernetes Services (**EKS**) (Amazon Web Services): Un écosystème Kubernetes assez standard à la sauce Amazon axé sur l'intégration avec le cloud Amazon (la gestion de l'accès, des loadbalancers ou du scaling notamment, le stockage avec Amazon EBS, etc.)
+- Elastic Kubernetes Services (**EKS**) (Amazon Web Services): Un écosystème Kubernetes assez standard à la sauce Amazon axé sur l'intégration avec le cloud Amazon (la gestion de l'accès, des loadbalancers ou du scaling notamment, le stockage avec Amazon EBS, etc.).
 - **Rancher**: Un écosystème Kubernetes très complet, assez _opinionated_ et entièrement open-source, non lié à un fournisseur de cloud. Inclut l'installation de stack de monitoring (Prometheus), de logging, de réseau mesh (Istio) via une interface web agréable. Rancher maintient aussi de nombreuses solutions open source, comme par exemple Longhorn pour le stockage distribué.
 - **K3S**: Un écosystème Kubernetes fait par l'entreprise Rancher et axé sur la légèreté. Il remplace `etcd` par une base de données Postgres, utilise Traefik pour l'ingress et Klipper pour le loadbalancing.
 - **Openshift** : Une version de Kubernetes configurée et optimisée par Red Hat pour être utilisée dans son écosystème. Tout est intégré donc plus guidé, avec l'inconvénient d'être un peu captif·ve de l'écosystème et des services vendus par Red Hat.

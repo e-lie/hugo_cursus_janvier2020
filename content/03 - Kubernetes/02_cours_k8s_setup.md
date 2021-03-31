@@ -131,8 +131,9 @@ Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps
 
 Pour la qualité supérieure on recommande souvent Google GKE pour la meilleure expérience Kubernetes.
 
-## Installer un cluster de production on premise avec `kubeadm`
+## Installer un cluster de production on premise : l'outil officiel `kubeadm`
 
+`kubeadm` est un utilitaire aider générer les certificats et les configurations spéciques pour le control plane et connecter les noeuds au control plane. Il permet également d'effectuer des taches de maintenant comme la mise à jour progressive (rolling) de chaque noeud du cluster.
 
 - Installer le dæmon `Kubelet` sur tous les noeuds
 - Installer l'outil de gestion de cluster `kubeadm` sur un noeud master
@@ -152,15 +153,15 @@ Opérer et maintenir un cluster de production Kubernetes "à la main" est très 
 
 ## Kubespray
 
-En réalité utiliser `kubeadm` directement en ligne de commande n'est pas la meilleure approche car cela ne respecte pas l'infrastructure as code et rend difficile la maintenance/maj du cluster par la suite.
+https://kubespray.io/#/
+
+En réalité utiliser `kubeadm` directement en ligne de commande n'est pas la meilleure approche car cela ne respecte pas l'infrastructure as code et rend plus périlleux la maintenance/maj du cluster par la suite.
 
 Le projet kubespray est un installer de cluster kubernetes utilisant Ansible et kubeadm. C'est probablement l'une des méthodes les plus populaires pour véritablement gérer un cluster de production on premise.
 
-Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance (comme avec kubeadm)
-
+Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance (comme avec kubeadm).
 ## Installer un cluster complètement à la main pour s'exercer
 
 On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
-
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 
