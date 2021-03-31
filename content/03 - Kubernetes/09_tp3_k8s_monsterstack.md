@@ -10,7 +10,7 @@ Elle est composée :
 - d'un service de backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères) appelé `dnmonster`
 - et d'un datastore `redis` servant de cache pour les images de monstericon
 
-## Déploiement de la stack `monsterstack`
+## Déploiement du frontend `monstericon`
 
 - Créez un projet vide `TP3_monster_app_k8s`.
 - Créez le fichier de déploiement `monstericon.yaml`
@@ -40,29 +40,49 @@ spec:
       - name: monstericon
         image: tecpi/monster_icon:0.1
         ports:
-        - containerPort: 9090
+        - containerPort: 5000
 
 ```
 
 - Appliquez cette ressource avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
 
-- Ajoutons un healthcheck de type `readinessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `readinessProbe` doit être à la hauteur du `i` de `image:`) :
+#### Santé du service avec les `Probes`
+
+- Ajoutons un healthcheck de type `livenessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
+
 ```yaml
-        readinessProbe:
-          failureThreshold: 5 # Reessayer 5 fois
+        livenessProbe:
           httpGet:
             path: /
-            port: 9090
-            scheme: HTTP
-          initialDelaySeconds: 30 # Attendre 30s avant de tester
-          periodSeconds: 10 # Attendre 10s entre chaque essai
-          timeoutSeconds: 5 # Attendre 5s la reponse
+            port: 5000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          failureThreshold: 3
           
 ```
 
-Ainsi, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que le  `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
+La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas remplit le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
 
-- Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `image:` :
+Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que le  `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
+
+Cependant une application peut être en train de tourner mais indisponible pour cause de surcharge ou de mise à jour par exemple. Dans ce cas on voudrait que le pod ne soit pas détruit mais que le traffic évite l'instance indisponible pour être renvoyé vers un autre backend `ready`.
+
+#### Configuration d'une application avec des variables d'environnement
+
+- Notre application monstericon doit être configurée en mode DEV pour fonctionner dans le contexte de ce TP exposée sur le port 5000 (sinon par défaut elle tourne sur 9090). Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous devons mettre l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
+
+
+```yaml
+        env:
+        - name: CONTEXT
+          value: DEV
+```
+
+#### Ajouter des indications de ressource nécessaires pour garantir la qualité de service
+
+- Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `env:` :
+
 ```yaml
       resources:
         requests:
@@ -70,13 +90,13 @@ Ainsi, k8s sera capable de savoir si le conteneur fonctionne bien en appelant la
           memory: "50Mi"
 ```
 
-Nos pods auront alors **la garantie** de disposer d'un dixième de CPU et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.  
+Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.  
 
 - Lancer `kubectl apply -f monstericon.yaml` pour appliquer.
-- Avec `kubectl get pods --watch`, observons en direct la stratégie de déploiement `type: Recreate`
+- Avec `kubectl get pods --watch`, observons en direct la stratégie de déploiement `type: Recreate`.
 - Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
 
-#### Déploiement semblable pour dnmonster
+## Un déploiement pour le backend d'image `dnmonster`
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
 
@@ -112,9 +132,8 @@ spec:
           name: dnmonster
 ```
 
-Enfin, configurons un troisième deployment `redis` :
+- Enfin, configurons un troisième deployment `redis.yaml`:
 
-`redis.yaml`: 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -146,7 +165,7 @@ spec:
 
 #### Exposer notre stack avec des services
 
-Les services K8s sont des endpoints réseaux qui balancent le trafic automatiquement vers un ensemble de pods désignés par certains labels.
+Les services K8s sont des endpoints réseaux qui balancent le trafic automatiquement vers un ensemble de pods désignés par certains labels. Ils sont un peu la pierre angulaire des applications microservices qui sont composées de plusieurs sous parties elles même répliquées.
 
 Pour créer un objet `Service`, utilisons le code suivant, à compléter :
 
@@ -176,22 +195,18 @@ Ajoutez le code précédent au début de chaque fichier déploiement. Complétez
 
 Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 
-Appliquez vos trois fichiers.
-
+- Appliquez à nouveau vos trois fichiers.
 - Listez les services avec `kubectl get services`.
-- Récupérez le NodePort de monstericon (port dans les 30000 à côté de 5000).
 - Visitez votre application dans le navigateur avec `minikube service monstericon`.
 
 ### Rassemblons les trois objets avec une kustomisation.
 
-Une kustomization permet de résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir le lancer facilement:
+Une kustomization permet:
 
-- Créez un dossier `monster_stack` pour ranger les trois fichiers:
-    - monstericon.yaml
-    - dnmonster.yaml
-    - redis.yaml
-  
-- Créez également un fichier `kustomization.yaml` avec à l'intérieur:
+- De résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir les manipuler facilement (mais sans avoir des fichiers à rallonge):
+- De surcharger la description yaml de certaines ressources sans modifier le fichier original (en gros de patcher nos ressource à la volée au moment du `apply`).
+
+Créez un fichier `kustomization.yaml` avec à l'intérieur:
 
 ```yaml
 resources:
@@ -199,8 +214,10 @@ resources:
     - dnmonster.yaml
     - redis.yaml
 ```
+- Essayez d'exécuter la kustomization avec `kubectl apply -k .`.
 
-- Essayez d'exécuter la kustomization avec `kubectl apply -k .` depuis le dossier `monster_stack`.
+
+On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour passer monstericon en mode `PROD` sur le port `9090` en remplaçant la variable d'environnement les numéros de port avec un patch (sans toucher au fichier monstericon.yaml). (Facultatif: trouvez comment utiliser cette fonctionnalité)
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application sur le port standard
 
@@ -226,7 +243,7 @@ spec:
         - path: /monstericon
           backend:
             serviceName: monstericon
-            servicePort: 9090
+            servicePort: 5000
 ```
 
 - Ajoutez ce fichier à notre `kustomization.yaml`
