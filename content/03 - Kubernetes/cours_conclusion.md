@@ -1,7 +1,7 @@
 ---
 title: Conclusion
 weight: 2100
-draft: false
+draft: true
 ---
 
 <!-- A supprimer de l'intro si ici -->

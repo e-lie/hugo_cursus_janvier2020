@@ -1,6 +1,6 @@
 ---
 title: '12 - TP 5 - Déployer Wordpress avec Helm'
-draft: false
+draft: true
 weight: 2071
 ---
 

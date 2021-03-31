@@ -1,6 +1,6 @@
 ---
 title: 10 - Cours - Objets Kubernetes Avancés.
-draft: false
+draft: true
 weight: 2060
 ---
 
