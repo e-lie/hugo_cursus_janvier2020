@@ -1,7 +1,7 @@
 ---
 draft: false
 title: 08 - Cours - Le réseau dans Kubernetes
-weight: 2044
+weight: 2052
 ---
 
 Les solutions réseau dans Kubernetes ne sont pas standard.

@@ -1,5 +1,5 @@
 ---
-title: 10 - Cours - Quelques Objets Kubernetes Avancés.
+title: 10 - Cours - Objets Kubernetes Avancés.
 draft: false
 weight: 2060
 ---

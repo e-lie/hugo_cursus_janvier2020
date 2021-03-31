@@ -1,7 +1,7 @@
 ---
 draft: false
 title: "09 - TP 4 - Déployer Wordpress Avec une base de donnée persistente"
-weight: 2045
+weight: 2055
 ---
 
 ## Déployer Wordpress et MySQL avec du stockage et des Secrets
