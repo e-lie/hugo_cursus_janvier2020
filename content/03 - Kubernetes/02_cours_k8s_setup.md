@@ -29,16 +29,16 @@ Les nœuds d’un cluster sont les machines (serveurs physiques, machines virtue
 - Le control plane Kubernetes comprend un ensemble de processus en cours d’exécution sur votre cluster:
 
     - Le master Kubernetes est un ensemble de trois processus qui s’exécutent sur un seul nœud de votre cluster, désigné comme nœud maître (*master node* en anglais). Ces processus sont:
-      - `kube-apiserver`
-      - `kube-controller-manager`
-      - `kube-scheduler`
+      - `kube-apiserver`: expose l'API pour parler au cluster
+      - `kube-controller-manager`: basé sur une boucle qui controlle en permanence l'état des resources et essaie de le corriger s'il n'est plus conforme.
+      - `kube-scheduler`: monitore les resources des différents workers, décide et cartographie ou doivent être créé les conteneur(Pods)
   
     - Chaque nœud non maître de votre cluster exécute deux processus :
-        `kubelet`, qui communique avec le Kubernetes master.
+        `kubelet`, qui communique avec le Kubernetes master et controle la création et l'état des pods sur son noeud.
         `kube-proxy`, un proxy réseau reflétant les services réseau Kubernetes sur chaque nœud.
 
 
-Les différentes parties du control plane Kubernetes, telles que les processus Kubernetes master et kubelet, déterminent la manière dont Kubernetes communique avec votre cluster.
+Les différentes parties du control plane Kubernetes, telles que les processus `kube-controller-manager` et `kubelet`, déterminent la manière dont Kubernetes communique avec votre cluster.
 
 Le control plane conserve un enregistrement de tous les objets Kubernetes du système et exécute des boucles de contrôle continues pour gérer l’état de ces objets. À tout moment, les boucles de contrôle du control plane répondent aux modifications du cluster et permettent de faire en sorte que l’état réel de tous les objets du système corresponde à l’état souhaité que vous avez fourni.
 
@@ -125,9 +125,12 @@ Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps
 
 - Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
 - AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
+- Azure avec AKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
 - DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
 
-Pour la qualité supérieure on recommande souvent Google GKE pour la meilleure expérience Kubernetes.
+Pour sa qualité on recommande souvent Google GKE qui est plus ancien avec un bonne UX. Mais il s'agit surtout de faciliter l'intégration avec l'existant:
+
+- Si vous utilisez déjà AWS ou Azure
 
 ## Installer un cluster de production on premise : l'outil officiel `kubeadm`
 
@@ -162,4 +165,8 @@ Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance
 
 On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
+
+## Remarque sur les clusters hybrides
+
+Il est possible de connecter plusieurs clusters ensembles dans le cloud chez plusieurs fournisseurs
 
