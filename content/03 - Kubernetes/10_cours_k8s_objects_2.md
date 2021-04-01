@@ -1,5 +1,5 @@
 ---
-title: 10 - Cours - Objets Kubernetes Avancés.
+title: 10 - Cours - Objets Kubernetes Partie 2.
 draft: true
 weight: 2060
 ---
@@ -7,23 +7,27 @@ weight: 2060
 
 ## Le stockage dans Kubernetes
 
-#### StorageClasses 
+### Les types de stockage avec les `StorageClasses`
+
 Le stockage dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
+
 - dans le cloud, ce sont les différentes offres du fournisseur,
 - dans un cluster auto-hébergé c'est par exemple :
   - un disque dur local ou distant (NFS)
-  - ou bien une solution de stockage distribué
+  - ou bien une solution de stockage distribuée
     - les plus connues sont Ceph et GlusterFS
 
-#### PersistentVolumeClaims et PersistentVolumes
-Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : une demande de volume (persistant). Si un des objets *StorageClass* est en capacité de le fournir, alors un *PersistentVolume* est créé et lié à ce conteneur : il devient disponible en tant que volume monté dans le conteneur.
+### Demander des volumes et les liers aux pods :`PersistentVolumes` et `PersistentVolumeClaims`
 
+Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : une demande de volume (persistant). Si un des objets *StorageClass* est en capacité de le fournir, alors un *PersistentVolume* est créé et lié à ce conteneur : il devient disponible en tant que volume monté dans le conteneur.
 
 - les *StorageClasses* fournissent du stockage
 - les conteneurs demandent du volume avec les *PersistentVolumeClaims*
 - les *StorageClasses* répondent aux *PersistentVolumeClaims* en créant des objets *PersistentVolumes* : le conteneur peut accéder à son volume.
 
-### StatefulSets
+### Des déploiements plus stables et précautionneux : les StatefulSets
+
+L'objet `StatefulSet` est relativement récent dans Kubernetes.
 
 On utilise les `Statefulsets` pour répliquer un ensemble de pods dont l'état est important : par exemple, des pods dont le rôle est d'être une base de données, manipulant des données sur un disque.
 
@@ -36,6 +40,9 @@ En général, on utilise des StatefulSets quand on veut :
 - du stockage stable et persistant
 - des déploiements et du scaling contrôlés et dans un ordre défini
 - des rolling updates dans un ordre défini et automatisées
+
+
+## Paramétrer ses Pods
 
 ### Les ConfigMaps 
 
@@ -55,19 +62,63 @@ Il y a 3 façons de donner un accès à un secret :
 
 Pour définir qui et quelle app a accès à quel secret, on utilise les fonctionnalités dites "RBAC" de Kubernetes.
 
-### Le Role-Based Access Control, les Roles et les RoleBindings
+
+## Lier utilisateurs et autorisations: Le Role-Based Access Control (RBAC)
 
 <!-- TODO: add ABAC? https://kubernetes.io/docs/reference/access-authn-authz/abac/ -->
 
-Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces.
+Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces. Il fonctionne en liant des ensembles de permissions appelées `Roles` à des identités/comptes humains appelés `User` ou des comptes de services pour vos programmes appelés `ServiceAccount`.
 
-- Classiquement on crée des `Roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission
-- La logique de ce système de permissions est d'associer un **objet** (un type de ressource k8s) à un **verbe** (par exemple : `get`, `list`, `create`, `delete`…)
-- On crée ensuite des utilisateurs appelés `ServiceAccounts` dans k8s.
-- On lie les *Roles* et *ServiceAccounts* à l'aide d'objets `RoleBindings`.
-<!-- - TODO: Exemples -->
+Exemple de comment générer un certificat à créer un nouvel utilisateur dans minikube: https://docs.bitnami.com/tutorials/configure-rbac-in-your-kubernetes-cluster/
 
-A côté des rôles crées pour les utilisateur·ices et processus du cluster, il existe des modèles de rôles prédéfinis qui sont affichables avec :
+### Roles et ClusterRoles + bindings
+
+Une `role` est un objet qui décrit un ensemble d'actions permises sur certaines ressources et s'applique sur **un seul namespace**. Pour prendre un exemple concret, voici la description d'un roles qui authorise la lecture, création et modification de `pods` et de `services` dans le namespace par défaut:
+
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-and-services
+rules:
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["create", "delete", "get", "list", "patch", "update", "watch", "proxy"]
+```
+
+- Un role est une liste de règles `rules`
+
+- Les rules sont décrites à l'aide de 8 verbes différents qui sont ceux présent dans le role d'exemple au dessus qu'ont associe à une liste d'objets.
+
+- Le role **ne fait rien par lui même** : il doit être appliqué à une identité ie un `User` ou `ServiceAccount`.
+
+- Classiquement on crée des `Roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission consistante pour une tâche donnée.
+
+- Notre role exemple est limité au `namespace default`. Pour créer des permissions valable pour tout le cluster on utilise à la place un objet appelé un `ClusterRole` qui fonctionne de la même façon mais indépendamment des namespace.
+
+- Les `Roles` et `ClusterRoles` sont ensuite appliqués aux `ServicesAccounts` à l'aide respectivement de `RoleBinding` et `ClusterRoleBinding` comme l'exemple suivant:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: default
+  name: pods-and-services
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: alice
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: mydevs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-and-services
+```
+
+En plus des rôles que vous pouvez créer pour les utilisateur·ices et processus de votre cluster, il existe déjà dans kubernetes un ensemble de `ClusterRoles` prédéfinis qui sont affichables avec :
 
 `kubectl get clusterroles`
 
@@ -80,7 +131,8 @@ Cependant quatre rôles génériques existent aussi par défaut :
 - Le rôle `edit` permet à un·e utilisateur·ice de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
-La commande `kubectl auth can-i` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
+
+La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
 
 ### Les CRD et Operators
 

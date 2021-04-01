@@ -19,7 +19,6 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 ### Utiliser une chart Helm pour installer Wordpress
 <!-- ### Utiliser une chart Helm pour installer Jenkins -->
-
 <!-- TODO: prendre autre chose que Jenkins, genre wordpress c'est parfait -->
 - Cherchez Wordpress sur [https://hub.kubeapps.com](https://hub.kubeapps.com) (vous pouvez prendre une autre chart si le cœur vous en dit).
 - Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
@@ -37,7 +36,7 @@ service:
 <!-- - Cherchez le port d'exposition du service avec `kc get services | grep jenkins` -->
 <!-- - Visitez [http://localhost:<node_port>](http://localhost:<node_port>) -->
 <!-- - Récupérez le password d'inititalisation précédemment sauvegardé et collez-le dans le navigateur -->
-- Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8sen).
+- Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8s).
 
 - Explorez les différents objets k8s créés par Helm avec Lens.
 
