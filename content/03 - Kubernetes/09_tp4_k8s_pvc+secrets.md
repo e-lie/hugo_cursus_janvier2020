@@ -34,20 +34,48 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 
 En l'état les `PersistentVolumes` générés par la combinaise du `PersistentVolumeClaim` et de la `StorageClass` de minikube sont également supprimés en même tant que les PVC. Les données sont donc perdues et au chargement du site on doit relancer l'installation.
 
-Pour éviter cela il faut que la `storageClass` standard soit configurée avec une `Reclaim Policy` à `retain` (conserver) et non `delete`.
+Pour éviter cela il faut que la `storageClass` standard soit configurée avec une `Reclaim Policy` à `retain` (conserver) et non `delete`. Cependant minikube dans docker ne permet pas simplement de faire une storage class en mode retain (à cause d'un bug semble-t-il). Nous allons donc créer manuellement des volumes avec une storageClass retain.
 
-- Supprimez la `storageClass standard`.
-- Créez-en une nouvelle en cliquant sur le `+ > create resource` en bas à gauche de Lens et collez le code suivant:
+- Créez deux volumes en cliquant sur le `+ > create resource` en bas à gauche de Lens et collez le code suivant:
 
 ```yaml
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
+---
+kind: PersistentVolume
+apiVersion: v1
 metadata:
-  name: standard
-provisioner: docker.io/hostpath
-reclaimPolicy: Retain
+  name: wordpress-mysql-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/mysql-data"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: wordpress-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/wp-data"
 ```
 
+- Modifiez les `PersistentVolumeClaims`(PVC) des deploiements wordpress et mysql pour passer le storage à `200M` et ajouter `storageClassName: manual` dans la `spec:` de chaque PVC.
+
+- Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress.
+
+- Vérifiez après suppression et recréation qu'il n'est pas besoin de reconfigurer wordpress...
 
 
 <!-- - https://cloud.google.com/kubernetes-engine/docs/tutorials/persistent-disk/

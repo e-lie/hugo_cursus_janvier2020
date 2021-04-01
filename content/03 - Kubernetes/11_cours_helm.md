@@ -7,42 +7,14 @@ weight: 2070
 
 Nous avons vu que dans Kubernetes la configuration de nos services / applications se fait généralement via de multiples fichiers YAML.
 
-### Les fichiers kustomization
+Les kustomizations permettent de rassembler ces descriptions en dossier de code et ont pas mal d'avantages mais on veut vite quelque chose de plus puissant.
 
-Il est courant de décrire un ensemble de resources dans le même fichier, séparées par `---`.
-Mais on pourrait préférer rassembler plusieurs fichiers dans un même dossier et les appliquer d'un coup.
+- Pour s'adapter à plein de paramétrages différents de notre application
+- Pour éviter la répétition de code
 
-Pour cela K8s propose le concept de `kustomization`.
-
-Exemple:
-
-```yaml
-k8s-mysql/
-├── kustomization.yaml
-├── mysql-deployment.yaml
-└── wordpress-deployment.yaml
-```
-
-`kustomization.yaml`
-
-```yaml
-secretGenerator:
-  - name: mysql-pass
-    literals:
-      - password=YOUR_PASSWORD
-resources:
-  - mysql-deployment.yaml
-  - wordpress-deployment.yaml
-```
-On peut ensuite l'appliquer avec `kubectl apply -k ./`
-
-A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
+C'est donc "trop" déclaratif en quelque sorte, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
 
 ### Helm
-
-Quand on a une seule application cela reste gérable avec des kustomizations ou sans, mais dès qu’on a plusieurs environnements, applications et services, on se retrouve vite submergé·es de fichiers de centaines, voire de milliers, de lignes qui sont, de plus, assez semblables. 
-
-C'est donc "trop" déclaratif, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
 
 Pour pallier ce problème, il existe un utilitaire appelé Helm, qui produit les fichiers de déploiement que l'on souhaite.
 

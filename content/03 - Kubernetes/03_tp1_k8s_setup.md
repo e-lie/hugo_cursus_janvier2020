@@ -117,6 +117,10 @@ Un service permet de créer un point d'accès unique exposant notre déploiement
 
 Avec minikube ce forwarding de port doit être concrêtisé avec la commande `minikube service rancher-demo-service`. Normalement la page s'ouvre automatiquement et nous voyons notre application.
 
+- Sauriez-vous expliquer ce que l'app fait ?
+- Pour le comprendre ou le confirmer, diminuez le nombre de réplicats à l'aide de la commande utilisée précédement pour passer à 5 réplicats. Qu se passe-t-il ?
+
+
 Une autre méthode pour accéder à un service (quel que soit sont type) en mode développement est de forwarder le traffic par l'intermédiaire de kubectl (et des composants kube-proxy installés sur chaque noeuds du cluster).
 
 - Pour cela on peut par exemple lancer: `kubectl port-forward svc/rancher-demo-service 8080:8080 --address 127.0.0.1`
@@ -125,9 +129,6 @@ Une autre méthode pour accéder à un service (quel que soit sont type) en mode
 => Un seul conteneur s'affiche. En effet `kubectl port-forward` sert à créer une connexion de developpement/debug qui pointe toujours vers le même pod en arrière plan.
 
 Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à service de type un LoadBalancer. Mais minikube ne propose pas par défaut de loadbalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
-
-- Sauriez-vous expliquer ce que l'app fait ?
-- Pour le comprendre ou confirmer diminuez le nombre de réplicats à l'aide de la commande utilisée précédement pour passer à 5 réplicats. Qu se passe-t-il ?
 
 #### Simplifier les lignes de commande k8s
 
@@ -143,7 +144,7 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
-## Mettre en place un cluster K8s managé un provider de cloud : l'exemple de Scaleway
+## Mettre en place un cluster K8s managé chez un provider de cloud : l'exemple de Scaleway
 
 Je vais louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
 
