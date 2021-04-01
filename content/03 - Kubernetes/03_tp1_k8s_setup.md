@@ -120,7 +120,9 @@ Avec minikube ce forwarding de port doit être concrêtisé avec la commande `mi
 Une autre méthode pour accéder à un service (quel que soit sont type) en mode développement est de forwarder le traffic par l'intermédiaire de kubectl (et des composants kube-proxy installés sur chaque noeuds du cluster).
 
 - Pour cela on peut par exemple lancer: `kubectl port-forward svc/rancher-demo-service 8080:8080 --address 127.0.0.1`
-- Vous pouvez désormais accéder à votre app via via kubectl sur: `http://localhost:8080`
+- Vous pouvez désormais accéder à votre app via via kubectl sur: `http://localhost:8080`. Quelle différence avec l'exposition précédente via minikube ?
+
+=> Un seul conteneur s'affiche. En effet `kubectl port-forward` sert à créer une connexion de developpement/debug qui pointe toujours vers le même pod en arrière plan.
 
 Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à service de type un LoadBalancer. Mais minikube ne propose pas par défaut de loadbalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
 
