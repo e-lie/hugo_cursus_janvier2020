@@ -17,52 +17,35 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Suivez le Quickstart : <https://helm.sh/docs/intro/quickstart/>
 
-### Utiliser une chart Helm pour installer Wordpress
-<!-- ### Utiliser une chart Helm pour installer Jenkins -->
-<!-- TODO: prendre autre chose que Jenkins, genre wordpress c'est parfait -->
+### Utiliser un chart Helm pour installer Wordpress
+
 - Cherchez Wordpress sur [https://hub.kubeapps.com](https://hub.kubeapps.com) (vous pouvez prendre une autre chart si le cœur vous en dit).
+
 - Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
-- Installer une release `wordpress-tp` de cette application (ce chart) avec `helm install --template-name wordpress-tp bitnami/wordpress`
-- Suivez les instructions affichées
-<!-- - Plutôt que de faire un port-forwarding, nous allons configurer le service k8s de `jenkins-master` pour être en mode `NodePort`. -->
-  <!-- - Créez un fichier `config_jenkins.yaml` avec à l'intérieur: -->
-<!-- 
-```yaml
-service:
-    master:
-        type: "NodePort"
-``` -->
-<!-- - Appliquez cette config à notre release avec `helm upgrade -f config_jenkins.yaml jenkins-tp codecentric/jenkins`. -->
-<!-- - Cherchez le port d'exposition du service avec `kc get services | grep jenkins` -->
-<!-- - Visitez [http://localhost:<node_port>](http://localhost:<node_port>) -->
-<!-- - Récupérez le password d'inititalisation précédemment sauvegardé et collez-le dans le navigateur -->
+
+- Installer une release `wordpress-tp` de cette application (ce chart) avec `helm install wordpress-tp bitnami/wordpress`
+
+- Suivez les instructions affichées dans le terminal pour trouver l'IP et afficher le login et password de notre installation.
+
 - Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8s).
 
-- Explorez les différents objets k8s créés par Helm avec Lens.
+Vous pouvez constater que l'utilisateur est par default `user` ce qui n'est pas très pertinent. Un chart prend de nombreux paramètres qui sont toujours listés dans le fichier `values.yaml` à la racine du Chart.
 
-- Allons voir le code du chart Wordpress.
+- Visitez le code de ce chart ici: https://github.com/bitnami/charts/tree/master/bitnami
 
+- Regardes en particulier les fichiers `templates` et le fichier de paramètre `values.yaml`, Cherchez comment modifier l'username et le password wordpress d'installation ?
 
+- Désinstallez la release avec `helm uninstall wordpress-tp`
 
-<!-- - Cherchez Jenkins sur [https://hub.kubeapps.com](https://hub.kubeapps.com).
-- Prenez la version de **codecentric** et ajoutez le dépot avec la première commande à droite (ajouter le dépot et déployer une release).
-- Installer une release `jenkins-tp` de cette application (ce chart) avec `helm install --template-name jenkins-tp codecentric/jenkins`
-- Cherchez le nom du pod `jenkins-master`
-- Affichez les logs du pod avec `kc logs` et récupérez la clé d'initialisation qui se trouve entre les triples lignes d'étoiles. Notez-la dans un fichier texte (`gedit key.tmp` ?)
-- Plutôt que de faire un port-forwarding, nous allons configurer le service k8s de `jenkins-master` pour être en mode `NodePort`.
-  - Créez un fichier `config_jenkins.yaml` avec à l'intérieur:
+- Créez un dossier TP5 avec à l'intérieur un fichier `values.yaml` contenant:
 
-```yaml
-service:
-    master:
-        type: "NodePort"
 ```
-- Appliquez cette config à notre release avec `helm upgrade -f config_jenkins.yaml jenkins-tp codecentric/jenkins`.
-- Cherchez le port d'exposition du service avec `kc get services | grep jenkins`
-- Visitez [http://localhost:<node_port>](http://localhost:<node_port>)
-- Récupérez le password d'inititalisation précédemment sauvegardé et collez-le dans le navigateur
-- Notre Jenkins est prêt.
+wordpressUsername: <votrenom>
+wordpressPassword: <easytoguesspasswd>
+```
 
-- Explorez les différents objets k8s créés par Helm avec Lens. -->
+- En utilisant ces paramètres auxquels vous pouvez en ajouter d'autres identifié dans le dépot du projet, faites un rendu (templating) des fichiers du chart dans un grand fichier à la racine du  projet en lançant: `helm template wordpress-tp bitnami/wordpress --values=values.yaml >> wordpress-tp-fullresources.yaml`
 
-<!-- TODO: Facultatif : Packagez l'app `monsterstack` avec Helm -->
+- Vous pouvez maintenant explorer ce grand fichier pour comprendre comment wordpress sera installé.
+
+- Pour installer notre wordpress avec ces ressources en mode fichier vous pouvez simplement faire `kubectl apply -f wordpress-tp-fullresources.yaml`
