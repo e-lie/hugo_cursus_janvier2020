@@ -7,7 +7,7 @@ weight: 2070
 
 Nous avons vu que dans Kubernetes la configuration de nos services / applications se fait généralement via de multiples fichiers YAML.
 
-Les kustomizations permettent de rassembler ces descriptions en dossier de code et ont pas mal d'avantages mais on veut vite quelque chose de plus puissant.
+Les kustomizations permettent de rassembler ces descriptions en dossier de code et ont pas mal d'avantages mais on a vite besoin de quelque chose de plus puissant.
 
 - Pour s'adapter à plein de paramétrages différents de notre application
 - Pour éviter la répétition de code
