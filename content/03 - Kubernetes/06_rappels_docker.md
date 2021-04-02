@@ -1,6 +1,6 @@
 ---
 title: "06 - Rappels Docker"
-draft: true
+draft: false
 weight: 2048
 ---
 

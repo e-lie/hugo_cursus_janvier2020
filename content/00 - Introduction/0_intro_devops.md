@@ -1,5 +1,5 @@
 ---
-draft: false
+draft: true
 title: Introduction au DevOps
 # title: DSI classique vs. DevOps
 

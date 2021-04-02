@@ -113,6 +113,7 @@ Sur MetalLB, les autres vidéos de la chaîne sont très bien :
 
 #### Autres
 
+- Tutoriels Bitnami pour pleins d'exemples de prod : https://docs.bitnami.com/tutorials/all
 - Bitnami Helm : https://github.com/bitnami/charts/tree/master/bitnami
 - BKPR : https://github.com/bitnami/kube-prod-runtime
 - Vitess : A database clustering system for horizontal scaling of MySQL : https://vitess.io
@@ -224,10 +225,10 @@ https://github.com/Microsoft/RockPaperScissorsLizardSpock -->
 
 <!-- ## Linux -->
 
-## DevOps
+<!-- ## DevOps
 
 - Krief - Learning DevOps - The complete guide (Azure Devops, Jenkins, Kubernetes, Terraform, Ansible, sécurité) - 2019
-- The DevOps Handbook
+- The DevOps Handbook -->
 
 <!-- ### Sécurité et DevOps
 
