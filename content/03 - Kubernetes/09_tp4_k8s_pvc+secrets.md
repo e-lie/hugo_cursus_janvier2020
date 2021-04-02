@@ -75,8 +75,6 @@ spec:
 
 - Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress.
 
-- Vérifiez après suppression et recréation qu'il n'est pas besoin de reconfigurer wordpress...
-
 
 <!-- - https://cloud.google.com/kubernetes-engine/docs/tutorials/persistent-disk/
 - https://github.com/GoogleCloudPlatform/kubernetes-workshops/blob/master/state/local.md
