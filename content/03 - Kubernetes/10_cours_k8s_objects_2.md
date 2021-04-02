@@ -1,6 +1,6 @@
 ---
 title: 10 - Cours - Objets Kubernetes Partie 2.
-draft: true
+draft: false
 weight: 2060
 ---
 

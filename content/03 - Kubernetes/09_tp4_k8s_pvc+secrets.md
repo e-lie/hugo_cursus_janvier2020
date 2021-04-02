@@ -75,6 +75,9 @@ spec:
 
 - Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress.
 
+### Essayons avec Scaleway
+
+
 
 <!-- - https://cloud.google.com/kubernetes-engine/docs/tutorials/persistent-disk/
 - https://github.com/GoogleCloudPlatform/kubernetes-workshops/blob/master/state/local.md
