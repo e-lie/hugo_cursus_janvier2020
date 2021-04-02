@@ -1,6 +1,7 @@
 ---
 title: TP optionnel - Installer un registry privé d'images dans votre cluster 
 draft: false
+weight: 2090
 ---
 
 https://www.linuxtechi.com/setup-private-docker-registry-kubernetes/
