@@ -64,14 +64,14 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 100M
+    storage: 100Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/wp-data"
 ```
 
-- Modifiez les `PersistentVolumeClaims`(PVC) des deploiements wordpress et mysql pour passer le storage à `100M` et ajouter `storageClassName: manual` dans la `spec:` de chaque PVC.
+- Modifiez les `PersistentVolumeClaims`(PVC) des deploiements wordpress et mysql pour passer le storage à `100Mi` et ajouter `storageClassName: manual` dans la `spec:` de chaque PVC.
 
 - Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress.
 
