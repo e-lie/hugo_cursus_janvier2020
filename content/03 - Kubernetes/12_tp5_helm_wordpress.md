@@ -46,6 +46,6 @@ wordpressPassword: <easytoguesspasswd>
 
 - En utilisant ces paramètres auxquels vous pouvez en ajouter d'autres identifié dans le dépot du projet, faites un rendu (templating) des fichiers du chart dans un grand fichier à la racine du  projet en lançant: `helm template wordpress-tp bitnami/wordpress --values=values.yaml >> wordpress-tp-fullresources.yaml`
 
-- Vous pouvez maintenant explorer ce grand fichier pour comprendre comment wordpress sera installé.
+- Vous pouvez maintenant explorer ce grand fichier pour comprendre comment wordpress sera installé. En le parcourant on peut contstater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
 - Pour installer notre wordpress avec ces ressources en mode fichier vous pouvez simplement faire `kubectl apply -f wordpress-tp-fullresources.yaml`

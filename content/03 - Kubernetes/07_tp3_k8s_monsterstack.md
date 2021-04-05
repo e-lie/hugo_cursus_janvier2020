@@ -4,103 +4,30 @@ draft: false
 weight: 2050
 ---
 
-Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices plutôt simple : `monsterstack`.
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b correction_k8s_tp2 https://github.com/Uptime-Formation/corrections_tp.git`
+
+Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
 - d'un front-end en Flask (Python) appelé `monstericon`,
 - d'un service de backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères) appelé `dnmonster`
 - et d'un datastore `redis` servant de cache pour les images de monstericon
 
-## Déploiement du frontend `monstericon`
+Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
 
-- Créez un projet vide `TP3_monster_app_k8s`.
-- Créez le fichier de déploiement `monstericon.yaml`
+# Etudions le code et testons avec `docker-compose`
 
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: monstericon
-  labels:
-    app: monsterstack
-spec:
-  selector:
-    matchLabels:
-      app: monsterstack
-      partie: monstericon
-  strategy:
-    type: Recreate
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: monsterstack
-        partie: monstericon
-    spec:
-      containers:
-      - name: monstericon
-        image: tecpi/monster_icon:0.1
-        ports:
-        - containerPort: 5000
+- Monstericon est une application web python (flask) qui propose un petit formulaire et lance  une requete sur le backend pour chercher une image et l'afficher.
+- Monstericon est construit à partir du `Dockerfile` présent dans le dossier `TP3`.
+- Le fichier `docker-compose.yml` est utile pour faire tourner les trois services de l'application dans docker rapidement (plus simple que kubernetes)
 
-```
+Pour lancer l'application il suffit d'exécuter: `docker-compose up`
 
-- Appliquez cette ressource avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
-
-#### Santé du service avec les `Probes`
-
-- Ajoutons un healthcheck de type `livenessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
-
-```yaml
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 5000
-          initialDelaySeconds: 5
-          timeoutSeconds: 1
-          periodSeconds: 10
-          failureThreshold: 3
-          
-```
-
-La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas remplit le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
-
-Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que le  `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
-
-Cependant une application peut être en train de tourner mais indisponible pour cause de surcharge ou de mise à jour par exemple. Dans ce cas on voudrait que le pod ne soit pas détruit mais que le traffic évite l'instance indisponible pour être renvoyé vers un autre backend `ready`.
-
-#### Configuration d'une application avec des variables d'environnement
-
-- Notre application monstericon doit être configurée en mode DEV pour fonctionner dans le contexte de ce TP exposée sur le port 5000 (sinon par défaut elle tourne sur 9090). Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous devons mettre l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
-
-
-```yaml
-        env:
-        - name: CONTEXT
-          value: DEV
-```
-
-#### Ajouter des indications de ressource nécessaires pour garantir la qualité de service
-
-- Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `env:` :
-
-```yaml
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "50Mi"
-```
-
-Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.  
-
-- Lancer `kubectl apply -f monstericon.yaml` pour appliquer.
-- Avec `kubectl get pods --watch`, observons en direct la stratégie de déploiement `type: Recreate`.
-- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
-
-## Un déploiement pour le backend d'image `dnmonster`
+Passons maintenant à Kubernetes.
+## Déploiements pour le backend d'image `dnmonster` et le datastore `redis`
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
 
-- créez `dnmonster.yaml` et collez-y le code suivant :
+- créez `dnmonster.yaml` dans le dossier `k8s-deploy-dev` et collez-y le code suivant :
 
 `dnmonster.yaml` :
 ```yaml
@@ -132,7 +59,7 @@ spec:
           name: dnmonster
 ```
 
-- Enfin, configurons un troisième deployment `redis.yaml`:
+- Ensuite, configurons un deuxième deployment `redis.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -162,6 +89,96 @@ spec:
         - containerPort: 6379
           name: redis
 ```
+
+- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
+
+
+## Déploiement du frontend `monstericon`
+
+Ajoutez au fichier `k8s-deploy-dev` le code suivant:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monstericon
+  labels:
+    app: monsterstack
+spec:
+  selector:
+    matchLabels:
+      app: monsterstack
+      partie: monstericon
+  strategy:
+    type: Recreate
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: monsterstack
+        partie: monstericon
+    spec:
+      containers:
+      - name: monstericon
+        image: monstericon
+        ports:
+        - containerPort: 5000
+```
+
+L'image `monstericon` de ce déploiement n'existe pas sur le dockerhub. Elle doit être construite à partir du `Dockerfile` et nous allons utiliser `skaffold` pour cela.
+
+- Observons le fichier `skaffold.yaml`
+- Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici `kubectl`)
+
+
+#### Santé du service avec les `Probes`
+
+- Ajoutons un healthcheck de type `livenessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
+
+```yaml
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 10
+          failureThreshold: 3
+          
+```
+
+La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas remplit le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
+
+Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que le  `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
+
+Cependant une application peut être en train de tourner mais indisponible pour cause de surcharge ou de mise à jour par exemple. Dans ce cas on voudrait que le pod ne soit pas détruit mais que le traffic évite l'instance indisponible pour être renvoyé vers un autre backend `ready`.
+
+#### Configuration d'une application avec des variables d'environnement simples
+
+- Notre application monstericon doit être configurée en mode DEV pour fonctionner dans le contexte de ce TP exposée sur le port 5000 (sinon par défaut elle tourne sur 9090). Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous devons mettre l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
+
+
+```yaml
+        env:
+        - name: CONTEXT
+          value: DEV
+```
+
+#### Ajouter des indications de ressource nécessaires pour garantir la qualité de service
+
+- Ajoutons aussi des contraintes sur l'usage du CPU et de la RAM, en ajoutant à la même hauteur que `env:` :
+
+```yaml
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+```
+
+Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.  
+
+- Relancer `skaffold run` pour appliquer les modifications.
+- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
 
 #### Exposer notre stack avec des services
 
@@ -195,18 +212,19 @@ Ajoutez le code précédent au début de chaque fichier déploiement. Complétez
 
 Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
 
-- Appliquez à nouveau vos trois fichiers.
+- Appliquez à nouveau avec `skaffold run`.
 - Listez les services avec `kubectl get services`.
 - Visitez votre application dans le navigateur avec `minikube service monstericon`.
+- Supprimez l'application avec `skaffold delete`.
 
-### Rassemblons les trois objets avec une kustomisation.
+### Rassemblons les trois objets avec une kustomisation et créons un déploiement récupérant monstericon depuis dockerhub
 
 Une kustomization permet:
 
 - De résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir les manipuler facilement (mais sans avoir des fichiers à rallonge):
 - De surcharger la description yaml de certaines ressources sans modifier le fichier original (en gros de patcher nos ressource à la volée au moment du `apply`).
 
-Créez un fichier `kustomization.yaml` avec à l'intérieur:
+Dans le dossier `k8s-deploy-dockerhub` copiez les 3 fichiers de `k8s-deploy-dev` et créez un fichier `kustomization.yaml` avec à l'intérieur:
 
 ```yaml
 resources:
@@ -214,10 +232,12 @@ resources:
     - dnmonster.yaml
     - redis.yaml
 ```
-- Essayez d'exécuter la kustomization avec `kubectl apply -k .`.
 
+- Modifiez le déploiement de `monstericon` pour utiliser un image du dockerhub (buildée et poussée par moi précédemment): `tecpi/monster_icon:0.1`
 
-On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour passer monstericon en mode `PROD` sur le port `9090` en remplaçant la variable d'environnement les numéros de port avec un patch (sans toucher au fichier monstericon.yaml). (Facultatif: trouvez comment utiliser cette fonctionnalité)
+- Essayez d'exécuter la kustomization avec `kubectl apply -k k8s-deploy-dockerhub`.
+
+On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour passer monstericon en mode `PROD` sur le port `9090` en remplaçant la variable d'environnement les numéros de port avec un patch (sans toucher au fichier monstericon.yaml).
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application sur le port standard
 
@@ -225,7 +245,7 @@ On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour pas
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
-- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utilisez l'ingress à la place pour afficher la page
+- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utilisez l'ingress à la place pour afficher la page.
 
 - Ajoutez également l'objet `Ingress` de configuration du loadbalancer suivant dans le fichier `monster-ingress.yaml` :
 
@@ -254,5 +274,5 @@ spec:
 
 ### Solution
 
-Le dépôt Git de la correction de ce TP est accessible ici : <https://github.com/Uptime-Formation/tp2_k8s_monsterstack_correction>
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b correction_k8s_tp3 https://github.com/Uptime-Formation/corrections_tp.git`
 

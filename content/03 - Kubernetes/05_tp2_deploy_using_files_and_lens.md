@@ -85,3 +85,7 @@ spec:
 - Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
 
 => Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
+
+### Solution
+
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b correction_k8s_tp2 https://github.com/Uptime-Formation/corrections_tp.git`
