@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Installer un registry privé d'images dans votre cluster 
-draft: true
+draft: false
 weight: 2090
 ---
 
