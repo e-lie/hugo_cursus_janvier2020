@@ -1,6 +1,6 @@
 ---
 title: '12 - TP 5 - Déployer Wordpress avec Helm'
-draft: false
+draft: true
 weight: 2071
 ---
 
@@ -48,4 +48,4 @@ wordpressPassword: <easytoguesspasswd>
 
 - Vous pouvez maintenant explorer ce grand fichier pour comprendre comment wordpress sera installé. En le parcourant on peut contstater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
-- Pour installer notre wordpress avec ces ressources en mode fichier vous pouvez simplement faire `kubectl apply -f wordpress-tp-fullresources.yaml`
+- Pour installer notre wordpress avec ces ressources en mode fichier vous pouvez simplement faire `kubectl apply -f wordpress-tp-fullresources.yaml`.
