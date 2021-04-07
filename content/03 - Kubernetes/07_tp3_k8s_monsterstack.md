@@ -270,9 +270,28 @@ spec:
 
 - Ajoutez ce fichier à notre `kustomization.yaml` et appliquez le. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
 
-- Allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`.
+- Pour corriger ce warning remplacez l'`apiVersion` par `networking.k8s.io/v1`. La syntaxe de la `spec` a légèrement changée depuis la v1beta1, modifiez comme suit:
+
+```yaml
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /monstericon
+          pathType: Prefix
+          backend:
+            service:
+              name: monstericon
+              port:
+                number: 5000
+```
+
+<!-- TODO changer la correction pour intégrer la bonne syntaxe et renommer l'ancienne en old-->
+
+- Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`.
 
 - Visitez la page `http://192.x.x.x/monstericon` pour constater que notre Ingress (reverse proxy) est bien fonctionnel.
+<!-- Pour le moment l'image de monstre ne s'affiche pas car la sous route de récup d'image /monster de notre application ne colle pas avec l'ingress que nous avons défini. TODO trouver la syntaxe d'ingress pour la faire marcher -->
 
 ### Solution
 

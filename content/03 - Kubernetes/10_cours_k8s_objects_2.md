@@ -7,15 +7,52 @@ weight: 2060
 
 ## Le stockage dans Kubernetes
 
+### Les Volumes Kubernetes
+
+Comme dans Docker, Kubernetes fournit la possibilité de mondes volumes virtuels dans les conteneurs de nos pod. On liste séparément les volumes de notre pod puis on les monte une ou plusieurs dans les différents conteneurs Exemple:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: k8s.gcr.io/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-pd
+      name: test-volume
+  volumes:
+  - name: test-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /data
+      # ce champ est optionnel
+      type: Directory
+```
+
+La problématique des volumes et du stockage est plus compliquée dans kubernetes que dans docker car k8s cherche à répondre à de nombreux cas d'usages. [doc officielle](https://kubernetes.io/fr/docs/concepts/storage/volumes/). Il y a donc de nombeux types de volumes kubernetes correspondants à des usages de base et aux solutions proposées par les principaux fournisseurs de cloud.
+
+Mentionnons quelques d'usage de base des volumes:
+
+- `hostPath`: monte un dossier du noeud ou est plannifié le pod à l'intérieur du conteneur.
+- `local`: comme hostPath mais conscient de la situation physique du volume sur le noeud et à combiner avec les placements de pods avec `nodeAffinity`
+- `emptyDir`: un dossier temporaire qui est supprimé en même temps que le pod
+- `configMap`: pour monter des fichiers de configurations provenant du cluster à l'intérieur des pods
+- `secret`: pour monter un secret (configuration) provenant du cluster à l'intérieur des pods
+- `cephfs`: monter un volume ceph provenant d'un ceph installé sur le cluster
+- etc.
+
+En plus de la gestion manuelle des volumes avec les option précédentes, kubernetes permet de provisionner dynamiquement du stockage en utilisant des plugins de création de volume grâce à 3 types d'objets: `StorageClass` `PersistentVolume` et `PersistentVolumeClaim`.
 ### Les types de stockage avec les `StorageClasses`
 
-Le stockage dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
+Le stockage dynamique dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
 
-- dans le cloud, ce sont les différentes offres du fournisseur,
-- dans un cluster auto-hébergé c'est par exemple :
-  - un disque dur local ou distant (NFS)
-  - ou bien une solution de stockage distribuée
-    - les plus connues sont Ceph et GlusterFS
+- dans le cloud, ce sont les différentes offres de volumes du fournisseur,
+- dans un cluster auto-hébergé c'est par exemple des opérateurs de stockage comme `rook.io` ou `longhorn`(Rancher).
+
+[doc officielle](https://kubernetes.io/docs/concepts/storage/storage-classes/)
 
 ### Demander des volumes et les liers aux pods :`PersistentVolumes` et `PersistentVolumeClaims`
 
@@ -24,6 +61,8 @@ Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : 
 - les *StorageClasses* fournissent du stockage
 - les conteneurs demandent du volume avec les *PersistentVolumeClaims*
 - les *StorageClasses* répondent aux *PersistentVolumeClaims* en créant des objets *PersistentVolumes* : le conteneur peut accéder à son volume.
+
+[doc officielle](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
 ### Des déploiements plus stables et précautionneux : les StatefulSets
 
