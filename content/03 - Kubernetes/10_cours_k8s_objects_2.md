@@ -64,6 +64,8 @@ Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : 
 
 [doc officielle](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
+Le provisionning de volume peut être manuelle (on crée un objet `PersistentVolume` ou non la `PersistentVolumeClaim` mène directement à la création d'un volume persistant si possible)
+
 ### Des déploiements plus stables et précautionneux : les StatefulSets
 
 L'objet `StatefulSet` est relativement récent dans Kubernetes.
@@ -79,7 +81,6 @@ En général, on utilise des StatefulSets quand on veut :
 - du stockage stable et persistant
 - des déploiements et du scaling contrôlés et dans un ordre défini
 - des rolling updates dans un ordre défini et automatisées
-
 
 ## Paramétrer ses Pods
 
@@ -97,7 +98,6 @@ Un secret se créé avec l'API Kubernetes, puis c'est au pod de demander à y av
 Il y a 3 façons de donner un accès à un secret :
 - le secret est un fichier que l'on monte en tant que volume dans un conteneur (pas nécessairement disponible à l'ensemble du pod). Il est possible de ne jamais écrire ce secret sur le disque (volume `tmpfs`).
 - le secret est une variable d'environnement du conteneur.
-- cas spécifique aux registres : le secret est récupéré par kubelet quand il pull une image.
 
 Pour définir qui et quelle app a accès à quel secret, on utilise les fonctionnalités dites "RBAC" de Kubernetes.
 
