@@ -1,13 +1,13 @@
 ---
 draft: false
-title: Cours 5 - Le réseau dans Kubernetes
-weight: 2050
+title: 08 - Cours - Le réseau dans Kubernetes
+weight: 2052
 ---
 
 Les solutions réseau dans Kubernetes ne sont pas standard.
 Il existe plusieurs façons d'implémenter le réseau.
 
-## Les objets Services
+## Rappel, les objets Services
 
 <!-- 
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
@@ -19,15 +19,44 @@ Les Services sont de trois types principaux :
 
 - `NodePort`: expose le service depuis l'IP publique de **chacun des noeuds du cluster** en ouvrant port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
 
-![](../../images/kubernetes/nodeport.png)
+![](../../images/kubernetes/nodeport.png?width=400px)
 *Crédits à [Ahmet Alp Balkan](https://medium.com/@ahmetb) pour les schémas*
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-![](../../images/kubernetes/loadbalancer.png)
+![](../../images/kubernetes/loadbalancer.png?width=400px)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
-## Les implémentations du réseau
+### Fournir des services LoadBalancer on premise avec `MetalLB`
+
+Dans un cluster managé provenant d'un fournisseur de cloud, la création d'un objet Service Lodbalancer entraine le provisionning d'une nouvelle machine de loadbalancing à l'extérieur du cluster avec une IPv4 publique grâce à l'offre d'IaaS du provideur (impliquant des frais supplémentaires).
+
+Cette intégration n'existe pas par défaut dans les clusters de dev comme minikube ou les cluster on premise (le service restera pending et fonctionnera comme un NodePort). Le projet [*MetalLB*](https://metallb.universe.tf/) cherche à y remédier en vous permettant d'installer un loadbalancer directement dans votre cluster en utilisant une connexion IP classique ou BGP pour la haute disponibilité.
+
+
+## Les objets Ingresses
+
+![](../../images/kubernetes/ingress.png)
+*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
+
+
+Un Ingress est un objet pour gérer le **reverse proxy** dans Kubernetes : il a besoin d'un **ingress controller** installé sur le cluster, qui agit donc au niveau du protocole HTTP et écoute sur un port (`80` ou `443` généralement), pour pouvoir rediriger vers différents services (qui à leur tour redirigent vers différents ports sur les pods) selon l'URL.
+
+- Un ingress basé sur Nginx plus ou moins officiel à Kubernetes et très utilisé
+- Traefik est optimisé pour k8s
+- il en existe d'autres : celui de l'entreprise Nginx, Istio, Contour, HAProxy....
+
+Comparaison : <https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b>
+
+## Le mesh networking et les *service meshes*
+
+Un **service mesh** est un type d'outil réseau pour connecter un ensemble de pods, généralement les parties d'une application microservices de façon encore plus intégrée que ne le permet Kubernetes.
+
+En effet opérer une application composée de nombreux services fortement couplés discutant sur le réseau implique des besoins particuliers en terme de routage des requêtes, sécurité et monitoring qui nécessite l'installation d'outils fortement dynamique autour des nos conteneurs.
+
+Un exemple de service mesh est `https://istio.io` qui, en ajoutant en conteneur "sidecar" à chacun des pods à supervisés, ajoute à notre application microservice un ensemble de fonctionnalités d'intégration très puissant. 
+
+## CNI (container network interface) : Les implémentations du réseau Kubernetes
 
 Beaucoup de solutions de réseau qui se concurrencent, demandant un comparatif un peu fastidieux.
 
@@ -45,7 +74,7 @@ Comparaisons :
 - <https://www.objectif-libre.com/fr/blog/2018/07/05/comparatif-solutions-reseaux-kubernetes/>
 - <https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/>
 
-## Les network policies
+## Les network policies : des firewalls dans le cluster
 
 ![](../../images/kubernetes/ahmetb_networkpolicies.gif)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
@@ -55,34 +84,6 @@ Comparaisons :
 Les pods deviennent isolés en ayant une NetworkPolicy qui les sélectionne. Une fois qu'une NetworkPolicy (dans un certain namespace) inclut un pod particulier, ce pod rejettera toutes les connexions qui ne sont pas autorisées par cette NetworkPolicy.
 
 - Des exemples de Network Policies : [Kubernetes Network Policy Recipes](https://github.com/ahmetb/kubernetes-network-policy-recipes)
-
-## Le loadbalancing
-
-Le loadbalancing permet de balancer le trafic à travers plusieurs nodes Kubernetes.
-
-Pas de solution de loadbalancing par défaut :
-- soit on se base sur ce que le fournisseur de cloud propose,
-- soit on configure [*MetalLB*](https://metallb.universe.tf/), seule alternative en dehors des fournisseurs de cloud
-
-## Les objets Ingresses
-
-![](../../images/kubernetes/ingress.png)
-*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
-
-
-Un Ingress est un objet pour gérer le **reverse proxy** dans Kubernetes : il a besoin d'un **ingress controller** installé sur le cluster, qui agit donc au niveau du protocole HTTP et écoute sur un port (`80` ou `443` généralement), pour pouvoir rediriger vers différents services (qui à leur tour redirigent vers différents ports sur les pods) selon l'URL.
-
-- Un ingress basé sur Nginx plus ou moins officiel à Kubernetes et très utilisé
-- Traefik est optimisé pour k8s
-- il en existe d'autres : celui de l'entreprise Nginx, Istio, Contour, HAProxy....
-
-Comparaison : <https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b>
-
-## Le mesh networking et les *service meshes*
-Envoy et Istio sont des *service meshes*.
-- Il faut y penser comme des super-ingresses : des proxy qui font beaucoup plus que du reverse proxy
-  - en particulier : ajouter des fonctions de monitoring et de sécurité
-  <!-- - ils s'adaptent plus ou moins bien à une solution réseau particulière -->
 
 ## Ressources sur le réseau
 

@@ -1,12 +1,10 @@
 ---
-title: Cours 2 - Mettre en place un cluster Kubernetes
+title: 02 - Cours - Mettre en place un cluster Kubernetes
 draft: false
 weight: 2020
 ---
 
-
 ## Architecture de Kubernetes - Partie 1 
-
 
 ##### Kubernetes master
 
@@ -31,16 +29,16 @@ Les nœuds d’un cluster sont les machines (serveurs physiques, machines virtue
 - Le control plane Kubernetes comprend un ensemble de processus en cours d’exécution sur votre cluster:
 
     - Le master Kubernetes est un ensemble de trois processus qui s’exécutent sur un seul nœud de votre cluster, désigné comme nœud maître (*master node* en anglais). Ces processus sont:
-      - `kube-apiserver`
-      - `kube-controller-manager`
-      - `kube-scheduler`
+      - `kube-apiserver`: expose l'API pour parler au cluster
+      - `kube-controller-manager`: basé sur une boucle qui controlle en permanence l'état des resources et essaie de le corriger s'il n'est plus conforme.
+      - `kube-scheduler`: monitore les resources des différents workers, décide et cartographie ou doivent être créé les conteneur(Pods)
   
     - Chaque nœud non maître de votre cluster exécute deux processus :
-        `kubelet`, qui communique avec le Kubernetes master.
+        `kubelet`, qui communique avec le Kubernetes master et controle la création et l'état des pods sur son noeud.
         `kube-proxy`, un proxy réseau reflétant les services réseau Kubernetes sur chaque nœud.
 
 
-Les différentes parties du control plane Kubernetes, telles que les processus Kubernetes master et kubelet, déterminent la manière dont Kubernetes communique avec votre cluster.
+Les différentes parties du control plane Kubernetes, telles que les processus `kube-controller-manager` et `kubelet`, déterminent la manière dont Kubernetes communique avec votre cluster.
 
 Le control plane conserve un enregistrement de tous les objets Kubernetes du système et exécute des boucles de contrôle continues pour gérer l’état de ces objets. À tout moment, les boucles de contrôle du control plane répondent aux modifications du cluster et permettent de faire en sorte que l’état réel de tous les objets du système corresponde à l’état souhaité que vous avez fourni.
 
@@ -49,7 +47,7 @@ Par exemple, lorsque vous utilisez l’API Kubernetes pour créer un objet `Depl
 
 ## Le client `kubectl`
 
-Permet depuis sa machine de travail de contrôler le cluster avec une ligne de commande qui ressemble un peu à celle de Docker (cf. TP1 et TP2):
+...Permet depuis sa machine de travail de contrôler le cluster avec une ligne de commande qui ressemble un peu à celle de Docker (cf. TP1 et TP2):
 
 - Lister les ressources
 - Créer et supprimer les ressources
@@ -117,13 +115,26 @@ Ce fichier déclare 2 clusters (un local, un distant), 2 contextes et 2 users.
 Pour installer un cluster de développement :
 
 - solution officielle : Minikube, tourne dans Docker par défaut (ou dans des VMs)
-- alternative qui possède de nombreux addons : microk8s
+- solution très pratique et vanilla: kind 
 - avec Docker Desktop depuis peu (dans une VM aussi)
-- un cluster léger avec `k3s`, de Rancher
+- un cluster léger avec `k3s`, de Rancher (simple et utilisable en production/edge)
 
-## Installer un cluster de production avec `kubeadm`
+## Commander un cluster en tant que service (*managed cluster*) dans le cloud
 
-Installer un cluster de production Kubernetes à la main est nettement plus complexe que mettre en place un cluster Docker Swarm.
+Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps des solutions de cluster gérées par eux :
+
+- Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
+- AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
+- Azure avec AKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
+- DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
+
+Pour sa qualité on recommande souvent Google GKE qui est plus ancien avec un bonne UX. Mais il s'agit surtout de faciliter l'intégration avec l'existant:
+
+- Si vous utilisez déjà AWS ou Azure
+
+## Installer un cluster de production on premise : l'outil officiel `kubeadm`
+
+`kubeadm` est un utilitaire aider générer les certificats et les configurations spéciques pour le control plane et connecter les noeuds au control plane. Il permet également d'effectuer des taches de maintenant comme la mise à jour progressive (rolling) de chaque noeud du cluster.
 
 - Installer le dæmon `Kubelet` sur tous les noeuds
 - Installer l'outil de gestion de cluster `kubeadm` sur un noeud master
@@ -134,17 +145,28 @@ Installer un cluster de production Kubernetes à la main est nettement plus comp
 
 L'installation est décrite dans la [documentation officielle](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/)
 
-## Installer un cluster complètement à la main
+Opérer et maintenir un cluster de production Kubernetes "à la main" est très complexe et une tâche à ne pas prendre à la légère. De nombreux éléments doivent être installés et géré par les opérateurs.
 
-On peut également installer Kubernetes de façon encore plus manuelle soit pour déployer une configuration vraiment spécifique ou simplement pour mieux comprendre ses rouages et composants.
+- Mise à jour et passage de version de kubernetes qui doit être fait très régulièrement car une version n'est supportée que 2 ans.
+- Choix d'une configuration réseau et de sécurité adaptée.
+- Installation probable de système de stockage distribué comme Ceph à maintenir également dans le temps
+- Etc.
 
+## Kubespray
+
+https://kubespray.io/#/
+
+En réalité utiliser `kubeadm` directement en ligne de commande n'est pas la meilleure approche car cela ne respecte pas l'infrastructure as code et rend plus périlleux la maintenance/maj du cluster par la suite.
+
+Le projet kubespray est un installer de cluster kubernetes utilisant Ansible et kubeadm. C'est probablement l'une des méthodes les plus populaires pour véritablement gérer un cluster de production on premise.
+
+Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance (comme avec kubeadm).
+## Installer un cluster complètement à la main pour s'exercer
+
+On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 
-## Commander un cluster en tant que service (*managed cluster*) dans le cloud
+## Remarque sur les clusters hybrides
 
-Tous les principaux provider de cloud fournissent depuis plus ou moins longtemps des solutions de cluster gérées par eux :
-
-- Google Cloud Plateform avec Google Kubernetes Engine (GKE) : très populaire car très flexible et l'implémentation de référence de Kubernetes.
-- AWS avec EKS : Kubernetes assez standard mais à la sauce Amazon pour la gestion de l'accès, des loadbalancers ou du scaling.
-- DigitalOcean ou Scaleway : un peu moins de fonctions mais plus simple à appréhender <!-- (nous l'utiliserons) -->
+Il est possible de connecter plusieurs clusters ensembles dans le cloud chez plusieurs fournisseurs
 

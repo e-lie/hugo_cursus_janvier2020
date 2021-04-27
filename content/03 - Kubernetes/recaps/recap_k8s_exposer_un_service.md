@@ -1,6 +1,6 @@
 ---
 title: Recap K8s - Exposer des services publiquement
-draft: false
+draft: true
 ---
 
 Les "NodePort" ça va 5 minutes mais on veut des apps accessibles avec un nom de domaine voir en https.

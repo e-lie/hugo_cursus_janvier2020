@@ -1,5 +1,5 @@
 ---
-title: Cours 7 - Helm, le gestionnaire de paquets Kubernetes
+title: 11 - Cours - Helm, le gestionnaire de paquets Kubernetes
 draft: false
 weight: 2070
 ---
@@ -7,43 +7,16 @@ weight: 2070
 
 Nous avons vu que dans Kubernetes la configuration de nos services / applications se fait généralement via de multiples fichiers YAML.
 
-### Les fichiers kustomization
+Les kustomizations permettent de rassembler ces descriptions en dossier de code et ont pas mal d'avantages mais on a vite besoin de quelque chose de plus puissant.
 
-Il est courant de décrire un ensemble de resources dans le même fichier, séparées par `---`.
-Mais on pourrait préférer rassembler plusieurs fichiers dans un même dossier et les appliquer d'un coup.
+- Pour s'adapter à plein de paramétrages différents de notre application
+- Pour éviter la répétition de code
 
-Pour cela K8s propose le concept de `kustomization`.
-
-Exemple:
-
-```yaml
-k8s-mysql/
-├── kustomization.yaml
-├── mysql-deployment.yaml
-└── wordpress-deployment.yaml
-```
-
-`kustomization.yaml`
-
-```yaml
-secretGenerator:
-  - name: mysql-pass
-    literals:
-      - password=YOUR_PASSWORD
-resources:
-  - mysql-deployment.yaml
-  - wordpress-deployment.yaml
-```
-On peut ensuite l'appliquer avec `kubectl apply -k ./`
-
-A noter que `kubectl kustomize .` permet de visualiser l'ensemble des modifications avant de les appliquer (`kubectl kustomize . | less` pour mieux lire).
+C'est donc "trop" déclaratif en quelque sorte, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
 
 ### Helm
 
-Quand on a une seule application cela reste gérable avec des kustomizations ou sans, mais dès qu’on a plusieurs environnements, applications et services, on se retrouve vite submergé·es de fichiers de centaines, voire de milliers, de lignes qui sont, de plus, assez semblables. 
-C'est donc "trop" déclaratif, et il faut se concentrer sur les quelques propriétés que l'on souhaite créer ou modifier,
-
-Pour pallier ce problème, il existe l'utilitaire Helm, qui produit les fichiers de déploiement que l'on souhaite.
+Pour pallier ce problème, il existe un utilitaire appelé Helm, qui produit les fichiers de déploiement que l'on souhaite.
 
 Helm est le package manager recommandé par Kubernetes, il utilise les fonctionnalités de templating du langage Go.
 
@@ -67,17 +40,6 @@ Les quelques concepts centraux de Helm :
 - Un Chart contient un lot d’informations nécessaires pour créer une application Kubernetes :
   - la **Config** contient les informations dynamiques concernant la configuration d’une **Chart**
   - Une **Release** est une instance existante sur le cluster, combinée avec une **Config** spécifique.
-
-
-### Architecture client-serveur de Helm
-
-Helm désigne une application client en ligne de commande.
-
-Pour fonctionner sur le cluster, Helm a besoin d'installer un gestionnaire appelé Tiller : c'est le serveur qui communique avec le client Helm et l’API de Kubernetes pour gérer vos déploiements.
-
-Lors de l’initialisation de Helm, le client installe Tiller sur un pod du cluster.
-
-Helm utilise automatiquement votre fichier `kubeconfig` pour se connecter.
 
 ### Quelques commandes Helm:
 

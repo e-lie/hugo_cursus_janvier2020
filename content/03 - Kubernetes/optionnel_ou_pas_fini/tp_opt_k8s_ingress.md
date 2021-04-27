@@ -1,6 +1,6 @@
 ---
 title: TP opt. - Les ingresses
-draft: false
+draft: true
 weight: 2080
 ---
 

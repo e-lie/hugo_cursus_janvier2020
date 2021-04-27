@@ -1,6 +1,6 @@
 ---
-title: TP7 - Stratégies de déploiement et monitoring
-draft: no
+title: TP optionnel - Stratégies de déploiement et monitoring
+draft: false
 ---
 
 <!-- https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/

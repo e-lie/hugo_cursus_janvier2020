@@ -1,6 +1,6 @@
 ---
 title: 'TP2 - Déployer une application multiconteneur'
-draft: false
+draft: true
 ---
 
 La première partie de ce TP va consister à créer des objets kubernetes pour déployer notre Stack monster_icon.
