@@ -53,3 +53,37 @@ wordpressPassword: <easytoguesspasswd>
 - On peut maintenant lire les fichier kubernetes déployés et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut contstater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
 - Installez un autre chart comme par exemple `gitlab` en le cherchant dans le menu apps de Lens et cliquant sur installer...
+<!-- 
+## Installer un certificat HTTPS avec certmanager
+
+- installer k3s sur l'hote (soit en desactivant traefik et installant nginx soit en gardant traefik)
+- installer certmanager avec helm dans le nouveau cluster
+- créer deux issuers letsencrypt (ou seulement letsencrypt-prod)
+- créer un ingress pour wordpress avec à peu pret:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"    
+    cert-manager.io/issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - wordpress.kluster.ptych.net
+    secretName: wordpress.kluster.ptych.net-tls
+  rules:
+  - host: wordpress.kluster.ptych.net
+    http:
+      paths:
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: wordpress-test
+            port:
+              number: 80
+``` -->
