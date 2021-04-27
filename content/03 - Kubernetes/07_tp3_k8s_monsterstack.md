@@ -14,7 +14,6 @@ Elle est composée :
 
 Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
 
-- Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 
 # Etudions le code et testons avec `docker-compose`
 
@@ -91,6 +90,9 @@ spec:
         - containerPort: 6379
           name: redis
 ```
+
+
+- Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
 
