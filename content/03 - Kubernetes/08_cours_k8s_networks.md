@@ -40,13 +40,100 @@ Cette intégration n'existe pas par défaut dans les clusters de dev comme minik
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
 
-Un Ingress est un objet pour gérer le **reverse proxy** dans Kubernetes : il a besoin d'un **ingress controller** installé sur le cluster, qui agit donc au niveau du protocole HTTP et écoute sur un port (`80` ou `443` généralement), pour pouvoir rediriger vers différents services (qui à leur tour redirigent vers différents ports sur les pods) selon l'URL.
+Un Ingress est un objet pour gérer dynamiquement le **reverse proxy** HTTP/HTTPS dans Kubernetes. Documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress
 
-- Un ingress basé sur Nginx plus ou moins officiel à Kubernetes et très utilisé
-- Traefik est optimisé pour k8s
-- il en existe d'autres : celui de l'entreprise Nginx, Istio, Contour, HAProxy....
+Exemple de syntaxe d'un ingress:
 
-Comparaison : <https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b>
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wildcard-host
+spec:
+  rules:
+  - host: "domain1.bar.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/bar"
+        backend:
+          service:
+            name: service1
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/foo"
+        backend:
+          service:
+            name: service2
+            port:
+              number: 80
+  - host: "domain2.foo.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: service3
+            port:
+              number: 80
+```
+
+Pour pouvoir créer des objets ingress il est d'abord nécessaire d'installer un **ingress controller** dans le cluster:
+
+- Il s'agit d'un déploiement conteneurisé d'un logiciel de reverse proxy (comme nginx) et intégré avec l'API de kubernetes
+- Le controlleur agit donc au niveau du protocole HTTP et doit lui-même être exposé (port 80 et 443) à l'extérieur, généralement via un service de type LoadBalancer.
+- Le controlleur redirige ensuite vers différents services (généralement configurés en ClusterIP) qui à leur tour redirigent vers différents ports sur les pods selon l'URL del a requête.
+
+Il existe plusieurs variantes d'**ingress controller**:
+
+- Un ingress basé sur Nginx plus ou moins officiel à Kubernetes et très utilisé: https://kubernetes.github.io/ingress-nginx/
+- Un ingress Traefik optimisé pour k8s.
+- il en existe d'autres : celui de payant l'entreprise Nginx, Contour, HAProxy...
+
+Chaque provider de cloud et flavour de kubernetes est légèrement différent au niveau de la configuration du controlleur ce qui peut être déroutant au départ:
+
+- minikube permet d'activer l'ingress nginx simplement (voir TP)
+- autre example: k3s est fourni avec traefik configuré par défaut
+- On peut installer plusieurs `ingress controllers` correspondant à plusieurs `IngressClasses`
+
+Comparaison des controlleurs: <https://medium.com/flant-com/comparing-ingress-controllers-for-kubernetes-9b397483b46b>
+
+## Gestion dynamique des certificats à l'aide de `certmanager`
+
+`Certmanager` est une application kubernetes (un `operator`) plus ou moins officielle  capable de générer automatiquement des certificats TLS/HTTPS pour nos ingresses.
+
+- Documentation d'installation: https://cert-manager.io/docs/installation/kubernetes/
+- Tutorial pas à pas pour générer un certificat automatiquement avec un ingress et letsencrypt: https://cert-manager.io/docs/tutorials/acme/ingress/
+
+Exemple de syntaxe d'un ingress utilisant `certmanager`:
+
+```yaml
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  name: kuard
+  annotations:
+    kubernetes.io/ingress.class: "nginx"    
+    cert-manager.io/issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - example.example.com
+    secretName: quickstart-example-tls
+  rules:
+  - host: example.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: kuard
+            port:
+              number: 80
+```
 
 ## Le mesh networking et les *service meshes*
 
