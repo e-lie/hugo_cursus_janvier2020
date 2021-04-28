@@ -27,7 +27,7 @@ ansible --version
 - Traditionnellement lorsqu'on veut vérifier le bon fonctionnement d'une configuration on utilise `ansible all -m ping`. Que signifie-t-elle ?
 
 {{% expand "Réponse  :" %}}
-Cette commande lance le module ansible `ping` (test de connection ansible) sur le groupe all c'est à dire toutes les machines de notre inventaire. Il s'agit d'une commande ad-hoc ansible.
+Cette commande lance le module ansible `ping` (test de connexion ansible) sur le groupe all c'est à dire toutes les machines de notre inventaire. Il s'agit d'une commande ad-hoc ansible.
 {{% /expand %}}
 
 
@@ -42,7 +42,7 @@ Cette commande renvoie une erreur car `all` ne matche aucun hôte.
 {{% /expand %}}
 
 
-- Utilisez en plus l'option `-vvv` pour mettre en mode très verbeux. Ce mode est très efficace pour **débugger** lorsqu'une erreur inconnue se présente. Que se passe-t-il avec l'inventaire ?
+- Utilisez en plus l'option `-vvv` pour mettre en mode très verbeux. Ce mode est très efficace pour **debugger** lorsqu'une erreur inconnue se présente. Que se passe-t-il avec l'inventaire ?
 
 {{% expand "Réponse  :" %}}
 
@@ -58,18 +58,18 @@ ansible essaye de trouver un inventaire c'est à dire une liste de machine à co
 ```
 ansible localhost -m ping
 ```
-La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est contactée (sortie en rouge). Nous allons dans la suite créer des machines de lab avec ssh installé.
+La commande échoue car ssh n'est pas configuré sur l'hôte mais la machine est contactée (sortie en rouge). Nous allons dans la suite créer des machines de lab avec ssh installé.
 {{% /expand %}}
 
 
-- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1` dans l'inventaire par défaut (le chemin est indiqué dans). Et pinguer hotelocal.
+- Ajoutez la ligne `hotelocal ansible_host=127.0.0.1` dans l'inventaire par défaut (le chemin est `/etc/ansible/hosts`). Et pinguer hotelocal.
 
 {{% expand "Réponse  :" %}}
 
 - Éditez le fichier `/etc/ansible/hosts` avec par exemple `sudo gedit /etc/ansible/hosts`
 
 - Testez cette configuration avec `ansible hotelocal -m ping`
-- => idem echec de login
+- => idem échec de login
 
 {{% /expand %}}
 
@@ -94,7 +94,7 @@ Il faut cependant l'initialiser avec : `lxd init`
 
 - Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
 
-## Facultatif : Configurer un conteneur pour Ansible manuellement
+<!-- ## Facultatif : Configurer un conteneur pour Ansible manuellement
 {{% expand "Facultatif :" %}}
 
 
@@ -182,11 +182,17 @@ lxc launch centos_ansible_ready centos2 centos3
 lxc delete centos1 centos2 centos3 --force
 ```
 
-{{% /expand %}}
+{{% /expand %}} -->
 
-### Récupérer les images de correction depuis un remote LXD
+### Récupérer les images pré-configurées
 
-Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
+Pour avoir tous les mêmes images de base générons-les depuis un script pré-installé, dans un terminal lancez :
+```bash
+bash /opt/lxd.sh
+``` 
+
+<!-- ### Récupérer les images de correction depuis un remote LXD -->
+<!-- Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
 
 - Ajoutez le remote `tp-images` avec la commande:
 
@@ -202,7 +208,7 @@ lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
 ```bash
 lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
 lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
-```
+``` -->
 
 
 ### Lancer et tester les conteneurs
@@ -234,7 +240,7 @@ Nous allons créer un tel projet de code pour la suite du tp1
 
 
 {{% expand "Facultatif  :" %}}
-- Initialisez le en dépôt git et configurez git:
+- Initialisez-le en dépôt git et configurez git:
 
 ```
 cd tp1
@@ -256,7 +262,7 @@ Un projet Ansible implique généralement une configuration Ansible spécifique 
 [defaults]
 inventory = ./inventory.cfg
 roles_path = ./roles
-host_key_checking = false # nécessaire pour les labs ou on créé et supprime des machines constamment avec des signatures SSH changées.
+host_key_checking = false # nécessaire pour les labs où l'on créé et supprime des machines constamment avec des signatures SSH changées.
 ```
 
 - Créez le fichier d'inventaire spécifié dans `ansible.cfg` et ajoutez à l'intérieur notre nouvelle machine `hote1`.
@@ -277,7 +283,7 @@ ansible_user=<votre_user>
 
 ## Contacter nos nouvelles machines
 
-Ansible cherche la configuration locale dans le dossier courant. Conséquence: on **lance généralement** toutes les commandes ansible depuis **la racine de notre projet**.
+Ansible cherche la configuration locale dans le dossier courant. Conséquence : on **lance généralement** toutes les commandes Ansible depuis **la racine de notre projet**.
 
 - Dans le dossier du projet, essayez de relancer la commande ad-hoc `ping` sur cette machine.
 
@@ -306,6 +312,7 @@ centos1 ansible_host=<ip>
 
 En précisant les paramètres de connexion dans le playbook il et aussi possible d'avoir des modes de connexion différents pour chaque machine.
 
+<!-- TODO: faire plus court pour adhoc pour pouvoir explorer --check et become: et autres avec les playbooks plutôt -->
 ## Installons nginx avec quelques modules et commandes ad-hoc
 
 - Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
@@ -402,4 +409,4 @@ Il existe trois façon de lancer des commandes unix avec ansible:
 
 ```
 ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-```
+``` 
