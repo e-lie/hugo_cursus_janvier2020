@@ -80,7 +80,7 @@ La découverte de service désigne généralement les méthodes qui permettent �
 - Elles vont pouvoir récupérer des information sur leur contexte (dev ou prod, us ou fr?)
 - Ce type d'automatisation de l'intérieur permet de limiter la complexité du déploiement.
 
-Concrêtement dans au sein d'un orchestrateur un système de découverte de service est un serveur qui est au courant automatiquement:
+Concrètement dans au sein d'un orchestrateur un système de découverte de service est un serveur qui est au courant automatiquement:
 
   - de chaque conteneur lancé.
   - du contexte dans lequel il a été lancé.

@@ -1,6 +1,6 @@
 ---
 draft: false
-title: "09 - TP 4 - Déployer Wordpress Avec une base de donnée persistente"
+title: "09 - TP 4 - Déployer Wordpress Avec une base de donnée persistante"
 weight: 2055
 ---
 

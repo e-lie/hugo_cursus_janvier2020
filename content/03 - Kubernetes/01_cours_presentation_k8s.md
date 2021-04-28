@@ -8,7 +8,7 @@ weight: 2010
 - Le projet est très ambitieux : une façon de considérer son ampleur est de voir Kubernetes comme un système d'exploitation (et un standard ouvert) pour les applications distribuées et le cloud.
 - Le projet est développé en Open Source au sein de la Cloud Native Computing Foundation.
 
-## Concrêtement : Architecture de Kubernetes
+## Concrètement : Architecture de Kubernetes
 
 ![](../../images/kubernetes/k8s_archi1.png?width=800px)
 
@@ -81,7 +81,7 @@ Les conteneurs sont souvent comparés à l'innovation du porte conteneur pour le
 - Intégrer tout le monde dans une seule équipe et ...
 - Calquer les rythmes de travail sur l'organisation agile du développement logiciel
 - Rapprocher techniquement la gestion de l'infrastructure du développement avec l'infrastructure as code.
-  - concrêtement on écrit des fichiers de code pour gérer les éléments d'infra
+  - Concrètement on écrit des fichiers de code pour gérer les éléments d'infra
   - l'état de l'infrastructure est plus claire et documentée par le code
   - la complexité est plus gérable car tout est déclaré et modifiable au fur et à mesure de façon centralisée
   - l'usage de git et des branches/tags pour la gestion de l'évolution d'infrastructure
@@ -136,7 +136,7 @@ Au delà de ces trois éléments, l'écosystème d'objets de Kubernetes est vast
 
 Un des intérêts principaux de Kubernetes est de fournir un modèle de Plateform as a Service (PaaS) suffisamment versatile qui permet l'interopérabilité entre des fournisseurs de clouds différents et des solutions auto-hébergées (on premise).
 
-Cependant cette interopérabilité n'est pas automatique (pour les cas complexes) car Kubernetes permet beaucoup de variations. Concrêtement il existe des variations entre les installations possibles de Kubernetes
+Cependant cette interopérabilité n'est pas automatique (pour les cas complexes) car Kubernetes permet beaucoup de variations. Concrètement il existe des variations entre les installations possibles de Kubernetes
 ## Distributions et "flavours" de Kubernetes
 
 Kubernetes est avant tout un ensemble de standards qui peuvent avoir des implémentations concurrentes. Il existe beaucoup de variétés (**flavours**) de Kubernetes, implémentant concrètement les solutions techniques derrière tout ce que Kubernetes ne fait que définir : solutions réseau, stockage (distribué ou non), loadbalancing, service de reverse proxy (Ingress), autoscaling de cluster (ajout de nouvelles VM au cluster automatiquement), monitoring…

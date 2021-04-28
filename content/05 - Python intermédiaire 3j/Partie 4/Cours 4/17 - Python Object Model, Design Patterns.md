@@ -119,7 +119,7 @@ Il existe pas mal d'autres Patterns non implémentés direactement dans le langa
 
 ## Décorateurs
 
-Les décorateurs sont en Python des sortes d'"emballages" qu'on ajoute aux fonctions et au classes pour personnaliser leur comportement sans modifier le code principal de la fonction. Concrêtement les décorateurs sont des 
+Les décorateurs sont en Python des sortes d'"emballages" qu'on ajoute aux fonctions et au classes pour personnaliser leur comportement sans modifier le code principal de la fonction. Concrètement les décorateurs sont des 
 
 En gros ça permet d'ajouter des prétraitements, des posttraitements et de modifier le comportement de la fonction elle
 
@@ -156,7 +156,7 @@ Dans le deuxième cas il faut utiliser le multiprocessing (solution 1.) pour max
 On peut combiner facilement les deux approches si nécessaire.
 
 
-### Concrêtement avec des exemples
+### Concrètement avec des exemples
 
 On commence par essayer d'accélérer son programme avec `asyncio`
 
