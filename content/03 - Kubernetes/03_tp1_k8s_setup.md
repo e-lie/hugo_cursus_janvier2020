@@ -91,7 +91,7 @@ Un cluster Kubernetes a généralement un namespace appelé `default` dans leque
 
 - Pour avoir des informations sur un namespace : `kubectl describe namespace/kube-system`
 
-### Déployer une application
+### Déployer une application en CLI
 
 Nous allons maintenant déployer une première application conteneurisée. Le déploiement est un peu plus complexe qu'avec Docker, en particulier car il est séparé en plusieurs objets et plus configurable.
 
@@ -144,7 +144,7 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
-## Mettre en place un cluster K8s managé chez un provider de cloud : l'exemple de Scaleway
+## Une 2e installation : Mettre en place un cluster K8s managé chez le provider de cloud Scaleway
 
 Je vais louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
 
@@ -157,28 +157,43 @@ La création prend environ 5 minutes.
 
 Ce fichier contient la **configuration kubectl** adaptée pour la connexion à notre cluster.
 
+## Une 3e installation: `k3s` sur votre VPS
+
+K3s est une distribution de Kubernetes orientée vers la création de petits clusters de production notamment pour l'informatique embarquée et l'Edge computing. Elle a la caractéristique de rassembler les différents composants d'un cluster kubernetes en un seul "binaire" pouvant s'exécuter en mode `master` (noeud du control plane) ou `agent` (noeud de calcul).
+
+Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une commande ce que nous allons faire ici:
+
+- Passez votre terminal en root avec la commande `sudo -i` puis:
+- Lancez dans un terminal la commande suivante: `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh - `
+
+
 ## Merger la configuration kubectl
 
-- Ouvrez avec `gedit` ou `VSCode` les fichiers `kubeconfig` de scaleway et `~/.kube/config`.
-- fusionnez dans `~/.kube/config` les éléments des listes YAML de:
+
+La/Les configurations de kubectl sont à déclarer dans la variable d'environnement `KUBECONFIG`. Nous allons déclarer deux fichiers de config et les merger automatiquement. 
+
+- Téléchargeons le fichiers de configuration scaleway fourni par le formateur ou à récupérer sur votre espace Scaleway. Enregistrez le par exemple dans `~/.kube/scaleway.yaml`.
+
+- Copiez le fichier de config `/etc/rancher/k3s/k3s.yaml` dans `~/.kube`.
+
+- Changez la variable d'environnement pour déclarer la config par défaut avec en plus nos deux nouvelles configs: `export KUBECONFIG=~/.kube/config:~/.kube/scaleway.yaml:~/.kube/k3s.yaml`
+
+- Nous pouvons maintenant visualiser les trois fichiers de config avec `kubectl config view`.
+
+- Pour afficher la configuration fusionnée des fichiers et l'exporter comme configuration par défaut lancez: `kubectl config view --flatten > ~/.kube/config`.
+
+- Remettons l'env par défaut (vide): `export KUBECONFIG=''`.
+
+- Maintenant que nos trois configs sont fusionnées, observons l'organisation du fichier `~/.kube/config` en particulier les éléments des listes YAML de:
   - `clusters`
   - `contexts`
   - `users`
+
 - Listez les contextes avec `kubectl config get-contexts` et affichez les contexte courant avec `kubectl config current-context`.
+
 - Changez de contexte avec `kubectl config use-context <nom_contexte>`.
 
-- Testons la connection avec `kubectl get nodes`.
-
-## Déployer l'application
-
-- Lancez `kubectl cluster-info`, l'API du cluster est accessible depuis un nom de domaine généré par le provider.
-- Créez un namespace à votre nom avec `kubectl create namespace <nom_namespace>`.
-- Déployez l'application `rancher-demo` comme dans la partie précédente mais cette fois installez la dans votre namespace plutôt que le namespace par défaut en ajoutant l'argument `-n <nom_namespace>` à vos commandes.
-- Pour visiter l'application vous devez trouver:
-  - l'IP publique d'un des nœuds du cluster en listant les nodes avec `kubectl get nodes` puis détaillant un node avec pour avoir l'IP avec `kubectl describe node/<nom_d_un_node> | grep ExternalIP`
-  - Le nodeport du service dans les ~30000 avec `kubectl get svc -n <nom_namespace>` et chercher le nombre qui est à côté de `8080`.
-
-Dans le contexte d'un cloud provider, on peut cette fois créer des services de type `LoadBalancer` qui entraineront le provisionning d'un loadbalancr au niveau du provider (et donc des frais supplémentaires pour chaque service). L'application dispose alors d'une vraie IP externe en haute disponibilité (si un noeud tombe toujours accessible).
+- Testons quelle connexion nous utilisons avec avec `kubectl get nodes`.
 
 
 ## Au délà de la ligne de commande...
@@ -187,15 +202,13 @@ Dans le contexte d'un cloud provider, on peut cette fois créer des services de 
 
 Le moyen le plus classique pour avoir une vue d'ensemble des ressources d'un cluster est d'utiliser la Dashboard officielle. Cette Dashboard est généralement installée par défaut lorsqu'on loue un cluster chez un provider.
 
-On peut aussi l'installer dans minikube.
+On peut aussi l'installer dans minikube ou k3s.
 
 => Démonstration
 
 #### Installer Lens
 
-Lens est une interface graphique sympatique pour Kubernetes.
-
-Elle se connecte en utilisant kubectl et la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard très puissant et agréable à utiliser.
+Lens est une interface graphique (un client "lourd") pour Kubernetes. Elle se connecte en utilisant kubectl et la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard puissant et agréable à utiliser.
 
 Vous pouvez l'installer en lançant ces commandes :
 
@@ -208,3 +221,6 @@ sudo dpkg -i Lens-4.1.4.amd64.deb
 - Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
 - Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement
 - Explorons ensemble les ressources dans les différentes rubriques et namespaces
+
+#### Installer `Argocd` sur notre cluster k3s
+

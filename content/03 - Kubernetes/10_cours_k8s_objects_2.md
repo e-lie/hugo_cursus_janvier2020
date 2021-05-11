@@ -173,15 +173,41 @@ Cependant quatre rôles génériques existent aussi par défaut :
 
 La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
 
-### Les CRD et Operators
+### Kubernetes API et extension par APIgroups
 
-Les *CustomResourcesDefinition* sont l'objet le plus *méta* de Kubernetes : inventés par Red Hat pour ses *Operators*, ils permettent de définir un nouveau type d'objet dans Kubernetes.
-Combinés à des Operators (du code d'API en Go), ils permettent d'étendre Kubernetes pour gérer de nouveaux objets qui eux-même interagissent avec des objets Kubernetes.
+Tous les types de resources Kubernetes correspondent à un morceau (un sous arbre) d'API REST de Kubernetes. Ces chemins d'API pour chaque ressources sont classés par groupe qu'on appelle des `apiGroups`:
+
+- On peut lister les resources et leur groupes d'API avec la commande `kubectl api-resources -o wide`.
+- Ces groups correspondent aux préfixes indiqué dans la section `apiVersion` des descriptions de ressources.
+- Ces groupes d'API sont versionnés sémantiquement et classés en `alpha` `beta` et `stable`. `beta` indique déjà un bon niveau de stabilité et d'utilisabilité et beaucoup de ressources officielles de kubernetes ne sont pas encore en api stable. Exemple: les `CronJobs` viennent de se stabiliser au début 2021.
+- N'importe qui peut développer ses propres types de resources appelées `CustomResourceDefinition` (voir ci dessous) et créer un `apiGroup` pour les ranger.
+
+Documentation: https://kubernetes.io/docs/reference/using-api/
+
+### Operators et Custom Resources Definitions (CRD)
+
+Un opérateur est :
+ - un morceau de logique opérationnelle de votre infrastructure (par exemple: la mise à jour votre logiciel de base de donnée stateful comme cassandra ou elasticsearch) ...
+ - ... implémenté dans kubernetes par un/plusieurs conteneur(s) "controller" ...
+ - ... controllé grâce à une extension de l'API Kubernetes sous forme de nouveaux type d'objets kubernetes personnalisés (de haut niveau) appelés *CustomResourcesDefinition* ...
+ - ... qui crée et supprime des resources de base Kubernetes comme résultat concrêt.
+
+Les opérateurs sont un sujet le plus *méta* de Kubernetes et sont très à la mode depuis leur démocratisation par Red Hat pour la gestion automatique de base de données.
+
+- Il peuvent être développés avec un framework Go ou Ansible
+- Ils sont généralement répertoriés sur le site: https://operatorhub.io/
 
 Exemples :
+- L'opérateur Prometheus permet d'automatiser le monitoring d'un cluster et ses opérations de maintenance.
 - la chart officielle de la suite Elastic (ELK) définit des objets de type `elasticsearch`
 - KubeVirt permet de rajouter des objets de type VM pour les piloter depuis Kubernetes
-- Azure propose des objets correspondant à ses ressources du cloud Azure, pour pouvoir créer et paramétrer des ressources Azure directement via la logique de Kubernetes
+- Azure propose des objets correspondant à ses ressources du cloud Azure, pour pouvoir créer et paramétrer des ressources Azure directement via la logique de Kubernetes.
 
 
 ![](../../images/kubernetes/k8s_crd.png)
+
+##### Limites des opérateurs
+
+Il est possible de développer soit même des opérateurs mais il s'agit de développement complexes qui devraient être entrepris par les développeurs d'un logiciel uniquement et qui sont surtout utiles pour des applications distribuées et directement stateful.
+
+Voir : https://thenewstack.io/kubernetes-when-to-use-and-when-to-avoid-the-operator-pattern/
