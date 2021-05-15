@@ -178,8 +178,6 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 
 - Changez la variable d'environnement pour déclarer la config par défaut avec en plus nos deux nouvelles configs: `export KUBECONFIG=~/.kube/config:~/.kube/scaleway.yaml:~/.kube/k3s.yaml`
 
-- Nous pouvons maintenant visualiser les trois fichiers de config avec `kubectl config view`.
-
 - Pour afficher la configuration fusionnée des fichiers et l'exporter comme configuration par défaut lancez: `kubectl config view --flatten > ~/.kube/config`.
 
 - Remettons l'env par défaut (vide): `export KUBECONFIG=''`.
