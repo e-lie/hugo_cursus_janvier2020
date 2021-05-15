@@ -174,7 +174,7 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 
 - Téléchargeons le fichiers de configuration scaleway fourni par le formateur ou à récupérer sur votre espace Scaleway. Enregistrez le par exemple dans `~/.kube/scaleway.yaml`.
 
-- Copiez le fichier de config `/etc/rancher/k3s/k3s.yaml` dans `~/.kube`.
+- Copiez le fichier de config k3s `/etc/rancher/k3s/k3s.yaml` dans `~/.kube`: `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/ && sudo chown stagiaire ~/.kube/k3s.yaml`
 
 - Changez la variable d'environnement pour déclarer la config par défaut avec en plus nos deux nouvelles configs: `export KUBECONFIG=~/.kube/config:~/.kube/scaleway.yaml:~/.kube/k3s.yaml`
 
