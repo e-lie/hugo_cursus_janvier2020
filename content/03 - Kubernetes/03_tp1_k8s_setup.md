@@ -222,16 +222,6 @@ sudo dpkg -i Lens-4.1.4.amd64.deb
 
 #### Installer `Argocd` sur notre cluster k3s
 
-ArgoCD s'installe grâce à une série de manifestes Kubernetes que nous verrons plus en détail dans les cours et TP suivant. Pour récupérer ces manifestes d'installation nous allons utiliser git et le dépôt de correction : `cd ~/Desktop && git clone -b argocd_installation https://github.com/Uptime-Formation/corrections_tp.git`
+Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster.
 
-- `kubectl config use-context default`
-- `kubectl get nodes`
-- `cd ~/Desktop/argocd_installation`
-- `kubectl apply -f argocd-kluster/namespaces.yaml`
-- `kubectl apply -f argocd-kluster/ingress-nginx`
-- `kubectl apply -f argocd-kluster/cert-manager`
-
-- Change `<yourname>` par votre nom (le login guacamole) pour configurer le nom de domaine de votre cluster personnel.
-
-- `kubectl apply -f argocd-kluster/argocd/manifests`
-- `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
+Nous verrons dans le TP5 comment l'installer et l'utiliser.
