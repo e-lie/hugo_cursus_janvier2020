@@ -91,7 +91,6 @@ spec:
           name: redis
 ```
 
-
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
@@ -286,12 +285,12 @@ spec:
 
 - Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`).
 
-- Ajoutez la ligne `<ip-minikube>  monsterstack.local` au fichier `/etc/hosts` avec `sudo nano /etc/hosts` puis CRTL+S et CTRL+X pour suaver et quitter.
+- Ajoutez la ligne `<ip-minikube>  monsterstack.local` au fichier `/etc/hosts` avec `sudo nano /etc/hosts` puis CRTL+S et CTRL+X pour sauver et quitter.
 
 - Visitez la page `http://monsterstack.local` pour constater que notre Ingress (reverse proxy) est bien fonctionnel.
 <!-- Pour le moment l'image de monstre ne s'affiche pas car la sous route de récup d'image /monster de notre application ne colle pas avec l'ingress que nous avons défini. TODO trouver la syntaxe d'ingress pour la faire marcher -->
 
 ### Solution
 
-Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b correction_k8s_tp3 https://github.com/Uptime-Formation/corrections_tp.git`
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b tp3 https://github.com/Uptime-Formation/corrections_tp.git`
 
