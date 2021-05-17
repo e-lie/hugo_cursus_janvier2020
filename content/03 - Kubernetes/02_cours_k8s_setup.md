@@ -33,7 +33,7 @@ Les nœuds d’un cluster sont les machines (serveurs physiques, machines virtue
       - `kube-controller-manager`: basé sur une boucle qui controlle en permanence l'état des resources et essaie de le corriger s'il n'est plus conforme.
       - `kube-scheduler`: monitore les resources des différents workers, décide et cartographie ou doivent être créé les conteneur(Pods)
   
-    - Chaque nœud non maître de votre cluster exécute deux processus :
+    - Chaque nœud (master et worker) de votre cluster exécute deux processus :
         `kubelet`, qui communique avec le Kubernetes master et controle la création et l'état des pods sur son noeud.
         `kube-proxy`, un proxy réseau reflétant les services réseau Kubernetes sur chaque nœud.
 

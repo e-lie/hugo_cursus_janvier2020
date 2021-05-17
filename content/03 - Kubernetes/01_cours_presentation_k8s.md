@@ -54,7 +54,7 @@ Il est un des projets qui symbolise et supporte techniquement ces transformation
 - On retourne à la consommation de "temps de calcul" et de services après une "aire du Personnal Computer".
 - Pour organiser cela on définit trois niveaux à la fois techniques et économiques de l'informatique:
   - **Software as a Service**: location de services à travers internet pour les usagers finaux
-  - **Plateforme as a Service**: location d'un environnement d'exécution logiciel flexible à destination des développeurs
+  - **Plateform as a Service**: location d'un environnement d'exécution logiciel flexible à destination des développeurs
   - **Infrastructure as a Service**: location de resources "matérielles" à la demande pour installer des logiciels sans avoir à maintenir un data center.
 
 #### Conteneurisation
