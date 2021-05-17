@@ -243,7 +243,7 @@ resources:
 
 On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour passer monstericon en mode `PROD` sur le port `9090` en remplaçant la variable d'environnement les numéros de port avec un patch (sans toucher au fichier monstericon.yaml).
 
-### Ajoutons un ingress (~ reverse proxy) pour exposer notre application sur le port standard
+### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
 - Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
 

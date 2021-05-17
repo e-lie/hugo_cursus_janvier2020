@@ -42,53 +42,134 @@ On peut écraser certains de ces paramètres dans un nouveau fichier par exemple
 
 ### Installer ArgoCD
 
-Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster.
+Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster. En particulier pour visualiser les charts Helm déployés.
 
 ArgoCD s'installe grâce à une série de manifestes Kubernetes. Pour récupérer ces manifestes d'installation nous allons utiliser git et le dépôt de correction : `cd ~/Desktop && git clone -b argocd_installation https://github.com/Uptime-Formation/corrections_tp.git argocd_installation`.
 
-L'installation comporte plusieurs étapes qui doivent être exécutées dans l'ordre et en vérifiant s'il n'y a pas d'erreurs à chaque étape.
+Cette installation comporte plusieurs étapes qui doivent être exécutées dans l'ordre et en vérifiant s'il n'y a pas d'erreurs à chaque étape.
 
 - Pour être sur d'installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` puis `kubectl get nodes` pour vérifier.
 - Les resources Kubernetes d'installation sont dans le dossier cloné précédemment et la partie kubernetes: `cd ~/Desktop/argocd_installation/kubernetes`
 - Commençons par créer quelques namespaces (`argocd` et `cert-manager`) pour installer nos différentes applications: `kubectl apply -f argocd-kluster/namespaces.yaml`
 - Puis installation de l'ingress controller nginx dans le namespace `kube-system`: `kubectl apply -n kube-system -f argocd-kluster/ingress-nginx`
-- Dans Lens vérifiez que le pod `ingres-nginx-controller-xxx` est bien lancé (vert)
+- Dans Lens vérifiez que le pod `ingress-nginx-controller-xxx` est bien lancé (vert)
 
 Ensuite installons l'application cert-manager qui permet de générer **automatiquement** des certificats TLS pour nos applications web HTTPS (notamment avec letsencrypt et ACME). Argocd à une interface web qui nécessite un accès https.
 
-- Lancez : `kubectl apply -n cert-manager -f argocd-kluster/cert-manager/cert-manager-manifests.yaml`.
+- Lancez : `kubectl apply -f argocd-kluster/cert-manager/cert-manager-manifests.yaml`.
 - Créons également les **"Issuers"** c'est à dire les composants qui vont permettre d'émettre des certificats avec la commande: `kubectl apply -n cert-manager -f argocd-kluster/cert-manager/issuers`.
 
-Vos serveurs VNC qui sont aussi désormais des clusters k3s on déjà deux sous-domaines configurés: `<votrelogin>.formation.dopl.uk` et `*.<votrelogin>.formation.dopl.uk`. Le sous domaine `argocd.<login>.formation.dopl.uk` pointe donc déjà sur le serveur <(Wildcard DNS). Celà va permettre à `cert-manager` de créer automatiquement un `ACME HTTP Challenge` pour enregistrer un certificat TLS.
+Vos serveurs VNC qui sont aussi désormais des clusters k3s on déjà deux sous-domaines configurés: `<votrelogin>.formation.dopl.uk` et `*.<votrelogin>.formation.dopl.uk`. Le sous domaine `argocd.<login>.formation.dopl.uk` pointe donc déjà sur le serveur (Wildcard DNS). Celà va permettre à `cert-manager` de créer automatiquement un `ACME HTTP Challenge` pour enregistrer un certificat TLS.
 
 - Dans le fichier Changez `argocd-kluster/argocd/argocd-ingress.yaml`, changez `<yourname>` par votre nom (le login guacamole) pour configurer l'ingress sur le nom de domaine de votre cluster personnel.
 
 - Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests`
 - Enfin `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
 
-<!-- ### TODO: Installer et visualiser le chart wordpress avec argocd -->
+- Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`.
 
-### La fonction `template` de Helm pour étudier les ressources d'un Chart
+### Utiliser la fonction `template` de Helm pour étudier les ressources d'un Chart
 
 - Visitez le code de ce chart ici: https://github.com/bitnami/charts/tree/master/bitnami
 
-- Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`, Cherchez comment modifier l'username et le password wordpress d'installation ?
+- Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
 
-- Désinstallez la release avec `helm uninstall wordpress-tp`
+- Comment modifier l'username et le password wordpress à l'installation ? il faut donner comme paramètres le yaml suivant:
 
-- Créez un dossier TP5 avec à l'intérieur un fichier `values.yaml` contenant:
-
-```
+```yaml
 wordpressUsername: <votrenom>
 wordpressPassword: <easytoguesspasswd>
 ```
 
-- En utilisant ces paramètres auxquels vous pouvez en ajouter d'autres identifiés dans le dépot du projet, installez e chart à nouveau avec `helm install wordpress-tp bitnami/wordpress --values=values.yaml`
+- Nous allons paramétrer plus encore l'installation. Créez un dossier TP5 avec à l'intérieur un fichier `values.yaml` contenant:
 
-- Visitez le site `minikube service wordpress-tp`
+```yaml
+wordpressUsername: <stagiaire> # replace
+wordpressPassword: myunsecurepassword
+wordpressBlogName: Kubernetes example blog
 
-- Pour savoir qu'est-ce que nous venons d'installer, faites un rendu (templating) des fichiers du chart dans un grand fichier à la racine du  projet en lançant: `helm template wordpress-tp bitnami/wordpress --values=values.yaml >> wordpress-tp-fullresources.yaml`.
+replicaCount: 1
 
-- On peut maintenant lire les fichier kubernetes déployés et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut contstater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
+service:
+  type: ClusterIP
 
-- Installez un autre chart comme par exemple `gitlab` en le cherchant dans le menu apps de Lens et cliquant sur installer...
+ingress:
+  enabled: true
+  hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
+  tls: true
+  certManager: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+```
+
+- En utilisant ces paramètres, plutôt que d'installer le chart, nous allons faire le rendu (templating) des fichiers ressource générés par le chart: `helm template wordpress-tp bitnami/wordpress --values=values.yaml > wordpress-tp-manifests.yaml`.
+
+On peut maintenant lire dans ce fichier les objets kubernetes déployés par le chart et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut constater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
+
+### ArgoCD pour installer et visualiser en live les ressources de notre chart
+
+Argocd permet de d'installer des applications qui peuvent être soit des dossiers de manifestes kubernetes simple, soit des dossiers contenant une `kustomization.yaml` soit des charts Helm. Une application Argocd peut être créée dans l'interface web ou être déclarée elle-même grâce à un fichier manifeste de type:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+```
+
+Ce n'est pas une ressource de base mais bien une `CustomResourceDefinition` car ArgoCD est un opérateur d'applications. Nous allons créer un tel manifeste.
+
+- Ouvrez le fichier `wordpress-chart-argocd-app.yaml` et collez à l'intérieur:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wordpress
+  namespace: argocd 
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: wordpress
+    targetRevision: 11.0.5
+    helm:
+      values: |
+        wordpressUsername: elie
+        wordpressPassword: myunsecurepassword
+        wordpressBlogName: Kubernetes example blog
+
+        replicaCount: 1
+
+        service:
+          type: ClusterIP
+
+        ingress:
+          enabled: true
+          hostname: wordpress.elie.formation.dopl.uk
+          pathType: Prefix
+          tls: true
+          certManager: true
+          annotations:
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+            kubernetes.io/ingress.class: nginx
+```
+
+- Appliquez ce fichier avec `kubectl apply -f`.
+
+- Visitez la page `https://argocd.<votrelogin>.formation.dopl.uk`.
+
+Une application wordpress est apparue
+
+- Visitez la, en particulier les `desired manifests` de quelques resources.
+- Synchronisez l'application pour installer le chart avec `Sync`.
+
+En une minute ou deux, l'application est installée et l'ingress avec son certificat devrait être généré.
+
+Vous pouvez visiter le blog à l'adresse: `https://wordpress.<votrelogin>.formation.dopl.uk`
+
+### Solution
+
+Le dépôt Git contenant la correction de ce TP et des précédents est accessible avec cette commande : `git clone -b all_corrections https://github.com/Uptime-Formation/corrections_tp.git`
