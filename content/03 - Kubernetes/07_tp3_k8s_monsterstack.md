@@ -4,7 +4,7 @@ draft: false
 weight: 2050
 ---
 
-Récupérez le projet de base en clonant la correction du TP2: `git clone -b correction_k8s_tp2 https://github.com/Uptime-Formation/corrections_tp.git`
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git`
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
@@ -136,7 +136,7 @@ L'image `monstericon` de ce déploiement n'existe pas sur le dockerhub. Elle doi
 
 #### Santé du service avec les `Probes`
 
-- Ajoutons un healthcheck de type `livenessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
+- Ajoutons des healthchecks au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
 
 ```yaml
         livenessProbe:
