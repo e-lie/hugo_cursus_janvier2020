@@ -63,7 +63,7 @@ Vos serveurs VNC qui sont aussi désormais des clusters k3s on déjà deux sous-
 
 - Dans le fichier Changez `argocd-kluster/argocd/argocd-ingress.yaml`, changez `<yourname>` par votre nom (le login guacamole) pour configurer l'ingress sur le nom de domaine de votre cluster personnel.
 
-- Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests`
+- Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests -n argocd`
 - Enfin `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
 
 - Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`.
