@@ -24,6 +24,23 @@ Nous allons également utiliser le builder kubernetes `skaffold` pour déployer 
 Pour lancer l'application il suffit d'exécuter: `docker-compose up`
 
 Passons maintenant à Kubernetes.
+
+## Utiliser Kompose (facultatif)
+
+Explorer avec Kompose comment on peut traduire un fichier `docker-compose.yml` en ressources Kubernetes (ce sont les instructions à la page suivante : https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/).
+
+D'abord, installons Kompose :
+
+```bash
+# Linux
+curl -L https://github.com/kubernetes/kompose/releases/download/v1.16.0/kompose-linux-amd64 -o kompose
+
+chmod +x kompose
+sudo mv ./kompose /usr/local/bin/kompose
+```
+
+Puis, utilisons la commande `kompose convert` et observons les fichiers générés. On peut aussi faire `kompose up`, qui regroupe `kompose convert` et `kubectl apply` avec les ressources créées à partir du fichier Compose.
+
 ## Déploiements pour le backend d'image `dnmonster` et le datastore `redis`
 
 Maintenant nous allons également créer un déploiement pour `dnmonster`:
