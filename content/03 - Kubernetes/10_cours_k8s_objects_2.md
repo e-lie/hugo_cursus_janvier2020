@@ -82,24 +82,27 @@ En général, on utilise des StatefulSets quand on veut :
 - des déploiements et du scaling contrôlés et dans un ordre défini
 - des rolling updates dans un ordre défini et automatisées
 
+
+Article récapitulatif des fonctionnalités de base pour applications stateful: https://medium.com/capital-one-tech/conquering-statefulness-on-kubernetes-26336d5f4f17
+
 ## Paramétrer ses Pods
 
 ### Les ConfigMaps 
 
 D'après les recommandations de développement [12factor](https://12factor.net/fr), la configuration de nos programmes doit venir de l'environnement. L'environnement est ici Kubernetes.
 
-Les objets ConfigMaps permettent d'injecter dans des pods des fichiers de configuration en tant que volumes.
+Les objets ConfigMaps permettent d'injecter dans des pods des ensemble clés/valeur de configuration en tant que volumes/fichiers de configuration ou variables d'environnement.
 
 ### les Secrets
 
-Les Secrets se manipulent comme des objets ConfigMaps, mais sont faits pour stocker des mots de passe, des clés privées, des certificats, des tokens, ou tout autre élément de config dont la confidentialité doit être préservée.
+Les Secrets se manipulent comme des objets ConfigMaps, mais ils sont chiffrés et faits pour stocker des mots de passe, des clés privées, des certificats, des tokens, ou tout autre élément de config dont la confidentialité doit être préservée.
 Un secret se créé avec l'API Kubernetes, puis c'est au pod de demander à y avoir accès.
 
 Il y a 3 façons de donner un accès à un secret :
 - le secret est un fichier que l'on monte en tant que volume dans un conteneur (pas nécessairement disponible à l'ensemble du pod). Il est possible de ne jamais écrire ce secret sur le disque (volume `tmpfs`).
 - le secret est une variable d'environnement du conteneur.
 
-Pour définir qui et quelle app a accès à quel secret, on utilise les fonctionnalités dites "RBAC" de Kubernetes.
+Pour définir qui et quelle app a accès à quel secret, on peut utiliser les fonctionnalités "RBAC" de Kubernetes.
 
 
 ## Lier utilisateurs et autorisations: Le Role-Based Access Control (RBAC)
@@ -172,16 +175,3 @@ Cependant quatre rôles génériques existent aussi par défaut :
 
 
 La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
-
-### Les CRD et Operators
-
-Les *CustomResourcesDefinition* sont l'objet le plus *méta* de Kubernetes : inventés par Red Hat pour ses *Operators*, ils permettent de définir un nouveau type d'objet dans Kubernetes.
-Combinés à des Operators (du code d'API en Go), ils permettent d'étendre Kubernetes pour gérer de nouveaux objets qui eux-même interagissent avec des objets Kubernetes.
-
-Exemples :
-- la chart officielle de la suite Elastic (ELK) définit des objets de type `elasticsearch`
-- KubeVirt permet de rajouter des objets de type VM pour les piloter depuis Kubernetes
-- Azure propose des objets correspondant à ses ressources du cloud Azure, pour pouvoir créer et paramétrer des ressources Azure directement via la logique de Kubernetes
-
-
-![](../../images/kubernetes/k8s_crd.png)

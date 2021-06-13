@@ -4,7 +4,7 @@ draft: false
 weight: 2050
 ---
 
-Récupérez le projet de base en clonant la correction du TP2: `git clone -b correction_k8s_tp2 https://github.com/Uptime-Formation/corrections_tp.git`
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git`
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
@@ -91,7 +91,6 @@ spec:
           name: redis
 ```
 
-
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
@@ -132,30 +131,41 @@ spec:
 L'image `monstericon` de ce déploiement n'existe pas sur le dockerhub. Elle doit être construite à partir du `Dockerfile` et nous allons utiliser `skaffold` pour cela.
 
 - Observons le fichier `skaffold.yaml`
-- Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici `kubectl`)
+- Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici le registry docker local et `kubectl`)
 
 
 #### Santé du service avec les `Probes`
 
-- Ajoutons un healthcheck de type `livenessProbe` au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
+- Ajoutons des healthchecks au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
 
 ```yaml
         livenessProbe:
-          httpGet:
-            path: /
+          tcpSocket: # si le socket est ouvert c'est que l'application est démarrée
             port: 5000
+          initialDelaySeconds: 5 # wait before firt probe
+          timeoutSeconds: 1 # timeout for the request
+          periodSeconds: 10 # probe every 10 sec
+          failureThreshold: 3 # fail maximum 3 times
+        readinessProbe:
+          httpGet:
+            path: /healthz # si l'application répond positivement sur sa route /healthz c'est qu'elle est prête pour le traffic
+            port: 5000
+            httpHeaders:
+            - name: Accept
+              value: application/json
           initialDelaySeconds: 5
           timeoutSeconds: 1
           periodSeconds: 10
           failureThreshold: 3
-          
 ```
 
-La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas remplit le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
+La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas rempli le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
 
-Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien en appelant la route `/`. C'est une bonne pratique pour que le  `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
+Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien, quand le redémarrer. C'est une bonne pratique pour que le `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
 
 Cependant une application peut être en train de tourner mais indisponible pour cause de surcharge ou de mise à jour par exemple. Dans ce cas on voudrait que le pod ne soit pas détruit mais que le traffic évite l'instance indisponible pour être renvoyé vers un autre backend `ready`.
+
+La **readinessProbe** est un test qui s'assure que l'application est prête à répondre aux requêtes en train de tourner. S'il n'est pas rempli le pod est marqué comme non prêt à recevoir des requêtes et le `service` évitera de lui en envoyer.
 
 #### Configuration d'une application avec des variables d'environnement simples
 
@@ -175,14 +185,17 @@ Cependant une application peut être en train de tourner mais indisponible pour 
 ```yaml
         resources:
           requests:
-            cpu: "100m"
+            cpu: "100m" # 10% de proc
             memory: "50Mi"
+          limits:
+            cpu: "300m" # 30% de proc
+            memory: "200Mi"
 ```
 
 Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.  
 
 - Relancer `skaffold run` pour appliquer les modifications.
-- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`
+- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`.
 
 #### Exposer notre stack avec des services
 
@@ -221,29 +234,7 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 - Visitez votre application dans le navigateur avec `minikube service monstericon`.
 - Supprimez l'application avec `skaffold delete`.
 
-### Rassemblons les trois objets avec une kustomisation et créons un déploiement récupérant monstericon depuis dockerhub
-
-Une kustomization permet:
-
-- De résumer un objet contenu dans de multiples fichiers en un seul lieu pour pouvoir les manipuler facilement (mais sans avoir des fichiers à rallonge):
-- De surcharger la description yaml de certaines ressources sans modifier le fichier original (en gros de patcher nos ressource à la volée au moment du `apply`).
-
-Dans le dossier `k8s-deploy-dockerhub` copiez les 3 fichiers de `k8s-deploy-dev` et créez un fichier `kustomization.yaml` avec à l'intérieur:
-
-```yaml
-resources:
-    - monstericon.yaml
-    - dnmonster.yaml
-    - redis.yaml
-```
-
-- Modifiez le déploiement de `monstericon` pour utiliser un image du dockerhub (buildée et poussée par moi précédemment): `tecpi/monster_icon:0.1`
-
-- Essayez d'exécuter la kustomization avec `kubectl apply -k k8s-deploy-dockerhub`.
-
-On pourrait utiliser ici la fonctionnalité de surcharge de `kustomize` pour passer monstericon en mode `PROD` sur le port `9090` en remplaçant la variable d'environnement les numéros de port avec un patch (sans toucher au fichier monstericon.yaml).
-
-### Ajoutons un ingress (~ reverse proxy) pour exposer notre application sur le port standard
+### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
 - Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
 
@@ -262,24 +253,26 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: monsterstack.local
+    http:
       paths:
-        - path: /monstericon
+        - path: /
           backend:
             serviceName: monstericon
             servicePort: 5000
 ```
 
-- Ajoutez ce fichier à notre `kustomization.yaml` et appliquez le. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
+- Ajoutez ce fichier avec `skaffold run`. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
 
 - Pour corriger ce warning remplacez l'`apiVersion` par `networking.k8s.io/v1`. La syntaxe de la `spec` a légèrement changée depuis la v1beta1, modifiez comme suit:
 
 ```yaml
 spec:
   rules:
-  - http:
+  - host: monsterstack.local
+    http:
       paths:
-        - path: /monstericon
+        - path: /
           pathType: Prefix
           backend:
             service:
@@ -290,12 +283,14 @@ spec:
 
 <!-- TODO changer la correction pour intégrer la bonne syntaxe et renommer l'ancienne en old-->
 
-- Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`.
+- Récupérez l'ip de minikube avec `minikube ip`, (ou alors allez observer l'objet `Ingress` dans `Lens` dans la section `Networking`. Sur cette ligne, récupérez l'ip de minikube en `192.x.x.x.`).
 
-- Visitez la page `http://192.x.x.x/monstericon` pour constater que notre Ingress (reverse proxy) est bien fonctionnel.
+- Ajoutez la ligne `<ip-minikube>  monsterstack.local` au fichier `/etc/hosts` avec `sudo nano /etc/hosts` puis CRTL+S et CTRL+X pour sauver et quitter.
+
+- Visitez la page `http://monsterstack.local` pour constater que notre Ingress (reverse proxy) est bien fonctionnel.
 <!-- Pour le moment l'image de monstre ne s'affiche pas car la sous route de récup d'image /monster de notre application ne colle pas avec l'ingress que nous avons défini. TODO trouver la syntaxe d'ingress pour la faire marcher -->
 
 ### Solution
 
-Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b correction_k8s_tp3 https://github.com/Uptime-Formation/corrections_tp.git`
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b tp3 https://github.com/Uptime-Formation/corrections_tp.git`
 
