@@ -8,9 +8,11 @@ weight: 2075
 
 En lançant la [chart PostgreSQL HA de Bitnami](https://github.com/bitnami/charts/tree/master/bitnami/postgresql-ha), et en lisant les logs des conteneurs, observez comment fonctionne les StatefulSets, par exemple avec Lens. Scalez les StatefulSets postgres.
 
-## Facultatif : A la main, avec MySQL, des init containers et des ConfigMaps
-- Suivre ce tutoriel pas à pas : <https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/>
+<!-- Ou PGOperator -->
 
+## Facultatif : A la main, avec MySQL, des init containers et des ConfigMaps
+
+- Suivre ce tutoriel pas à pas : <https://kubernetes.io/docs/tasks/run-application/run-replicated-stateful-application/>
 
 <!-- - https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/ -->
 <!-- - https://kubernetes.io/docs/tutorials/stateful-application/cassandra/ -->
