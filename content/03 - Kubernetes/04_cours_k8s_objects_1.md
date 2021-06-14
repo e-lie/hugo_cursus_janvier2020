@@ -282,7 +282,7 @@ Si c'est nécessaire d'avoir ces trois types de ressources c'est parce que Kuber
 
 La responsabilité d'un déploiement est de gérer la coexistence et le **tracking de versions** multiples d'une application et d'effectuer des montées de version automatiques en haute disponibilité en suivant une **RolloutStrategy** (CF. TP optionnel).
 
-Ainsi lors des changements de version, un seul **deployment** gère automatiquement de multiples **replicasets** contenant chacun **une version** de l'application => Le découplage est nécessaire.
+Ainsi lors des changements de version, un seul **deployment** gère automatiquement deux **replicasets** contenant chacun **une version** de l'application : le découplage est nécessaire.
 
 Un *deployment* implique la création d'un ensemble de Pods désignés par une étiquette `label` et regroupé dans un **Replicaset**.
 
