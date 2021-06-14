@@ -289,9 +289,9 @@ spec:
           protocol: TCP
 ```
 
-### Les ReplicaSet
+### Les ReplicaSets
 
-Un ReplicatSet ou rs est une ressource qui permet de spécifier finement le nombre de réplication d'un pod à un moment donné.
+Un ReplicatSet ou rs est une ressource qui permet de spécifier finement le nombre d'exemplaires (*replicas*) d'un pod à un moment donné.
 Un peu comme le paramètre `replicas:`  d'un service docker mais en plus précis.
 
 - `kubectl get rs` pour afficher la liste des replicas.
@@ -300,15 +300,15 @@ En général on ne les manipule pas directement.
 
 ### Les Deployments
 
-Plutôt que d'utiliser les replicaset il est recommander d'utiliser un objet de plus haut niveau les `deployments`.
+Plutôt que d'utiliser les replicasets il est recommandé d'utiliser un objet de plus haut niveau : les `deployments`.
 
-De la même façon que les ReplicaSets gèrent les pods, les Deployments gèrent les ReplicaSet.
+De la même façon que les ReplicaSets gèrent les pods, les Deployments gèrent les ReplicaSets.
 
 Un déploiement sert surtout comme son nom l'indique à gérer le déploiement d'une nouvelle version d'un pod.
 
-Un `deployment` est un peu l'équivalent d'un `service` docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`
+Un `deployment` est un peu l'équivalent d'un `service` docker : il demande la création d'un ensemble de Pods désignés par une étiquette `label`.
 
-exemple:
+exemple :
 
 ```yaml
 apiVersion: apps/v1
@@ -350,7 +350,7 @@ L’ensemble des pods ciblés par un service est déterminé par un `selector`
 
 Par exemple, considérons un backend de traitement d’image stateless qui s’exécute avec 3 replicas. Ces réplicas sont interchangeables et les frontends ne se soucient pas du backend qu’ils utilisent. Bien que les pods réels qui composent l’ensemble backend puissent changer, les clients frontends ne devraient pas avoir besoin de le savoir, pas plus qu’ils ne doivent suivre eux-mêmes l’ensemble des backends.
 
-L’abstraction du service permet ce découplage en 
+L’abstraction du service permet ce découplage.
 
 
 Les Services sont de quatre types
