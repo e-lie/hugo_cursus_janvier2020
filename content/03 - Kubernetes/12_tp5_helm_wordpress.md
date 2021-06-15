@@ -44,7 +44,12 @@ On peut écraser certains de ces paramètres dans un nouveau fichier par exemple
 
 ### Utiliser la fonction `template` de Helm pour étudier les ressources d'un Chart
 
-- Visitez le code de ce chart ici: https://github.com/bitnami/charts/tree/master/bitnami
+- Visitez le code des charts de votre choix en clonant le répertoire Git des Charts officielles Bitnami et en l'explorant avec VSCode :
+
+```bash
+git clone https://github.com/bitnami/charts/
+code charts
+```
 
 - Regardez en particulier les fichiers `templates` et le fichier de paramètres `values.yaml`.
 
