@@ -1,5 +1,5 @@
 ---
-title: '12 - TP 5 - Déployer Wordpress avec Helm et ArgoCD'
+title: "12 - TP 5 - Déployer Wordpress avec Helm et ArgoCD"
 draft: false
 weight: 2071
 ---
@@ -36,37 +36,11 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 Vous pouvez constater que l'utilisateur est par default `user` ce qui n'est pas très pertinent. Un chart prend de nombreux paramètres de configuration qui sont toujours listés dans le fichier `values.yaml` à la racine du Chart.
 
-On peut écraser certains de ces paramètres dans un nouveau fichier par exemple `myvalues.yaml` et installer la release avec l'option `--values=myvalues.yaml`. Nous allons faire cela avec Argocd à la place de la CLI helm.
+On peut écraser certains de ces paramètres dans un nouveau fichier par exemple `myvalues.yaml` et installer la release avec l'option `--values=myvalues.yaml`.
+
+<!-- Nous allons faire cela avec Argocd à la place de la CLI helm. -->
 
 - Désinstallez Wordpress avec `helm uninstall wordpress-tp`
-
-### Installer ArgoCD
-
-Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster. En particulier pour visualiser les charts Helm déployés.
-
-ArgoCD s'installe grâce à une série de manifestes Kubernetes. Pour récupérer ces manifestes d'installation nous allons utiliser git et le dépôt de correction : `cd ~/Desktop && git clone -b argocd_installation https://github.com/Uptime-Formation/corrections_tp.git argocd_installation`.
-
-Cette installation comporte plusieurs étapes qui doivent être exécutées dans l'ordre et en vérifiant s'il n'y a pas d'erreurs à chaque étape.
-
-- Pour être sur d'installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` puis `kubectl get nodes` pour vérifier.
-- Les resources Kubernetes d'installation sont dans le dossier cloné précédemment et la partie kubernetes: `cd ~/Desktop/argocd_installation/kubernetes`
-- Commençons par créer quelques namespaces (`argocd` et `cert-manager`) pour installer nos différentes applications: `kubectl apply -f argocd-kluster/namespaces.yaml`
-- Puis installation de l'ingress controller nginx dans le namespace `kube-system`: `kubectl apply -n kube-system -f argocd-kluster/ingress-nginx`
-- Dans Lens vérifiez que le pod `ingress-nginx-controller-xxx` est bien lancé (vert)
-
-Ensuite installons l'application cert-manager qui permet de générer **automatiquement** des certificats TLS pour nos applications web HTTPS (notamment avec letsencrypt et ACME). Argocd à une interface web qui nécessite un accès https.
-
-- Lancez : `kubectl apply -f argocd-kluster/cert-manager/cert-manager-manifests.yaml`.
-- Créons également les **"Issuers"** c'est à dire les composants qui vont permettre d'émettre des certificats avec la commande: `kubectl apply -n cert-manager -f argocd-kluster/cert-manager/issuers`.
-
-Vos serveurs VNC qui sont aussi désormais des clusters k3s on déjà deux sous-domaines configurés: `<votrelogin>.formation.dopl.uk` et `*.<votrelogin>.formation.dopl.uk`. Le sous domaine `argocd.<login>.formation.dopl.uk` pointe donc déjà sur le serveur (Wildcard DNS). Celà va permettre à `cert-manager` de créer automatiquement un `ACME HTTP Challenge` pour enregistrer un certificat TLS.
-
-- Dans le fichier Changez `argocd-kluster/argocd/argocd-ingress.yaml`, changez `<yourname>` par votre nom (le login guacamole) pour configurer l'ingress sur le nom de domaine de votre cluster personnel.
-
-- Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests -n argocd`
-- Enfin `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
-
-- Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`.
 
 ### Utiliser la fonction `template` de Helm pour étudier les ressources d'un Chart
 
@@ -107,6 +81,34 @@ ingress:
 
 On peut maintenant lire dans ce fichier les objets kubernetes déployés par le chart et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut constater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
+### Installer ArgoCD
+
+Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster. En particulier pour visualiser les charts Helm déployés.
+
+ArgoCD s'installe grâce à une série de manifestes Kubernetes. Pour récupérer ces manifestes d'installation nous allons utiliser git et le dépôt de correction : `cd ~/Desktop && git clone -b argocd_installation https://github.com/Uptime-Formation/corrections_tp.git argocd_installation`.
+
+Cette installation comporte plusieurs étapes qui doivent être exécutées dans l'ordre et en vérifiant s'il n'y a pas d'erreurs à chaque étape.
+
+- Pour être sur d'installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` puis `kubectl get nodes` pour vérifier.
+- Les resources Kubernetes d'installation sont dans le dossier cloné précédemment et la partie kubernetes: `cd ~/Desktop/argocd_installation/kubernetes`
+- Commençons par créer quelques namespaces (`argocd` et `cert-manager`) pour installer nos différentes applications: `kubectl apply -f argocd-kluster/namespaces.yaml`
+- Puis installation de l'ingress controller nginx dans le namespace `kube-system`: `kubectl apply -n kube-system -f argocd-kluster/ingress-nginx`
+- Dans Lens vérifiez que le pod `ingress-nginx-controller-xxx` est bien lancé (vert)
+
+Ensuite installons l'application cert-manager qui permet de générer **automatiquement** des certificats TLS pour nos applications web HTTPS (notamment avec letsencrypt et ACME). Argocd à une interface web qui nécessite un accès https.
+
+- Lancez : `kubectl apply -f argocd-kluster/cert-manager/cert-manager-manifests.yaml`.
+- Créons également les **"Issuers"** c'est à dire les composants qui vont permettre d'émettre des certificats avec la commande: `kubectl apply -n cert-manager -f argocd-kluster/cert-manager/issuers`.
+
+Vos serveurs VNC qui sont aussi désormais des clusters k3s ont déjà deux sous-domaines configurés: `<votrelogin>.formation.dopl.uk` et `*.<votrelogin>.formation.dopl.uk`. Le sous domaine `argocd.<login>.formation.dopl.uk` pointe donc déjà sur le serveur (Wildcard DNS). Celà va permettre à `cert-manager` de créer automatiquement un `ACME HTTP Challenge` pour enregistrer un certificat TLS.
+
+- Dans le fichier `argocd-kluster/argocd/argocd-ingress.yaml`, changez `<yourname>` par votre nom (le login guacamole) pour configurer l'ingress sur le nom de domaine de votre cluster personnel.
+
+- Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests -n argocd`
+- Enfin `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
+
+- Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`.
+
 ### ArgoCD pour installer et visualiser en live les ressources de notre chart
 
 Argocd permet de d'installer des applications qui peuvent être soit des dossiers de manifestes kubernetes simple, soit des dossiers contenant une `kustomization.yaml` soit des charts Helm. Une application Argocd peut être créée dans l'interface web ou être déclarée elle-même grâce à un fichier manifeste de type:
@@ -125,7 +127,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: wordpress
-  namespace: argocd 
+  namespace: argocd
 spec:
   destination:
     namespace: default
