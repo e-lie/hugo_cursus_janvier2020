@@ -1,60 +1,37 @@
 ---
 title: Bibliographie
 draft: false
+weight: 55
 ---
 
+# Bibliographie
 
-## Ansible
+## Livres
 
-- Jeff Geerling - Ansible for DevOps - Leanpub
+- Apprendre la programmation avec Python 3 (plutôt complet et orienté débutant)
+- Fluent Python (Ce que pythonique veut dire, comment utiliser Python proprement)
+- Serious Python (problématiques avancées de développement)
 
-##### Pour aller plus loin :
+## Tutoriels
 
-- Keating2017 - Mastering Ansible - Second Edition - Packt
+- Flask Mega Tutorial très long et développé : tutoriel pour coder une application web d'assez grande taille en Python de façon réaliste et illustrant pleins de point du travail de développeur et d'architecture d'application Python :
+    - Bases de données
+    - Structuration en package
+    - Testing
+    - Distribution et déploiement de l'application
 
-##### Cheatsheet
+## Articles
 
-- [https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide)
+- https://www.infoq.com/news/2012/05/DRY-code-duplication-coupling/
+- https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction
 
-## Docker
+## Sites de références
+- https://python.org
+- https://stackoverflow.com
+- https://devdocs.io
 
-- McKendrick,Gallagher2017 Mastering Docker - Second Edition
+## Évènements Python
 
-##### Pour aller plus loin :
-
-- Miell,Sayers2019 - Docker in Practice
-
-##### Cheatsheet
-
-- [https://devhints.io/docker](https://devhints.io/docker)
-
-## Kubernetes
-
-- Kubernetes Up and Running - O Reilly 2019
-
-##### Pour aller plus loin :
-
-- Luksa2018 - Kubernetes in Action
-
-##### Cheatsheet
-
-- [https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
-
-## Jenkins
-
-- Leszko2017 - Continuous Delivery with Docker and Jenkins - Packt
-- Le wiki Jenkins
-
-## Terraform
-
-- Brikman2019 - Terraform Up&Running - O Reilly
-
-## DevOps
-
-- Krief2019 - Learning DevOps - The complete guide (Azure Devops, Jenkins, kubernetes, terraform, ansible, security)
-- The DevOps Handbook
-
-
-### Sécurité et DevOps
-
+- PyconFr: https://www.pycon.fr/2020/
+- Cherchez des RDV python près de chez vous.
 - Madhu,Akash2017 - Security automation with Ansible 2 - Packt
