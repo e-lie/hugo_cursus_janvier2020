@@ -1,5 +1,5 @@
 ---
-title: Introduction DevOps
+title: Introduction Python
 weight: 1
 pre: "<i class='fas fa-rocket'></i> - "
 chapter: true
@@ -7,7 +7,6 @@ chapter: true
 
 ### Introduction
 
-# DevOps
+# Python
 
-Le nouveau paradigme de l'informatique
-
+Un language de programation interprété de moyen niveau.

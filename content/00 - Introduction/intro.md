@@ -7,9 +7,9 @@ weight: 3
 
 Aurélien Narbeburu
 
-- Developpeur backend et DevOps (Sewan Group / Yunohost)
+- Ingénieur
+- Developpeur backend (Sewan Group/ Yunohost)
 - Formateur Python
-- Philosophie de la technique
 
 ## A propos de vous
 
