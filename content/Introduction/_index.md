@@ -6,12 +6,12 @@ weight: 2
 
 ## Plan
 
-#### Partie 1 : Révisions? élémentaires
+#### Partie 1 : Notions de "base"
 
 - Variables, fonctions
 - Structures de contrôle (conditions, boucles)
-- Debugging
-- setup de dev
+- Structures de données (listes, dictionnaires, ...)
+- Fichier, exceptions, libraires, ...
 
 #### Partie 2 :
 
@@ -155,5 +155,3 @@ Bonne nouvelle le Python est un écosystème informatique plutôt sain: culture 
 
 Le sujet est très vaste, le métier de développeur est long à intégrer. Il faut "passer plusieurs couches de peintures".
 Nous allons parcourir pas mal de distance (en profondeur) et vous pourrez (devriez ?) creuser en largeur par la suite grâce aux références indiquées.
-
-
