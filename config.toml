@@ -1,6 +1,6 @@
-baseURL = "https://cursus-janvier2020.uptime-formation.fr/"
+baseURL = "https://tochange.fr"
 languageCode = "fr-FR"
-title = "Formation Ansible"
+title = "Formation Python"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
