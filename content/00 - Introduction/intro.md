@@ -1,20 +1,20 @@
 ---
-title: Introduction DevOps
+title: Introduction Python
 weight: 3
 ---
 
 ## A propos de moi
 
-Élie Gavoty
+Aurélien Narbeburu
 
 - Developpeur backend et DevOps (Sewan Group / Yunohost)
-- Formateur DevOps, Linux, Python
+- Formateur Python
 - Philosophie de la technique
 
 ## A propos de vous
 
 - Attentes ?
-- Début du cursus : 
+- Début du cursus :
   - Est-ce que ça vous plait ?
   - Quels modules avez vous déjà fait ?
 
@@ -134,7 +134,7 @@ Exemple: Amazon Web Services, DigitalOcean, Azure etc
 
 - Plateforme as a Service (PaaS): on commande directement un environnement PHP ou NodeJS pour notre application
 
-Exemple: heroku, netlify, 
+Exemple: heroku, netlify,
 
 - Software as a service (SaaS): des services web à la demande pour des utilisateurs finaux
 
@@ -186,4 +186,3 @@ Le problème identifié que cherche a résoudre l'IaC est un écheveau de diffic
 ## Aller plus loin
 
 - La DevOps roadmap: [https://github.com/kamranahmedse/developer-roadmap#devops-roadmap](https://github.com/kamranahmedse/developer-roadmap#devops-roadmap)
-
