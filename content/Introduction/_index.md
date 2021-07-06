@@ -11,15 +11,14 @@ weight: 2
 - Variables, fonctions
 - Structures de contrôle (conditions, boucles)
 - Structures de données (listes, dictionnaires, ...)
-- Fichier, exceptions, libraires, ...
+- Debugging avec pdb/ipdb
 
-#### Partie 2 :
+#### Partie 2 : Notions avancés
 
-- Structures de données (listes, dictionnaires, ...)
 - Fichiers
-- exceptions
-- librairies
-- XML en python
+- Exceptions
+- Librairies
+- Bonne pratiques
 
 #### Partie 3 : Programmation Orientée Objet
 
