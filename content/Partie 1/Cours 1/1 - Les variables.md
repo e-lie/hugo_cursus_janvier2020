@@ -123,3 +123,13 @@ float("3.14") -> 3.14
 int(True)     -> 1
 int("trois")  -> Erreur / Exception
 ```
+
+### Interactivité basique
+
+Dans un terminal il est possible de demander une information à l'utilisateur avec `input("message")
+
+```python
+reponse = input("Combien font 6 fois 7 ?")
+```
+
+N.B. : ce que renvoie input() est une chaîne de caractère !
