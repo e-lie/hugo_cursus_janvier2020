@@ -22,7 +22,7 @@ weight: 20
 aura dans deux ans (approximativement, sans tenir compte du jour et mois de naissance...).
 
 
-### 3. Chaînes de caractères
+### 2. Chaînes de caractères
 
 - Demander un mot à l'utilisateur. Afficher la longueur du mot avec
 une message tel que `"Ce mot fait X caractères !"`
@@ -35,7 +35,7 @@ une message tel que `"Ce mot fait X caractères !"`
 ##########
 ```
 
-### 4. Fonctions
+### 3. Fonctions
 
 - Ecrire une fonction `centrer` prend en argument une chaîne de caractère, et retourne une nouvelle chaîne centrée sur 40 caractères. Par exemple `print(centrer("Python"))` affichera :
 
@@ -60,7 +60,7 @@ produire un texte centré et encadré avec des `####`. Par exemple,
 ```
 
 
-### 5. Conditions
+### 4. Conditions
 
 - Reprendre la fonction `annee_naissance` et afficher un message d'erreur et sortir immédiatement de la fonction si l'argument fourni n'est pas un nombre entre 0 et 130. Valider le comportement en appelant votre fonction avec comme argument `-12`, `158`, `None` ou `"toto"`.
 
@@ -73,6 +73,38 @@ produire un texte centré et encadré avec des `####`. Par exemple,
 ##########
 # Python #
 ##########
+```
+
+### 5. Boucles
+
+```python
+def afficher_allumettes(nombre_allumettes):
+    for i in range(nombre_allumettes):
+        print("|",end='')
+    print("")
+
+def choisir_nombre():
+    correct=False
+    while not correct:
+        choix=int(input("Combien d'allumettes?"))
+        if choix in [1,2,3]:
+            correct=True
+    return choix
+
+def jeu(allumettes):
+    while allumettes > 1:
+        afficher_allumettes(allumettes)
+        choix=choisir_nombre()
+        if allumettes-choix <= 0:
+            print("Choose again")
+        elif allumettes-choix== 1:
+            print("you loose")
+            allumettes-=choix
+            afficher_allumettes(allumettes)
+        else:
+            allumettes-=choix
+        
+jeu(10)
 ```
 
 ### 6. Performances et debugging : plusieurs implémentations de la suite de fibonacci
