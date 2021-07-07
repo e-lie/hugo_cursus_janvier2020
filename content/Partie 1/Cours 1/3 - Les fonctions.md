@@ -1,5 +1,5 @@
 ---
-title: 5. Les fonctions
+title: 3. Les fonctions
 draft: false
 weight: 20
 ---
@@ -271,3 +271,26 @@ subprocess.Popen(args,
 
 c.f. `https://docs.python.org/2/library/subprocess.html#subprocess.Popen`
 
+### Ex.5 Fonctions
+
+- Ecrire une fonction `centrer` prend en argument une chaîne de caractère, et retourne une nouvelle chaîne centrée sur 40 caractères. Par exemple `print(centrer("Python"))` affichera :
+
+```text
+|                Python                |
+```
+
+- Ajouter un argument optionnel pour gérer la largeur au lieu du 40 "codé en dur". Par exemple `print(centrer("Python", 20)) affichera :`
+
+```text
+|      Python      |
+```
+
+- Créer une fonction `encadrer` qui utilise la fonction `centrer` pour
+produire un texte centré et encadré avec des `####`. Par exemple,
+`print(encadrer("Python", 20))` affichera :
+
+```text
+####################
+|      Python      |
+####################
+```

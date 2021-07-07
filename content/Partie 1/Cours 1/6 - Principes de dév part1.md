@@ -96,3 +96,23 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 #### Tartiflette
 
 ![](../../../../images/python/tartiflette.png)
+
+### Ex.6 Performances et debugging : plusieurs implémentations de la suite de fibonacci
+
+La célèbre suite de Fibonacci, liée au nombre d'or, est une suite d'entiers dans laquelle chaque terme est la somme des deux termes qui le précèdent. Mais elle est également un exercice classique d'algorithmique.
+
+- Écrire une fonction `fibonacci_rec_naive(n)` qui calcule de façon récursive la suite de fibonacci.
+
+- Créez une autre fonction `fibonacci_iter(n)` qui calcule de façon iterative la suite de fibonacci.
+
+- Calculez le 40e terme de la suite avec chacune des implémentation précédente.
+
+- Debuggez les deux implémentations. Que se passe-t-il ?
+
+- A l'aide de la librairie timeit et de sa fonction timer (`from timeit import default_timer as timer`) qui renvoie le temps processeur courant, mesurez le temps d'exécution des deux fonctions.
+
+- Écrire une fonction `fibonacci_rec_liste(n)` qui calcule récursivement la suite de fibonacci en utilisant une liste comme mémoire pour ne pas recalculer les terme déjà calculés.
+
+- Bonus 1: Utilisons un décorateur de "caching" de fonction (`from functools import lru_cache as cache`) sur `fibonacci_rec_naive(n)` pour l'optimiser sans changer le code.
+
+- Bonus 2: Écrivons une implémentation pythonique de fibonacci utilisant un générateur

@@ -1,5 +1,5 @@
 ---
-title: 3. Conditions et branchements conditionnels
+title: 4. Conditions et branchements conditionnels
 draft: false
 weight: 20
 ---
@@ -143,3 +143,18 @@ TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique de
 Autrement dit en python on aime utiliser la vraisemblance implicite des variables pour tester si leur valeur est significative/initialisée ou non.
 
 <!-- TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique des choses pour nos classes de programmation orientée objet en python (en Résumé on veut que `if monObjet:` soit capable de tester si l'objet est initialisé et utilisable)  -->
+
+### Ex.5 Conditions
+
+- Reprendre la fonction `annee_naissance` et afficher un message d'erreur et sortir immédiatement de la fonction si l'argument fourni n'est pas un nombre entre 0 et 130. Valider le comportement en appelant votre fonction avec comme argument `-12`, `158`, `None` ou `"toto"`.
+
+- Inspecter l'execution du code pas à pas à l'aide du debugger VSCode.
+
+- Reprendre la fonction `centrer` de l'exercice 4.1 et gérer le cas où la largueur demandée est -1 : dans ce cas, ne pas centrer. Par exemple,
+`print(encadrer("Python", -1))` affichera :
+
+```text
+##########
+# Python #
+##########
+```
