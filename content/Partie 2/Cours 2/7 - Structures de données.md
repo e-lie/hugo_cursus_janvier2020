@@ -307,7 +307,7 @@ Les "list/dict comprehensions" sont des syntaxes particulière permettant de rap
 ```
 
 ### Exemple (dict comprehension)
- 
+
 
 ```python
 { nom: age-20 for nom, age in ages.items() if age >= 20 }
@@ -382,7 +382,7 @@ def factorielle():
 
 ### Ex.7 Structures de données
 
-8.0 : Écrire une fonction qui retourne le plus grand élément d'une liste (ou d'un set) de nombres, et une autre fonction qui retourne le plus petit. Par exemple, `plus_grand([5, 9, 12, 6, -1, 4])` retournera 12.
+7.0 : Écrire une fonction qui retourne le plus grand élément d'une liste (ou d'un set) de nombres, et une autre fonction qui retourne le plus petit. Par exemple, `plus_grand([5, 9, 12, 6, -1, 4])` retournera 12.
 
 ```python
 assert plus_grand([5, 9, 12, 6, -1, 4]) == 12
@@ -391,23 +391,23 @@ assert plus_petit([5, 9, 12, 6, -1, 4]) == -1
 assert plus_petit([-6, -19, -2]) == -19
 ```
 
-8.1 : Écrire une fonction qui retourne le mot le plus long parmis une liste de mot donnée en argument.
+7.1 : Écrire une fonction qui retourne le mot le plus long parmis une liste de mot donnée en argument.
 
 ```python
 assert plus_long(["Paris", "Amsterdam", "Londres"]) == "Amsterdam"
 assert plus_long(["Choucroute", "Pizza", "Tarte flambée"]) == "Tarte flambée"
 ```
 
-8.2 : Écrire une fonction qui calcule la somme d'une liste de nombres.
+7.2 : Écrire une fonction qui calcule la somme d'une liste de nombres.
 
 ```python
 assert somme([3, 4, 5]) == 12
 assert somme([0, 7, -3]) == 4
 ```
 
-8.3 : Écrire une fonction qui prends en argument un chemin de fichier comme "/usr/bin/toto.py" et extrait le nom du fichier, c'est à dire "toto". On pourra utiliser la méthode `chaine.split(caractere)` des chaînes de caractère.
+7.3 : Écrire une fonction qui prends en argument un chemin de fichier comme "/usr/bin/toto.py" et extrait le nom du fichier, c'est à dire "toto". On pourra utiliser la méthode `chaine.split(caractere)` des chaînes de caractère.
 
-8.4.1 : Récuperer le dictionnaire d'exemple auprès du formateur (example_dict.py) et boucler sur ce dictionnaire pour afficher quelque chose comme:
+7.4.1 : Récuperer le dictionnaire d'exemple auprès du formateur (example_dict.py) et boucler sur ce dictionnaire pour afficher quelque chose comme:
 
 ```python
 Sebastian est né.e en 1979
@@ -416,15 +416,15 @@ Vivien est né.e en 1955
 ...
 ```
 
-8.4.2 : Transformer le programme précédent pour n'afficher que les personnes ayant une adresse mail finissant par `.edu`.
+7.4.2 : Transformer le programme précédent pour n'afficher que les personnes ayant une adresse mail finissant par `.edu`.
 
-8.5 : Ecrire une fonction `compte_lettres` qui prends en argument une (grande) chaîne de caractère et retourne un dictionnaire avec un compte des occurences des lettres. Par exemple `compte_lettres("hello")` retournera `{"h":1, "l": 2, "o": 1, "e":1 }`. Utiliser cette fonction sur Lorem Ipsum ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt [...]")
+7.5 : Ecrire une fonction `compte_lettres` qui prends en argument une (grande) chaîne de caractère et retourne un dictionnaire avec un compte des occurences des lettres. Par exemple `compte_lettres("hello")` retournera `{"h":1, "l": 2, "o": 1, "e":1 }`. Utiliser cette fonction sur Lorem Ipsum ("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt [...]")
 
-8.6 : Écrire une fonction qui retourne seulement les entiers pairs d'une liste
+7.6 : Écrire une fonction qui retourne seulement les entiers pairs d'une liste
 
-8.7 : Écrire une fonction qui permet de trier une liste (ou un set) d'entiers
+7.7 : Écrire une fonction qui permet de trier une liste (ou un set) d'entiers
 
-8.8 : En une seule ligne de code, générer la matrice suivante :
+7.8 : En une seule ligne de code, générer la matrice suivante :
 
 ```python
 [ [ 0, 1, 2, 3,  4  ],
@@ -433,8 +433,8 @@ Vivien est né.e en 1955
   [ 0, 4, 8, 12, 16 ] ]
 ```
 
-8.9 : Réécrire la fonction `somme` du 8.2, mais cette fois sans utiliser de variable intermédiaire (utiliser la récursivité)
+7.9 : Réécrire la fonction `somme` du 8.2, mais cette fois sans utiliser de variable intermédiaire (utiliser la récursivité)
 
-8.10 : Ecrire un générateur `carre()` qui genere la suite 1, 4, 9, 16, ... Utiliser ce générateur pour afficher les carrés jusqu'à ce qu'une valeur dépasse 200.
+7.10 : Ecrire un générateur `carre()` qui genere la suite 1, 4, 9, 16, ... Utiliser ce générateur pour afficher les carrés jusqu'à ce qu'une valeur dépasse 200.
 
-8.11 : Ecrire un générateur `fibonnaci` qui genere la suite de fibonnaci 0, 1, 1, 2, 3, 5, 8, ... Utiliser ce générateur pour afficher les valeurs jusqu'à ce qu'elles dépassent 500.
+7.11 : Ecrire un générateur `fibonnaci` qui genere la suite de fibonnaci 0, 1, 1, 2, 3, 5, 8, ... Utiliser ce générateur pour afficher les valeurs jusqu'à ce qu'elles dépassent 500.
