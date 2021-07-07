@@ -81,3 +81,57 @@ for i in range(0,10):
 ```
 
 -> Affiche le message pour 0 à 6
+
+### Ex.5 Boucles
+
+7.1.1 : Écrire une fonction qui, pour un nombre donné, renvoie la table de multiplication. Dans un premier temps, on pourra se contenter d'afficher les résultats. Par exemple print(table_du_7()) affichera:
+
+```python
+7
+14
+21
+...
+70
+```
+
+puis ensuite on peut améliorer la présentation pour obtenir le résultat :
+
+```python
+Table du 7
+----------
+ 1 x 7 = 7
+ 2 x 7 = 14
+ [..]
+ 10 x 7 = 70
+ ```
+
+7.1.2 : Cette fois, passer le nombre en argument. La fonction devient par exemple table_multiplication(7)
+
+7.1.3 : En appelant cette fonction plusieurs fois, afficher les tables de multiplication pour tous les nombres entre 1 et 10.
+
+7.1.4 : Protéger l'accès à toute cette connaissance précieuse en demandant, au début du programme, un "mot de passe" jusqu'à ce que le bon mot de passe soit donné.
+
+7.2 : (Optionnel) Écrire une fonction qui permet de déterminer si un nombre est premier. Par exemple is_prime(3) renverra True, et is_prime(10) renverra False.
+
+7.3 : (Optionnel) Écrire une fonction qui permet de générer les n premiers nombres de la suite de Fibonnaci
+- Inspecter l'execution du code pas à pas à l'aide du debugger VSCode.
+
+7.4.1 : Jeu des allumettes
+
+Le jeu des allumettes est un jeu pour deux joueurs, où n allumettes sont disposées, et chaque joueur peut prendre à tour de rôle 1, 2 ou 3 allumettes. Le perdant est celui qui se retrouve obligé de prendre la dernière allumette.
+
+
+- Écrire une fonction afficher_allumettes capable d'afficher un nombre donné d'allumettes (donné en argument), par exemple avec le caractère |
+- Écrire une fonction choisir_nombre qui demande à l'utilisateur combien d'allumette il veut prendre. Cette fonction vérifiera que le choix est valide (en entier qui est soit 1, 2 ou 3).
+- Commencer la construction d'une fonction partie_allumettes qui pour le moment, se contente de :
+    - Initialiser le nombre d'allumette sur la table
+    - Afficher des allumettes avec afficher_allumettes
+    - Demander à l'utilisateur combien il veut prendre d'allumettes avec choisir_nombre
+    - Propager ce choix sur le nombre d'allumette actuellement sur la table
+    - Afficher le nouvel état avec afficher_allumettes
+
+7.4.2 : (Optionnel) Modifier partie_allumettes pour gérer deux joueurs (1 et 2) et les faire jouer à tour de rôle jusqu'à ce qu'une condition de victoire soit détectée (il reste moins d'une allumette...).
+
+7.4.3 : (Optionnel) Intelligence artificielle
+
+Reprendre le jeu précédent et le modifier pour introduire une "intelligence" artificielle qui soit capable de jouer en tant que 2ème joueur. (Par exemple, une stratégie très simple consiste à prendre une allumette quoiqu'il arrive)

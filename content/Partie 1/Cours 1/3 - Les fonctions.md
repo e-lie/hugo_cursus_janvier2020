@@ -271,7 +271,7 @@ subprocess.Popen(args,
 
 c.f. `https://docs.python.org/2/library/subprocess.html#subprocess.Popen`
 
-### Ex.5 Fonctions
+### Ex.3 Fonctions
 
 - Ecrire une fonction `centrer` prend en argument une chaîne de caractère, et retourne une nouvelle chaîne centrée sur 40 caractères. Par exemple `print(centrer("Python"))` affichera :
 

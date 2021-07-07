@@ -144,7 +144,7 @@ Autrement dit en python on aime utiliser la vraisemblance implicite des variable
 
 <!-- TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique des choses pour nos classes de programmation orientée objet en python (en Résumé on veut que `if monObjet:` soit capable de tester si l'objet est initialisé et utilisable)  -->
 
-### Ex.5 Conditions
+### Ex.4 Conditions
 
 - Reprendre la fonction `annee_naissance` et afficher un message d'erreur et sortir immédiatement de la fonction si l'argument fourni n'est pas un nombre entre 0 et 130. Valider le comportement en appelant votre fonction avec comme argument `-12`, `158`, `None` ou `"toto"`.
 
