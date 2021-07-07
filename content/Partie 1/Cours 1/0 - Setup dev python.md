@@ -53,6 +53,38 @@ $ chmod +x hello.py
 $ ./hello.py
 ```
 
+### Ex.0 Hello world
+
+- Démarrer VS Code
+
+- Écrire et lancer le programme suivant :
+
+```python
+print("Hello World!")
+```
+
+- Créez un fichier hello.py directement dans la console (par exemple via nano hello.py) et mettez dedans :
+```python
+#!/usr/bin/env python3
+print("Hello, world!")
+```
+
+- Executez ensuite ce script à l'aide de python3 hello.py ou ./hello.py dans un terminal :`
+
+```text
+|      Python      |
+```
+
+- Créer une fonction `encadrer` qui utilise la fonction `centrer` pour
+produire un texte centré et encadré avec des `####`. Par exemple,
+`print(encadrer("Python", 20))` affichera :
+
+```text
+####################
+|      Python      |
+####################
+```
+
 
 ### En interactif
 
