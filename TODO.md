@@ -23,3 +23,8 @@
 - [ ] Comprendre l'exercice avec active_alchemy -> pas sur que ce soit nécessaire de le mettre en tout cas au départ tout comme le cours sur le stockage de données.
 - Faire un exercice pour générer un xml de notre jeu de carte
 - Faire un exercice pour écrire un doctype correcte générer
+
+# Moi
+Rajouter definition flask propre
+Est-ce qu'il ont deja fait du sql?
+detailler virtualenv
