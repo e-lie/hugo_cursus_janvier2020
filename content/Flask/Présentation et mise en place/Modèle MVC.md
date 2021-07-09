@@ -5,7 +5,7 @@ draft: false
 ---
 
 ### L'architecture MVC
-![](../../images/mvc2.png)
+![](../../../images/mvc2.png)
 
 
   - Modèle = les données et la façon dont elles sont structurées...
