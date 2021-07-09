@@ -1,5 +1,5 @@
 ---
-title: Exercice 2.3 - Lecture itérative avec la library externe lxml
+title: allflask
 draft: false
 weight: 20
 ---
@@ -7,11 +7,11 @@ weight: 20
 ---
 
 class: impact
-# Introduction à Flask
+### Introduction à Flask
 
 ---
 
-# Une application web
+### Une application web
 
 - On interagit avec au travers d'un navigateur web
 - Avec le navigateur, on accède à des ressources par des URL. Par exemple :
@@ -23,7 +23,7 @@ class: impact
 
 ---
 
-# Une application web
+### Une application web
 
 ## ... mais pourquoi une app web ? (plutôt qu'un logiciel classique)
 
@@ -42,7 +42,7 @@ Cons:
 
 ---
 
-# L'architecture MVC
+### L'architecture MVC
 
 .center[
 ![](img/mvc2.png)
@@ -50,7 +50,7 @@ Cons:
 
 ---
 
-# L'architecture MVC
+### L'architecture MVC
 
 - **Modèle** = les données et la façon dont elles sont structurées...
 - **Vue** = affichage, mise en forme des données
@@ -59,7 +59,7 @@ Cons:
 
 ---
 
-# L'architecture MVC ... en exemple?
+### L'architecture MVC ... en exemple?
 
 .center[
 ![](img/mvc3.png)
@@ -67,9 +67,9 @@ Cons:
 
 ---
 
-# Flask
+### Flask
 
-## En quelques mots
+### En quelques mots
 
 Un "micro-framework" pour faire du web, composé de plusieurs morceaux
 - Vues gérées avec **Jinja**  (moteur de template avec une syntaxe "à la Python")
@@ -82,7 +82,7 @@ Pour des applications plus grosses, on préferera tout même **Django** qui est 
 
 ---
 
-# Virtualenv
+### Virtualenv
 
 - Environnement virtuel
 - Isoler des paquets / dépendances pour utiliser des versions spécifiques
@@ -109,7 +109,7 @@ deactivate
 
 ---
 
-# Virtualenv "de base" pour Flask
+### Virtualenv "de base" pour Flask
 
 ```python
 virtualenv -p python3 venv
@@ -121,7 +121,7 @@ pip install Flask-SQLAlchemy
 
 ---
 
-# Hello World en Flask
+### Hello World en Flask
 
 #### On associe l'url `/` à un controleur (= une fonction) qui renvoie `Hello World`
 
@@ -138,7 +138,7 @@ Mon controleur `hello_world()` doit renvoyer du texte ou une "HTTP response" (pa
 
 ---
 
-# Hello World en Flask
+### Hello World en Flask
 
 Lancer le serveur web de test :
 
@@ -155,7 +155,7 @@ http://127.0.0.1:5000/     # -> Affichera 'Hello world'
 
 ---
 
-# Hello World en Flask
+### Hello World en Flask
 
 #### On peut créer d'autres controleur pour d'autres URLs...
 
@@ -179,7 +179,7 @@ http://127.0.0.1:5000/python    # -> Affichera 'Le python, c'est la vie!'
 
 ---
 
-# Créer des vues avec Jinja
+### Créer des vues avec Jinja
 
 Un template ressemble à :
 
@@ -204,7 +204,7 @@ apps = [ { "name": "mailman", "level": 2 },
 
 ---
 
-# Créer des vues avec Jinja
+### Créer des vues avec Jinja
 
 Rendu :
 
@@ -220,7 +220,7 @@ Rendu :
 
 ---
 
-# Créer des vues avec Jinja
+### Créer des vues avec Jinja
 
 En supposant que le template précédent soit situé dans `templates/hello.html`, je peux utiliser `render_template` dans mon controleur générer un rendu à l'aide de mes données
 
@@ -239,7 +239,7 @@ def homepage():
 
 ---
 
-# Gérer les données avec SQL Alchemy
+### Gérer les données avec SQL Alchemy
 
 ```python
 from flask_sqlalchemy import SQLAlchemy
@@ -258,7 +258,7 @@ class App(db.Model):
 
 ---
 
-# Gérer les données avec SQL Alchemy
+### Gérer les données avec SQL Alchemy
 
 ### Initialiser les tables
 
@@ -273,7 +273,7 @@ db.create_all()
 
 ---
 
-# Gérer les données avec SQL Alchemy
+### Gérer les données avec SQL Alchemy
 
 ### Ecrire
 
@@ -299,7 +299,7 @@ App.query.filter_by(name="mailman").first()
 
 ---
 
-# Gérer les données avec SQL Alchemy
+### Gérer les données avec SQL Alchemy
 
 ### Dans un controleur
 
