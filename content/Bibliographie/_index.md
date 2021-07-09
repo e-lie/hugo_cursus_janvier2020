@@ -4,8 +4,6 @@ draft: false
 weight: 55
 ---
 
-# Bibliographie
-
 ## Livres
 
 - Apprendre la programmation avec Python 3 (plutôt complet et orienté débutant)
