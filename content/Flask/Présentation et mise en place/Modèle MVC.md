@@ -12,4 +12,4 @@ draft: false
   - Vue = affichage, mise en forme des données
   - Controleur = la logique qui gère la requête de l'utilisateur, va chercher les données qu'il faut, et les donne à manger à la vue
 
-  ![](../../images/mvc2.png)
+  ![](../../images/mvc3.png)
