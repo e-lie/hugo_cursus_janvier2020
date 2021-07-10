@@ -17,7 +17,6 @@ On peut y greffer pleins d'autres modules petits modules optionnels
 
 Pour des applications plus grosses, on préferera tout même **Django** qui est un framework plus complet (mais plus complexe) mais qui suis la même logique
 
----
 
 ### Virtualenv
 
@@ -44,8 +43,6 @@ pip3 install <une autre dependance...>
 deactivate
 ```
 
----
-
 ### Virtualenv "de base" pour Flask
 
 ```python
@@ -55,8 +52,6 @@ source venv/bin/activate
 pip install Flask
 pip install Flask-SQLAlchemy
 ```
-
----
 
 ### Hello World en Flask
 
@@ -73,7 +68,6 @@ def hello_world():
 
 Mon controleur `hello_world()` doit renvoyer du texte ou une "HTTP response" (par exemple, erreur 404, ou redirection, ...)
 
----
 
 ### Hello World en Flask
 
@@ -89,8 +83,6 @@ ensuite, je visite:
 ```
 http://127.0.0.1:5000/     # -> Affichera 'Hello world'
 ```
-
----
 
 ### Hello World en Flask
 
@@ -113,8 +105,6 @@ ensuite :
 ```
 http://127.0.0.1:5000/python    # -> Affichera 'Le python, c'est la vie!'
 ```
-
----
 
 ### Créer des vues avec Jinja
 
@@ -139,8 +129,6 @@ apps = [ { "name": "mailman", "level": 2 },
          { "name": "nextcloud", "level": 8 }    ]
 ```
 
----
-
 ### Créer des vues avec Jinja
 
 Rendu :
@@ -154,8 +142,6 @@ Rendu :
   nextcloud est de niveau 8 !
 </html>
 ```
-
----
 
 ### Créer des vues avec Jinja
 
@@ -174,8 +160,6 @@ def homepage():
                            apps=apps)
 ```
 
----
-
 ### Gérer les données avec SQL Alchemy
 
 ```python
@@ -193,8 +177,6 @@ class App(db.Model):
     date_last_test = db.Column(db.Date, nullable=True)
 ```
 
----
-
 ### Gérer les données avec SQL Alchemy
 
 ### Initialiser les tables
@@ -206,9 +188,6 @@ db.drop_all()
 # Recréer toutes les tables qui vont bien
 db.create_all()
 ```
-
-
----
 
 ### Gérer les données avec SQL Alchemy
 
@@ -234,8 +213,6 @@ App.query.filter_by(level=7).all()
 App.query.filter_by(name="mailman").first()
 ```
 
----
-
 ### Gérer les données avec SQL Alchemy
 
 ### Dans un controleur
@@ -253,7 +230,5 @@ def homepage():
                            prenom="Alex",
                            apps=apps)
 ```
-
----
 
 TP de mise en application : gestionnaire de contacts

@@ -1,4 +1,4 @@
----
+  ---
 title: Bonus. Introduction à Flask et le web
 draft: false
 weight: 26
@@ -8,7 +8,7 @@ weight: 26
 ## Une application web
 
 - On interagit avec au travers d'un navigateur web
-- Avec le navigateur, on accède à des ressources par des URL. Par exemple : 
+- Avec le navigateur, on accède à des ressources par des URL. Par exemple :
     - La racine du site : `/`
     - Une page avec un formulaire de contact : `/contact`
     - Une image stockée sur le site : `/chat.jpg`
@@ -78,7 +78,7 @@ $ flask run
  * Running on http://127.0.0.1:5000/
 ```
 
-ensuite, je visite: 
+ensuite, je visite:
 ```
 http://127.0.0.1:5000/     # -> Affichera 'Hello world'
 ```
@@ -98,7 +98,7 @@ def python():
     return "Le python, c'est la vie!"
 ```
 
-ensuite : 
+ensuite :
 ```
 http://127.0.0.1:5000/python    # -> Affichera 'Le python, c'est la vie!'
 ```
@@ -126,7 +126,7 @@ apps = [ { "name": "mailman", "level": 2 },
          { "name": "nextcloud", "level": 8 }    ]
 ```
 
-Rendu : 
+Rendu :
 
 ```
 <html>
@@ -148,7 +148,7 @@ def homepage():
     apps = [ { "name": "mailman", "level": 2 },
              { "name": "wordpress", "level": 7 },
              { "name": "nextcloud", "level": 8 }    ]
-    return render_template('hello.html', 
+    return render_template('hello.html',
                            name="Marius",
                            apps=apps)
 ```
@@ -213,9 +213,8 @@ from my_models import App
 def homepage():
 
     apps = App.query.all()
-    
-    return render_template('hello.html', 
+
+    return render_template('hello.html',
                            prenom="Marius",
                            apps=apps)
 ```
-

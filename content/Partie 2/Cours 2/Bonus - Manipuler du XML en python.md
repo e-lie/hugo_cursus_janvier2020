@@ -1,7 +1,7 @@
 ---
 title: Bonus. Manipuler du XML en Python
 draft: false
-weight: 24
+weight: 25
 ---
 
 
@@ -197,5 +197,3 @@ for event, element in iterator:
     # [...] traiter l'element
     clear_elem_and_ancestors(element)
 ```
-
-
