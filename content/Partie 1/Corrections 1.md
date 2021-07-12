@@ -1,6 +1,6 @@
 ---
 title: Corrections 1
-draft: true
+draft: false
 weight: 20
 ---
 
