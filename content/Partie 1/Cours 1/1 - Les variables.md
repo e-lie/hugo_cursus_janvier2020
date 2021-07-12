@@ -1,5 +1,5 @@
 ---
-title: 1. Les variables 
+title: 1. Les variables
 draft: false
 weight: 20
 ---
@@ -134,7 +134,7 @@ reponse = input("Combien font 6 fois 7 ?")
 
 N.B. : ce que renvoie input() est une chaîne de caractère !
 
-### Ex.1 Calculs dans l'interpréteur
+### Ex.1.1 Calculs dans l'interpréteur
 
 - À l'aide de python, calculer le résultat des opérations suivantes :
     - `567×72`
@@ -144,7 +144,7 @@ N.B. : ce que renvoie input() est une chaîne de caractère !
     - `vrai et non (faux ou non vrai)`
 
 
-### Ex.2 Interactivité
+### Ex.1.2 Interactivité
 
 - Demander l'année de naissance de l'utilisateur, puis calculer et afficher l'âge qu'il
 aura dans deux ans (approximativement, sans tenir compte du jour et mois de naissance...).

@@ -1,7 +1,7 @@
 ---
 title: Correction exercice 2.2 - Utilisation de la librairie XML intégrée `ElementTree`
 weight: 5
-draft: false
+draft: true
 ---
 
 - En utilisant le module ElementTree de Python, charger le fichier `country.xml` fourni par le formateur. Boucler sur les différents éléments `country` et afficher pour chaque élément la valeur du `gdppc` et le nom des voisins.
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         for neighbor in country.iter(tag="neighbor"):
             print("\t" + neighbor.attrib["name"])
 
-    
+
     france = ET.SubElement(data, "country", attrib={"name": "France"})
     france_gdppc = ET.SubElement(france, "gdppc")
     france_gdppc.text = "42473"

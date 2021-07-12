@@ -69,22 +69,7 @@ print("Hello World!")
 print("Hello, world!")
 ```
 
-- Executez ensuite ce script à l'aide de python3 hello.py ou ./hello.py dans un terminal :`
-
-```text
-|      Python      |
-```
-
-- Créer une fonction `encadrer` qui utilise la fonction `centrer` pour
-produire un texte centré et encadré avec des `####`. Par exemple,
-`print(encadrer("Python", 20))` affichera :
-
-```text
-####################
-|      Python      |
-####################
-```
-
+- Executez ensuite ce script à l'aide de python3 hello.py ou ./hello.py dans un terminal
 
 ### En interactif
 
@@ -106,7 +91,7 @@ In [1]: print("Hello, world!")
 - Complétion des noms de variables et de modules avec TAB
 - Coloré pour la lisibilité
 - Plus explicite parfois
-- des commandes magiques comme `%cd`, `%run script.py`, 
+- des commandes magiques comme `%cd`, `%run script.py`,
 
 #### Inconvénients:
 

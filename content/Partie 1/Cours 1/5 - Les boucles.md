@@ -113,10 +113,7 @@ Table du 7
 
 5.2 : (Optionnel) Écrire une fonction qui permet de déterminer si un nombre est premier. Par exemple `is_prime(3)` renverra True, et `is_prime(10)` renverra False.
 
-5.3 : (Optionnel) Écrire une fonction qui permet de générer les n premiers nombres de la suite de Fibonnaci
-- Inspecter l'execution du code pas à pas à l'aide du debugger VSCode.
-
-5.4.1 : Jeu des allumettes
+5.3.1 : Jeu des allumettes
 
 Le jeu des allumettes est un jeu pour deux joueurs, où n allumettes sont disposées, et chaque joueur peut prendre à tour de rôle 1, 2 ou 3 allumettes. Le perdant est celui qui se retrouve obligé de prendre la dernière allumette.
 
@@ -130,8 +127,8 @@ Le jeu des allumettes est un jeu pour deux joueurs, où n allumettes sont dispos
     - Propager ce choix sur le nombre d'allumette actuellement sur la table
     - Afficher le nouvel état avec `afficher_allumettes`
 
-5.4.2 : (Optionnel) Modifier `partie_allumettes` pour gérer deux joueurs (1 et 2) et les faire jouer à tour de rôle jusqu'à ce qu'une condition de victoire soit détectée (il reste moins d'une allumette...).
+5.3.2 : (Optionnel) Modifier `partie_allumettes` pour gérer deux joueurs (1 et 2) et les faire jouer à tour de rôle jusqu'à ce qu'une condition de victoire soit détectée (il reste moins d'une allumette...).
 
-5.4.3 : (Optionnel) Intelligence artificielle
+5.3.3 : (Optionnel) Intelligence artificielle
 
 Reprendre le jeu précédent et le modifier pour introduire une "intelligence" artificielle qui soit capable de jouer en tant que 2ème joueur. (Par exemple, une stratégie très simple consiste à prendre une allumette quoiqu'il arrive)

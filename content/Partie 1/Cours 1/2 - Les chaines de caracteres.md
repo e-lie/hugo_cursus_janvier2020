@@ -94,12 +94,12 @@ N.B. : ce que renvoie `input()` est une chaîne de caractère !
 
 c.f. documentation, e.g `https://devdocs.io/python~3.7/library/stdtypes#str`
 
-### Ex.3 Chaînes de caractères
+### Ex.2 Chaînes de caractères
 
-- Demander un mot à l'utilisateur. Afficher la longueur du mot avec
+2.1 Demander un mot à l'utilisateur. Afficher la longueur du mot avec
 une message tel que `"Ce mot fait X caractères !"`
 
-- Afficher le mot encadré avec des `####`. Par exemple:
+2.2 Afficher le mot encadré avec des `####`. Par exemple:
 
 ```
 ##########

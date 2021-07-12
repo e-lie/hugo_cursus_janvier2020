@@ -272,7 +272,10 @@ subprocess.Popen(args,
 c.f. `https://docs.python.org/2/library/subprocess.html#subprocess.Popen`
 
 ### Ex.3 Fonctions
+3.1
+Écrire une fonction annee_naissance qui prends en argument un age et retourne l'année de naissance (+/- 1) sachant que nous sommes ne 2019. Par exemple, annee_naissance(29) retounera l'entier 1990.
 
+3.2
 - Ecrire une fonction `centrer` prend en argument une chaîne de caractère, et retourne une nouvelle chaîne centrée sur 40 caractères. Par exemple `print(centrer("Python"))` affichera :
 
 ```text

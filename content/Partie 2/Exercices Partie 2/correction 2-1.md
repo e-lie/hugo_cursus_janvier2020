@@ -1,7 +1,7 @@
 ---
 title: Correction - Exercice 2.1
 weight: 5
-draft: false
+draft: true
 ---
 
 ## 2.1 - Fichiers, JSON et dictionnaires
@@ -79,7 +79,7 @@ def filtrer_yunohost_apps(yunoapps_dict: Dict[str, Dict], level_min: int) -> Dic
 
 if __name__ == "__main__":
     # pprint.pprint(json_fichier_vers_dict("community.json")) # pretty print the dictionnary
-    
+
     app_level_8_ou_plus = filtrer_yunohost_apps(
         json_fichier_vers_dict("community.json"),
         8

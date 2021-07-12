@@ -79,7 +79,7 @@ angle <= pi      # Inférieur ou égal
 ```python
 x = 2
 
-print("x > 0:", x > 0) # vrai 
+print("x > 0:", x > 0) # vrai
 print("x > 0 and x == 2:", x > 0 and x == 2) # vrai et vrai donne vrai
 print("x > 0 and x == 1:", x > 0 and x == 2) # vrai et faux donne faux
 print("x > 0 or x == 1:", x > 0 or x == 1) # vrai ou faux donne vrai
@@ -139,18 +139,18 @@ Remarque: dans notre dernier cas il n'est pas forcément important de savoir si 
 #### Vraisemblance (truthiness) d'un valeur
 
 L'usage de `if variable:` comme précédemment est basé sur la truthiness ou vraisemblance de la variable. On dit que `a` est vraisemblable si la conversion de `a` en booléen donne `True` : `bool(3)` donne `True` on dit que 3 est `truthy`, `bool(None)` donne `False` donc `None` est `falsy`.
-TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique des choses pour nos classes de programmation orientée objet en python (en Résumé on veut que `if monObjet:` soit capable de tester si l'objet est initialisé et utilisable) 
+TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique des choses pour nos classes de programmation orientée objet en python (en Résumé on veut que `if monObjet:` soit capable de tester si l'objet est initialisé et utilisable)
 Autrement dit en python on aime utiliser la vraisemblance implicite des variables pour tester si leur valeur est significative/initialisée ou non.
 
 <!-- TODO Nous verrons dans la partie sur le `Python Data Model` que cela implique des choses pour nos classes de programmation orientée objet en python (en Résumé on veut que `if monObjet:` soit capable de tester si l'objet est initialisé et utilisable)  -->
 
 ### Ex.4 Conditions
 
-- Reprendre la fonction `annee_naissance` et afficher un message d'erreur et sortir immédiatement de la fonction si l'argument fourni n'est pas un nombre entre 0 et 130. Valider le comportement en appelant votre fonction avec comme argument `-12`, `158`, `None` ou `"toto"`.
+4.1 Reprendre la fonction `annee_naissance` et afficher un message d'erreur et sortir immédiatement de la fonction si l'argument fourni n'est pas un nombre entre 0 et 130. Valider le comportement en appelant votre fonction avec comme argument `-12`, `158`, `None` ou `"toto"`.
 
 - Inspecter l'execution du code pas à pas à l'aide du debugger VSCode.
 
-- Reprendre la fonction `centrer` de l'exercice 4.1 et gérer le cas où la largueur demandée est -1 : dans ce cas, ne pas centrer. Par exemple,
+4.2 Reprendre la fonction `centrer` de l'exercice 3.1 et gérer le cas où la largueur demandée est -1 : dans ce cas, ne pas centrer. Par exemple,
 `print(encadrer("Python", -1))` affichera :
 
 ```text
