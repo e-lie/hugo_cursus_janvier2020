@@ -1,5 +1,5 @@
 ---
-title: 6. Principes de développement - Partie 1 
+title: 6. Principes de développement - Partie 1
 draft: false
 weight: 20
 ---
@@ -48,7 +48,7 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 
 - `pp <variable>` : pretty-print d'une variable (par ex. une liste, un dict, ..)
 
-#### Debug VSCode 
+#### Debug VSCode
 - Dans VSCode on peut fixer des breakpoints (points rouges) directement dans le code en cliquant sur la colonne de gauche de l'éditeur.
 - Il faut ensuite aller dans l'onglet debug et sélectionner une configuration de debug ou en créer une plus précise (https://code.visualstudio.com/docs/python/python-tutorial)
 - Ensuite on lance le programme en mode debug et au moment de l'arrêt il est possible d'explorer les valeurs de toutes les variables du programme (Démo)
@@ -67,7 +67,7 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
     - si le contenu d'une variable ou d'une fonction change, peut-être qu'il faut modifier son nom
     - si je fais pleins de petites opérations bizarre, peut-être qu'il faut créer une fonction
 
-### Quelques programmes réels utilisant Python 
+### Quelques programmes réels utilisant Python
 
 #### Dropbox
 
