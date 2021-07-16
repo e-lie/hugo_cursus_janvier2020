@@ -2,7 +2,7 @@
 title: Introduction Python
 weight: 1
 pre: "<i class='fas fa-rocket'></i> - "
-chapter: true
+chapter: false
 ---
 
 ### Introduction
