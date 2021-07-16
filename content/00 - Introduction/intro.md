@@ -1,6 +1,7 @@
 ---
 title: Introduction Python
 weight: 3
+draft: true
 ---
 
 ## A propos de moi
