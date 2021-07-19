@@ -103,7 +103,7 @@ def jeu(allumettes):
             afficher_allumettes(allumettes)
         else:
             allumettes-=choix
-        
+
 jeu(10)
 ```
 

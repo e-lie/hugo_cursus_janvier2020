@@ -33,7 +33,11 @@ weight: 2
 - Itérateurs, Décorateurs, Design Patterns
 - Modules et Packages, script CLI, documentation
 - Testing
-- +? Parallélisme, ?
+
+#### Flask
+
+#### Bonus
+- Regexp
 
 ## Méthode
 
