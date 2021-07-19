@@ -75,7 +75,7 @@ A3 = aire_disque(6)           # -> A3 vaut (environ) 113 !
 def aire_triangle(base, hauteur):
     return base * hauteur / 2
 
-A1 = aire_triangle(3, 5)      # -> A1 vaut 15 !
+A1 = aire_triangle(3, 5)      # -> A1 vaut 7.5 !
 A2 = aire_triangle(4, 2)      # -> A2 vaut 8 !
 
 
@@ -273,7 +273,7 @@ c.f. `https://docs.python.org/2/library/subprocess.html#subprocess.Popen`
 
 ### Ex.3 Fonctions
 3.1
-Écrire une fonction annee_naissance qui prends en argument un age et retourne l'année de naissance (+/- 1) sachant que nous sommes ne 2019. Par exemple, annee_naissance(29) retounera l'entier 1990.
+Écrire une fonction annee_naissance qui prends en argument un age et retourne l'année de naissance (+/- 1) sachant que nous sommes en 2019. Par exemple, annee_naissance(29) retounera l'entier 1990.
 
 3.2
 - Ecrire une fonction `centrer` prend en argument une chaîne de caractère, et retourne une nouvelle chaîne centrée sur 40 caractères. Par exemple `print(centrer("Python"))` affichera :

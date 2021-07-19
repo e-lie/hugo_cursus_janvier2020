@@ -32,6 +32,7 @@ print("Dans deux ans vous aurez {} ans.".format(age))
 ```python
 mot = input("Donnez moi un mot.\n")
 print("Ce mot fait {} caractères (espaces inclus).".format(len(mot)))
+print("#"*len(mot)+2+"\n"+)
 ```
 
 ### 2.2 Encadrer le mot avec ##
