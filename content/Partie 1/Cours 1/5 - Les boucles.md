@@ -113,6 +113,7 @@ Table du 7
 
 5.2 : (Optionnel) Écrire une fonction qui permet de déterminer si un nombre est premier. Par exemple `is_prime(3)` renverra True, et `is_prime(10)` renverra False.
 
+(Optionnel)
 5.3.1 : Jeu des allumettes
 
 Le jeu des allumettes est un jeu pour deux joueurs, où n allumettes sont disposées, et chaque joueur peut prendre à tour de rôle 1, 2 ou 3 allumettes. Le perdant est celui qui se retrouve obligé de prendre la dernière allumette.
@@ -132,3 +133,10 @@ Le jeu des allumettes est un jeu pour deux joueurs, où n allumettes sont dispos
 5.3.3 : (Optionnel) Intelligence artificielle
 
 Reprendre le jeu précédent et le modifier pour introduire une "intelligence" artificielle qui soit capable de jouer en tant que 2ème joueur. (Par exemple, une stratégie très simple consiste à prendre une allumette quoiqu'il arrive)
+
+5.3.4 : (Optionnel)
+Installer pylint3 avec:
+```bash
+pip3 install pylint3
+```
+Analyser son code avec pylint3
