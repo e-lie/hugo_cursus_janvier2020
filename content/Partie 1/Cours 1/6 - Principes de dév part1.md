@@ -45,6 +45,8 @@ Autrement dit : **la lisibilité pour vous et vos collègues a énormément d'im
 - `w(here)` : print the stack trace, c.a.d. les différents sous-appels de fonction dans lesquels on se trouve
 - `u(p)` : remonte d'un cran dans les appels de la stacktrace
 - `d(own)` : redescend d'un cran dans les appels de la stacktrace
+- `b(reak)` : fixe un point d'arrêt (breakpoint) à la ligne donnée.
+- `tbreak` : fixe un point d'arrêt temporaire qui sera retiré au premier passage.
 
 - `pp <variable>` : pretty-print d'une variable (par ex. une liste, un dict, ..)
 
