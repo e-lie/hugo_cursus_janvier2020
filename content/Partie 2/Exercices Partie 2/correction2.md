@@ -1,7 +1,7 @@
 ---
 title: Correction - Exercice 2
 weight: 5
-draft: false
+draft: true
 ---
 7.1
 ```python
