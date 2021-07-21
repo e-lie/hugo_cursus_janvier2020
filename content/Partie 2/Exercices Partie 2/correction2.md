@@ -33,8 +33,13 @@ def somme(liste):
  7.4
  ```python
  def extraire_nom_fichier(path):
-     liste=path.split("/")
-     return liste[-1]
+     liste=path.split("/") #['usr,'bin,'toto.py']
+     nom_du_fichier=list[-1].split(".") #['toto','py']
+     return liste[0]
+
+# En un seule ligne
+def extraire_nom_fichier_une_ligne(path):
+  return path.split("/")[-1].split(".")[0]
 ```
 7.5.1
 ```python
@@ -61,9 +66,12 @@ read_dict_edu(example_dict)
 ```python
 def compte_lettres(phrase):
     dict={}
+    # Pour chaque lettre:
     for lettre in phrase:
+    # Si la clef existe (dans ce cas la lettre a déjà été rencontrée) alors on incremente sa valeur de 1.
         if lettre in dict:
             dict[lettre]+=1
+    # Si la clef n'existe pas, on la crée et on initialise sa valeur à 1
         else:
             dict[lettre]=1
     return dict
@@ -76,10 +84,11 @@ print(compte_lettres(phrase))
 ```python
 def retourne_pair(liste):
     nouvel_liste=[]
-    for element in liste:
-        if element%2==0:
+    for nombre in liste:
+        if nombre%2==0:
             nouvel_liste.append(element)
     return nouvel_liste
+
 liste_paire=range(11)
 print(retourne_pair(liste_paire))
 ```
@@ -94,7 +103,7 @@ def tri_a_bulles(tableau):
     return tableau
 ```
 
-7.9 On utlise une list comprehension:
+7.9 On utlise ici une imbrication de compréhension de lire:
 ```python
 matrice=[[i+j for i in range(5)] for j in range(4)]
 ```
@@ -102,6 +111,7 @@ matrice=[[i+j for i in range(5)] for j in range(4)]
 ```python
 def somme_2(liste):
     if liste:
+        #Litéralement ma somme vaut le dernier élément plus la somme de tous les autres éléments moins le dernier
         return liste[-1]+somme_2(liste[:-1])
     else:
         return 0
