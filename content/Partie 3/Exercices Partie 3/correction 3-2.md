@@ -1,13 +1,13 @@
 ---
 title: Correction exercice 3.2 - Jeu de carte
-draft: false
+draft: true
 weight: 20
 ---
 
 
 ### Une classe Carte pour représenter les éléments d'un jeu
 
-- Dans un fichier `carte.py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`. 
+- Dans un fichier `carte.py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`.
 
 - Implémenter la méthode `points` pour la classe `Carte`, qui retourne un nombre entre 1 et 13 en fonction de la valeur de la carte. Valider ce comportement depuis un fichier `main.py` qui importe la classe Carte.
 
@@ -44,7 +44,7 @@ class Carte:
     # On aurait également put utiliser des enums pour représenter les couleurs/valeurs possibles (classique en programmation)
     couleurs_valides = ("TREFLE", "CARREAU", "COEUR", "PIQUE")
     valeurs_valides = tuple(list(range(1,11)) + ["VALET", "DAME", "ROI"])
-    
+
     def __init__(self, valeur, couleur):
         # La bonne méthode pour gérer les valeurs incorrectes en python est généralement de lever une exception
         # (traditionnellement de type ValueError qui est faite pour cela mais une Exception spécifique c'est encore mieux car cela explique l'erreur à l'utilisateur de la classe)
@@ -58,10 +58,10 @@ class Carte:
     @property
     def points(self):
         return Carte.valeurs_valides.index(self.valeur) + 1
-        
+
     def __repr__(self):
         return f"<Carte {self.valeur} de {self.couleur}>"
-        
+
 ```
 
 {{% /expand %}}
@@ -92,7 +92,7 @@ class Carte:
     # On aurait également put utiliser des enums pour représenter les couleurs/valeurs possibles (classique en programmation)
     couleurs_valides = ("TREFLE", "CARREAU", "COEUR", "PIQUE")
     valeurs_valides = tuple(list(range(1,11)) + ["VALET", "DAME", "ROI"])
-    
+
     def __init__(self, valeur, couleur):
         # La bonne méthode pour gérer les valeurs incorrectes en python est généralement de lever une exception
         # (traditionnellement de type ValueError qui est faite pour cela mais une Exception spécifique c'est encore mieux car cela explique l'erreur à l'utilisateur de la classe)
@@ -126,7 +126,7 @@ class Carte:
     @property
     def points(self):
         return Carte.valeurs_valides.index(self.valeur) + 1
-        
+
     def __repr__(self):
         return f"<Carte {self.valeur} de {self.couleur}>"
 
@@ -170,47 +170,47 @@ from carte import Carte
 import random
 
 class Paquet:
-    
+
     def __init__(self):
-        
+
         self.cartes = []
         for valeur in Carte.valeurs_valides:
             for couleur in Carte.couleurs_valides:
                 c = Carte(valeur, couleur)
                 self.cartes.append(c)
-                
-    def __repr__(self): # fonction qui décrit comment représenter une carte sous forme texte (exp avec print) 
-        return str(self.cartes) # Renvoie simplement l'affichage de la liste de cartesTRE 
-    
+
+    def __repr__(self): # fonction qui décrit comment représenter une carte sous forme texte (exp avec print)
+        return str(self.cartes) # Renvoie simplement l'affichage de la liste de cartesTRE
+
     def melanger(self):
-        
+
         random.shuffle(self.cartes)
-        
+
     def couper(self):
-        
+
         coupe_index = random.randint(0, len(self.cartes))
 
         self.cartes = self.cartes[coupe_index:] + self.cartes[:coupe_index]
 
 
     def piocher(self):
-        
+
         pioche = self.cartes[0]
         self.cartes = self.cartes[1:]
-        
+
         return pioche
-    
+
     def distribuer(self, nb_joueurs, nb_cartes):
-        
+
         distribution = [ [] for i in range(0, nb_joueurs)]
-        
+
         for i in range(0, nb_joueurs):
             for _ in range(0, nb_cartes):
                 carte = self.piocher()
                 distribution[i].append(carte)
-                
+
         return distribution
-        
+
 ```
 
 {{% /expand %}}
@@ -263,4 +263,3 @@ print(cartes_bob)
 ```
 
 {{% /expand %}}
-
