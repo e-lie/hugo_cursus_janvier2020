@@ -1,13 +1,13 @@
 ---
 title: Exercice 3.2 - Jeu de carte
-draft: false
+draft: true
 weight: 20
 ---
 
 
 ### Une classe Carte pour représenter les éléments d'un jeu
 
-- Dans un fichier `carte.py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`. 
+- Dans un fichier `carte.py`, créer une classe `Carte`. Une carte dispose d'une `valeur` (1 à 10 puis VALET, DAME et ROI) et d'une `couleur` (COEUR, PIQUE, CARREAU, TREFLE). Par exemple, on pourra créer des cartes en invoquant `Carte(3, 'COEUR')` et `Carte('ROI', 'PIQUE')`.
 
 - Implémenter la méthode `points` pour la classe `Carte`, qui retourne un nombre entre 1 et 13 en fonction de la valeur de la carte. Valider ce comportement depuis un fichier `main.py` qui importe la classe Carte.
 
