@@ -130,3 +130,39 @@ for i in carre():
         break
     print (i)
 ```
+10.1
+```python
+def liste_users():
+    with open("/etc/passwd","r") as file:
+        read_file=file.readlines()
+    for element in read_file:
+        e=element.rstrip().split(':')
+        if e[-1]=="/bin/bash":
+            print(e[0])
+
+liste_users()
+```
+
+10.2
+```python
+def generer_email(prenom,nom):
+        modele = """
+Bonjour {prenom} !
+Voici en pièce jointe les billets pour votre voyage en train vers {destination}.
+""".format(prenom=prenom,destination=nom)
+        with open("email_{}".format(prenom), "w") as f:
+            f.write(modele)
+
+generer_email("Sacha","Rennes")
+```
+10.3
+```python
+def afficher_fichier_no_comment(file,char):
+    with open(file) as file_read:
+        read_file=file_read.readlines()
+    print(read_file)
+    for element in read_file:
+        if not element.strip() == "" and not element[0]==char:
+            print(element,end='')
+afficher_fichier_no_comment("test","#")
+```

@@ -62,7 +62,7 @@ print(cercle1.centre)
 - On instancie un objet en faissant `mon_objet = Classe(...)` ce qui appelle `__init__`
 
 
-- `self` correspond à l'objet en train d'être manipulé. Il soit être passé en paramètre de toutes les fonctions de la classe (les méthodes)
+- `self` correspond à l'objet en train d'être manipulé. Il doit être passé en paramètre de toutes les fonctions de la classe (les méthodes)
 
 Les attributs sont les variables internes qui décrivent l'état et régisse le fonctionnement de l'objet.
 
