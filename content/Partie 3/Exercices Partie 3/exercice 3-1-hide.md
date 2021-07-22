@@ -1,6 +1,6 @@
 ---
 title: Exercice 3.1 - Cercles et Cylindres
-draft: false
+draft: true
 weight: 20
 ---
 
@@ -13,3 +13,9 @@ Dans cet exercice nous allons représenter des objets et calculs géométriques 
 - Implémenter une classe `Cylindre`, fille de `Cercle`, qui est caractérisée par un rayon `rayon`, une hauteur `hauteur` et des coordonnées `x`, `y` et `z`. On écrira le constructeur de `Cylindre` en appelant le constructeur de `Cercle`.
 
 - Surcharger la méthode `aire` pour la classe `Cylindre`, en se basant sur le résultat de la méthode de la classe mère.
+
+```
+- Dans la classe `Cercle`, implémenter une méthode `intersect` qui retourne `True` ou `False` suivant si deux cercles se touchent. Exemple d'utilisation : `c1.intersect(c2)`
+
+- Surcharger la méthode `intersect` pour la classe `Cylindre`, en se basant sur le résultat de la méthode de la classe mère.
+```
