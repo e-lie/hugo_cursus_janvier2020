@@ -1,6 +1,6 @@
 ---
 title: Correction exercice 3.2 - Jeu de carte
-draft: true
+draft: false
 weight: 20
 ---
 

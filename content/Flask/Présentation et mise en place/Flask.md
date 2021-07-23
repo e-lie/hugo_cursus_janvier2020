@@ -123,7 +123,7 @@ Un template ressemble à :
 On peut l'*hydrater* avec par exemple ces données :
 
 ```python
-prenom = "Alex"
+prenom = "Sacha"
 apps = [ { "name": "mailman", "level": 2 },
          { "name": "wordpress", "level": 7 },
          { "name": "nextcloud", "level": 8 }    ]
@@ -135,7 +135,7 @@ Rendu :
 
 ```
 <html>
-  Bonjour Alex !
+  Bonjour Sacha !
 
   mailman est niveau 2 !
   wordpress est niveau 7 !
@@ -156,7 +156,7 @@ def homepage():
              { "name": "wordpress", "level": 7 },
              { "name": "nextcloud", "level": 8 }    ]
     return render_template('hello.html',
-                           name="Alex",
+                           name="Sacha",
                            apps=apps)
 ```
 
@@ -227,8 +227,23 @@ def homepage():
     apps = App.query.all()
 
     return render_template('hello.html',
-                           prenom="Alex",
+                           prenom="Sacha",
                            apps=apps)
+```
+
+### Récupérer une requête
+```python
+from flask import request
+@app.route('/add', methods=['POST','GET'])
+def add():
+  return request.form["name"]+" "+request.form["level"]
+```
+
+# Faire une redirection
+``` python
+from flask import redirect
+@app.route('/redirect')
+  return redirect('/')
 ```
 
 TP de mise en application : gestionnaire de contacts
