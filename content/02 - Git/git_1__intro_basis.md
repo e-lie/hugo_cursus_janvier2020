@@ -6,17 +6,14 @@ weight: 10
 draft: false
 ---
 
-<!-- class: impact -->
 
-# Git - première partie
-
-## Des dépôts de code à partager
+## GIT = Des dépôts de code à partager
 
 ---
 
-### Comment gérer du code logiciel ?
+## Comment gérer du code logiciel ?
 
-## Plusieurs difficultés :
+### Plusieurs difficultés :
 
 1. **Suivre** le code avec **précision** :
 
@@ -27,16 +24,10 @@ draft: false
    - Comment **partager** nos modifications ?
    - Comment faire si deux personnes travaillent sur le même fichier => **conflits**
 
----
-
-## Comment gérer du code logiciel ?
-
 3. **Version** du logiciel :
    - Le développement est un travail **itératif** = contruction petit à petit => plein de versions !
    - On veut ajouter une nouvelle fonctionnalité à un logiciel, mais continuer à distribuer l'ancienne version et l'améliorer.
    - On veut créer une version de test pour que des utilisateur·trices avancé·es trouvent des bugs
-
----
 
 ## Solution : un gestionnaire de versions
 
@@ -44,21 +35,15 @@ draft: false
 
 ![](../../images/git_diff.png)
 
----
-
 2. Permet de **stocker plusieurs versions** des **mêmes fichiers** et passer d'une version à l'autre.
 
 Un peu comme la fonctionnalité "Historique" de Google Docs ou de Framapad en **beaucoup plus avancé**.
 
 ![](../../images/merge_3_versions.png)
 
----
-
-## 3. Permet de suivre **qui** a fait quelle modification, **partager les modifications** avec les autres, **régler les conflits d'édition**
+3. Permet de suivre **qui** a fait quelle modification, **partager les modifications** avec les autres, **régler les conflits d'édition**
 
 ![](../../images/gitkraken.png)
-
----
 
 ## Git !
 
@@ -70,8 +55,6 @@ Un peu comme la fonctionnalité "Historique" de Google Docs ou de Framapad en **
 - Aide à résoudre les conflits de code
 
 Pour la petite histoire, Git a été inventé en 2005 par Linus Torvalds, le créateur de Linux, pour garder la trace des propositions de modification du code de Linux !
-
----
 
 ## Écosystème Git :
 
@@ -88,15 +71,11 @@ Pour la petite histoire, Git a été inventé en 2005 par Linus Torvalds, le cr�
 
 On va utiliser **les trois** car c'est nécessaires pour bien comprendre comment on travaille avec git sur un projet.
 
----
-
 On va utiliser :
 
 - **git** en ligne de commande souvent : il faut **absolument connaître** les fonctions de base pour travailler sur un projet de code aujourd'hui
 - **VSCode** : un éditeur de texte qui a des fonctions pratiques pour visualiser les modifications git et l'historique d'un projet, afficher les conflits d'édition.
 - **Gitlab** sur l'instance `framagit.org` : une forge logicielle open-source. On va l'utiliser pour collaborer sur du code existant. Framagit est l'instance de l'association Framasoft qui milite pour le libre et un Internet décentralisé.
-
----
 
 ## Git, fonctionnement de base
 
@@ -112,9 +91,7 @@ On va utiliser :
 
 - Même les ingénieur·es avec de l'expérience se trompent dans le comportement d'une commande Git et ne connaissent pas forcément les fonctions avancées.
 
----
-
-# 1. Créer un nouveau dépôt git, valider une première version du code
+## 1. Créer un nouveau dépôt git, valider une première version du code
 
 Vous êtes dans un dossier avec du code :
 
@@ -123,9 +100,7 @@ Vous êtes dans un dossier avec du code :
 - `git commit` permet de **valider vos modifications** pour créer ce qu'on appelle un **commit**, c'est-à-dire une **étape validée du code**.
 - `git status` et `git log` permettent de suivre l'état du dépôt et la liste des commits.
 
----
-
-# Le **commit**
+## Le **commit**
 
 Un commit est composé :
 
@@ -144,11 +119,7 @@ Un commit est composé :
 
 - un **commit** est toujours une référence à **une version précise de l'ensemble du code** par rapport à l'arbre Git, c'est n'est **pas** juste des ajouts et des suppressions par rapport au code du commit précédent
 
----
-
-# Créer un nouveau dépot : Démonstration !
-
----
+## Créer un nouveau dépot : Démonstration !
 
 ## Cycle des fichiers
 
@@ -167,4 +138,4 @@ Un commit est composé :
 
 ## <!-- FIXME: gitignore -->
 
-# Premier TP
+# Premiers exercices

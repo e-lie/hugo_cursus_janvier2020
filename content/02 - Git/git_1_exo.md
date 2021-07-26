@@ -1,5 +1,5 @@
 ---
-title: "Git 1 - Introduction - Exercices"
+title: "Git 1 - Exercices"
 weight: 11
 ---
 

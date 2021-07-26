@@ -3,13 +3,9 @@ title: Git 4 - Forges Git
 weight: 400
 ---
 
-# Git - quatrième partie
-
 <!-- FIXME: Parler de merge --continue, choper le workflow depuis simple git -->
 
 ## Collaborer à l'aide de gitlab
-
----
 
 # Git pour collaborer...
 
@@ -18,8 +14,6 @@ Git devient indispensable lorsque :
 - L'équipe avec laquelle vous collaborez est grande...
 - Changeante...
 - Le logiciel évolue dans le temps et en taille.
-
----
 
 ## La forge logicielle
 
