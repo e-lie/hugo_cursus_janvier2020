@@ -11,7 +11,7 @@ home = [ "HTML", "RSS", "JSON" ]
 
 [params]
 editURL = "https://github.com/e-lie/hugo_cursus_janvier2020"
-globalTitle = "Kubernetes - Avril 2021"
+globalTitle = "POEC DevOps 2021"
 
 [params.reveal_hugo]
 custom_theme = "reveal-hugo/themes/robot-lung.css"
