@@ -8,10 +8,7 @@ draft: false
 
 
 ## GIT = Des dépôts de code à partager
-
----
-
-## Comment gérer du code logiciel ?
+### Comment gérer du code logiciel ?
 
 ### Plusieurs difficultés :
 
@@ -127,7 +124,7 @@ Un commit est composé :
 
 ![](../../images/git_file_statuses.jpg)
 
-3 **arbres** :
+### **arbres** :
 
 - _l'espace de travail_ : ce sont les fichiers qu'il y a réellement dans votre dossier
 - l'_index_ ou _staging_ : un espace où l'on prépare son futur commit
@@ -136,6 +133,6 @@ Un commit est composé :
   <!-- - _Staged_ = inclus (dans le prochain commit) -->
   <!-- - `git rm fichier` pour désindexer. -->
 
-## <!-- FIXME: gitignore -->
+<!-- ## FIXME: gitignore -->
 
-# Premiers exercices
+## Premiers exercices
