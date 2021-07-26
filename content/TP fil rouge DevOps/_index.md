@@ -4,7 +4,7 @@ weight: 350
 # pre: "<i class='fab fa-git'></i> - "
 pre: "<i class='fas fa-infinity'></i> - "
 # chapter: true
-draft: false
+draft: true
 ---
 
 ## Introduction
@@ -25,7 +25,6 @@ Le rendu du TP est à effectuer par groupe. Pour chaque groupe les éléments su
 
 - Une présentation succinte décrivant les différents élements du rendu et leurs objectifs ainsi que les choix réalisés lors de la réalisation.
 
-
 ## 1 - Application
 
 Créer une application web python et l'installer sur Linux.
@@ -34,18 +33,20 @@ Installer une application minimale en mode production utilisant un service syste
 
 -> Inspirez vous du Dockerfile de l'application
 
-#### Idées de bonus 
+#### Idées de bonus
 
 Installer l'application flask microblog avec une base de donnée MySQL (mode développement flask et production uwsgi+nginx)
 
 ## 2 - Git
 
 Versionner le code de l'application précédente sur Github.
+
 - Un membre du groupe créé le dépôt et ajoute ses collègues à l'application en leur donnant le status de `maintainer`.
 - Pousser le code avec une branche `development`, une branche `main` (production).
 - Chaque membre crée une branche à son nom et s'efforce de ne pousse plus sur `development` ou `main` dans le futur.
 
 Répétez les étapes précédentes en créant un dépôt pour le code d'infrastructure.
+
 #### Idées de bonus
 
 - Écrire à l'avance (au fur et a mesure pas toutes au départ) des issues pour décrire les prochaines étapes à réaliser.
@@ -88,14 +89,14 @@ Installer un cluster kubernetes dans 3 machines virtuelles avec Ansible et Kubes
 Déployer l'application flask simple, l'exposer à l'aide d'un Ingress
 
 #### Bonus
- 
+
 Déployer l'application flask avec une base de donnée. Installez MySQL à l'aide d'un chart Helm.
 
 #### Bonus Avancé
 
 Déployer l'application microservice GRPC avec Istio
 
-<!-- 
+<!--
 ## Ansible et Amazon Web Service
 
 #### Simple
