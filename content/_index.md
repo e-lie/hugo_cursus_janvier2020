@@ -1,11 +1,10 @@
 ---
-title: "Uptime Formation"
+title: POEC DevOps été 2021 
 ---
 
 # {{< param globalTitle >}}
 
-Supports de formation : Elie Gavoty et Hadrien Pélissier</br>
+Vous trouverez rassemblé sur ce site les supports de formations pour un bonne partie des modules technique du cursus POEC DevOps organisé par IB Formation durant l'été 2021.
 
 Conçus initialement dans le cadre d'un cursus [Uptime Formation](https://uptime-formation.fr)</a>.</br>
 
-Sous [licence CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr)</a>

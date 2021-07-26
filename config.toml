@@ -1,7 +1,9 @@
-baseURL = "https://cours.hadrienpelissier.fr/"
+baseURL = "https://tochange.fr"
 languageCode = "fr-FR"
-title = "Formations Uptime"
-theme = ["hugo-theme-learn", "reveal-hugo"]
+title = "Cursus POEC DevOps"
+
+# Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
+theme = "hugo-theme-learn"
 
 # Pour la fonctionnalité de recherche
 [outputs]
@@ -19,7 +21,4 @@ custom_theme = "reveal-hugo/themes/robot-lung.css"
 [markup.goldmark.renderer]
 unsafe = true
 
-[outputFormats.Reveal]
-baseName = "index"
-mediaType = "text/html"
-isHTML = true
+# [menu.shortcuts]
