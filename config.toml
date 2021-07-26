@@ -1,6 +1,6 @@
 baseURL = "https://tochange.fr"
 languageCode = "fr-FR"
-title = "Formation Python"
+title = "Cursus POEC DevOps"
 
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
