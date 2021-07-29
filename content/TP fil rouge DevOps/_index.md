@@ -20,28 +20,41 @@ Attention:
 - Toutes les parties ne sont pas forcément obligatoire. L'appréciation sera globale. Les bonus sont des idées de personnalisation à réaliser si vous avez le temps et le courage.
 
 - Ce sujet de TP est loin d'être simple:
-    - N'hésitez pas à demander de l'aide aux formateurs.
-    - Collaborez et partagez la compréhension des enjeux dans le groupe.
+  - N'hésitez pas à demander de l'aide aux formateurs.
+  - Collaborez et partagez la compréhension des enjeux dans le groupe.
 - Le sujet est succeptible d'évoluer au fur et à mesure en fonction de vos retours et demandes d'information.
 - Les parties de la fin du cursus (Jenkins et peut-être le Monitoring et/ou AWS et/ou Ansible) seront ajoutées par la suite.
 - N'oubliez pas de vous reposer pendant les vacances !!
 
 ## Rendu
 
-Le rendu du TP est à effectuer par groupe. Pour chaque groupe les éléments suivant devront être présentés lors de la présentation finale du cursus:
+Le rendu du TP est à effectuer par groupe.
+
+Pour chaque groupe les éléments suivant devront être présentés lors de la présentation finale du cursus:
+
+- Une présentation décrivant les différents élements de l'infrastructure et leurs objectifs ainsi que les choix réalisés lors de la réalisation.
+
+- On peut se servir de diapositives afin d’avoir un support oral. L’idée est de voir la gestion du temps, l’expression orale et évidemment le côté technique. Et attention, à la répartition de parole dans le groupe, chacun doit occuper sa place.
+
+- La qualité des diapositives est notée également.
+
+- La présentation dure 20mn, 10mn de plus de questions du jury, 5 mn de délibération du jury sans les stagiaires et 5 mn de compte rendu au groupe de la part du jury.
+
+- Pas de rapport écrit à part les diapositives.
+
+## Objectifs
 
 - Une installation fonctionnelle de l'infrastructure et de l'application du TP installé sur cette infrastructure telle que décrite dans l'énoncé suivant.
 
-- Deux dépots de code sur Github contenant pour le premier le code d'infrastructure et pour le second l'application à déployer sur l'infrastructure.
+- Deux dépots de code sur Github ou Gitlab contenant pour le premier le code d'infrastructure et pour le second l'application à déployer sur l'infrastructure.
 
-- Une présentation succinte décrivant les différents élements du rendu et leurs objectifs ainsi que les choix réalisés lors de la réalisation.
 ## 0 - Vagrant et Virtualbox: créer une machine virtuelle avec du code
 
 Une infrastructure est généralement composée de machines virtuelles pour la flexibilité, qu'elles soient louées chez un provider de cloud comme Amazon Web Service ou créées à l'aide d'un hyperviseur comme Virtualbox (ou VMWare ou Proxmox etc).
 
 Dans ce TP nous allons utiliser Virtualbox pour créer un ou plusieurs serveurs (selon vos préférences, voir bonus kubernetes installation dans la suite). Pour respecter les bonnes pratiques de l'infrastructure as code et pouvoir partager et reproduire l'installation nous aimerions créer ces machines virtuelles à l'aide de **code descriptif**. L'outil adapté pour cela s'appelle `Vagrant`.
 
-- Installez Vagrant en ajoutant le dépôt ubuntu et utilisant apt (voir https://www.vagrantup.com/downloads pour d'autres installation): 
+- Installez Vagrant en ajoutant le dépôt ubuntu et utilisant apt (voir https://www.vagrantup.com/downloads pour d'autres installation):
 
 ```sh
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -51,17 +64,16 @@ sudo apt-get update && sudo apt-get install vagrant
 
 - Créez un dossier pour votre code d'infrastructure par exemple `tp_fil_rouge_infra` et ajoutez à l'intérieur un fichier `Vagrantfile` contenant le code suivant:
 
-
 ```ruby
 Vagrant.configure("2") do |config|
     config.vm.provider :virtualbox do |v|
       v.memory = 2048
       v.cpus = 2
     end
-  
+
     config.vm.define :master do |master|
-      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search 
-      master.vm.box = "ubuntu/focal64" 
+      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
+      master.vm.box = "ubuntu/focal64"
       master.vm.hostname = "master"
       master.vm.network :private_network, ip: "10.10.0.1"
     end
@@ -71,16 +83,17 @@ Vagrant.configure("2") do |config|
 - Entrainez vous à allumer, éteindre, détruire la machine et vous y connecter en ssh en suivant ce tutoriel: https://les-enovateurs.com/vagrant-creation-machines-virtuelles/. (pensez également à utiliser `vagrant --help` ou `vagrant <commande> --help` pour découvrir les possibilités de la ligne de commande vagrant).
 
 Remarques pratiques sur Vagrant :
+
 - toutes les machines vagrant ont automatiquement un utilisateur vagrant.
 - Vagrant partage automatiquement le dossier dans lequel est le `Vagrantfile` à l'intérieur de la VM dans le dossier `/vagrant`. Les scripts et autres fichiers sont donc directement accessibles dans la VM.
 
 ## 1 - Application Web Python et Linux
 
-- Installez une application Flask simple sur Linux en suivant les étapes présentées dans le tutoriel suivant (en s'arrêtant à la partie 5 (avant certbot)): https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-fr.
+- Choisissez une application Flask simple sur Linux (voir les codes d'apps Flask présents dans le cours Docker ou l'application flask `microblog` du Flask Mega Tutorial : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux)
 
-- Rassemblez les étapes d'installation dans un script shell (à ajouter dans le dossier d'infra).
+- (facultatif) Rassemblez les étapes d'installation dans un script shell (à ajouter dans le dossier d'infra), pour vous entraîner. Vous pouvez vous aider des étapes présentées dans le tutoriel suivant (en s'arrêtant à la partie 5 (avant certbot)): https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-fr.
 
-- Vérifiez que votre script d'installation fonctionne en détruisant et recréant la machine virtuelle (`vagrant destroy`) puis an lçant le script en ssh.
+- (facultatif) Vérifiez que votre script d'installation fonctionne en détruisant et recréant la machine virtuelle (`vagrant destroy`) puis en lançant le script en ssh.
 
 Vous pouvez même ajouter le script directement au `Vagrantfile`, après la ligne `master.vm.network :private_network, ip: "10.10.0.1"` avec la syntaxe suivante:
 
@@ -92,14 +105,16 @@ Vous pouvez même ajouter le script directement au `Vagrantfile`, après la lign
   SHELL
 ```
 
-#### Idée de bonus 
+<!--
+#### Idée de bonus
 
-- Sur votre serveur, installez/scriptez en plus de la précédente, l'application flask `microblog` du Flask Mega Tutorial avec une base de donnée MySQL. Voir : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux.
+- Sur votre serveur, installez/scriptez en plus de la précédente,  -->
 
 ## 2 - Git
 
-Versionner le code de l'application précédente avec git. Créer un dépôt sur Github.
-- Un membre du groupe crée le dépôt et ajoute ses collègues à l'application en leur donnant le status de `maintainer`.
+Versionner le code de l'application précédente avec git. Créer un dépôt sur Github ou Gitlab.
+
+- Un-e membre du groupe crée le dépôt et ajoute ses collègues à l'application en leur donnant le status de `maintainer`.
 - Poussez le code avec une branche `develop`, une branche `main` (production).
 - Chaque membre du groupe créé une branche à son nom et s'efforce de ne plus pousser sur `develop` ou `main` dans le futur mais en utilisant sa branche.
 - Le code sera ensuite mergé dans la branche `develop` et/ou `main`.
@@ -107,57 +122,63 @@ Versionner le code de l'application précédente avec git. Créer un dépôt sur
 Répétez les étapes précédentes en créant un dépôt pour le code d'infrastructure.
 
 Ces deux dépôts serviront pour la présentation finale de votre code.
+
 #### Idées de bonus
 
 - Écrire à l'avance des issues (au fur et a mesure plutôt que toutes au départ) pour décrire les prochaines étapes à réaliser.
 
 - Utilisez pour la suite du TP des branches pour les issues.
-    - Les merger dans `main` sans passer par `develop` (les feature branches remplacent la branche `develop`) en effectuant des pull request Github.
 
-- Utilisez le wiki Github du dépot d'infrastructure pour documenter votre infrastructure et servir de support à la présentation finale.
+  - Les merger dans `main` sans passer par `develop` (les feature branches remplacent la branche `develop`) en effectuant des pull request Github ou merge requests Gitlab.
+
+- Utilisez le wiki Github ou Gitlab du dépôt d'infrastructure pour documenter votre infrastructure et servir de support à la présentation finale.
+
 ## 3 - Docker
 
 En suivant le TP2 et 4 du module Docker:
 
-- Dockeriser une application flask en écrivant un Dockerfile (celle du TP est adaptée)
-- Ajoutez un fichier `docker-compose.yml`. pour lancer l'application.
+- Dockeriser l'application flask en écrivant un Dockerfile (celle du TP est adaptée)
+
+- (facultatif) Ajoutez un fichier `docker-compose.yml`. pour lancer l'application.
 - Ajoutez les fichiers créées à votre dépôt d'application.
 
 #### Bonus
 
-- Dockeriser en plus l'application microblog avec une base de donnée MySQL à mettre dans un conteneur à part (voir chapitre 19 du Flask Mega Tutorial).
+- Dockeriser l'application microblog avec une base de données MySQL ou un volume pour une base de données SQlite à mettre dans un conteneur à part (voir chapitre 19 du Flask Mega Tutorial et les différentes branches du dépôt <https://github.com/Uptime-Formation/microblog/>).
+
 ## 4 - Kubernetes installation
 
 En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
-- Créez une machine virtuelle ubuntu avec Vagrant qui dispose au minimum de 6G de RAM et 3 cpus (ou plus si vous êtes sur des machines surpuissantees).
+- (facultatif) Créez une machine virtuelle ubuntu avec Vagrant qui dispose au minimum de 8G de RAM et 3 cpus (ou plus si vous êtes sur des machines surpuissantes).
 
-- Utilisez la commande `master.vm.provision` comme indiqué dans la partie 0 ci-dessus pour installer k3s (voir TP1 le getting started de k3s).
+- (facultatif) Utilisez la commande `master.vm.provision` comme indiqué dans la partie 0 ci-dessus pour installer k3s (voir TP1 le getting started de k3s).
 
-- Trouvez comment supprimez l'ingress Traefik de k3s et installez à la place un ingress nginx plus classique (pour pouvoir exposer l'application web à l'extérieur).
+- (facultatif) Trouvez comment supprimez l'ingress Traefik de k3s et installez à la place un ingress nginx plus classique (pour pouvoir exposer l'application web à l'extérieur).
 
-- Installez cert-manager comme dans le TP
+- (facultatif) Installez cert-manager comme dans le TP avec un certificat auto-signé : https://cert-manager.io/docs/configuration/selfsigned/
 
 <!-- - Installez un repository d'image docker simple à faire plutôt dans la partie Jenkins-->
 
 - Installez ArgoCD comme dans le TP
 
-- Versionnez les fichiers d'installation kubernetes dans le dépôt d'infrastructure.
+- Versionnez les fichiers d'installation Kubernetes dans le dépôt d'infrastructure.
 
 #### Idées de bonus
 
+- Installez un repository d'image docker simple en vous aidant de tutoriels sur Internet et de l'image registry:2, ou bien de solutions plus avancées
 - Créez un cluster de 3 noeuds k3s avec Vagrant et k3sup.
-- Avancé! : installer un cluster Kubernetes dans 3 machines virtuelles Vagrant avec Kubespray (solution de référence d'installation kubernetes utilisant Ansible).
+<!-- - Très avancé! : installer un cluster Kubernetes dans 3 machines virtuelles Vagrant avec Kubespray (solution de référence d'installation kubernetes utilisant Ansible). -->
 
 ## 5 - Kubernetes déploiement de l'application
 
-
-- Déployez une application flask dans le cluster en vous inspirant du TP déployer une application de A à Z.
+- Déployez une application flask (si avec base de données interne comme SQlite, vous pouvez utiliser un simple volume) dans le cluster en vous inspirant du TP déployer une application de A à Z.
 - Versionnez les fichiers d'installation dans un dossier `k8s` du dépôt d'application.
-#### Idée de bonus
- 
-- Déployer en plus l'application flask avec une base de donnée. Installez MySQL à l'aide d'un chart Helm.
 
+#### Idée de bonus
+
+- Gérez le déploiement de l'application avec ArgoCD
+- Déployer en plus l'application flask avec une base de donnée externe. Installez MySQL à l'aide d'un chart Helm.
 
 <!--
 ## Ansible et Amazon Web Service
