@@ -1,6 +1,6 @@
 ---
-title: 'Kubernetes'
-draft: false
+title: "Kubernetes"
+draft: true
 weight: 204
 pre: "05 - <i class='fas fa-dharmachakra'></i> "
 chapter: true
