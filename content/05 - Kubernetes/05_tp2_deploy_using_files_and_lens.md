@@ -6,8 +6,8 @@ weight: 2045
 
 Dans ce court TP nous allons redéployer notre application `rancher-demo` du TP1 mais cette fois en utilisant `kubectl apply -f` et en visualisant le résultat dans `Lens`.
 
-- Changez de contexte pour minikube avec `kubectl config use-context minikube`
-- Chargez également la configuration de minikube dans `Lens` en cliquant à nouveau sur plus et en selectionnant `minikube`
+- Changez de contexte pour k3s avec `kubectl config use-context k3s` ou `kubectl config use-context default`
+- Chargez également la configuration de k3s dans `Lens` en cliquant à nouveau sur plus et en selectionnant `k3s` ou `default`
 - Commencez par supprimer les ressources `rancher-demo` et `rancher-demo-service` du TP1
 - Créez un dossier `TP2_deploy_using_files_and_Lens` sur le bureau de la machine distante et ouvrez le avec `VSCode`.
 
@@ -47,11 +47,11 @@ spec:
         app: rancher-demo
     spec:
       containers:
-      - image: <image>
-        name: <name>
-        ports:
-        - containerPort: <port>
-          name: demo-http
+        - image: <image>
+          name: <name>
+          ports:
+            - containerPort: <port>
+              name: demo-http
 ```
 
 - Appliquez ce nouvel objet avec kubectl.
@@ -74,13 +74,13 @@ spec:
   ports:
     - port: <port>
   selector:
-    app: <app_selector> 
+    app: <app_selector>
   type: NodePort
 ```
 
 - Appliquez ce nouvel objet avec kubectl.
 - Inspectez le service dans Lens.
-- Visitez votre application avec `minikube service rancher-demo-service`, le nombre de réplicat devrait apparaître.
+- Visitez votre application avec le lien Lens, le nombre de réplicat devrait apparaître.
 - Changez les labels du template et du selector dans le **déploiement** (2 fois `app: rancher-demo` à remplacer dans le fichier ) et supprimez le déploiement et réappliquez.
 - Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
 
