@@ -105,10 +105,9 @@ Vous pouvez même ajouter le script directement au `Vagrantfile`, après la lign
   SHELL
 ```
 
-<!--
 #### Idée de bonus
 
-- Sur votre serveur, installez/scriptez en plus de la précédente,  -->
+- Personnalisez votre application Flask / Python avec une ou des pages en plus et une fonctionnalité en plus (n'hésitez pas à lire le tutoriel Flask : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
 
 ## 2 - Git
 
