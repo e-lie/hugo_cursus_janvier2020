@@ -22,11 +22,11 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 #### Autocomplete
 
-`helm completion bash | sudo tee /etc/bash_completion.d/helm`
+`helm completion bash | sudo tee /etc/bash_completion.d/helm` et relancez votre terminal.
 
 ### Utiliser un chart Helm pour installer Wordpress
 
-- Pour installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` puis `kubectl get nodes` pour vérifier.
+- Pour installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` ou `kubectl config use-context k3s` puis `kubectl get nodes` pour vérifier.
 
 - Cherchez Wordpress sur [https://artifacthub.io/](https://artifacthub.io/).
 
