@@ -20,6 +20,10 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Suivez le Quickstart : <https://helm.sh/docs/intro/quickstart/>
 
+#### Autocomplete
+
+`helm completion bash > /etc/bash_completion.d/helm`
+
 ### Utiliser un chart Helm pour installer Wordpress
 
 - Pour installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` puis `kubectl get nodes` pour vérifier.
