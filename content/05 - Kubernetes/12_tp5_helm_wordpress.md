@@ -22,7 +22,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 #### Autocomplete
 
-`helm completion bash > /etc/bash_completion.d/helm`
+`helm completion bash | sudo tee /etc/bash_completion.d/helm`
 
 ### Utiliser un chart Helm pour installer Wordpress
 
