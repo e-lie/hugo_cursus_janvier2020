@@ -48,7 +48,7 @@ Voici quelques commandes de bases pour Helm :
 
 - `helm search repo bitnami` : rechercher un chart en particulier
 
-- `helm install my-chart` : permet d’installer le chart my-chart. Le nom de release est généré aléatoirement dans votre cluster Kubernetes.
+- `helm install my-release my-chart --values=myvalues.yaml` : permet d’installer le chart my-chart avec le nom my-release et les valeurs de variable contenues dans myvalues.yaml (elles écrasent les variables par défaut)
 
 - `helm upgrade my-release my-chart` : permet de mettre à jour notre release avec une nouvelle version.
 
