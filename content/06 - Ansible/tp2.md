@@ -1,5 +1,5 @@
 ---
-title: "TP2 - Créer un playbook de déploiement d'application flask" 
+title: "TP2 - Créer un playbook de déploiement d'application web flask" 
 draft: false
 weight: 22
 ---

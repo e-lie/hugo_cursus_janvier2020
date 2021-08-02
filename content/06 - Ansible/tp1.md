@@ -74,151 +74,64 @@ La commande échoue car ssh n'est pas configuré sur l'hote mais la machine est 
 {{% /expand %}}
 
 
-## Explorer LXD 
+## Découvrir Vagrant
 
-LXD est une technologie de conteneurs actuellement promue par canonical (ubuntu) qui permet de faire des conteneur linux orientés systèmes plutôt qu'application. Par exemple `systemd` est disponible à l'intérieur des conteneurs contrairement aux conteneurs Docker.
+Vagrant est un outil pour créer des VMs (ou conteneurs) à partir de code. Son objectif est de permettre la création d'environnement de développement / DevOps reproductibles et partageables.
 
-LXD est déjà installé et initialisé sur notre ubuntu (sinon `apt install snapd` + `snap install lxd` + ajouter votre utilisateur courant au group unix `lxd`).
+Pour utiliser Ansible nous avons justement besoin de machine vituelles à provisionner. Nous allons utiliser Vagrant et Virtualbox pour créer plusieurs serveurs. 
 
-Il faut cependant l'initialiser avec : `lxd init`
+- Installez Vagrant en ajoutant le dépôt ubuntu et utilisant apt (voir https://www.vagrantup.com/downloads pour d'autres installation):
 
-- Cette commande vous pose un certain nombre de questions pour la configuration et vous pouvez garder TOUTES les valeurs par défaut en fait ENTER simplement à chaque question.
-
-- Affichez la liste des conteneurs avec `lxc list`. Aucun conteneur ne tourne.
-- Maintenant lançons notre premier conteneur `centos` avec `lxc launch images:centos/7/amd64 centos1`.
-- Listez à nouveau les conteneurs lxc.
-- Ce conteneur est un centos minimal et n'a donc pas de serveur SSH pour se connecter. Pour lancez des commandes dans le conteneur on utilise une commande LXC pour s'y connecter `lxc exec <non_conteneur> -- <commande>`. Dans notre cas nous voulons lancer bash pour ouvrir un shell dans le conteneur : `lxc exec centos1 -- bash`.
-- Nous pouvons installer des logiciels dans le conteneur comme dans une VM. Pour sortir du conteneur on peut simplement utiliser `exit`.
-
-- Un peu comme avec Docker, LXC utilise des images modèles pour créer des conteneurs. Affichez la liste des images avec `lxc image list`. Trois images sont disponibles l'image centos vide téléchargée et utilisée pour créer centos1 et deux autres images préconfigurée `ubuntu_ansible` et `centos_ansible`. Ces images contiennent déjà la configuration nécessaire pour être utilisée avec ansible (SSH + Python + Un utilisateur + une clé SSH).
-
-- Supprimez la machine centos1 avec `lxc stop centos1 && lxc delete centos1`
-
-## Facultatif : Configurer un conteneur pour Ansible manuellement
-{{% expand "Facultatif :" %}}
-
-
-- Connectez vous dans le conteneur avec la commande `lxc exec` précédente. Une fois dans le conteneur  lancez les commandes suivantes:
-
-##### Pour centos
-
-```bash
-# installer SSH
-yum update -y && yum install -y openssh-server sudo
-
-systemctl start sshd
-
-# verifier que python2 ou python3 est installé
-python --version || python3 --version
-
-## Attention copiez cette commande bien correctement
-# configurer sudo pour être sans password
-sed -i 's@\(%wheel.*\)ALL@\1 NOPASSWD: ALL@' /etc/sudoers
-
-# Créer votre utilisateur de connexion
-useradd -m -s /bin/bash -G wheel stagiaire
-
-# Définission du mot de passe
-passwd stagiaire
-
-exit
+```sh
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install vagrant
 ```
 
-##### Pour ubuntu
+- Créez un dossier pour votre code d'infrastructure par exemple `tp_fil_rouge_infra` et ajoutez à l'intérieur un fichier `Vagrantfile` contenant le code suivant:
 
-```bash
-# installer SSH
-apt update && apt install -y openssh-server sudo
+```ruby
+Vagrant.configure("2") do |config|
+    config.vm.provider :virtualbox do |v|
+      v.memory = 1024
+      v.cpus = 1
+    end
 
-# verifier que python2 ou python3 est installé
-python --version || python3 --version
+    config.vm.define :ubu1 do |ubu1|
+      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
+      ubu1.vm.box = "ubuntu/focal64"
+      ubu1.vm.hostname = "ubu1"
+      ubu1.vm.network :private_network, ip: "10.10.0.1"
+    end
 
-## Attention copiez cette commande bien correctement
-# configurer sudo pour être sans password
-sed -i 's@\(%sudo.*\)ALL@\1 NOPASSWD: ALL@' /etc/sudoers
-
-# Créer votre utilisateur de connexion
-useradd -m -s /bin/bash -G sudo stagiaire
-
-# Définission du mot de passe
-passwd stagiaire
-
-exit
+    config.vm.define :centos1 do |centos1|
+      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
+      centos1.vm.box = "geerlingguy/centos7"
+      centos1.vm.hostname = "centos1"
+      centos1.vm.network :private_network, ip: "10.10.0.2"
+    end
+  end
 ```
 
-#### Copier la clé ssh à l'intérieur
+- Utilisez la commande `vagrant up` pour démarrer la machine.
 
-Maintenant nous devons configurer une identité (ou clé) ssh pour pouvoir nous connecter au serveur de façon plus automatique et sécurisée. Cette clé a déjà été créé pour votre utilisateur stagiaire. Il reste à copier la version publique dans le conteneur.
+- Entrainez vous à allumer, éteindre, détruire la machine et vous y connecter en ssh en suivant ce tutoriel: https://les-enovateurs.com/vagrant-creation-machines-virtuelles/. (pensez également à utiliser `vagrant --help` ou `vagrant <commande> --help` pour découvrir les possibilités de la ligne de commande vagrant).
 
-- On copie notre clé dans le conteneur en se connectant en SSH avec `ssh_copy_id`:
+Remarques pratiques sur Vagrant :
 
-```bash
-lxc list # permet de trouver l'ip du conteneur
-ssh-copy-id -i ~/.ssh/id_ed25519 stagiaire@<ip_conteneur>
-ssh stagiaire@<ip_conteneur>
-```
-
-### Exporter nos conteneurs en image pour pouvoir les multipliers
-
-LXD permet de gérer aisément des snapshots de nos conteneurs sous forme d'images (archive du systeme de fichier + manifeste).
-
-Nous allons maintenant créer snapshots opérationnels de base qui vont nous permettre de construire notre lab d'infrastructure en local.
-
-```bash
-lxc stop centos1
-lxc publish --alias centos_ansible_ready centos1
-lxc image list
-```
-
-On peut ensuite lancer autant de conteneur que nécessaire avec la commande launch:
-
-```bash
-lxc launch centos_ansible_ready centos2 centos3
-```
-
-- Une fois l'image exportée faite supprimez les conteneurs.
-
-```bash
-lxc delete centos1 centos2 centos3 --force
-```
-
-{{% /expand %}}
-
-### Récupérer les images de correction depuis un remote LXD
-
-Pour avoir tous les mêmes images de base récupérons les depuis un serveur dédié à la formation. Un serveur distant LXD est appelé un `remote`.
-
-- Ajoutez le remote `tp-images` avec la commande:
-
-```bash
-lxc remote add tp-images https://lxd-images.dopl.uk --protocol lxd
-```
-
-- Le mot de passe est: `formation_ansible`.
+- Toutes les machines vagrant (on parle de boxes vagrant) ont automatiquement un utilisateur vagrant qui a une clé SSH publiquement disponible (c'est pas sécurisé mais utile pour le développement).
+- Vagrant partage automatiquement le dossier dans lequel est le `Vagrantfile` à l'intérieur de la VM dans le dossier `/vagrant`. Les scripts et autres fichiers sont donc directement accessibles dans la VM.
 
 
-- Copiez ensuite les images depuis ce remote dans le dépot d'image local avec :
+### Lancer et tester les VMs
 
-```bash
-lxc image copy tp-images:centos_ansible local: --copy-aliases --auto-update
-lxc image copy tp-images:ubuntu_ansible local: --copy-aliases --auto-update
-```
-
-
-### Lancer et tester les conteneurs
-
-Créons à partir des images du remotes un conteneur ubuntu et un autre centos:
-
-```bash
-lxc launch ubuntu_ansible ubu1
-lxc launch centos_ansible centos1
-```
-
-- Pour se connecter en SSH nous allons donc utiliser une clé SSH appelée `id_stagiaire` qui devrait être présente dans votre dossier `~/.ssh/`. Vérifiez cela en lançant `ls -l /home/stagiaire/.ssh`.
+- Pour se connecter en SSH avec Ansible nous allons donc utiliser l'utilisateur vagrant et une clé SSH (non sécure) ajoutée automatiquement à chaque box Vagrant. Cette clé est disponible dans le dossier `.vagrant/machines/<nom_machine>/virtualbox/private_key`
 
 - Déverrouillez cette clé ssh avec `ssh-add ~/.ssh/id_stagiaire` et le mot de passe `devops101` (le ssh-agent doit être démarré dans le shell pour que cette commande fonctionne si ce n'est pas le cas `eval $(ssh-agent)`).
 
 - Essayez de vous connecter à `ubu1` et `centos1` en ssh pour vérifier que la clé ssh est bien configurée et vérifiez dans chaque machine que le sudo est configuré sans mot de passe avec `sudo -i`.
+
+
 
 
 ## Créer un projet de code Ansible

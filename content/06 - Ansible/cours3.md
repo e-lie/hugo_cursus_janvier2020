@@ -1,5 +1,5 @@
 ---
-title: 'Cours 3 - Organiser un projet'
+title: 'Cours 3 - Organiser un projet modulariser son code avec les roles'
 draft: false
 weight: 12
 ---

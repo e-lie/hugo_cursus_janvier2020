@@ -1,8 +1,31 @@
 ---
-title: 'Cours 4 - Sécurité et Cloud'
+title: 'Cours 4 - Ansible en production, sécurité et Cloud'
 draft: false
 weight: 13
 ---
+
+
+## Execution d'Ansible en production
+
+L'intérêt d'un outil d'installation idempotent comme Ansible est de pouvoir exécuter de façon régulière et automatiser l'execution d'Ansible pour s'assurer de la conformité de l'infrastructure avec le code.
+
+Une production Ansible est généralement un serveur spécial (parfois appelé un ansible master) depuis lequel le code peut être exécuté, ponctuellement ou de préférence régulièrement (2x par jours par exemple).
+
+Le serveur Ansible s'assure également que les exécutions sont correctement logguées et que les DevOps peuvent par la suite s'assurer que les différentes exécutions se sont déroulées correctement et éventuellement lire les logs d'execution pour diagnostiquer les erreurs.
+
+## Différentes solutions de serveur de production Ansible
+
+- Ansible Tower/AWX : La solution "officielle" pour exécuter ansible en production promue par RedHat. AWX est l'upstream open source de Tower. Cette solution est assez lourde à déployer et n'exécute que du Ansible (peu versatile) mais elle a été prouvé adapté pour des très grosses production pilotées principalement par Ansible.
+
+- Un serveur master Linux simple pour executer Ansible en CLI ou en Cron : plus léger et versatile mais ne propose par de dashboard pour afficher l'état de de l'infrastructure
+
+- Rundeck: une solution générique pour exécuter des Jobs d'infrastructure qui s'intègre plutôt correctement avec Ansible.
+
+- Jenkins: souvent associé à la CI/CD, Jenkins est en réalité un serveur générique pour exécuter des Jobs automatiquement et à la demande. Il propose un plugin Ansible intéssant et permet de consulté les logs d'exécution et d'avoir une vue globale des dernières exécutions à travers des dashboard. Il est très flexible mais assez complexe à configurer correctement.
+
+Nous allons pour le dernier TP de ce module utiliser Jenkins pour exécuter Ansible. Ainsi nous pouvons découvrir un peu en avance 
+ Jenkins qui est complexe et important pour la fin du cursus.
+
 
 # Sécurité
 
@@ -136,63 +159,3 @@ $ ./inventory_terraform.py
 ```
 
 On peut ensuite appeler `ansible-playbook` en utilisant ce programme plutôt qu'un fichier statique d'inventaire: `ansible-playbook -i inventory_terraform.py configuration.yml`
-
-## Étendre et intégrer Ansible
-
-
-### La bonne pratique : utiliser un plugin d'inventaire pour alimenter
-
-Bonne pratique : Normalement l'information de configuration Ansible doit provenir au maximum de l'inventaire. Ceci est conforme à l'orientation plutôt déclarative d'Ansible et à son exécution descendante (master -> nodes). La méthode à privilégier pour intégrer Ansible à des sources d'information existantes est donc d'utiliser ou développer un **plugin d'inventaire**.
-
-[https://docs.ansible.com/ansible/latest/plugins/inventory.html](https://docs.ansible.com/ansible/latest/plugins/inventory.html)
-
-On peut cependant alimenter le dictionnaire de variable Ansible au fur et à mesure de l'exécution, en particulier grâce à la directive `register` et au module `set_fact`.
-
-Exemple:
-
-```yaml
-# this is just to avoid a call to |default on each iteration
-- set_fact:
-    postconf_d: {}
-
-- name: 'get postfix default configuration'
-  command: 'postconf -d'
-  register: postconf_result
-  changed_when: false
-
-# the answer of the command give a list of lines such as:
-# "key = value" or "key =" when the value is null
-- name: 'set postfix default configuration as fact'
-  set_fact:
-    postconf_d: >
-      {{ postconf_d | combine(dict([ item.partition('=')[::2]map'trim') ])) }}
-  loop: postconf_result.stdout_lines
-```
-
-On peut explorer plus facilement la hiérarchie d'un inventaire statique ou dynamique avec la commande:
-
-```
-ansible-inventory --inventory <inventory> --graph
-```
-
-### Principaux type de plugins possibles pour étendre Ansible
-
-[https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html](https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html)
-
-- Ansible modules
-- Inventory plugins
-- Connection plugins
-
-### Intégration Ansible et AWS
-
-Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les modules adaptés.
-
-- Module EC2: [https://docs.ansible.com/ansible/latest/modules/ec2_module.html](https://docs.ansible.com/ansible/latest/modules/ec2_module.html).
-- Plugin d'inventaire: [https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html](https://docs.ansible.com/ansible/latest/plugins/inventory/aws_ec2.html).
-
-### Intégration Ansible Nagios
-
-
-**Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
-
-**Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes.

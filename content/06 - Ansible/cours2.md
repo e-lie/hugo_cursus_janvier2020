@@ -1,5 +1,5 @@
 ---
-title: 'Cours 2 - Les playbooks Ansible'
+title: 'Cours 2 - Les playbooks Ansible, modules de base, variables et structures de contrôle'
 draft: false
 weight: 11
 ---
