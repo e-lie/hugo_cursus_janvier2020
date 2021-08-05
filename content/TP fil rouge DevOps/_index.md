@@ -146,7 +146,7 @@ En suivant le TP2 et 4 du module Docker:
 
 #### Idée de bonus
 
-- Dockeriser l'application microblog avec une base de données MySQL ou un volume pour une base de données SQlite à mettre dans un conteneur à part (voir chapitre 19 du Flask Mega Tutorial et les différentes branches du dépôt <https://github.com/Uptime-Formation/microblog/>).
+- Dockeriser l'application microblog avec une base de données MySQL à mettre dans un conteneur à part (voir [le chapitre 19 du Flask Mega Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) et les différentes branches du dépôt <https://github.com/Uptime-Formation/microblog/>).
 
 ## 4 - Kubernetes installation
 
@@ -175,7 +175,7 @@ En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
 #### Idée de bonus
 
-- Déployer en plus l'application flask avec une base de donnée externe (chapitre 19 du mega tutorial). Installez MySQL à l'aide d'un chart Helm.
+- Déployer en plus l'application flask avec une base de donnée externe (voir [chapitre 19 du mega tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers)). Installez MySQL à l'aide d'un chart Helm.
 
 <!--
 ## Ansible et Amazon Web Service
