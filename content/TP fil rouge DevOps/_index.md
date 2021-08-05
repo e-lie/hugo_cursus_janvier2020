@@ -44,7 +44,7 @@ Pour chaque groupe les éléments suivant devront être présentés lors de la p
 
 ## Objectifs
 
-- Une installation fonctionnelle de l'infrastructure et de l'application du TP installé sur cette infrastructure telle que décrite dans l'énoncé suivant.
+- Une installation fonctionnelle de l'infrastructure et de l'application du TP installées sur cette infrastructure telle que décrite dans l'énoncé suivant.
 
 - Deux dépots de code sur Github ou Gitlab contenant pour le premier le code d'infrastructure et pour le second l'application à déployer sur l'infrastructure.
 
@@ -84,16 +84,19 @@ Vagrant.configure("2") do |config|
 
 Remarques pratiques sur Vagrant :
 
-- toutes les machines vagrant ont automatiquement un utilisateur vagrant.
+- Toutes les machines vagrant ont automatiquement un utilisateur vagrant.
 - Vagrant partage automatiquement le dossier dans lequel est le `Vagrantfile` à l'intérieur de la VM dans le dossier `/vagrant`. Les scripts et autres fichiers sont donc directement accessibles dans la VM.
 
 ## 1 - Application Web Python et Linux
 
-- Choisissez une application Flask simple sur Linux (voir les codes d'apps Flask présents dans le cours Docker ou l'application flask `microblog` du Flask Mega Tutorial : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux)
 
-- (facultatif) Rassemblez les étapes d'installation dans un script shell (à ajouter dans le dossier d'infra), pour vous entraîner. Vous pouvez vous aider des étapes présentées dans le tutoriel suivant (en s'arrêtant à la partie 5 (avant certbot)): https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-fr.
+En vous aidant du tutorial suivant (jusqu'à la partie 5, avant la partie certbot): https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-fr
 
-- (facultatif) Vérifiez que votre script d'installation fonctionne en détruisant et recréant la machine virtuelle (`vagrant destroy`) puis en lançant le script en ssh.
+- Installez dans la machine virtuelle Vagrant précédente une application web flask (par exemple celle proposée dans le tutoriel).
+
+- Rassemblez les étapes d'installation dans un script shell (à ajouter dans le dossier d'infra).
+
+- Vérifiez que votre script d'installation fonctionne en détruisant et recréant la machine virtuelle (`vagrant destroy`) puis en lançant le script en ssh.
 
 Vous pouvez même ajouter le script directement au `Vagrantfile`, après la ligne `master.vm.network :private_network, ip: "10.10.0.1"` avec la syntaxe suivante:
 
@@ -106,6 +109,7 @@ Vous pouvez même ajouter le script directement au `Vagrantfile`, après la lign
 ```
 
 #### Idée de bonus
+
 
 - Personnalisez votre application Flask / Python avec une ou des pages en plus et une fonctionnalité en plus (n'hésitez pas à lire le tutoriel Flask : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
 
@@ -136,12 +140,11 @@ Ces deux dépôts serviront pour la présentation finale de votre code.
 
 En suivant le TP2 et 4 du module Docker:
 
-- Dockeriser l'application flask en écrivant un Dockerfile (celle du TP est adaptée)
-
+- Dockeriser une application flask simple (par exemple celle de la partie précédent ou celle du TP Docker à la place) en écrivant un Dockerfile.
 - (facultatif) Ajoutez un fichier `docker-compose.yml`. pour lancer l'application.
 - Ajoutez les fichiers créées à votre dépôt d'application.
 
-#### Bonus
+#### Idée de bonus
 
 - Dockeriser l'application microblog avec une base de données MySQL ou un volume pour une base de données SQlite à mettre dans un conteneur à part (voir chapitre 19 du Flask Mega Tutorial et les différentes branches du dépôt <https://github.com/Uptime-Formation/microblog/>).
 
@@ -149,19 +152,15 @@ En suivant le TP2 et 4 du module Docker:
 
 En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
-- (facultatif) Créez une machine virtuelle ubuntu avec Vagrant qui dispose au minimum de 8G de RAM et 3 cpus (ou plus si vous êtes sur des machines surpuissantes).
-
-- (facultatif) Utilisez la commande `master.vm.provision` comme indiqué dans la partie 0 ci-dessus pour installer k3s (voir TP1 le getting started de k3s).
+- En repartant du Vagrantfile de la partie 0 : utilisez la commande `master.vm.provision` comme indiqué dans la partie 0 ci-dessus pour installer k3s avec la commande `curl -sfL https://get.k3s.io | sh -`.
 
 - (facultatif) Trouvez comment supprimez l'ingress Traefik de k3s et installez à la place un ingress nginx plus classique (pour pouvoir exposer l'application web à l'extérieur).
 
-- (facultatif) Installez cert-manager comme dans le TP avec un certificat auto-signé : https://cert-manager.io/docs/configuration/selfsigned/
+- (facultatif) Installez cert-manager comme dans le TP avec un générateur de certificat auto-signé : https://cert-manager.io/docs/configuration/selfsigned/
 
-<!-- - Installez un repository d'image docker simple à faire plutôt dans la partie Jenkins-->
+- (facultatif) Installez ArgoCD comme dans le TP Kubernetes.
 
-- Installez ArgoCD comme dans le TP
-
-- Versionnez les fichiers d'installation Kubernetes dans le dépôt d'infrastructure.
+- Versionnez le Vagrantfile et les fichiers d'installation Kubernetes dans le dépôt d'infrastructure.
 
 #### Idées de bonus
 
@@ -171,13 +170,12 @@ En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
 ## 5 - Kubernetes déploiement de l'application
 
-- Déployez une application flask (si avec base de données interne comme SQlite, vous pouvez utiliser un simple volume) dans le cluster en vous inspirant du TP déployer une application de A à Z.
+- Déployez l'application flask précédemment dockerisée en vous inspirant du TP déployer une application de A à Z.
 - Versionnez les fichiers d'installation dans un dossier `k8s` du dépôt d'application.
 
 #### Idée de bonus
 
-- Gérez le déploiement de l'application avec ArgoCD
-- Déployer en plus l'application flask avec une base de donnée externe. Installez MySQL à l'aide d'un chart Helm.
+- Déployer en plus l'application flask avec une base de donnée externe (chapitre 19 du mega tutorial). Installez MySQL à l'aide d'un chart Helm.
 
 <!--
 ## Ansible et Amazon Web Service
