@@ -7,6 +7,10 @@ pre: "<i class='fas fa-infinity'></i> - "
 draft: false
 ---
 
+<!-- pas facultatif le shell -->
+<!-- facultatif mysql grinberg -->
+<!-- tous prendre flask microblog ? ou le flask qu'ils ont pris -->
+
 ## Introduction
 
 L'objectif de ce TP est de faire la démonstration pratique de la plupart des éléments techniques appris durant le cursus DevOps.
@@ -15,11 +19,11 @@ L'activité de DevOps dans une équipe est une activité de support au développ
 
 Ce TP consiste donc logiquement à rassembler les aspects pratiques (éléments vus en TP) découverts dans les modules du cursus et de les combiner autour d'une infrastrure Kubernetes pour réaliser en particulier une CI/CD de notre application utilisant Jenkins.
 
-Attention:
+Attention :
 
 - Toutes les parties ne sont pas forcément obligatoire. L'appréciation sera globale. Les bonus sont des idées de personnalisation à réaliser si vous avez le temps et le courage.
 
-- Ce sujet de TP est loin d'être simple:
+- Ce sujet de TP est loin d'être simple :
   - N'hésitez pas à demander de l'aide aux formateurs.
   - Collaborez et partagez la compréhension des enjeux dans le groupe.
 - Le sujet est succeptible d'évoluer au fur et à mesure en fonction de vos retours et demandes d'information.
@@ -44,8 +48,12 @@ Pour chaque groupe les éléments suivant devront être présentés lors de la p
 
 ## Objectifs
 
-- Une installation fonctionnelle de l'infrastructure et de l'application du TP installées sur cette infrastructure telle que décrite dans l'énoncé suivant.
+- Mettre en œuvre un système d’intégration continue et de déploiement DevOps
+- Construire une image capable de servir à l’application
+- Automatiser la construction d’images
+- Mettre à jour et déployer automatiquement des images
 
+- Une installation fonctionnelle de l'infrastructure et de l'application du TP installé sur cette infrastructure telle que décrite dans l'énoncé suivant.
 - Deux dépots de code sur Github ou Gitlab contenant pour le premier le code d'infrastructure et pour le second l'application à déployer sur l'infrastructure.
 
 ## 0 - Vagrant et Virtualbox: créer une machine virtuelle avec du code
@@ -98,7 +106,7 @@ En vous aidant du tutorial suivant (jusqu'à la partie 5, avant la partie certbo
 
 - Vérifiez que votre script d'installation fonctionne en détruisant et recréant la machine virtuelle (`vagrant destroy`) puis en lançant le script en ssh.
 
-Vous pouvez même ajouter le script directement au `Vagrantfile`, après la ligne `master.vm.network :private_network, ip: "10.10.0.1"` avec la syntaxe suivante:
+- (facultatif) Vous pouvez même ajouter le script directement au `Vagrantfile`, après la ligne `master.vm.network :private_network, ip: "10.10.0.1"` avec la syntaxe suivante ([cf. la documentation](https://www.vagrantup.com/docs/provisioning/basic_usage)):
 
 ```rb
       master.vm.provision :shell, privileged: false, inline: <<-SHELL
@@ -110,12 +118,13 @@ Vous pouvez même ajouter le script directement au `Vagrantfile`, après la lign
 
 #### Idée de bonus
 
+- Sur votre serveur, installez/scriptez en plus de la précédente, l'application flask `microblog` du Flask Mega Tutorial avec une base de donnée MySQL. Voir ce lien tutoriel : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux.
 
-- Personnalisez votre application Flask / Python avec une ou des pages en plus et une fonctionnalité en plus (n'hésitez pas à lire le tutoriel Flask : https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+- Personnalisez votre application Flask / Python avec une ou des pages en plus ou une fonctionnalité en plus
 
 ## 2 - Git
 
-Versionner le code de l'application précédente avec git. Créer un dépôt sur Github ou Gitlab.
+Versionner le code de l'application précédente avec Git. Créer un dépôt sur Github ou Gitlab.
 
 - Un-e membre du groupe crée le dépôt et ajoute ses collègues à l'application en leur donnant le status de `maintainer`.
 - Poussez le code avec une branche `develop`, une branche `main` (production).
@@ -138,7 +147,7 @@ Ces deux dépôts serviront pour la présentation finale de votre code.
 
 ## 3 - Docker
 
-En suivant le TP2 et 4 du module Docker:
+En s'aidant du TP2 et TP4 du module Docker, et de votre script d'installation existant :
 
 - Dockeriser une application flask simple (par exemple celle de la partie précédent ou celle du TP Docker à la place) en écrivant un Dockerfile.
 - (facultatif) Ajoutez un fichier `docker-compose.yml`. pour lancer l'application.
@@ -147,6 +156,7 @@ En suivant le TP2 et 4 du module Docker:
 #### Idée de bonus
 
 - Dockeriser l'application microblog avec une base de données MySQL à mettre dans un conteneur à part (voir [le chapitre 19 du Flask Mega Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers) et les différentes branches du dépôt <https://github.com/Uptime-Formation/microblog/>).
+- (facultatif) Comme vu dans les TP, rajoutez une instruction `HEALTHCHECK` au Dockerfile pour tester si votre app va bien.
 
 ## 4 - Kubernetes installation
 
@@ -154,11 +164,11 @@ En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
 - En repartant du Vagrantfile de la partie 0 : utilisez la commande `master.vm.provision` comme indiqué dans la partie 0 ci-dessus pour installer k3s avec la commande `curl -sfL https://get.k3s.io | sh -`.
 
-- (facultatif) Trouvez comment supprimez l'ingress Traefik de k3s et installez à la place un ingress nginx plus classique (pour pouvoir exposer l'application web à l'extérieur).
+- (facultatif) Trouvez comment supprimer l'ingress Traefik de k3s et installez à la place un ingress nginx plus classique (pour pouvoir exposer l'application web à l'extérieur).
 
 - (facultatif) Installez cert-manager comme dans le TP avec un générateur de certificat auto-signé : https://cert-manager.io/docs/configuration/selfsigned/
 
-- (facultatif) Installez ArgoCD comme dans le TP Kubernetes.
+<!-- - Installez ArgoCD comme dans le TP -->
 
 - Versionnez le Vagrantfile et les fichiers d'installation Kubernetes dans le dépôt d'infrastructure.
 
@@ -170,7 +180,7 @@ En suivant/vous inspirant des TP kubernetes et de la partie 0.
 
 ## 5 - Kubernetes déploiement de l'application
 
-- Déployez l'application flask précédemment dockerisée en vous inspirant du TP déployer une application de A à Z.
+- Déployez une application flask dans le cluster en vous inspirant du TP déployer une application de A à Z.
 - Versionnez les fichiers d'installation dans un dossier `k8s` du dépôt d'application.
 
 #### Idée de bonus
