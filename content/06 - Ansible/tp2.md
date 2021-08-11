@@ -6,6 +6,8 @@ weight: 22
 
 ## Création du projet
 
+
+- Détruisez les machines du tp1 si ce n'est pas encore fait avec `vagrant destroy --force` dans le dossier `tp1`
 - Créez un nouveau dossier `tp2_flask_deployment`.
 - Créez le fichier `ansible.cfg` comme précédemment.
 
@@ -16,26 +18,42 @@ roles_path = ./roles
 host_key_checking = false
 ```
 
-- Créez deux machines ubuntu `app1` et `app2`.
+- Créez deux machines ubuntu `app1` et `app2` avec le `Vagrantfile` suivant:
 
-```
-lxc launch ubuntu_ansible app1
-lxc launch ubuntu_ansible app2
+```ruby
+Vagrant.configure("2") do |config|
+    config.ssh.insert_key = false # to use the global unsecure key instead of one insecure key per VM
+    config.vm.provider :virtualbox do |v|
+      v.memory = 512
+      v.cpus = 1
+    end
+
+    config.vm.define :app1 do |app1|
+      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
+      app1.vm.box = "ubuntu/focal64"
+      app1.vm.hostname = "app1"
+      app1.vm.network :private_network, ip: "10.10.10.11"
+    end
+
+    config.vm.define :app2 do |app2|
+      # Vagrant va récupérer une machine de base ubuntu 20.04 (focal) depuis cette plateforme https://app.vagrantup.com/boxes/search
+      app2.vm.box = "ubuntu/focal64"
+      app2.vm.hostname = "app2"
+      app2.vm.network :private_network, ip: "10.10.10.12"
+    end
+  end
 ```
 
 - Créez l'inventaire statique `inventory.cfg`.
 
-```
-$ lxc list # pour récupérer les adresses ip 
-```
-
+```ini
+[appservers]
+app1 ansible_host=10.10.10.11
+app2 ansible_host=10.10.10.12
 
 [all:vars]
-ansible_user=<user>
-
-[appservers]
-app1 ansible_host=10.x.y.z
-app2 ansible_host=10.x.y.z
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
 
 - Ajoutez à l'intérieur les deux machines dans un groupe `appservers`.
@@ -127,108 +145,6 @@ Le code (très minimal) de cette application se trouve sur github à l'adresse: 
         groups:
           - "www-data"
 ```
-
-
-<!-- TODO: faire plus court pour adhoc pour pouvoir explorer --check et become: et autres avec les playbooks -->
-<!-- ## Installons nginx avec quelques modules et commandes ad-hoc
-
-- Modifiez l'inventaire pour créer deux sous-groupes de `adhoc_lab`, `centos_hosts` et `ubuntu_hosts` avec deux machines dans chacun. (utilisez pour cela `[adhoc_lab:children]`)
-
-
-```ini
-[all:vars]
-ansible_user=<votre_user>
-
-[ubuntu_hosts]
-ubu1 ansible_host=<ip>
-
-[centos_hosts]
-centos1 ansible_host=<ip>
-
-[adhoc_lab:children]
-ubuntu_hosts
-centos_hosts
-```
-
-Dans un inventaire ansible on commence toujours par créer les plus petits sous groupes puis on les rassemble en plus grands groupes.
-
-- Pinguer chacun des 3 groupes avec une commande ad hoc.
-
-Nous allons maintenant installer `nginx` sur les 2 machines. Il y a plusieurs façons d'installer des logiciels grâce à Ansible: en utilisant le gestionnaire de paquets de la distribution ou un gestionnaire spécifique comme `pip` ou `npm`. Chaque méthode dispose d'un module ansible spécifique.
-
-- Si nous voulions installer nginx avec la même commande sur des machines centos et ubuntu à la fois impossible d'utiliser `apt` car centos utilise `yum`. Pour éviter ce problème on peut utiliser le module `package` qui permet d'uniformiser l'installation (pour les cas simples).
-  - Allez voir la documentation de ce module
-  - utilisez `--become` pour devenir root avant d'exécuter la commande (cf élévation de privilège dans le cours2)
-  - Utilisez le pour installer `nginx`
-
-{{% expand "Réponse  :" %}}
-```
-ansible adhoc_lab --become -m package -a "name=nginx state=present"
-```
-{{% /expand %}}
-
-- Pour résoudre le problème installez `epel-release` sur la  machine centos.
-
-{{% expand "Réponse  :" %}}
-```
-ansible centos_hosts --become -m package -a "name=epel-release state=present"
-```
-{{% /expand %}}
-
-- Relancez la commande d'installation de `nginx`. Que remarque-t-on ?
-
-{{% expand "Réponse  :" %}}
-```
-ansible adhoc_lab -m package -a name=nginx state=present
-```
-
-la machine centos a un retour changed jaune alors que la machine ubuntu a un retour ok vert. C'est l'idempotence: ansible nous indique que nginx était déjà présent sur le serveur ubuntu.
-{{% /expand %}}
-
-- Utiliser le module `systemd` et l'option `--check` pour vérifier si le service `nginx` est démarré sur chacune des 2 machines. Normalement vous constatez que le service est déjà démarré (par défaut) sur la machine ubuntu et non démarré sur la machine centos.
-
-{{% expand "Réponse  :" %}}
-```
-ansible adhoc_lab --become --check -m systemd -a "name=nginx state=started"
-```
-{{% /expand %}}
-
-- L'option `--check` à vérifier l'état des ressources sur les machines mais sans modifier la configuration`. Relancez la commande précédente pour le vérifier. Normalement le retour de la commande est le même (l'ordre peu varier).
-
-- Lancez la commande avec `state=stopped` : le retour est inversé.
-
-- Enlevez le `--check` pour vous assurer que le service est démarré sur chacune des machines.
-
-- Visitez dans un navigateur l'ip d'un des hôtes pour voir la page d'accueil nginx.
-
-## Ansible et les commandes unix
-
-Il existe trois façon de lancer des commandes unix avec ansible:
-
-- le module `command` utilise python pour lancez la commande.
-  - les pipes et syntaxes bash ne fonctionnent pas.
-  - il peut executer seulement les binaires.
-  - il est cependant recommandé quand c'est possible car il n'est pas perturbé par l'environnement du shell sur les machine et donc plus prévisible.
-  
-- le module `shell` utilise un module python qui appelle un shell pour lancer une commande.
-  - fonctionne comme le lancement d'une commande shell mais utilise un module python.
-  
-- le module `raw`.
-  - exécute une commande ssh brute.
-  - ne nécessite pas python sur l'hote : on peut l'utiliser pour installer python justement.
-  - ne dispose pas de l'option `creates` pour simuler de l'idempotence.
-
-- Créez un fichier dans `/tmp` avec `touch` et l'un des modules précédents.
-
-- Relancez la commande. Le retour est toujours `changed` car ces modules ne sont pas idempotents.
-
-- Relancer l'un des modules `shell` ou `command` avec `touch` et l'option `creates` pour rendre l'opération idempotente. Ansible détecte alors que le fichier témoin existe et n'exécute pas la commande.
-
-```
-ansible adhoc_lab --become -m "command touch /tmp/file" -a "creates=/tmp/file"
-``` -->
-
-
 ## Récupérer le code de l'application
 
 - Pour déployer le code de l'application deux options sont possibles.

@@ -5,9 +5,7 @@ weight: 23
 ---
 
 
-## Facultatif: Ajouter une machine mysql simple avec un role externe
-
-{{% expand "Facultatif  :" %}}
+## Ajouter une machine mysql simple avec un role externe
 
 - Créez à la racine du projet le dossier `roles` dans lequel seront rangés tous les roles (c'est une convention ansible à respecter).
 - Cherchez sur [https://galaxy.ansible.com/](https://galaxy.ansible.com/) le **nom** du role `mysql` de `geerlingguy`. Il s'agit de l'auteur d'un livre de référence **"Ansible for DevOps"** et de nombreux roles de références.
@@ -34,8 +32,6 @@ weight: 23
 - Faire un playbook `configuration.yml` qui importe juste les deux playbooks `flaskapp_deploy.yml` et `dbservers.yml` avec `import_playbook`.
 
 - Lancer la configuration de toute l'infra avec ce playbook.
-
-{{% /expand %}}
 
 ## Transformer notre playbook en role
 
