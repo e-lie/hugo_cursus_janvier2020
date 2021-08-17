@@ -1,5 +1,5 @@
 ---
 title: "6 - Exercices bonus"
-draft: true
+draft: false
 weight: 3060
 ---

@@ -1,6 +1,6 @@
 ---
 title: "3 - Exercices"
-draft: true
+draft: false
 weight: 3031
 ---
 

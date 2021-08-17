@@ -1,6 +1,6 @@
 ---
 title: "3 - Kibana"
-draft: true
+draft: false
 weight: 3030
 ---
 

@@ -1,5 +1,5 @@
 ---
 title: "7 - Bibliographie"
-draft: true
+draft: false
 weight: 3070
 ---

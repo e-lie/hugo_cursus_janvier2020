@@ -1,6 +1,6 @@
 ---
 title: "2 - Exercice"
-draft: true
+draft: false
 weight: 3021
 ---
 
@@ -11,3 +11,5 @@ weight: 3021
 ## Pattern-matching
 
 ## Exploration du cluster (paramètres)
+
+<!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search -->

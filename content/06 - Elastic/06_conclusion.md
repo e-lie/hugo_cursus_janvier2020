@@ -1,6 +1,6 @@
 ---
 title: "6 - Conclusion"
-draft: true
+draft: false
 weight: 3060
 ---
 

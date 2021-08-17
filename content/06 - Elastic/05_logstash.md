@@ -1,6 +1,6 @@
 ---
 title: "5 - Logstash"
-draft: true
+draft: false
 weight: 3050
 ---
 

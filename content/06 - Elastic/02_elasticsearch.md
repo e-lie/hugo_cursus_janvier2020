@@ -1,6 +1,6 @@
 ---
 title: "2 - Elasticsearch"
-draft: true
+draft: false
 weight: 3020
 ---
 
