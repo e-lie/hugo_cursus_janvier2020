@@ -1,167 +1,145 @@
-API Elasticsearch memento - Version 6.4 de l'API
+---
+title: API Elasticsearch memento - Version 6.4 de l'API
+---
 
-[]{#anchor}Gérer les documents
-==============================
+# Gérer les documents
 
-### []{#anchor}Créer un document:
-
-PUT /\<index\>/\<type\>/1
-
+### Créer un document: 
+```json
+PUT /<index>/<type>/1
 {
-
-\"champ1\": \"value1\",
-
-\"champ2\": \"value2\"
-
+  "champ1": "value1",
+  "champ2": "value2"
 }
+
+```
 
 ou
 
-POST /\<index\>/\<type\>
-
+```json
+POST /<index>/<type>
 {
-
-\"champ1\": \"value1\",
-
-\"champ2\": \"value2\"
-
+  "champ1": "value1",
+  "champ2": "value2"
 }
 
-### []{#anchor}Afficher un document:
+```
 
-GET /\<index\>/\<type\>/\<num\>/
+### Afficher un document:
+```json
+GET /<index>/<type>/<num>/
+```
 
-### []{#anchor}Lister tous les documents:
+### Lister tous les documents:
+```json
+GET /<index>/<type>/_search
+```
 
-GET /\<index\>/\<type\>/\_search
-
-### []{#anchor}Mettre à jour un document (ajouter modifier un champ)
-
-POST /\<index\>/\<type\>/\<num\>/\_update
-
+### Mettre à jour un document (ajouter modifier un champ)
+```json
+POST /<index>/<type>/<num>/_update
 {
-
-\"doc\": {
-
-\"field\": \"value\"
-
+    "doc": {
+        "field": "value"
+    }
 }
+```
 
-}
+### Supprimer un document
 
-### []{#anchor}Supprimer un document
+```json
+DELETE /<index>/<type>/<_id>
+```
 
-DELETE /\<index\>/\<type\>/\<\_id\>
 
-[]{#anchor}Gérer les index
-==========================
 
-### []{#anchor}List Indices
 
-GET /\_cat/indices
+# Gérer les index
 
--   avec le nom des colonnes
+### List Indices
+```
+GET /_cat/indices
+```
+- avec le nom des colonnes
+```
+GET /_cat/indices?v
+```
 
-GET /\_cat/indices?v
-
-### []{#anchor}Create index
-
-PUT /\<index\>
-
+### Create index
+```json
+PUT /<index>
 {
-
-\"settings\": {
-
-\"number\_of\_shards\": 1, // default 5
-
-\"number\_of\_replicas\": 0 // default 1
-
+    "settings": {
+        "number_of_shards": 1, // default 5
+        "number_of_replicas": 0 // default 1
+    }
 }
+```
 
-}
+#### Avec un mapping directement
 
-#### []{#anchor}Avec un mapping directement
-
-PUT /\<index\>
-
+```json
+PUT /<index>
 {
-
-\"settings\": {
-
-\"index\": {
-
-\"number\_of\_shards\": 1,
-
-\"number\_of\_replicas\": 0
-
+  "settings": {
+    "index": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0
+    }
+  },
+  "mappings": {
+    "<mapping>": {
+      "properties": {
+        "<property>": {
+          "type": "<datatype>"
+        },
+        ...
+      }
+    }
+  }
 }
+```
 
-},
+### Supprimer un index
+```json
+DELETE /<index>
+```
 
-\"mappings\": {
 
-\"\<mapping\>\": {
 
-\"properties\": {
 
-\"\<property\>\": {
 
-\"type\": \"\<datatype\>\"
+# Gérer les mappings
 
-},
+#### Lister les mappings
 
-\...
 
-}
+```
+GET /<index>/_mapping
+```
 
-}
 
-}
 
-}
-
-### []{#anchor}Supprimer un index
-
-DELETE /\<index\>
-
-[]{#anchor}Gérer les mappings
-=============================
-
-#### []{#anchor}Lister les mappings
-
-GET /\<index\>/\_mapping
-
-#### []{#anchor}Ajouter un champ à un mapping:
-
-PUT /\<index\>/\_mapping/\<type\>
-
+#### Ajouter un champ à un mapping:
+```json
+PUT /<index>/_mapping/<type>
 {
-
-\"properties\": {
-
-\"\<new\_fieldname\>\": {
-
-\"type\": \"\<datatype\>\"
-
+  "properties": {
+    "<new_fieldname>": {
+      "type": "<datatype>"
+    }
+  }
 }
+```
 
-}
+# Réindexer des données
 
-}
-
-[]{#anchor}Réindexer des données
-================================
-
-#### []{#anchor}Dupliquer un champ et réindexer
-
-POST /\<index\>/\_update\_by\_query
-
+#### Dupliquer un champ et réindexer
+```json
+POST /<index>/_update_by_query
 {
-
-\"script\": {
-
-\"inline\": \"ctx.\_source.\<fieldname\> = ctx.\_source.\<fieldname\>\"
-
+  "script": {
+    "inline": "ctx._source.<fieldname> = ctx._source.<fieldname>"
+  }
 }
-
-}
+```
