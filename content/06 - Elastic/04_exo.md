@@ -17,3 +17,5 @@ Input container + TCP : https://www.youtube.com/watch?v=_eQWPGpJZ1k&list=PLn6POg
 Input type log : https://www.youtube.com/watch?v=X3OXO4C0wR8&list=PLn6POgpklwWrgJXXvbjlFPyHf8Q5a9n2b&index=11
 
 Filebeats module nginx : https://www.youtube.com/watch?v=X0FY1XeHtmI&list=PLn6POgpklwWrgJXXvbjlFPyHf8Q5a9n2b&index=9
+
+<http://localhost:5601/app/kibana#/home/tutorial/elasticsearchMetrics?_g=()>

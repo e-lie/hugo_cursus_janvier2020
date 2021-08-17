@@ -13,3 +13,9 @@ https://www.elastic.co/fr/subscriptions
 
 https://www.youtube.com/watch?v=2sdOvuLiBb8
 https://www.elastic.co/guide/en/apm/get-started/current/index.html
+
+WTF ?? http://localhost:5601/app/kibana#/home/tutorial/logstashLogs?\_g=()
+
+localhost:5601/app/kibana#/home/tutorial/systemLogs?\_g=() http://localhost:5601/app/kibana#/home/tutorial/nginxLogs?\_g=()
+
+si y a osquery dans filebeat en module, logstash sert vraiment pas à grand chose qia,d ù$eùe

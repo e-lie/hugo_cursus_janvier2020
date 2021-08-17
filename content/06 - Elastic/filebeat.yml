@@ -1,0 +1,49 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+    filebeat.modules:
+    - module: nginx
+    - module: postgresql
+    - module: system
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+      # json.expand_keys: true
+      # json.add_error_key: true
+      # hints.default_config:
+        # type: container
+        # co.elastic.logs/json.message_key: message
+      # json.message_key: message  
+      # templates:
+      #   - config:
+      #       - type: docker
+      #         containers.ids: "*"
+      #         json.keys_under_root: true
+      #         json.add_error_key: false
+      # co.elastic.logs/json.expand_keys: true
+      # co.elastic.logs/json.add_error_key: true
+      # co.elastic.logs/json.message_key: message
+      # co.elastic.logs/json.message_key: log
+
+# filebeat.inputs:
+#   - type: docker
+#     containers.ids: "*"
+#     containers.path: /var/lib/docker/containers
+#     # json.expand_keys: true
+#     # json.add_error_key: true
+#     # json.message_key: message
+#       # json.message_key: log
+
+output.elasticsearch:
+  hosts: ["http://es01:9200","http://es02:9200","http://es03:9200"]
+
+processors:
+- add_cloud_metadata: ~
+
+# output.elasticsearch:
+#   hosts: '${ELASTICSEARCH_HOSTS:elasticsearch:9200}'
+#   username: '${ELASTICSEARCH_USERNAME:}'
+#   password: '${ELASTICSEARCH_PASSWORD:}'
