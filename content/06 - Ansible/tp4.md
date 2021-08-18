@@ -1,6 +1,6 @@
 ---
 title: 'TP4 Ansible - Découvrir Jenkins et lancer des jobs Ansible'
-draft: true
+draft: false
 weight: 23
 ---
 
