@@ -11,3 +11,476 @@ weight: 3020
 ## Le sharding et le multi-nodes
 
 ## La sécurité, X-Pack et les alternatives
+
+---
+
+## III.2) Recherche avec requête multiple et filtre
+
+---
+
+## Des requêtes complexes pour l'analyse
+
+Elasticsearch est puissant pour l'analyse car il permet de combiner un grande quantité de critères de recherche
+différent en même temps et de transformer les données récupérer pour les rendre significatives.
+
+Imaginons qu'on veuille chercher tous les avions qui ont décollé de New York sous la pluie depuis un mois et qui ont un prix moyen supérieur à 800$.
+Par exemple pour créer une mesure du risque économique que le dérèglement climatique fait peser sur une companie ?
+
+On va devoir écrire une requête complexe.
+
+## Plusieurs outils
+
+- des **requêtes composées**
+  tous les vols qui vérifie condition A ET condition B ET PAS condition C
+- des **filtres** de requêtes
+  garder que les vols dont le prix est entre 300 et 1000 €
+- des **aggrégations** de requêtes (somme, aggrégation géographique)
+  chercher en gros le chiffre d'affaire d'une companie : faire la somme des trafifs de ses vols.
+
+## Repasser à Kibana
+
+On pourrait tout faire avec l'API mais ce serait pas très fun et on s'arracherait vite les cheveux.
+Donc on
+
+## III.3) Recherche et analyse
+
+## VS
+
+## stocker des données d'application
+
+#### Comparaison avec les BDD SQL et NoSQL.
+
+---
+
+## Deux types de BDD d'applications
+
+- SQL : _des tableaux qu'on peut croiser_ = **Jointures**
+
+exp MySQL, PostgreSQL
+
+- NoSQL: _des documents qu'on peut filtrer et aggréger_
+
+exp MongoDB, CouchDB
+
+---
+
+## Le point commun des deux : Stocker des données de base pour une application.
+
+Exp: un Site ou web ou un utilisateur a acheté une liste de produit
+
+- **utilisateur**: login, email, mdp, présentation, age, image de profil
+- **produit**: ref, description, prix, photo
+- **facture et garantie**: documents complexes mais créés une fois pour toute.
+
+---
+
+**SQL**: On veut avoir un historique des achats et les documents afférents : on relie formellement
+utilisateurs et les produits à travers un historique d'achat.
+
+**NoSQL**: On stocke les factures comme des documents JSON.
+
+---
+
+## Côté SQL:
+
+_ça donne trois tables_
+
+-- schema données liées en SQL
+
+---
+
+## Côté NoSQL:
+
+_des documents JSON qu'on va récupérer avec une référence et un type_
+
+---
+
+## Avec des BDD SQL et NoSQL
+
+- Penser et créer le schéma pour structurer les données d'une application.
+
+- Concevoir correctement pour pas être coincé : Il faut que les donneés soient reliées aux bons endroits et efficacement.
+
+- Combinaison de SQL (données _homogènes_, _cohérentes_ et fortement _changeantes_) et NoSQL(données _complexes_ mais _moins de cohérence_)
+
+- Effectuer une recherche de texte n'est pas simple.
+
+---
+
+## Elasticsearch : une _sorte_ de BDD mais pour la recherche de texte
+
+- Assez proche de MongoDB : on met des documents JSON dedans en HTTP.
+- On jette des trucs dedans qu'on voudrais analyser plus tard
+- On explore ces éléments en faisant des recherche et des graphiques
+
+## A chaque tache son outil
+
+- Elasticsearch n'est pas conçu pour supporter l'application, seulement la partie recherche / analyse.
+- Dans notre cas elasticsearch sert pour travailler sur les logs
+
+---
+
+## L'organisation basique de Elasticsearch
+
+![](../../images/elastic/index.jpg)
+
+---
+
+## L'architecture basique de Elasticsearch
+
+- **Index** :
+  - comme une bibliothèque de documents
+  - comme une _base de données_ en SQL
+  - on peut en créer plusieurs (bien sur)
+
+---
+
+## L'architecture basique de Elasticsearch
+
+- **Type** avec son **Mapping**
+  - le type des données stockées : livre
+  - un peu comme une _table_ en SQL
+  - **mapping** = **format** c'est title+author+price+description
+
+_mapping_ signifie représenter/modéliser en anglais.
+
+---
+
+## L'architecture basique de Elasticsearch
+
+- **Documents**
+  - chaque entrée dans un index avec son _\_id_
+  - ici un _livre_ ou un _vol_
+  - un peu comme une _ligne_ dans une table en sql
+
+---
+
+## Les opérations de base de l'API = CRUD
+
+- "ajouter un index/mapping/document" (**C**reate)
+- "récupérer/lire un index/mapping/document" (**R**ead)
+- "mettre à jour un index/mapping/document" (**U**pdate)
+- "supprimer un index/mapping/document" (**D**elete)
+
+---
+
+## CRUD et méthode HTTP
+
+```
+<METHODE> <URI>
+<DATA>
+```
+
+METHOD en gros (il y a des exception sinon c'est pas drôle)
+
+- GET = Read / récupérer
+- POST = Créer
+- PUT = Mettre à jour / Update
+- DELETE = Supprimer
+
+> > >
+
+## Exercice II.2.1) Gérer les documents dans Elasticsearch.
+
+Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API : TODO bien ajouter toutes les fonctions requises dans le mémo
+
+1. mettre à jour le livre que vous avez ajouté en changeant le prix
+
+- ajouter deux nouveaux livre avec la méthode POST
+- lister tous les livres de l'index
+- lister les index présents sur le cluster
+- supprimer le livre numéro 2 (avec son \_id)
+
+---
+
+## II.2.2) Gérer les mappings et les index
+
+---
+
+## Mapping implicite et Mapping explicite
+
+Lorsque vous ajoutez un document sans avoir créé de Type de document et de mapping (=format) pour ce type, elasticsearch
+créé _automatiquement_ un format en devinant le type de chaque champ:
+
+- pour les champs texte il prend le type **text** + **keyword** (on verra pourquoi après)
+- pour champs numériques il prend le type **integer** ou **float**
+
+C'est le **mapping implicite**
+Mais si on veux des champs spéciaux ou optimisés il faut créer le mapping soit même explicitement.
+
+---
+
+## Mapping explicite
+
+Pour avoir plus de contrôle sur les types de champs il vaut mieux décrire manuellement le schéma de données.
+Au moins les premiers champs qu'on connaît déjà.
+
+(Il peut arriver qu'on ait pas au début d'un projet une idée de toutes les parties importantes. On peut raffiner le mapping au fur et à mesure)
+
+---
+
+## Afficher le(s) mapping(s)
+
+```json
+GET /<index>/_mapping
+```
+
+Exemple:
+
+```json
+GET /kibana_sample_data_flights/_mapping
+```
+
+---
+
+## Les types de données (datatypes)
+
+Un documents dans elasticsearch est une données complexe qui peut être composé de nombreux éléments hétérogènes
+
+Les types les plus importants:
+**text**, **keyword**, **integer**, **float**, **date**, **geo_point**
+
+---
+
+## Types texte
+
+- **text** : Pour stocker du texte de longueur arbitraire. Indexé en recherche **fulltext**. On y reviendra: ça veut dire que tous les mots du texte sont recherchables.
+- **keyword** : Du texte généralement court pour décrire une caractéristique du document
+  - Exemple: _OriginWeather_ décrit la météo _cloudy_
+
+---
+
+## Types nombre
+
+- **integer** : un nombre entier
+- **float** : nombre à virgule
+
+Il existe d'autres types de nombres plus courts ou plus longs (donc plus gourmand en espace).
+
+---
+
+## Type **date**
+
+Comme on stocke souvent des évènements dans elasticsearch il y a presque toujours une ou plusieurs date dans un document.
+En fait ce n'est pas vraiment une date mais ce qu'on appelle un _timestamp_ qui va jusqu'à la milliseconde.
+
+---
+
+## Type **geo_point**
+
+Pour stocker un point géographique. C'est une paire de nombres : _latitude_ et _longitude_.
+On verra ça un peu dans kibana plus tard.
+La stack Elk fournit plein d'outil pour stocker des données géolocalisés et les visualiser :
+C'est un besoin courant. exemple: savoir d'où viennent les requêtes sur votre application pour connaître vos usagers.
+
+---
+
+## Exercice II.2.2)
+
+1. supprimer votre index
+
+- Cherchez dans la documentation comment ajouter un mapping
+- Décrivez en JSON les propriétés suivantes pour ce mapping en choisissant les types
+  title, description, author, price, ISBN/EAN, weight
+
+- Ajouter le mapping. Indication : il faut un nouvel index d'abord (mettez 1 shard et 0 replicas)
+
+- Recréez vos deux livres avec POST sans renseigner l'ISBN
+- ajouter l'ISBN avec PUT problème
+- ajouter un champ de type _long_ pour régler le problème
+
+---
+
+## II.3) API REST et JSON ?
+
+---
+
+## Revenons sur le format de l'API
+
+C'est quoi ce format d'appel de fonction:
+METHOD URI DATA ?
+
+---
+
+## HTTP - 1
+
+- Le protocole le plus connu pour la communication d'applications
+- protocole = requêtes et réponses formalisées entre deux logiciels
+- exemples:
+  - navigateur <-> serveur apache
+  - kibana <-> elasticsearch
+  - application web <-> mongoDB
+
+---
+
+## HTTP - 2
+
+#### En requête
+
+- url: http://192.168.0.34:4561 ou http://monelastic.net/catalog/product/3/_update
+- method: GET, POST, PUT, DELETE, HEAD, ... autres moins connues
+- data: données du message falcultatif
+
+---
+
+## HTTP - 3
+
+#### En réponse
+
+- un fichier avec
+- un en tête nommé _HEAD_ qui gère décrit la réponse avec des métadonnées
+- le _HEAD_ contient notamment un **code de réponse** :
+  - 200 = OK
+  - 404 = non trouvé
+- un contenu nommé _BODY_
+
+---
+
+## API REST - 1
+
+- API = _Application Programming Interface_ :
+  "Une **liste de fonctions** qu'on peut appeler de l'**extérieur** d'un logiciel"
+
+---
+
+#### API REST - 2
+
+- REST signifie _REpresentational State Transfer_.
+- C'est un format standard (le plus répendu) pour une API.
+- C'est-à-dire une façon de décrire la liste des fonctions et leurs paramètres.
+
+---
+
+## Curl, l'outil HTTP
+
+- `GET / ` devient : `curl -XGET http://localhost:9200/`
+
+```json
+PUT /catalog/product/1
+{
+    "sku": "SP000001",
+    "title": "Elasticsearch for Hadoop",
+    "description": "Elasticsearch for Hadoop",
+    "author": "Vishal Shukla",
+    "ISBN": "1785288997",
+    "price": 26.99
+}
+```
+
+Devient :
+
+```bash
+$ curl -XPUT http://localhost:9200/catalog/product/1 -d '{ "sku": "SP000001",
+"title": "Elasticsearch for Hadoop", "description": "Elasticsearch for
+Hadoop", "author": "Vishal Shukla", "ISBN": "1785288997", "price": 26.99}'
+```
+
+> > >
+
+## Exercice II.3) Utiliser curl
+
+1. connectez vous à l'infra en ssh:
+
+```bash
+ssh -p 12223 formation@ptych.net
+```
+
+l'adresse de elasticsearch est 0.0.0.0:9200
+
+- taper `curl --help`, cherchez le nom de l'option longue correspondant à `-d` (un petit grep ?)
+- ajouter une suite à l'un de vos livre avec curl.
+- ajoutez une entrée _genre_ de type keyword dans votre mapping et mettez à jours vos livre pour ajouter leur genre
+- utilisez curl pour télécharger une page de la documentation dans votre dossier personnel.
+
+> > >
+
+---
+
+## III) Rechercher et analyzer dans Elasticsearch
+
+### III.1) Index et recherche de texte
+
+---
+
+## Comme dans une bibliothèque
+
+**Indexer** des documents c'est comme les **ranger dans une bibliothèque**.
+Si on range c'est pour retrouver. Mais on veut vouloir trouver de deux types de façon.
+
+- **Recherche exacte**: On veut pouvoir trouver les documents rangés dans la catégorie _litterature anglaise_ ou _bandes déssinées SF_.
+- **Recherche en texte intégral** ou **fulltext** : On veut pouvoir trouver les documents qui ont _Lanfeust_ ou _éthique_ dans leur titre.
+
+---
+
+## Recherche exacte
+
+- Quand je cherche _littérature anglaise_ je ne veux pas trouver les documents de _littérature espagnole_ bien qu'il y ai le mot "littérature" en commun.
+- Je veux que les termes correspondent précisément ou dit autrement je veux que _littérature anglaise_ soit comme une seule étiquette, pas un texte.
+- C'est le fonctionnement d'une recherche classique dans une base de données SQL:
+
+```SQL
+SELECT * FROM bibliothèque WHERE genre = "littérature anglaise";
+```
+
+---
+
+## Recherche exacte 2
+
+On utilise **\_search**, **query** et **term**.
+
+```json
+GET /<index>/<type>/_search
+{
+    "query": {
+        "term": {
+            "<field>": "<value>"
+        }
+    }
+}
+```
+
+---
+
+## Recherche fulltext
+
+- Retrouver non pas l'ensemble des livres d'un genre mais un livre _à partir d'une citation_.
+- Pour cela on fait un **index inversé** qui permet une **recherche fulltext**.
+- Elasticsearch est spécialement fait pour ce type de recherche. Il le fait très efficacement et sur des milliards de lignes de texte.
+  - exemple: github utilise elasticsearch pour indexer des milliers de dépôts de code.
+
+---
+
+## Recherche fulltext 2
+
+On utilise **\_search**, **query** et **match**.
+
+```json
+GET /<index>/<type>/_search
+{
+    "query": {
+        "match": {
+            "<field>": "<value>"
+        }
+    }
+}
+```
+
+---
+
+## Différence entre les champs _keyword_ et _text_
+
+- Un champ **keyword** n'est pas indexé en mode fulltext : la méthode **match** ne fonctionne pas en mode partiel
+- Un champ **text** est automatiquement indexé en mode fulltext: la méthode **match** fonctionne
+
+(- un champ textuel créé implicitement est double le champ principal en **text** plus un sous champ **keyword**: - exemple: _title_ est un champ **text**, _title.keyword_ est un champ **keyword**)
+
+> > >
+
+## Exercice III.1)
+
+Avec la vue Devtools:
+
+1. chercher le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
+
+- chercher le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
+- faire une recherche des avions où New apparaît dans le champ Dest. Que remarquez vous ?
