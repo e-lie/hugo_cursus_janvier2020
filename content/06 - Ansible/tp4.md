@@ -145,7 +145,7 @@ Il nous faut en plus nous assurer un minimum de configuration de ce serveur pour
 
 - Complétez les étapes d'installation dans le `Vagrantfile` pour:
   - `apt-get update`
-  - s'assurer que le dossier `/home/vagrant/jenkins_agent` existe avec `mkdir -p`. Jenkins a besoin d'un dossier de travail accessible par l'utilisateur de connexion (ici `vagrant`)
+  - s'assurer que le dossier `/home/vagrant/jenkins_agent` existe et appartient à l'user `vagrant` avec `sudo -u vagrant mkdir -p <path>`. Jenkins a besoin d'un dossier de travail accessible par l'utilisateur de connexion (ici `vagrant`)
   - installer `openjdk-13-jdk` nécessaire au fonctionnement de l'agent Jenkins. (`apt-get install -y` l'option -y permet l'installation automatique)
   - installer `python3` et `python3-pip` avec `apt` puis `ansible` à l'aide de `pip3`.
 
@@ -191,6 +191,20 @@ Maintenant nous pouvons ajouter l'agent ssh.
 ![](../../images/jenkins/jenkins-ssh-agent-configuration.png)
 
 - Sauvegardez et vérifiez grace aux logs de Jenkins si tout s'est bien passé ou quelle partie corriger.
+
+#### Pour debugger si la connexion de l'agent échoue
+
+Il s'agit généralement soit d'un problème de connexion ssh:
+
+  - revérifier que la clé/ip est valide etc
+  - changer de stratégie pour la gestion des known_hosts dans la configuration de l'agent et réessayer
+
+... soit d'un problème d'initialisation du programme agent jenkins sur le serveur agent.
+
+  - revérifier que java est bien installé
+  - vérifier l'existence du dossier de travail de jenkins (`jenkins_agent` pour nous)
+  - vérifier les permissions sur le dossier de travail qui doit être accessible pour l'utilisateur de connection ssh, `vagrant` dans notre cas. Le dossier a été créé en root on obtient un erreur permission denied.
+
 
 Nous pouvons maintenant exécuter du code Ansible avec Jenkins
 
