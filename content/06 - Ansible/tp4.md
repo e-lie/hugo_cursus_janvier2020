@@ -177,7 +177,7 @@ Nous allons crée un `credential` de type user / clé ssh avec `vagrant` et sa c
 
 - Allez voir la configuration des credentials Jenkins : `Administrer Jenkins > Manage Credentials > Jenkins > Identifiants globaux > Ajouter des identifiants`.
 
-- Complétez le formulaire comme suit (dans `Private key > enter directly` collez le texte de la clé privée présent dans `~/.vagrant.d/unsecure_private_key`):
+- Complétez le formulaire comme suit (dans `Private key > enter directly` collez le texte de la clé privée présent dans `~/.vagrant.d/insecure_private_key`):
 
 ![](../../images/jenkins/jenkins-sshkey-credential-creation.png)
 
