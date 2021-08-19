@@ -1,5 +1,6 @@
 ---
-draft: true
+draft: false
+title: Notes
 ---
 
 elastic :
@@ -82,3 +83,8 @@ PUT /blogs
 }
 } - vérifier le status du cluster - supprimer un noeuds
 le service est-il toujours
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-bootstrap-cluster.html#modules-discovery-bootstrap-cluster-joining
+
+FIXME: séarer clustering d'elasticsrarch de Lucene det de l'api elasticsearch dans le cours.
+Couper 1er cours par exos

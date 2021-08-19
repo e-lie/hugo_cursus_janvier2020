@@ -4,6 +4,14 @@ draft: false
 weight: 3030
 ---
 
+## Kibana
+
+Kibana est un outil très complet de visualisation (dashboards) et d'administration des données dans une base de données Elasticsearch.
+Elle est toujours connectée à un cluster (un ou plusieurs nœuds) Elasticsearch.
+
+<!-- FIXME: différentes parties Kibana -->
+<!-- FIXME: KQL -->
+
 ## La recherche, le KQL
 
 ## Les dashboards
@@ -312,3 +320,35 @@ On va devoir écrire une requête complexe.
 - Vue globale pour comprendre rapidement les données
 
 - Tout est dynamique: vous pouvez ajouter un filtre et les informations se mettent à jour.
+
+> > >
+
+## III) Recherche avec Elasticsearch et Kibana
+
+    - Deux types de recherche : exacte et fulltext
+
+### Exercices
+
+### II.2) Comparaison avec les base de données classiques
+
+    - le schéma est facultatif et moins important
+    - fait pour chercher plutôt que supporter le modèle des données.
+
+Rappel kibana est une interface pour elastic (soit on attaque direct elastic soit on utilise les trucs pratiques de Kibana)
+
+_utiliser les données d'aviation_
+expliquer l'interface
+expliquer les graphiques
+
+idées d'exercices:
+
+trouver les correspondances possible pour aller d'une ville A à une ville B entre telle et telle heure ?
+
+## Exercice:
+
+    requête pour analyser une erreur dans le code
+    graphique sur le volume de connexion au cours de la journée
+    corréler des évènements comme l'exemple du début
+    ajouter des exemples de plus en plus compliqués
+
+> > >

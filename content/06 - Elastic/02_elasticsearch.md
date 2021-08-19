@@ -4,119 +4,94 @@ draft: false
 weight: 3020
 ---
 
-## Les indexes
+## Elasticsearch
 
-## Lucene et le Kibana Query Language
+Elasticsearch est à la fois :
 
-## Le sharding et le multi-nodes
+- une base de données distribuée (plusieurs instances de la base de données sont connectées entre elles de manière à assurer de la **redondance** si un des nœuds en vient à avoir des problèmes)
+- un moteur de recherche puissant, basé sur un autre logiciel appelé Apache Lucene
 
-## La sécurité, X-Pack et les alternatives
+Elle fait partie des bases de données de type _NoSQL_.
+
+<!-- FIXME: NoSQL -->
+<!-- FIXME: vocab nœuds et cluster -->
+<!-- FIXME: Lucene et KQL -->
+
+<!-- ## Les indexes
+
+## Lucene et le Kibana Query Language -->
+
+<!-- ## Le sharding et le multi-nodes -->
+
+<!-- ## La sécurité, X-Pack et les alternatives -->
 
 ---
 
-## III.2) Recherche avec requête multiple et filtre
-
----
-
-## Des requêtes complexes pour l'analyse
-
-Elasticsearch est puissant pour l'analyse car il permet de combiner un grande quantité de critères de recherche
-différent en même temps et de transformer les données récupérer pour les rendre significatives.
-
-Imaginons qu'on veuille chercher tous les avions qui ont décollé de New York sous la pluie depuis un mois et qui ont un prix moyen supérieur à 800$.
-Par exemple pour créer une mesure du risque économique que le dérèglement climatique fait peser sur une companie ?
-
-On va devoir écrire une requête complexe.
-
-## Plusieurs outils
-
-- des **requêtes composées**
-  tous les vols qui vérifie condition A ET condition B ET PAS condition C
-- des **filtres** de requêtes
-  garder que les vols dont le prix est entre 300 et 1000 €
-- des **aggrégations** de requêtes (somme, aggrégation géographique)
-  chercher en gros le chiffre d'affaire d'une companie : faire la somme des trafifs de ses vols.
-
-## Repasser à Kibana
-
-On pourrait tout faire avec l'API mais ce serait pas très fun et on s'arracherait vite les cheveux.
-Donc on
-
+<!--
 ## III.3) Recherche et analyse
 
-## VS
+## VS -->
 
-## stocker des données d'application
-
-#### Comparaison avec les BDD SQL et NoSQL.
-
----
-
-## Deux types de BDD d'applications
+### Comparaison entre les BDD SQL et NoSQL.
 
 - SQL : _des tableaux qu'on peut croiser_ = **Jointures**
 
-exp MySQL, PostgreSQL
+ex: MySQL, PostgreSQL, Microsoft Access
 
 - NoSQL: _des documents qu'on peut filtrer et aggréger_
 
-exp MongoDB, CouchDB
+ex: MongoDB, CouchDB, Elasticsearch
 
----
+### Le point commun des deux : Stocker des données de base pour une application.
 
-## Le point commun des deux : Stocker des données de base pour une application.
-
-Exp: un Site ou web ou un utilisateur a acheté une liste de produit
+Ex: un Site ou web ou un utilisateur a acheté une liste de produit
 
 - **utilisateur**: login, email, mdp, présentation, age, image de profil
 - **produit**: ref, description, prix, photo
 - **facture et garantie**: documents complexes mais créés une fois pour toute.
-
----
 
 **SQL**: On veut avoir un historique des achats et les documents afférents : on relie formellement
 utilisateurs et les produits à travers un historique d'achat.
 
 **NoSQL**: On stocke les factures comme des documents JSON.
 
----
-
-## Côté SQL:
+### Côté SQL:
 
 _ça donne trois tables_
 
--- schema données liées en SQL
+- schéma de données liées en SQL
+- concevoir correctement pour pas être coincé : il faut que les données soient reliées aux bons endroits et efficacement.
+- effectuer une recherche de texte approximative (par exemple) ou un peu complexe (comme Google) n'est pas simple.
+
+### Côté NoSQL:
+
+_des documents JSON qu'on va récupérer avec une référence_
+
+- moins de pression à concevoir correctement pour pas être coincé : il faut que les données répondent quand même à un schéma qu'on va essayer de ne pas trop modifier, mais ce n'est pas un problème si cela se fait dans un second temps.
+<!--
+- possible de réindexer -->
 
 ---
 
-## Côté NoSQL:
+### Avec des BDD SQL et NoSQL
 
-_des documents JSON qu'on va récupérer avec une référence et un type_
+<!-- - Penser et créer le schéma pour structurer les données d'une application. -->
 
----
-
-## Avec des BDD SQL et NoSQL
-
-- Penser et créer le schéma pour structurer les données d'une application.
-
-- Concevoir correctement pour pas être coincé : Il faut que les donneés soient reliées aux bons endroits et efficacement.
-
-- Combinaison de SQL (données _homogènes_, _cohérentes_ et fortement _changeantes_) et NoSQL(données _complexes_ mais _moins de cohérence_)
-
-- Effectuer une recherche de texte n'est pas simple.
+- SQL : données _homogènes_, _cohérentes_ et fortement _changeantes_
+- NoSQL : données _complexes_ mais _moins de cohérence_
 
 ---
 
 ## Elasticsearch : une _sorte_ de BDD mais pour la recherche de texte
 
 - Assez proche de MongoDB : on met des documents JSON dedans en HTTP.
-- On jette des trucs dedans qu'on voudrais analyser plus tard
+- On jette des trucs dedans qu'on voudrait analyser plus tard
 - On explore ces éléments en faisant des recherche et des graphiques
 
-## A chaque tache son outil
+## A chaque tâche son outil
 
-- Elasticsearch n'est pas conçu pour supporter l'application, seulement la partie recherche / analyse.
-- Dans notre cas elasticsearch sert pour travailler sur les logs
+- Elasticsearch n'est pas conçu pour soutenir l'application pour toutes ses données, seulement pour la partie recherche / analyse.
+- Dans notre cas Elasticsearch sert pour travailler sur les logs
 
 ---
 
@@ -131,7 +106,7 @@ _des documents JSON qu'on va récupérer avec une référence et un type_
 - **Index** :
   - comme une bibliothèque de documents
   - comme une _base de données_ en SQL
-  - on peut en créer plusieurs (bien sur)
+  - on peut en créer plusieurs (bien sûr)
 
 ---
 
@@ -140,20 +115,14 @@ _des documents JSON qu'on va récupérer avec une référence et un type_
 - **Type** avec son **Mapping**
   - le type des données stockées : livre
   - un peu comme une _table_ en SQL
-  - **mapping** = **format** c'est title+author+price+description
+  - **mapping** = **format** c'est `title+author+price+description`
 
 _mapping_ signifie représenter/modéliser en anglais.
 
----
-
-## L'architecture basique de Elasticsearch
-
 - **Documents**
-  - chaque entrée dans un index avec son _\_id_
+  - chaque entrée dans un index avec son _id_
   - ici un _livre_ ou un _vol_
   - un peu comme une _ligne_ dans une table en sql
-
----
 
 ## Les opérations de base de l'API = CRUD
 
@@ -171,31 +140,18 @@ _mapping_ signifie représenter/modéliser en anglais.
 <DATA>
 ```
 
-METHOD en gros (il y a des exception sinon c'est pas drôle)
+METHOD en gros (il y a des exceptions sinon c'est pas drôle) :
 
-- GET = Read / récupérer
-- POST = Créer
-- PUT = Mettre à jour / Update
-- DELETE = Supprimer
-
-> > >
+- `GET` = Read / récupérer
+- `POST` = Créer
+- `PUT` = Mettre à jour / Update
+- `DELETE` = Supprimer
 
 ## Exercice II.2.1) Gérer les documents dans Elasticsearch.
 
-Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API : TODO bien ajouter toutes les fonctions requises dans le mémo
-
-1. mettre à jour le livre que vous avez ajouté en changeant le prix
-
-- ajouter deux nouveaux livre avec la méthode POST
-- lister tous les livres de l'index
-- lister les index présents sur le cluster
-- supprimer le livre numéro 2 (avec son \_id)
-
----
+<!-- Pause jeudi soir -->
 
 ## II.2.2) Gérer les mappings et les index
-
----
 
 ## Mapping implicite et Mapping explicite
 
@@ -206,7 +162,7 @@ créé _automatiquement_ un format en devinant le type de chaque champ:
 - pour champs numériques il prend le type **integer** ou **float**
 
 C'est le **mapping implicite**
-Mais si on veux des champs spéciaux ou optimisés il faut créer le mapping soit même explicitement.
+Mais si on veux des champs spéciaux ou optimisés il faut créer le mapping soi-même explicitement.
 
 ---
 
@@ -484,3 +440,51 @@ Avec la vue Devtools:
 
 - chercher le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
 - faire une recherche des avions où New apparaît dans le champ Dest. Que remarquez vous ?
+
+### II.2) API REST ?
+
+- HTTP, head & body
+- REST : GET, POST, PUT, DELETE, HEAD endpoint
+
+## III) Life inside a cluster
+
+    - scale In = vertical , scale Out = horizontal
+    - shard
+    - dimensionner un cluster
+    - haute disponibilité
+      - endpoint switching déclarer plusieurs
+      - fallback automatique
+
+### Exercice:
+
+    - calculer le nombre de noeuds pour que ça marche encore
+    - répartir les noeuds sur une infrastructure
+    # - configurer et constater qu'on a le bon nombre de noeuds
+    - vérifier que quand il y en a un qui tombe ça marche toujours
+
+## III.2) Recherche avec requête multiple et filtre
+
+---
+
+## Des requêtes complexes pour l'analyse
+
+Elasticsearch est puissant pour l'analyse car il permet de combiner un grande quantité de critères de recherche
+différent en même temps et de transformer les données récupérer pour les rendre significatives.
+
+Imaginons qu'on veuille chercher tous les avions qui ont décollé de New York sous la pluie depuis un mois et qui ont un prix moyen supérieur à 800$.
+Par exemple pour créer une mesure du risque économique que le dérèglement climatique fait peser sur une companie ?
+
+On va devoir écrire une requête complexe.
+
+## Plusieurs outils
+
+- des **requêtes composées**
+  tous les vols qui vérifie condition A ET condition B ET PAS condition C
+- des **filtres** de requêtes
+  garder que les vols dont le prix est entre 300 et 1000 €
+- des **aggrégations** de requêtes (somme, aggrégation géographique)
+  chercher en gros le chiffre d'affaire d'une companie : faire la somme des trafifs de ses vols.
+
+## Repasser à Kibana
+
+On pourrait tout faire avec l'API mais ce serait pas très fun et on s'arracherait vite les cheveux.

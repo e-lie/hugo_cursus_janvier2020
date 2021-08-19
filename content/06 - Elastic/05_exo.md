@@ -16,3 +16,5 @@ https://www.elastic.co/guide/en/logstash/current/plugins-inputs-twitter.html
 iptables trop stylé mais trop avancé : juste output exec c bi1
 
 https://www.elastic.co/fr/blog/introducing-logstash-input-http-plugin
+
+https://www.elastic.co/guide/en/logstash/7.14/plugins-filters-dissect.html

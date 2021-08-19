@@ -4,73 +4,18 @@ draft: false
 weight: 3021
 ---
 
-## Mise en place d'un cluster multi-node
+## Exercice II.2.1) Gérer les documents dans Elasticsearch.
 
-https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
+Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API : TODO bien ajouter toutes les fonctions requises dans le mémo
 
-# Use the Cluster Health API [http://localhost:9200/_cluster/health], the
+1. mettre à jour le livre que vous avez ajouté en changeant le prix
 
-curl -s localhost:9200/\_cluster/health | jq
-
-<!-- # Node Info API [http://localhost:9200/_cluster/nodes] or GUI tools -->
-<!-- curl -s localhost:9200/_nodes | jq -->
-<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html -->
-<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html -->
-<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html -->
-<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html -->
-
-curl -s localhost:9200/\_cat/nodes
-
-# such as <http://github.com/lukas-vlcek/bigdesk> and
-
-# <http://mobz.github.com/elasticsearch-head> to inspect the cluster state.
-
-## Recherche via l'API
-
-## Pattern-matching
-
-## Exploration du cluster (paramètres)
+- ajouter deux nouveaux livre avec la méthode POST
+- lister tous les livres de l'index
+- lister les index présents sur le cluster
+- supprimer le livre numéro 2 (avec son \_id)
 
 <!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search -->
-
----
-
----
-
-title: Corrections des exercices
-theme: moon
-separator: "\n>>>\n"
-verticalSeparator: "\n---\n"
-revealOptions:
-transition: 'none'
-
----
-
-## I.1) Analyse de logs
-
-Objectif: - analyser des logs pour retrouver une information - être attentif au format des logs
-
-Sur le serveur ptych.net le titre d'une page web a été changé. On veut savoir qui des trois administrateurs Alice, Bob ou Jack a fait cette modification.
-
-- connectez vous en ssh :
-  `ssh -p 12222 enqueteur@ptych.net`
-  passwd: `enqueteur`
-- en utilisant cat et grep par exemple:
-  - Pour savoir qui s'est connecté consultez le fichier /var/log/auth.log
-  - Pour connaître le titre du site au fil du temps consultez le fichier /var/log/nginx/access.log
-- utilisez `| grep MyWebSite` pour savoir quand le titre a été modifié
-- utilisez `| grep` et l'heure pour savoir qui s'est connecté à cette heure ci
-- bilan ?
-
-## I.2) Calculer une quantité de logs
-
-- entre 100 et 150 caractères, disons 120.
-- un octet
-- on vide le fichier on laisse tourner une semaine et on compte les lignes (`wc -l`)
-
-- ( 12 _ (200 + 120) + 60 ) 120 _ 60 _ 24 _ 30 = 20217600000 = 20.2176 GB
-
-C'est une application moyenne. Un infra pour 600.000 utilisateurs produit par exemple 10 TB en 3 mois.
 
 ## II.1) API JSON
 

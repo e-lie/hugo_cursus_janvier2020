@@ -1,4 +1,7 @@
-Installation d'un cluster Elastic avec Ansible
+---
+draft: true
+title: Installation d'un cluster Elastic avec Ansible
+---
 
 ## Mettre en place son cluster
 
@@ -19,9 +22,9 @@ navigateur sous peine de sévère ramage ;)
     \`**ifconfig**\`
 7.  Relevez les adresses IP des trois machines :
 
--   node 1
--   node 2
--   master
+- node 1
+- node 2
+- master
 
 1.  Vérifiez que vous pouvez pinguer les autres machines du cluster
 
@@ -66,7 +69,8 @@ le master (dans les paramètres du réseau NatNetwork)
 
 7.  Ajouter une commande (task) ansible au dessus de ping pour
     activer/lier python :\
-    - *raw: \'sudo ln -fs /usr/bin/python3 /usr/bin/python\'*
+
+    - _raw: \'sudo ln -fs /usr/bin/python3 /usr/bin/python\'_
 
 8.  Relancez Ping. Si vous n'avez pas d'erreur c'est que ansible est
     prêt pour la configuration des machines.
@@ -76,11 +80,11 @@ le master (dans les paramètres du réseau NatNetwork)
 1.  Connectez vous en ssh depuis le master dans l'un des nœuds elastic
     et installez : **apt-transport-https uuid-runtime
     openjdk-11-jre-headless gpg**
-2.   Lancez **ansible-playbook setup\_elastic.yml** avoir pris soin de
+2.  Lancez **ansible-playbook setup_elastic.yml** avoir pris soin de
     vérifier que hosts visait le groupe **elk_nodes**. Les requirements
     sont installé ! Voyez les ok et changed apparaissant lorsque vous
     lancez le playbook : ansible est verbeux il informe de sa réussite.
-3.   Ajoutez à la suite ces trois commandes (tasks) Ansible (qui vont
+3.  Ajoutez à la suite ces trois commandes (tasks) Ansible (qui vont
     servir à installer elasticsearch sur chacun des nodes) :
 
 \- name: Add elasticsearch repo GPG key
@@ -99,11 +103,11 @@ repo: \<repo debian\>
 
 state: \<state\>
 
-\- name: Install Elasticsearch *\# requires java preinstalled*
+\- name: Install Elasticsearch _\# requires java preinstalled_
 
 apt: pkg=elasticsearch state=\<state\>
 
-1.   Complétez ces commande à l'aide des paramètres ci-dessous
+1.  Complétez ces commande à l'aide des paramètres ci-dessous
 
 \- url de la clé GPG des dev de elastic :
 https://artifacts.elastic.co/GPG-KEY-elasticsearch
@@ -111,23 +115,23 @@ https://artifacts.elastic.co/GPG-KEY-elasticsearch
 répertoire debian pour elastic : \"deb
 https://artifacts.elastic.co/packages/6.x/apt stable main\"
 
-1.   Chercher sur internet quoi mettre à la place de \<state\>. Par
+1.  Chercher sur internet quoi mettre à la place de \<state\>. Par
     exemple en tapant : ansible doc apt module → il faut mettre
     **present**. C'est l'état qui signifie que ansible va s'assurer de
     la présence des paquets/repos et les ajouter si et seulement si ils
     sont manquant.
-2.   Relancez le playbook !
+2.  Relancez le playbook !
 
 ## Bilan Ansible :
 
--   Ansible peut être rejoué plusieur fois (il est idempotent)
--   Ansible garanti l'état de certains éléments du système lorsqu'on le
-    (re)joue
--   Ansible est (dès qu'on est un peu habitué) plus limpide que du bash
+- Ansible peut être rejoué plusieur fois (il est idempotent)
+- Ansible garanti l'état de certains éléments du système lorsqu'on le
+  (re)joue
+- Ansible est (dès qu'on est un peu habitué) plus limpide que du bash
 
 ## Configurer Elastic en cluster
 
-1.   Il manque la configuration ! Ajoutez une nouvelle commande pour
+1.  Il manque la configuration ! Ajoutez une nouvelle commande pour
     créer le fichier de configuration :
 
 \- name: Configure Elasticsearch.
@@ -149,8 +153,8 @@ notify: restart elasticsearch
 1.  Observez le fichier template/elasticsearch.yml.j2 : c'est modèle de
     fichier de configuration. Il contient des trous ** {{ var }} **qui
     doivent être remplis par les variables du playbook
-2.  ** **Ajoutez les variables suivantes avant les tasks (attention aux
-    alignement! Vars doit être aligné avec **tasks:**) :
+2.  \*\* **Ajoutez les variables suivantes avant les tasks (attention aux
+    alignement! Vars doit être aligné avec **tasks:\*\*) :
 
 **vars:**
 
@@ -165,9 +169,9 @@ notify: restart elasticsearch
 - 10.0.2.4
 
 - 10.0.2.5\
-pensez à changer les ips pour désigner vos nœuds elastic
+  pensez à changer les ips pour désigner vos nœuds elastic
 
-1.   Ajoutez la fin suivante au playbook :
+1.  Ajoutez la fin suivante au playbook :
 
 \- name: Start Elasticsearch.
 
@@ -179,7 +183,7 @@ state: restarted
 
 enabled: yes
 
-daemon_reload: yes *\#required before first run*
+daemon*reload: yes *\#required before first run\_
 
 \- name: Make sure Elasticsearch is running before proceeding.
 
@@ -194,8 +198,8 @@ service: name=elasticsearch state=restarted
 
 (attention aux alignements : handlers est au même niveau que tasks)
 
-1.   Jouer le playbook enfin complet.
-2.   Lancez les commandes de diagnostic
+1.  Jouer le playbook enfin complet.
+2.  Lancez les commandes de diagnostic
 
 \- curl
 [http://](http://10.0.2.4:9200/_cat/nodes?pretty)[10.0.2.4](http://10.0.2.4:9200/_cat/nodes?pretty)[:9200/\_cat/nodes?pretty](http://10.0.2.4:9200/_cat/nodes?pretty)
@@ -218,7 +222,7 @@ signifiant que les deux elastic se « connaissent »
 
 ## Installer kibana
 
-\- Remplacez : \<elastic_node_ip\> par l'ip d'un des nœuds elastic
+\- Remplacez : \<elastic-node_ip\> par l'ip d'un des nœuds elastic
 
 \- Vérifier que le groupe kibana_node dans hosts pointe bien vers
 elk-master
