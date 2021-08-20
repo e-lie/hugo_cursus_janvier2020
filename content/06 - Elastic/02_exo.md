@@ -4,20 +4,48 @@ draft: false
 weight: 3021
 ---
 
-## Exercice II.2.1) Gérer les documents dans Elasticsearch.
-
-Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API : TODO bien ajouter toutes les fonctions requises dans le mémo
-
-1. mettre à jour le livre que vous avez ajouté en changeant le prix
-
-- ajouter deux nouveaux livre avec la méthode POST
-- lister tous les livres de l'index
-- lister les index présents sur le cluster
-- supprimer le livre numéro 2 (avec son \_id)
-
-<!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search -->
+<!-- FIXME: ON CREE QUAND L'INDEX ? -->
 
 ## II.1) API JSON
+
+### 0. Accéder à Kibana
+
+- aller à l'adresse http://192.168.2.4:15601
+- section Discover: taper
+- Dev tools
+
+### 2. Requêtes
+
+```json
+POST /mabibli/livre/
+{
+    "<fieldname>": "<value>",
+    ...
+}
+```
+
+## Exercice II.1) syntaxe API et JSON
+
+1. Chercher un livre sur http://lalibrairie.com
+1. écrire un fichier JSON pour décrire le livre avec:
+
+   - le titre (title)
+   - l'auteur (author)
+   - le prix (price)
+   - la première phrase de la description à mettre entre guillemets (description)
+   - d'autres infos si vous voulez
+
+1. Choisissez un nom simple pour votre bibliothèque.
+1. Ajoutez ce livre à votre bibliothèque dans Kibana :
+
+```json
+PUT /<votre_bibli>/livre/1
+<DATA>
+```
+
+### Solution
+
+{{% expand "Solution :" %}}
 
 Dans la vue devtools:
 
@@ -31,7 +59,25 @@ PUT /mabibli/livre/1
 }
 ```
 
+{{% /expand  %}}
+
 # II.2.1
+
+## Exercice II.2.1) Gérer les documents dans Elasticsearch.
+
+Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API :
+
+1. mettre à jour le livre que vous avez ajouté en changeant le prix
+1. ajouter deux nouveaux livre avec la méthode POST
+1. lister tous les livres de l'index
+1. lister les index présents sur le cluster
+1. supprimer le livre numéro 2 (avec son \_id)
+
+<!-- https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search -->
+
+### Solution
+
+{{% expand "Solution :" %}}
 
 - Afficher votre livre pour se souvenir du prix
 
@@ -87,6 +133,24 @@ GET /_cat/indices
 ```json
 DELETE /mabibli/livre/Ekd8E2cBVH8Nz7YD6zUt
 ```
+
+{{% /expand %}}
+
+## Exercice II.2.2)
+
+1. supprimer votre index
+1. Cherchez dans la documentation comment ajouter un mapping
+1. Décrivez en JSON les propriétés suivantes pour ce mapping en choisissant les types: title, description, author, price, ISBN/EAN, weight
+
+1. Ajoutez le mapping. Indication : il faut un nouvel index d'abord (mettez 1 shard et 0 replicas)
+
+1. Recréez vos deux livres avec POST sans renseigner l'ISBN
+1. ajoutez l'ISBN avec PUT problème
+1. ajoutez un champ de type _long_ pour régler le problème
+
+### Solution
+
+{{% expand "Solution :" %}}
 
 ## Exercice II.2.2)
 
@@ -164,7 +228,7 @@ POST /mabibli/livre/<id>
 
 - problème: l'ISBN est trop grand pour rentrer dans un integer normal. Il faut un type long
 
-- Ajoutons un nouveau car sinon il faudrait réindexer
+- Ajoutons un nouveau champ car sinon il faudrait réindexer (changer le mapping, le type du champ `ISBN`)
 
 ```json
 PUT /mabibli/_mapping/livre
@@ -177,12 +241,45 @@ PUT /mabibli/_mapping/livre
 }
 ```
 
+{{% /expand %}}
+
 ## Exercice II.2.3)
+
+## Exercice II.3) Utiliser curl
+
+1. connectez vous à l'infra en ssh:
+
+```bash
+vagrant ssh <nom-du-noeud>
+```
+
+l'adresse de elasticsearch est 0.0.0.0:9200
+
+1. taper `curl --help`, cherchez le nom de l'option longue correspondant à `-d` (un petit grep ?)
+1. ajouter une suite à l'un de vos livres avec curl.
+1. ajoutez une entrée _genre_ de type keyword dans votre mapping et mettez à jour vos livres pour ajouter leur genre
+1. utilisez curl pour télécharger une page de la documentation dans votre dossier personnel.
+
+### Solution
+
+{{% expand "Solution :" %}}
 
 - -d c'est --data
 - `curl -X<METHOD> http://0.0.0.0:9200 -d '<JSON>'`
+  {{% /expand %}}
 
 ## Exercice III.1)
+
+Avec la vue Devtools:
+
+1. Cherchez le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
+1. Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
+1. Faire une recherche des avions où _New_ apparaît dans le champ _Dest_. Que remarquez vous ?
+1. Faire une recherche des avions où _New_ apparaît dans le champ _Destfull.raw_. Que remarquez vous ?
+
+### Solution
+
+{{% expand "Solution :" %}}
 
 - Cherchez le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
 
@@ -222,12 +319,27 @@ GET /kibana_sample_data_flights/_doc/_search
 }
 ````
 
+<!-- FIXME: QUOI ? -->
+
 - Il n'y a pas de résultat car Dest est un champ keyword qui n'est pas indexé en mode fulltext
+
+<!-- FIXME: QUOI ? -->
 
 - Le champ .raw est une version non fulltext d'un champ "text" normalement indexé en fulltext
 
+{{% /expand %}}
+
 ---
 
+<!--
+
+### 1. Mettre quelques données dans la base de données
+
+- PUT gnagna -->
+
+<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html -->
+
+<!--
 ## Exercice I.1)
 
 Objectif: - analyser des logs pour retrouver une information - être attentif au format des logs
@@ -255,95 +367,4 @@ Chaque instance = Un serveur web, une application python + une base de données 
    - 120 pour l'application python
    - 60 pour la DB -> c'est très variable
 1. Calcul
-1. Conclusions...
-
-## Exercice II.1) syntaxe API et JSON
-
-1. Chercher un livre sur http://lalibrairie.com
-1. écrire un fichier JSON pour décrire le livre avec:
-
-   - le titre (title)
-   - l'auteur (author)
-   - le prix (price)
-   - la première phrase de la description à mettre entre guillemets (description)
-   - d'autres infos si vous voulez
-
-1. Choisissez un nom simple pour votre bibliothèque.
-1. Ajoutez ce livre à votre bibliothèque dans Kibana :
-
-```json
-PUT /<votre_bibli>/livre/1
-<DATA>
-```
-
-## Exercice II.2.1) Gérer les documents dans Elasticsearch.
-
-Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API :
-
-1. mettre à jour le livre que vous avez ajouté en changeant le prix
-1. ajouter deux nouveaux livre avec la méthode POST
-1. lister tous les livres de l'index
-1. lister les index présents sur le cluster
-1. supprimer le livre numéro 2 (avec son \_id)
-
-## Exercice II.2.2)
-
-1. supprimer votre index
-1. Cherchez dans la documentation comment ajouter un mapping
-1. Décrivez en JSON les propriétés suivantes pour ce mapping en choisissant les types: title, description, author, price, ISBN/EAN, weight
-
-1. Ajoutez le mapping. Indication : il faut un nouvel index d'abord (mettez 1 shard et 0 replicas)
-
-1. Recréez vos deux livres avec POST sans renseigner l'ISBN
-1. ajoutez l'ISBN avec PUT problème
-1. ajoutez un champ de type _long_ pour régler le problème
-
-## Exercice II.3) Utiliser curl
-
-1. connectez vous à l'infra en ssh:
-
-```bash
-ssh -p 12223 formation@ptych.net
-```
-
-l'adresse de elasticsearch est 0.0.0.0:9200
-
-1. taper `curl --help`, cherchez le nom de l'option longue correspondant à `-d` (un petit grep ?)
-1. ajouter une suite à l'un de vos livre avec curl.
-1. ajoutez une entrée _genre_ de type keyword dans votre mapping et mettez à jours vos livre pour ajouter leur genre
-1. utilisez curl pour télécharger une page de la documentation dans votre dossier personnel.
-
-## Exercice III.1)
-
-Avec la vue Devtools:
-
-1. Cherchez le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
-1. Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
-1. Faire une recherche des avions où _New_ apparaît dans le champ _Dest_. Que remarquez vous ?
-1. Faire une recherche des avions où _New_ apparaît dans le champ _Destfull.raw_. Que remarquez vous ?
-
----
-
-## 1. Les logs
-
-## 2. La recherche dans elastic search
-
-### 0. Accéder à Kibana
-
-- aller à l'adresse http://81.65.166.101:15601
-- section Discover: taper
-- Dev tools
-
-### 1. Mettre quelques données dans la base de données
-
-- PUT gnagna
-
-### 2. Requêtes
-
-```json
-POST /mabibli/livre/
-{
-    "<fieldname>": "<value>",
-    ...
-}
-```
+1. Conclusions... -->

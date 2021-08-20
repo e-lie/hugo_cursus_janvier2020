@@ -261,12 +261,12 @@ root@exemple:/home/alice# cat /var/log/nginx/access.log
 
 ```log
 root@exemple:/home/alice# cat /var/log/auth.log
-Aug 19 21:31:13 ubuntu-bionic sudo:  vagrant : TTY=pts/0 ; PWD=/home/vagrant ; USER=root ; COMMAND=/bin/sh -c echo BECOME-SUCCESS-qzjtxhuddaxgkqyivvmjsgpcijwmywth ; /usr/bin/python3 /home/vagrant/.ansible/tmp/ansible-tmp-1629408672.571441-2529-99170342043575/AnsiballZ_systemd.py
-Aug 19 21:31:13 ubuntu-bionic sudo: pam_unix(sudo:session): session opened for user root by vagrant(uid=0)
+Aug 19 21:31:13 ubuntu-bionic sudo:  jack : TTY=pts/0 ; PWD=/home/jack ; USER=root ; COMMAND=/bin/sh -c echo BECOME-SUCCESS-qzjtxhuddaxgkqyivvmjsgpcijwmywth ; /usr/bin/python3 /home/jack/.ansible/tmp/ansible-tmp-1629408672.571441-2529-99170342043575/AnsiballZ_systemd.py
+Aug 19 21:31:13 ubuntu-bionic sudo: pam_unix(sudo:session): session opened for user root by jack(uid=0)
 Aug 19 21:31:15 ubuntu-bionic sudo: pam_unix(sudo:session): session closed for user root
 Aug 19 21:32:15 ubuntu-bionic sshd[2176]: Received disconnect from 192.168.2.1 port 49608:11: disconnected by user
-Aug 19 21:32:15 ubuntu-bionic sshd[2176]: Disconnected from user vagrant 192.168.2.1 port 49608
-Aug 19 21:32:15 ubuntu-bionic sshd[2099]: pam_unix(sshd:session): session closed for user vagrant
+Aug 19 21:32:15 ubuntu-bionic sshd[2176]: Disconnected from user jack 192.168.2.1 port 49608
+Aug 19 21:32:15 ubuntu-bionic sshd[2099]: pam_unix(sshd:session): session closed for user jack
 Aug 19 21:32:15 ubuntu-bionic systemd-logind[847]: Removed session 5.
 Aug 19 21:52:19 ubuntu-bionic sshd[5610]: Accepted publickey for bob from 10.0.2.2 port 49854 ssh2: RSA SHA256:1M4RzhMyWuFS/86uPY/ce2prh/dVTHW7iD2RhpquOZA
 Aug 19 21:52:19 ubuntu-bionic sshd[5610]: pam_unix(sshd:session): session opened for user bob by (uid=0)

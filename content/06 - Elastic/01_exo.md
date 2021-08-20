@@ -339,3 +339,5 @@ curl -s localhost:9200/\_cat/nodes
 # <http://mobz.github.com/elasticsearch-head> to inspect the cluster state.
 
 ## Recherche via l'API -->
+
+<!-- https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html -->

@@ -67,6 +67,8 @@ _ça donne trois tables_
 
 _des documents JSON qu'on va récupérer avec une référence_
 
+- le schéma est facultatif et moins important
+- fait pour chercher plutôt que supporter le modèle des données.
 - moins de pression à concevoir correctement pour pas être coincé : il faut que les données répondent quand même à un schéma qu'on va essayer de ne pas trop modifier, mais ce n'est pas un problème si cela se fait dans un second temps.
 <!--
 - possible de réindexer -->
@@ -92,6 +94,51 @@ _des documents JSON qu'on va récupérer avec une référence_
 
 - Elasticsearch n'est pas conçu pour soutenir l'application pour toutes ses données, seulement pour la partie recherche / analyse.
 - Dans notre cas Elasticsearch sert pour travailler sur les logs
+
+---
+
+## Dev tools
+
+- Pour exécuter directement des requêtes _REST_ (on revient sur ce que c'est juste après)
+<!-- - taper: TODO même requête que la recherche au dessus -->
+- Ctrl+Entrée ou "Play" pour lancer la commande selectionnée.
+
+- C'est cette vue qu'on va principalement utiliser dans les premières parties.
+- Elle montre mieux les dessous de Elasticsearch.
+- Il faut que vous compreniez bien le principe d'une API REST JSON parce que c'est très répandu.
+
+## Connaitre la version de Elasticsearch
+
+Dans la vue dev tools tapez:
+
+```json
+GET /
+```
+
+---
+
+## réponse:
+
+```json
+{
+    "name": "ZEWiZLN",
+    "cluster_name": "elk_formation",
+    "cluster_uuid": "rGzTBgbXRyev62Ku4vTWFw",
+    "version": {
+        "number": "7.14.1",
+        ...
+    },
+    "tagline": "You Know, for Search"
+}
+```
+
+---
+
+## Version de Elasticsearch
+
+- Version 7.14. C'est important car entre chaque version majeure (3, 4, 5, 6, 7) il y a des changements dans les fonctions (L'API)
+- La référence c'est la documentation: https://www.elastic.co/guide/en/elasticsearch/reference/7.14/index.html
+- Toutes les fonctions de elasticsearch y sont décrites et on peut choisir la version selon celle installée.
 
 ---
 
@@ -132,6 +179,55 @@ _mapping_ signifie représenter/modéliser en anglais.
 - "supprimer un index/mapping/document" (**D**elete)
 
 ---
+
+## Syntaxe d'un appel de fonction
+
+```
+<METHODE> <URI>
+<DATA>
+```
+
+```json
+PUT /bibliotheque/livre/1
+{
+    "title": "La Promesse de l'aube",
+    "description": "[...] J'entendis une fois de plus la formule intolérable [...]",
+    "author": "Romain Gary",
+}
+```
+
+---
+
+## Le BODY
+
+- est _facultatif_
+- est en JSON (JavaScript Objet Notation)
+  - décrire des données complexes avec du texte
+  - très répendu
+  - pas trop dur à lire pour un humain
+
+---
+
+## Syntaxe du JSON
+
+```json
+{
+    "champ1": "valeur1",
+    "champ2_nombre": 3, // pas de guillemets
+    "champ3_liste": [
+        "item1",
+        "item2",
+        "item3",
+    ],
+    "champ4_objet": { // on ouvre un "nouveau json" imbriqué
+        "souschamp1": "valeur1.1";
+        ...
+    },
+    "champ5": "Pour échapper des \"guillemets\" et des \\n" // échappement pour " et \
+}
+```
+
+## Exercice II.1) syntaxe API et JSON
 
 ## CRUD et méthode HTTP
 
@@ -227,27 +323,13 @@ En fait ce n'est pas vraiment une date mais ce qu'on appelle un _timestamp_ qui 
 Pour stocker un point géographique. C'est une paire de nombres : _latitude_ et _longitude_.
 On verra ça un peu dans kibana plus tard.
 La stack Elk fournit plein d'outil pour stocker des données géolocalisés et les visualiser :
-C'est un besoin courant. exemple: savoir d'où viennent les requêtes sur votre application pour connaître vos usagers.
+C'est un besoin courant. Exemple : savoir d'où viennent les requêtes sur votre application pour connaître vos usagers.
 
 ---
 
 ## Exercice II.2.2)
 
-1. supprimer votre index
-
-- Cherchez dans la documentation comment ajouter un mapping
-- Décrivez en JSON les propriétés suivantes pour ce mapping en choisissant les types
-  title, description, author, price, ISBN/EAN, weight
-
-- Ajouter le mapping. Indication : il faut un nouvel index d'abord (mettez 1 shard et 0 replicas)
-
-- Recréez vos deux livres avec POST sans renseigner l'ISBN
-- ajouter l'ISBN avec PUT problème
-- ajouter un champ de type _long_ pour régler le problème
-
----
-
-## II.3) API REST et JSON ?
+### II.3) API REST et JSON ?
 
 ---
 
@@ -258,7 +340,7 @@ METHOD URI DATA ?
 
 ---
 
-## HTTP - 1
+### HTTP
 
 - Le protocole le plus connu pour la communication d'applications
 - protocole = requêtes et réponses formalisées entre deux logiciels
@@ -267,19 +349,11 @@ METHOD URI DATA ?
   - kibana <-> elasticsearch
   - application web <-> mongoDB
 
----
-
-## HTTP - 2
-
 #### En requête
 
 - url: http://192.168.0.34:4561 ou http://monelastic.net/catalog/product/3/_update
 - method: GET, POST, PUT, DELETE, HEAD, ... autres moins connues
 - data: données du message falcultatif
-
----
-
-## HTTP - 3
 
 #### En réponse
 
@@ -290,22 +364,14 @@ METHOD URI DATA ?
   - 404 = non trouvé
 - un contenu nommé _BODY_
 
----
-
-## API REST - 1
+### API REST
 
 - API = _Application Programming Interface_ :
   "Une **liste de fonctions** qu'on peut appeler de l'**extérieur** d'un logiciel"
 
----
-
-#### API REST - 2
-
 - REST signifie _REpresentational State Transfer_.
 - C'est un format standard (le plus répendu) pour une API.
 - C'est-à-dire une façon de décrire la liste des fonctions et leurs paramètres.
-
----
 
 ## Curl, l'outil HTTP
 
@@ -331,34 +397,13 @@ $ curl -XPUT http://localhost:9200/catalog/product/1 -d '{ "sku": "SP000001",
 Hadoop", "author": "Vishal Shukla", "ISBN": "1785288997", "price": 26.99}'
 ```
 
-> > >
-
 ## Exercice II.3) Utiliser curl
 
-1. connectez vous à l'infra en ssh:
-
-```bash
-ssh -p 12223 formation@ptych.net
-```
-
-l'adresse de elasticsearch est 0.0.0.0:9200
-
-- taper `curl --help`, cherchez le nom de l'option longue correspondant à `-d` (un petit grep ?)
-- ajouter une suite à l'un de vos livre avec curl.
-- ajoutez une entrée _genre_ de type keyword dans votre mapping et mettez à jours vos livre pour ajouter leur genre
-- utilisez curl pour télécharger une page de la documentation dans votre dossier personnel.
-
-> > >
-
----
-
-## III) Rechercher et analyzer dans Elasticsearch
+## III) Rechercher et analyser dans Elasticsearch
 
 ### III.1) Index et recherche de texte
 
----
-
-## Comme dans une bibliothèque
+### Comme dans une bibliothèque
 
 **Indexer** des documents c'est comme les **ranger dans une bibliothèque**.
 Si on range c'est pour retrouver. Mais on veut vouloir trouver de deux types de façon.
@@ -368,7 +413,7 @@ Si on range c'est pour retrouver. Mais on veut vouloir trouver de deux types de 
 
 ---
 
-## Recherche exacte
+### Recherche exacte
 
 - Quand je cherche _littérature anglaise_ je ne veux pas trouver les documents de _littérature espagnole_ bien qu'il y ai le mot "littérature" en commun.
 - Je veux que les termes correspondent précisément ou dit autrement je veux que _littérature anglaise_ soit comme une seule étiquette, pas un texte.
@@ -380,7 +425,7 @@ SELECT * FROM bibliothèque WHERE genre = "littérature anglaise";
 
 ---
 
-## Recherche exacte 2
+### Recherche exacte 2
 
 On utilise **\_search**, **query** et **term**.
 
@@ -404,10 +449,6 @@ GET /<index>/<type>/_search
 - Elasticsearch est spécialement fait pour ce type de recherche. Il le fait très efficacement et sur des milliards de lignes de texte.
   - exemple: github utilise elasticsearch pour indexer des milliers de dépôts de code.
 
----
-
-## Recherche fulltext 2
-
 On utilise **\_search**, **query** et **match**.
 
 ```json
@@ -428,39 +469,28 @@ GET /<index>/<type>/_search
 - Un champ **keyword** n'est pas indexé en mode fulltext : la méthode **match** ne fonctionne pas en mode partiel
 - Un champ **text** est automatiquement indexé en mode fulltext: la méthode **match** fonctionne
 
-(- un champ textuel créé implicitement est double le champ principal en **text** plus un sous champ **keyword**: - exemple: _title_ est un champ **text**, _title.keyword_ est un champ **keyword**)
-
-> > >
+- un champ textuel créé implicitement est double : le champ principal en **text** + un sous champ **keyword**:
+  - exemple: _title_ est un champ **text**, _title.keyword_ est un champ **keyword**
 
 ## Exercice III.1)
 
-Avec la vue Devtools:
-
-1. chercher le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
-
-- chercher le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
-- faire une recherche des avions où New apparaît dans le champ Dest. Que remarquez vous ?
-
-### II.2) API REST ?
-
-- HTTP, head & body
-- REST : GET, POST, PUT, DELETE, HEAD endpoint
-
 ## III) Life inside a cluster
 
-    - scale In = vertical , scale Out = horizontal
-    - shard
-    - dimensionner un cluster
-    - haute disponibilité
-      - endpoint switching déclarer plusieurs
-      - fallback automatique
+  <!-- - scaling : vertical et horizontal -->
+
+- shard
+- dimensionner un cluster
+- haute disponibilité
+  - endpoint switching
+  - fallback automatique
 
 ### Exercice:
 
-    - calculer le nombre de noeuds pour que ça marche encore
-    - répartir les noeuds sur une infrastructure
-    # - configurer et constater qu'on a le bon nombre de noeuds
-    - vérifier que quand il y en a un qui tombe ça marche toujours
+<!-- - calculer le nombre de noeuds pour que ça marche encore -->
+<!-- - répartir les noeuds sur une infrastructure -->
+
+- configurer et constater qu'on a le bon nombre de noeuds
+- vérifier que quand il y en a un qui tombe ça marche toujours
 
 ## III.2) Recherche avec requête multiple et filtre
 
@@ -484,6 +514,8 @@ On va devoir écrire une requête complexe.
   garder que les vols dont le prix est entre 300 et 1000 €
 - des **aggrégations** de requêtes (somme, aggrégation géographique)
   chercher en gros le chiffre d'affaire d'une companie : faire la somme des trafifs de ses vols.
+
+<!-- FIXME: exercice ? -->
 
 ## Repasser à Kibana
 

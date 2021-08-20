@@ -4,6 +4,15 @@ draft: false
 weight: 3031
 ---
 
+## Exercices
+
+Rappel : kibana est une interface pour elastic (soit on attaque direct elastic soit on utilise les trucs pratiques de Kibana)
+
+- _utiliser les données d'aviation_
+- expliquer l'interface
+- expliquer les graphiques
+
+<!--
 geoip
 https://logz.io/blog/kibana-tutorial/
 
@@ -16,9 +25,9 @@ super dashboards
 YT KIBANA :
 https://www.youtube.com/watch?v=6bM5SPVIuDs
 
-Lancer un scanner web pour faire clignoter le dashboard ? Gerne nikto
+Lancer un scanner web pour faire clignoter le dashboard ? Gerne nikto -->
 
-Recherche dans Kibana
+### Recherche dans Kibana
 
 - Tous les avions en provenance de New York qui ont eu du retard ?
 
@@ -68,3 +77,15 @@ Axe Y  cliquez sur la flèche bleue :
   visualisation
 
   - Utilisez la section contrôle pour ajouter des filtres
+
+---
+
+<!-- idées d'exercices: FIXME: Are they realistic? -->
+
+- requête pour analyser une erreur dans le code
+- graphique sur le volume de connexion au cours de la journée
+- corréler des évènements comme l'exemple Nginx du début
+- trouver les correspondances possibles pour aller d'une ville A à une ville B entre telle et telle heure ?
+<!-- - ajouter des exemples de plus en plus compliqués -->
+
+> > >
