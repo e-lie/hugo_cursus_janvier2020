@@ -1,5 +1,5 @@
 ---
-title: "1 - Installation - Exercices"
+title: "1 - Installation"
 draft: false
 weight: 3011
 ---
@@ -24,7 +24,7 @@ weight: 3011
 
 ### Configurer Elastic en cluster
 
-1.  Observez le fichier template/elasticsearch.yml.j2 : c'est modèle de
+1.  Observez le fichier `templates/elasticsearch.yml.j2` : c'est modèle de
     fichier de configuration. Il contient des trous ** {{ var }} **qui
     doivent être remplis par les variables du playbook
 

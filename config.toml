@@ -2,6 +2,8 @@ baseURL = "https://tochange.fr"
 languageCode = "fr-FR"
 title = "Cursus POEC DevOps"
 
+ignorefiles = [ "vagrant-ansible-elk/.*" ]
+
 # Modifiez le thème pour qu'il soit utilisé par défaut à chaque génération de site.
 theme = "hugo-theme-learn"
 

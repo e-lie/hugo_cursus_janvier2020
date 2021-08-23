@@ -125,9 +125,9 @@ https://artifacts.elastic.co/packages/6.x/apt stable main\"
 ## Bilan Ansible :
 
 - Ansible peut être rejoué plusieur fois (il est idempotent)
-- Ansible garanti l'état de certains éléments du système lorsqu'on le
+- Ansible garantit l'état de certains éléments du système lorsqu'on le
   (re)joue
-- Ansible est (dès qu'on est un peu habitué) plus limpide que du bash
+- Ansible est (dès qu'on est un peu habitué-e) plus limpide que du bash
 
 ## Configurer Elastic en cluster
 
@@ -150,7 +150,7 @@ mode: 0740
 
 notify: restart elasticsearch
 
-1.  Observez le fichier template/elasticsearch.yml.j2 : c'est modèle de
+1.  Observez le fichier `templates/elasticsearch.yml.j2` : c'est modèle de
     fichier de configuration. Il contient des trous ** {{ var }} **qui
     doivent être remplis par les variables du playbook
 2.  \*\* **Ajoutez les variables suivantes avant les tasks (attention aux
