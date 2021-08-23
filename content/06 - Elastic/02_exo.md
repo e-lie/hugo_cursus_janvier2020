@@ -1,5 +1,5 @@
 ---
-title: "2 - Exercice"
+title: "2 - Elasticsearch - Exercices"
 draft: false
 weight: 3021
 ---

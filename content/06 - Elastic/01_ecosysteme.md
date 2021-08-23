@@ -97,11 +97,14 @@ APM est le petit dernier d'Elastic, axé sur le monitoring et le traçage des pe
 
 ## L'écosystème Elastic
 
-La société Elastic évolue assez vite et change souvent ses produits. Elle a un business model _open core_ : les fonctionnalités de base sont gratuites et open source, d'autres nécessitent un abonnement (assez cher) appelé X-Pack. Ce dernier est suggéré assez agressivement dans l'interface Kibana.
+La société Elastic évolue assez vite et change souvent ses produits. Elle a un business model _open core_ : les fonctionnalités de base sont gratuites et open source, certaines ont une licence gratuites et source ouverte un peu spéciale et sont regroupées dans le "X-Pack" (les fonctionnalités **Basic**). D'autres fonctionnalités "X-Pack" enfin nécessitent un abonnement "Gold" ou plus.
 
 Le cœur des produits Elastic est composé de Elasticsearch, Kibana (les dashboards et le mode Discover), de Logstash et de Filebeat.
 
-La sécurité est gérée à part, l'alerting aussi. Cela a conduit d'autres personnes à proposer des remplacements open source pour les fonctionnalités payantes : ElastAlert, OpenSearch (anciennement OpenDistro for Elasticsearch) qui est un fork de la suite Elastic, sponsorisé par Amazon.
+Des bagarres de licence ont conduit d'autres personnes à proposer un fork d'Elasticsearch : OpenSearch (anciennement OpenDistro for Elasticsearch) qui est un fork de la suite Elastic, sponsorisé par Amazon et AWS.
+
+Détails :
+https://www.elastic.co/fr/subscriptions
 
 ## <!-- FIXME: lien vers site de stacks monitoring pour dire que c compliké -->
 
@@ -218,10 +221,13 @@ Vous en connaissez ?
 
 ## Exemples de fichier de logs
 
-- _auth.log_ : connexion des utilisateurs au système
-- _httpd.log_ : connexion au serveur web apache
-- _mail.log_ : (aussi bien envoi que réception donc plusieurs applications)
-- _nginx/access.log_ : connexion au serveur web nginx
+Exemples de fichiers de logs :
+
+- `auth.log` : connexion des utilisateurs au système
+- `httpd.log` : connexion au serveur web apache
+- `mail.log` : aussi bien envoi que réception de mails
+- `nginx/access.log` : connexion au serveur web nginx
+- `nginx/error.log` : erreurs de connexion au serveur web nginx
 
 ## Exemple d'investigation
 

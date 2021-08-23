@@ -15,12 +15,9 @@ Beats est un programme designé pour être extrêmement léger et n'avoir qu'une
 - Les **Beats** pour lire les données depuis plusieurs machines. Les principales sont :
 
   - **FileBeat** : lire des fichiers de log pour les envoyer à **Logstash** ou directement à **Elasticsearch**
-  - **MetricBeat** : récupérer des données d'usage, du CPU, de la mémoire, du nombre de process NGINX
-  <!-- - etc -->
-
-- Logstash : récupère les log pour les traiter avant de les envoyer dans Elasticsearch
-  - formater des logs
-  - transformer les données avant de les mettre dans Elasticsearch
+  - **MetricBeat** : récupérer des données d'usage système, du CPU, de la mémoire, etc.
+  - **Packetbeat** : récupérer des données très poussées sur le réseau
+  - d'autres existent mais sont moins importants
 
 ## Logstash
 
@@ -31,7 +28,8 @@ Contrairement à Kibana et Elasticsearch, Logstash peut être utilisé de façon
 
 Il est un peu difficile de comprendre la différence fondamentale entre **Beats** et **Logstash** au début, on peut retenir :
 
-- que **Beats** a beaucoup moins de fonctionnalités que Logstash,
-- et qu'il n'a que quelques missions simples à remplir, là où Logstash est un outil très complet pour récupérer, transformer et renvoyer des logs.
+- que **Beats** a beaucoup moins de fonctionnalités que Logstash, et qu'il n'a que quelques missions simples à remplir,
+- là où Logstash est un outil très complet pour récupérer, transformer et renvoyer des logs.
+- **dès que l'on est restreint-e par les possibilités de Beats, on utilise souvent à la fois Beats et Logstash**
 
 <!-- FIXME: Filebeat -->

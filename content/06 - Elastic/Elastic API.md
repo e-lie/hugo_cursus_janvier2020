@@ -1,10 +1,11 @@
 ---
-title: API Elasticsearch memento - Version 6.4 de l'API
+title: API Elasticsearch memento - Version 7.14 de l'API
 ---
 
 # Gérer les documents
 
-### Créer un document: 
+### Créer un document:
+
 ```json
 PUT /<index>/<type>/1
 {
@@ -26,16 +27,19 @@ POST /<index>/<type>
 ```
 
 ### Afficher un document:
+
 ```json
 GET /<index>/<type>/<num>/
 ```
 
 ### Lister tous les documents:
+
 ```json
 GET /<index>/<type>/_search
 ```
 
 ### Mettre à jour un document (ajouter modifier un champ)
+
 ```json
 POST /<index>/<type>/<num>/_update
 {
@@ -51,21 +55,22 @@ POST /<index>/<type>/<num>/_update
 DELETE /<index>/<type>/<_id>
 ```
 
-
-
-
 # Gérer les index
 
 ### List Indices
+
 ```
 GET /_cat/indices
 ```
+
 - avec le nom des colonnes
+
 ```
 GET /_cat/indices?v
 ```
 
 ### Create index
+
 ```json
 PUT /<index>
 {
@@ -101,26 +106,21 @@ PUT /<index>
 ```
 
 ### Supprimer un index
+
 ```json
 DELETE /<index>
 ```
-
-
-
-
 
 # Gérer les mappings
 
 #### Lister les mappings
 
-
 ```
 GET /<index>/_mapping
 ```
 
-
-
 #### Ajouter un champ à un mapping:
+
 ```json
 PUT /<index>/_mapping/<type>
 {
@@ -135,6 +135,7 @@ PUT /<index>/_mapping/<type>
 # Réindexer des données
 
 #### Dupliquer un champ et réindexer
+
 ```json
 POST /<index>/_update_by_query
 {

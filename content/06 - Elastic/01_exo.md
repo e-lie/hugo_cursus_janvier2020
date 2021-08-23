@@ -1,5 +1,5 @@
 ---
-title: "1 - Exercice - Installation"
+title: "1 - Installation - Exercices"
 draft: false
 weight: 3011
 ---
