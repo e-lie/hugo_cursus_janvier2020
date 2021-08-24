@@ -31,17 +31,17 @@ weight: 3011
 1.  Lancez les commandes de diagnostic
 
 - `curl http://192.168.2.2:9200/_cat/nodes?pretty`
-
 - `curl -XGET http://192.168.2.2:9200/_cluster/state?pretty`
+- `curl -XGET http://192.168.2.2:9200/_cluster/health?pretty`
 
 Si tout est bien configuré vous devriez voir une liste de deux nœuds
 signifiant que les deux elastic se « connaissent »
 
 - Pour ajouter un nouveau nœud !
 
-  - importer une nouvelle machine
-  - l'ajouter au fichier hosts
-  - ajoutez les ips dans vars
+  - ajoutez une nouvelle machine dans Vagrant
+  - l'ajouter au fichier `hosts.cfg` dans le groupe `elastic_nodes`
+  - ajoutez la nouvelle IP dans la variable `elk_node_ips`
 
 - relancer le playbook : **\#magic**
 
