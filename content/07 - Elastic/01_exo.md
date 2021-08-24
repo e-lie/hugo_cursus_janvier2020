@@ -25,14 +25,14 @@ weight: 3011
 ### Configurer Elastic en cluster
 
 1.  Observez le fichier `templates/elasticsearch.yml.j2` : c'est modèle de
-    fichier de configuration. Il contient des trous `{{ var }}` qui doivent être remplis par les variables du playbook
+    fichier de configuration. Il contient des trous `{{ ma_variable }}` qui doivent être remplis par les variables du playbook
 
 1.  Jouer le playbook complet.
 1.  Lancez les commandes de diagnostic
 
-- `curl http://10.0.2.4:9200/_cat/nodes?pretty`
+- `curl http://192.168.2.2:9200/_cat/nodes?pretty`
 
-- `curl -XGET http://10.0.2.4:9200/_cluster/state?pretty`
+- `curl -XGET http://192.168.2.2:9200/_cluster/state?pretty`
 
 Si tout est bien configuré vous devriez voir une liste de deux nœuds
 signifiant que les deux elastic se « connaissent »
