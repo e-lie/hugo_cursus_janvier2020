@@ -191,7 +191,7 @@ PUT /bibliotheque/1
 {
     "title": "La Promesse de l'aube",
     "description": "[...] J'entendis une fois de plus la formule intolérable [...]",
-    "author": "Romain Gary",
+    "author": "Romain Gary"
 }
 ```
 
