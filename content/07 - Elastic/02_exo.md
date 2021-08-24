@@ -10,14 +10,14 @@ weight: 3021
 
 ### 0. Accéder à Kibana
 
-- aller à l'adresse http://192.168.2.4:15601
-- section Discover: taper
+- aller à l'adresse http://192.168.2.4:5601
+<!-- - section Discover: -->
 - Dev tools
 
 ### 2. Requêtes
 
 ```json
-POST /mabibli/livre/
+POST /mabibli/_doc/
 {
     "<fieldname>": "<value>",
     ...
@@ -36,10 +36,10 @@ POST /mabibli/livre/
    - d'autres infos si vous voulez
 
 1. Choisissez un nom simple pour votre bibliothèque.
-1. Ajoutez ce livre à votre bibliothèque dans Kibana :
+1. Ajoutez ce livre à votre bibliothèque dans Kibana à l'aide de la documentation de l'API : https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
 
 ```json
-PUT /<votre_bibli>/livre/1
+POST /<votre_bibli>/_doc/1
 <DATA>
 ```
 
@@ -50,7 +50,7 @@ PUT /<votre_bibli>/livre/1
 Dans la vue devtools:
 
 ```json
-PUT /mabibli/livre/1
+POST /mabibli/_doc/1
 {
     "title": "Awesome Thriller",
     "author": "Stephen King", // pas de guillemets
@@ -82,24 +82,22 @@ Dans la vue _Devtools_ et à l'aide de votre feuille de mémo de l'API :
 - Afficher votre livre pour se souvenir du prix
 
 ```json
-GET /mabibli/livre/1/
+GET /mabibli/_doc/1/
 ```
 
 - mettre à jour le prix
 
 ```json
-POST /mabibli/livre/1/_update
+POST /mabibli/_doc/1
 {
-    "doc": {
-        "price": 19.80
-    }
+    "price": 19.80
 }
 ```
 
 - ajouter 2 nouveau livres
 
 ```json
-POST /mabibli/livre/
+POST /mabibli/_doc/
 {
     "title": "Awesome Thriller 2",
     "author": "Stephen King", // pas de guillemets
@@ -108,7 +106,8 @@ POST /mabibli/livre/
 }
 ```
 
-POST /mabibli/livre/
+```json
+POST /mabibli/
 {
 "title": "Awesome Thriller 3",
 "author": "Stephen Boring", // pas de guillemets
@@ -116,11 +115,13 @@ POST /mabibli/livre/
 "price": 11.80
 }
 
-````
+```
+
 - lister tous les livres de l'index
+
 ```json
-GET /mabibli/livre/_search
-````
+GET /mabibli/_search
+```
 
 - lister les index
 
@@ -131,7 +132,7 @@ GET /_cat/indices
 - Supprimer livre 2 avec l'id récupéré précédemment dans la liste
 
 ```json
-DELETE /mabibli/livre/Ekd8E2cBVH8Nz7YD6zUt
+DELETE /mabibli/_doc/Ekd8E2cBVH8Nz7YD6zUt
 ```
 
 {{% /expand %}}

@@ -187,7 +187,7 @@ _mapping_ signifie représenter/modéliser en anglais.
 ```
 
 ```json
-PUT /bibliotheque/1
+PUT /bibliotheque/_doc/1
 {
     "title": "La Promesse de l'aube",
     "description": "[...] J'entendis une fois de plus la formule intolérable [...]",
@@ -243,8 +243,6 @@ METHOD en gros (il y a des exceptions sinon c'est pas drôle) :
 - `DELETE` = Supprimer
 
 ## Exercice II.2.1) Gérer les documents dans Elasticsearch.
-
-<!-- Pause jeudi soir -->
 
 ## II.2.2) Gérer les mappings et les index
 
