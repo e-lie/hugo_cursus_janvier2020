@@ -49,7 +49,7 @@ signifiant que les deux elastic se « connaissent »
 
 - Lancer : **ansible-playbook setup_kibana.yml**
 
-- Accéder à `192.168.2.2:5601` dans Firefox 😃
+- Accéder à `192.168.2.4:5601` dans Firefox 😃
 
 ## Installer Elasticsearch avec Docker Compose
 
