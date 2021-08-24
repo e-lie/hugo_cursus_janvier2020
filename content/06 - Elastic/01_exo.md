@@ -25,8 +25,7 @@ weight: 3011
 ### Configurer Elastic en cluster
 
 1.  Observez le fichier `templates/elasticsearch.yml.j2` : c'est modèle de
-    fichier de configuration. Il contient des trous ** {{ var }} **qui
-    doivent être remplis par les variables du playbook
+    fichier de configuration. Il contient des trous `{{ var }}` qui doivent être remplis par les variables du playbook
 
 1.  Jouer le playbook complet.
 1.  Lancez les commandes de diagnostic

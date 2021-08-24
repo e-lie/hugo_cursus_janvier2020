@@ -345,9 +345,13 @@ root@kibana-node:/home/vagrant# cat /var/log/nginx/access.log
   - **MetricBeat** : récupérer des données d'usage, du CPU, de la mémoire, du nombre de process NGINX
   <!-- - etc -->
 
-- Logstash : récupère les log pour les traiter avant de les envoyer dans Elasticsearch
+- Logstash : récupère les logs pour les traiter avant de les envoyer dans Elasticsearch
+
   - formater des logs
   - transformer les données avant de les mettre dans Elasticsearch
+
+- Elastic APM
+  - Elastic APM permet d'envoyer des mesures d'une application à Elasticsearch, il y a un agent à intégrer qui dépend du langage : l'agent d'une applicatin Java par exemple va faire remonter des statistiques sur la JVM.
 
 ---
 

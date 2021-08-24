@@ -40,8 +40,8 @@ Une application en _haute disponibilité_ signifie qu'elle continue à fonctionn
 - un healthcheck automatique
 - de l'auto-balancing -->
   <!-- - déploiement progressif TODO -->
-  <!--
-  **Les mécanismes de haute disponibilité d'un cluster commencent réellement à partir de 3 nœuds : il faut 2 nœuds restants pour continuer leur service en conditions optimales sans le 3e nœud défectueux.** -->
+
+**Les mécanismes de haute disponibilité d'un cluster commencent réellement à partir de 3 nœuds : il faut 2 nœuds restants pour continuer à fonctionner sans le 3e nœud défectueux.**
 
 ## Santé d'un cluster / d'un indice
 

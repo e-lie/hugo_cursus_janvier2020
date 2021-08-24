@@ -1,7 +1,6 @@
 ---
-title: "6 - Exercice bonus - ELK et Docker Compose"
+title: "Exercice bonus - ELK et Docker Compose"
 draft: true
-weight: 3070
 ---
 
 ## Une stack Elastic
