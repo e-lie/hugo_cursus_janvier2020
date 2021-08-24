@@ -229,5 +229,7 @@ https://github.com/Microsoft/RockPaperScissorsLizardSpock -->
 
 - Madhu,Akash2017 - Security automation with Ansible 2 - Packt -->
 
-<!-- ## Suite Elastic -->
-<!-- https://gitlab.com/xavki/sommaire-xavki-tutos-fr -->
+## Suite Elastic
+
+- https://gitlab.com/xavki/sommaire-xavki-tutos-fr
+- https://openapm.io/landscape

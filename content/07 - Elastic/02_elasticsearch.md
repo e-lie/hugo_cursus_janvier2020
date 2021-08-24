@@ -159,8 +159,7 @@ GET /
 
 ## L'architecture basique de Elasticsearch
 
-- **Type** avec son **Mapping**
-  - le type des données stockées : livre
+- Index avec son **Mapping**
   - un peu comme une _table_ en SQL
   - **mapping** = **format** c'est `title+author+price+description`
 
