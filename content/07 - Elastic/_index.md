@@ -1,8 +1,8 @@
 ---
 title: "Suite Elastic"
 draft: false
-weight: 300
-pre: "06 - <i class='fas fa-database'></i> "
+weight: 206
+pre: "07 - <i class='fas fa-database'></i> "
 chapter: true
 ---
 
