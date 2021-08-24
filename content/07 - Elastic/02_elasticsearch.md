@@ -187,7 +187,7 @@ _mapping_ signifie représenter/modéliser en anglais.
 ```
 
 ```json
-PUT /bibliotheque/livre/1
+PUT /bibliotheque/1
 {
     "title": "La Promesse de l'aube",
     "description": "[...] J'entendis une fois de plus la formule intolérable [...]",
