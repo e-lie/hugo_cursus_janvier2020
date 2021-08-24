@@ -1,6 +1,6 @@
 ---
-title: "5 - Logstash - Exercices"
-draft: true
+title: "5 - Logstash - Exercices bonus"
+draft: false
 weight: 3051
 ---
 

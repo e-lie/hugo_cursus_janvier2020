@@ -1,6 +1,6 @@
 ---
-title: "6 - Exercice bonus - Elastic APM dans Flask"
-draft: true
+title: "6 - Elastic APM dans Flask - Exercice bonus"
+draft: false
 weight: 3070
 ---
 
