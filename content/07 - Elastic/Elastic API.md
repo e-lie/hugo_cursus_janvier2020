@@ -4,10 +4,10 @@ title: API Elasticsearch memento - Version 7.14 de l'API
 
 # Gérer les documents
 
-### Créer un document:
+### Créer un document
 
 ```json
-PUT /<index>/<type>/1
+PUT /<index>/_doc/1
 {
   "champ1": "value1",
   "champ2": "value2"
@@ -18,7 +18,7 @@ PUT /<index>/<type>/1
 ou
 
 ```json
-POST /<index>/<type>
+POST /<index>/_doc
 {
   "champ1": "value1",
   "champ2": "value2"
@@ -29,19 +29,19 @@ POST /<index>/<type>
 ### Afficher un document:
 
 ```json
-GET /<index>/<type>/<num>/
+GET /<index>/_doc/<num>/
 ```
 
 ### Lister tous les documents:
 
 ```json
-GET /<index>/<type>/_search
+GET /<index>/_search
 ```
 
-### Mettre à jour un document (ajouter modifier un champ)
+### Mettre à jour un document (ajouter/modifier un champ)
 
 ```json
-POST /<index>/<type>/<num>/_update
+POST /<index>/_update/<num>/
 {
     "doc": {
         "field": "value"
@@ -52,7 +52,7 @@ POST /<index>/<type>/<num>/_update
 ### Supprimer un document
 
 ```json
-DELETE /<index>/<type>/<_id>
+DELETE /<index>/_doc/<_id>
 ```
 
 # Gérer les index
@@ -93,12 +93,10 @@ PUT /<index>
     }
   },
   "mappings": {
-    "<mapping>": {
       "properties": {
         "<property>": {
           "type": "<datatype>"
-        },
-        ...
+        }
       }
     }
   }
@@ -122,7 +120,7 @@ GET /<index>/_mapping
 #### Ajouter un champ à un mapping:
 
 ```json
-PUT /<index>/_mapping/<type>
+PUT /<index>/_mapping
 {
   "properties": {
     "<new_fieldname>": {

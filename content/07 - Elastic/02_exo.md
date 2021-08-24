@@ -107,7 +107,7 @@ POST /mabibli/_doc/
 ```
 
 ```json
-POST /mabibli/
+POST /mabibli/_doc
 {
 "title": "Awesome Thriller 3",
 "author": "Stephen Boring", // pas de guillemets
@@ -207,7 +207,7 @@ PUT /mabibli/_mapping/livre
 - créer un livre
 
 ```json
-POST /mabibli/livre/
+POST /mabibli/_doc/
 {
     "title": "Awesome Thriller",
     "author": "Stephen King",
@@ -219,7 +219,7 @@ POST /mabibli/livre/
 - ajouter l'ISBN
 
 ```json
-POST /mabibli/livre/<id>
+PUT /mabibli/_doc/<id>
 {
     "doc": {
         "ISBN": 9782369350804
@@ -232,7 +232,7 @@ POST /mabibli/livre/<id>
 - Ajoutons un nouveau champ car sinon il faudrait réindexer (changer le mapping, le type du champ `ISBN`)
 
 ```json
-PUT /mabibli/_mapping/livre
+PUT /mabibli/_mapping/
 {
   "properties": {
     "ISBN2": {
