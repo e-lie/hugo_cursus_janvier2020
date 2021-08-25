@@ -193,7 +193,7 @@ PUT /mabibli
 - ajouter le mapping
 
 ```json
-PUT /mabibli/_mapping/livre
+PUT /mabibli/_mapping
 {
   "properties": {
     "title": {
