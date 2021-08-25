@@ -37,10 +37,10 @@ Avec Filebeat, envoyez le contenu des fichiers `auth.log` (logs de connexion des
 
 Avec Journalbeat, envoyez le contenu des fichiers de type `journal` de systemd : : https://www.elastic.co/guide/en/beats/journalbeat/master/journalbeat-installation-configuration.html
 
-## Optionnel : Metricbeat pour Docker
-
-Suivre ce tutoriel sur un host avec Docker d'installé : https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-module-docker.html
-
 ## Optionnel : Metricbeat dans et pour Kubernetes
 
 Avec un Kubernetes joignable (par exemple `k3s`), suivre ce guide : https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-kubernetes.html
+
+## Optionnel : Metricbeat pour Docker
+
+Suivre ce tutoriel sur un host avec Docker d'installé : https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-module-docker.html

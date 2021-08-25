@@ -427,7 +427,7 @@ SELECT * FROM bibliothèque WHERE genre = "littérature anglaise";
 On utilise **\_search**, **query** et **term**.
 
 ```json
-GET /<index>/<type>/_search
+GET /<index>/_search
 {
     "query": {
         "term": {
@@ -449,7 +449,7 @@ GET /<index>/<type>/_search
 On utilise **\_search**, **query** et **match**.
 
 ```json
-GET /<index>/<type>/_search
+GET /<index>/_search
 {
     "query": {
         "match": {
