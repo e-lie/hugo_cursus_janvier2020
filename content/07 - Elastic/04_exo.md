@@ -29,9 +29,13 @@ Nous pouvons ensuite utiliser une commande spéciale pour ajouter des tableaux p
 
 <!-- <http://localhost:5601/app/kibana#/home/tutorial/elasticsearchMetrics?_g=()> -->
 
-## Optionnel : `auth.log`
+## Optionnel : `auth.log` et `syslog`
 
-Avec Filebeat, envoyez le contenu du fichier `auth.log` (logs de connexion des utilisateurs au système) à Elasticsearch grâce au module appelé `system` : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-module-system.html
+Avec Filebeat, envoyez le contenu des fichiers `auth.log` (logs de connexion des utilisateurs au système) et `syslog` (logs système) à Elasticsearch grâce au module appelé `system` : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-module-system.html
+
+## Optionnel : `journald` avec `Journalbeat`
+
+Avec Journalbeat, envoyez le contenu des fichiers de type `journal` de systemd : : https://www.elastic.co/guide/en/beats/journalbeat/master/journalbeat-installation-configuration.html
 
 ## Optionnel : Metricbeat pour Docker
 

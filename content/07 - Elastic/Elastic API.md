@@ -4,6 +4,8 @@ title: API Elasticsearch memento - Version 7.14 de l'API
 
 # Gérer les documents
 
+Source : https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+
 ### Créer un document
 
 ```json
