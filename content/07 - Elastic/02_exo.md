@@ -88,9 +88,11 @@ GET /mabibli/_doc/1/
 - mettre à jour le prix
 
 ```json
-POST /mabibli/_doc/1
+POST /mabibli/_update/1
 {
-    "price": 19.80
+    "doc": {
+        "price": 19.80
+    }
 }
 ```
 
@@ -143,10 +145,11 @@ DELETE /mabibli/_doc/Ekd8E2cBVH8Nz7YD6zUt
 1. Cherchez dans la documentation comment ajouter un mapping
 1. Décrivez en JSON les propriétés suivantes pour ce mapping en choisissant les types: title, description, author, price, ISBN/EAN, weight
 
-1. Ajoutez le mapping. Indication : il faut un nouvel index d'abord (mettez 1 shard et 0 replicas)
+1. Ajoutez le mapping. Indication : il faut un nouvel index d'abord
+<!-- (mettez 1 shard et 0 replicas) -->
 
 1. Recréez vos deux livres avec POST sans renseigner l'ISBN
-1. ajoutez l'ISBN avec PUT problème
+1. ajoutez l'ISBN en modifiant ces livres : problème
 1. ajoutez un champ de type _long_ pour régler le problème
 
 ### Solution
@@ -219,7 +222,7 @@ POST /mabibli/_doc/
 - ajouter l'ISBN
 
 ```json
-PUT /mabibli/_doc/<id>
+POST /mabibli/_update/<id>
 {
     "doc": {
         "ISBN": 9782369350804
@@ -274,9 +277,9 @@ l'adresse de elasticsearch est 0.0.0.0:9200
 Avec la vue Devtools:
 
 1. Cherchez le nombre d'avion _ES-Air_ (champ _Carrier_) en tout
-1. Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
+<!-- 1. Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull) -->
 1. Faire une recherche des avions où _New_ apparaît dans le champ _Dest_. Que remarquez vous ?
-1. Faire une recherche des avions où _New_ apparaît dans le champ _Destfull.raw_. Que remarquez vous ?
+<!-- 1. Faire une recherche des avions où _New_ apparaît dans le champ _Destfull.raw_. Que remarquez vous ? -->
 
 ### Solution
 
@@ -295,9 +298,9 @@ GET /kibana_sample_data_flights/_doc/_search
 }
 ```
 
-- Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull)
+<!-- - Cherchez le nombre d'avion ou New apparaît dans l'aéroport de destination (champ Destfull) -->
 
-````json
+<!-- ````json
 GET /kibana_sample_data_flights/_doc/_search
 {
   "query" : {
@@ -306,9 +309,10 @@ GET /kibana_sample_data_flights/_doc/_search
     }
   }
 }
-```json
+```json -->
 
-- Faire une recherche des avions où *New* apparaît dans le champ *Dest*. Que remarquez vous ?
+- Faire une recherche des avions où _New_ apparaît dans le champ _Dest_. Que remarquez vous ?
+
 ```json
 GET /kibana_sample_data_flights/_doc/_search
 {
@@ -318,7 +322,7 @@ GET /kibana_sample_data_flights/_doc/_search
     }
   }
 }
-````
+```
 
 <!-- FIXME: QUOI ? -->
 
@@ -326,7 +330,7 @@ GET /kibana_sample_data_flights/_doc/_search
 
 <!-- FIXME: QUOI ? -->
 
-- Le champ .raw est une version non fulltext d'un champ "text" normalement indexé en fulltext
+<!-- - Le champ .raw est une version non fulltext d'un champ "text" normalement indexé en fulltext -->
 
 {{% /expand %}}
 

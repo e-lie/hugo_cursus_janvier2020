@@ -33,31 +33,31 @@ Lancer un scanner web pour faire clignoter le dashboard ? Gerne nikto -->
 
 {{% expand "Solution :" %}}
 
-OriginCityName:\"New York\" AND FlightDelay:true
+`OriginCityName:"New York" AND FlightDelay:true`
 
 (trois vols seulement en 1 mois) -- on peut observer 3 pics sur le
 graphique
 {{% /expand %}}
 
-- La quantité d\'avion ayant eu du retard hier soir entre 21h30 et 22h
+- La quantité d'avions ayant eu du retard hier soir entre 21h30 et 22h
   ?
 
 {{% expand "Solution :" %}}
 
-FlightDelay:true + changer la période en mode absolu en haut à droite
+`FlightDelay:true` + changer la période en mode absolu en haut à droite
 
 ou
 
-FlightDelay:true + Add a filter.
+`FlightDelay:true` + Add a filter.
 
 {{% /expand %}}
 
-- Le prix moyen des billets par companie avec une visualisation
+- Le prix moyen des billets par compagnie avec une visualisation
   {{% expand "Solution :" %}}
 
-Cliquer sur AvgTicketPrice dans la liste des propriétés \> visualize.
+Cliquer sur `AvgTicketPrice` dans la liste des propriétés \> visualize.
 
-Axe Y  cliquez sur la flèche bleue.
+Axe Y : cliquez sur la flèche bleue.
 {{% /expand %}}
 
 - Aller dans la section dashboard. Explorer les différentes
