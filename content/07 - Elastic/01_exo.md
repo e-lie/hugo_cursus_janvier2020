@@ -55,7 +55,7 @@ signifiant que les deux elastic se « connaissent »
 
 {{% expand "`docker-compose.yml` :" %}}
 
-```
+```yaml
 version: "3.8"
 services:
   es01:
@@ -132,8 +132,7 @@ services:
     networks:
       - elastic
     environment:
-          ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
-
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
 
 volumes:
   data01:
@@ -146,12 +145,15 @@ volumes:
 networks:
   elastic:
     driver: bridge
-
 ```
+
+## Une stack complète Elastic et Filebeat avec Docker Compose
+
+{{% expand "`docker-compose.yml` :" %}}
 
 <!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
-<!--
-```
+
+```yaml
 version: "3.8"
 services:
   es01:
@@ -263,27 +265,12 @@ services:
     networks:
       - elastic
     environment:
-          ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
     labels:
       co.elastic.logs/json.keys_under_root: "true"
       co.elastic.logs/json.add_error_key: "true"
       co.elastic.logs/json.message_key: "message"
       co.elastic.logs/json. expand_keys: "true"
-
-  # httpd:
-  #   image: httpd:latest
-  #   depends_on:
-  #     - logstash
-  #   ports:
-  #     - 80:80
-  #   logging:
-  #     driver: gelf
-  #     options:
-  #       # Use udp://host.docker.internal:12201 when you are using Docker Desktop for Mac
-  #       # docs: https://docs.docker.com/docker-for-mac/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
-  #       # issue: https://github.com/lvthillo/docker-elk/issues/1
-  #       gelf-address: "udp://localhost:12201"
-
 
 volumes:
   data01:
@@ -296,8 +283,7 @@ volumes:
 networks:
   elastic:
     driver: bridge
-
-``` -->
+```
 
 {{% /expand %}}
 
