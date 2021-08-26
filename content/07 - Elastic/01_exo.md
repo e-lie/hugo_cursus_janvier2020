@@ -149,9 +149,9 @@ networks:
 
 ## Une stack complète Elastic et Filebeat avec Docker Compose
 
-{{% expand "`docker-compose.yml` :" %}}
-
 <!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
+
+{{% expand "`docker-compose.yml` :" %}}
 
 ```yaml
 version: "3.8"
