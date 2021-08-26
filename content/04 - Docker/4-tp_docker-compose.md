@@ -240,7 +240,7 @@ networks:
 
 ## D'autres services
 
-### Exercice de *google-fu* : un pad CodiMD
+### Exercice de _google-fu_ : un pad CodiMD
 
 <!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré. -->
 
@@ -266,6 +266,7 @@ Renommons cette configuration et rectifions qui possède ce fichier pour satisfa
 ```bash
 mv filebeat.docker.yml filebeat.yml
 sudo chown root filebeat.yml
+sudo chmod go-w filebeat.yml
 ```
 
 Enfin, créons un fichier `docker-compose.yml` pour lancer une stack Elasticsearch :
@@ -315,7 +316,6 @@ Il suffit ensuite de se rendre sur Kibana (port `5601`) et de configurer l'index
 <!-- ### _Facultatif :_ Ajouter un nœud Elasticsearch
 
 Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier. -->
-
 
 <!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
 <!-- TODO: Fiare avec ma version de l'app et du docker compose -->
@@ -447,7 +447,6 @@ Commentons ce code:
 Le dépôt avec les solutions : <https://github.com/Uptime-Formation/tp4_docker_compose_correction_202001>
 
 --- -->
-
 
 <!-- Galera automagic docker-compose : https://gist.github.com/lucidfrontier45/497341c4b848dfbd6dfb -->
 

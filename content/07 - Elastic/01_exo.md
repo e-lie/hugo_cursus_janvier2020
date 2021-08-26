@@ -162,6 +162,7 @@ Renommons cette configuration et rectifions qui possède ce fichier pour satisfa
 ```bash
 mv filebeat.docker.yml filebeat.yml
 sudo chown root filebeat.yml
+sudo chmod go-w filebeat.yml
 ```
 
 <!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
