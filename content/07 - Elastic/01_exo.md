@@ -270,9 +270,7 @@ services:
       ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
     labels:
       co.elastic.logs/json.keys_under_root: "true"
-      co.elastic.logs/json.add_error_key: "true"
       co.elastic.logs/json.message_key: "message"
-      co.elastic.logs/json. expand_keys: "true"
 
 volumes:
   data01:
