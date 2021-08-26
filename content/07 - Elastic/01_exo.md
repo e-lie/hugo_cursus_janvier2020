@@ -156,6 +156,49 @@ networks:
 {{% expand "`docker-compose.yml` :" %}}
 
 ```yaml
+version: "3"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - logging-network
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.5.0
+    user: root
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - logging-network
+    environment:
+      - -strict.perms=false
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.0
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    networks:
+      - logging-network
+
+networks:
+  logging-network:
+    driver: bridge
+```
+
+{{% /expand %}}
+
+<!--
+```yaml
 version: "3.8"
 services:
   es01:
@@ -284,9 +327,7 @@ volumes:
 networks:
   elastic:
     driver: bridge
-```
-
-{{% /expand %}}
+``` -->
 
 <!--
 https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
