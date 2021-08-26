@@ -147,6 +147,8 @@ networks:
     driver: bridge
 ```
 
+{{% /expand %}}
+
 ## Une stack complète Elastic et Filebeat avec Docker Compose
 
 <!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
