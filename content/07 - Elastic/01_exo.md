@@ -151,6 +151,19 @@ networks:
 
 ## Une stack complète Elastic et Filebeat avec Docker Compose
 
+Récupérer la config Filebeat :
+
+```bash
+curl -L -O https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml
+```
+
+Renommons cette configuration et rectifions qui possède ce fichier pour satisfaire une contrainte de sécurité de Filebeat :
+
+```bash
+mv filebeat.docker.yml filebeat.yml
+sudo chown root filebeat.yml
+```
+
 <!-- FIXME: aplatir réseau ou exposer ports logstash / elasticsearch pour pouvoir envoyer logs type ceux d'un nginx local (mais en même temps un nginx local c'est une histoire de filebeat) -->
 
 {{% expand "`docker-compose.yml` :" %}}
