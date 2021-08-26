@@ -14,6 +14,16 @@ https://www.elastic.co/fr/blog/how-to-monitor-nginx-web-servers-with-the-elastic
 Nous pouvons ensuite utiliser une commande spéciale pour ajouter des tableaux pré-configurés pour Nginx et Kibana avec la commande suivante :
 `sudo ./filebeat setup --dashboards`
 
+## Optionnel : Metricbeat pour Nginx
+
+Suivre la **partie Metricbeat pour Nginx** (sans Docker) du tutoriel :
+https://www.elastic.co/fr/blog/how-to-monitor-nginx-web-servers-with-the-elastic-stack
+
+## Optionnel : Filebeat et Metricbeat pour des conteneurs Docker
+
+Suivre les parties reastantes **Configurations Autodiscover de Filebeat et Metricbeat** du tutoriel :
+https://www.elastic.co/fr/blog/how-to-monitor-nginx-web-servers-with-the-elastic-stack
+
 <!-- https://logz.io/blog/docker-stats-monitoring-dockbeat/ -->
 
 <!-- https://raw.githubusercontent.com/elastic/beats/7.10/deploy/docker/filebeat.docker.yml -->
