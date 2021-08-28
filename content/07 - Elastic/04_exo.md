@@ -41,7 +41,9 @@ https://www.elastic.co/fr/blog/how-to-monitor-nginx-web-servers-with-the-elastic
 
 ## Optionnel : `auth.log` et `syslog`
 
-Avec Filebeat, envoyez le contenu des fichiers `auth.log` (logs de connexion des utilisateurs au système) et `syslog` (logs système) à Elasticsearch grâce au module appelé `system` : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-module-system.html
+Avec Filebeat, envoyez le contenu des fichiers `auth.log` (logs de connexion des utilisateurs au système) grâce à la configuration d'un `inputs` de type `log` dans Filebeat en indiquant le chemin du fichier (cf. documentation). Regardons dans Kibana : les données arrivent, mais ne sont pas structurées.
+
+Puis, envoyez le contenu des fichiers `auth.log` et `syslog` (logs système) à Elasticsearch grâce au module appelé `system` : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-module-system.html
 
 ## Optionnel : `journald` avec `Journalbeat`
 

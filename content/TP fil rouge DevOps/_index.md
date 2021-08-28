@@ -97,7 +97,6 @@ Remarques pratiques sur Vagrant :
 
 ## 1 - Application Web Python et Linux
 
-
 En vous aidant du tutorial suivant (jusqu'à la partie 5, avant la partie certbot): https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-20-04-fr
 
 - Installez dans la machine virtuelle Vagrant précédente une application web flask (par exemple celle proposée dans le tutoriel).
