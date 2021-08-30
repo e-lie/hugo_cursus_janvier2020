@@ -202,7 +202,7 @@ Il s'agit généralement soit d'un problème de connexion ssh:
 ... soit d'un problème d'initialisation du programme agent jenkins sur le serveur agent.
 
   - revérifier que java est bien installé
-  - vérifier l'existence du dossier de travail de jenkins (`jenkins_agent` pour nous)
+  - vérifier l'existence du dossier de travail de jenkins (`/home/vagrant/jenkins_agent` pour nous)
   - vérifier les permissions sur le dossier de travail qui doit être accessible pour l'utilisateur de connection ssh, `vagrant` dans notre cas. Le dossier a été créé en root on obtient un erreur permission denied.
 
 
