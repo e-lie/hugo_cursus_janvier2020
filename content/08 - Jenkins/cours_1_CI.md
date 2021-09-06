@@ -4,6 +4,12 @@ draft: false
 ---
 
 
+## Pourquoi écrire des tests systématiquement ?
+
+
+### Le `test driven development`
+
+## Pourquoi l'intégration continue ?
 
 ## Test unitaires
 
@@ -12,8 +18,9 @@ draft: false
 ## Tous les autres méchanismes de fiabilisation
 
 - git hooks pour empêcher de pousser du code trop sale
-- sonarcube et
+- sonarcube et la qualité de code
 - analyse de sécurité automatique du code
+- tests de performance
 
 ## La partie CI d'un pipeline
 
