@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
       v3s.vm.hostname = "v3s"
       v3s.vm.network :private_network, ip: "10.12.0.10"
       v3s.vm.provision :shell, privileged: false, inline: <<-SHELL
+        sudo rm /etc/resolv.conf && echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf && sudo chattr +i /etc/resolv.conf # fixed resolv.conf to avoid DNS bugs
         # commandes d'installation à ajouter ici
       SHELL
     end
@@ -169,7 +170,7 @@ spec:
     # You must replace this email address with your own.
     # Let's Encrypt will use this to contact you about expiring
     # certificates, and issues related to your account.
-    email: eliegavoty@free.fr
+    email: trucmuche@bidule.fr
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
@@ -218,10 +219,10 @@ controller:
     enabled: true
     paths: []
     apiVersion: "networking.k8s.io/v1"
-    hostName: jenkins.<votrenom>.v3s.dopl.uk
+    hostName: jenkins.<votrenom>.vagrantk3s.dopl.uk
     tls:
       - hosts:
-        - jenkins.<votrenom>.v3s.dopl.uk
+        - jenkins.<votrenom>.vagrantk3s.dopl.uk
         secretName: jenkins-tls-cert
     annotations:
       kubernetes.io/ingress.class: "nginx"
@@ -254,7 +255,7 @@ Comme nous avons configuré le cert-manager, la création d'un ingress en mode t
     - Une ressource spéciale de type `Certificate` existe bien dans la section `Custom Resource Definitions` et qu'elle est `Ready: True`
 
 
-- Ajoutez le nom de domaine Jenkins à votre fichier `etc/hosts`.
+- Ajoutez le nom de domaine Jenkins à votre fichier `etc/hosts` pointant vers l'ip de votre cluster k3s vagrant: 10.12.0.10.
 
 - Visitez Jenkins dans votre navigateur.
 
@@ -273,3 +274,8 @@ Ces deux qualités permettent de gagner plein de temps et d'avoir une installati
 - Cette installation dans Kubernetes configure automatiquement la connexion de Jenkins au cluster dans lequel il est installé. Cela permet ensuite d'exécuter les pipelines Jenkins dans des agents kubernetes temporaire.
 
 - Allez vérifier ce dernier point dans `Administrer Jenkins > Gérer les noeuds > Clouds` pour voir la configuration du cloud Kubernetes. On pourrait aussi piloter de multiple Cluster avec un seul Jenkins.
+
+
+## Correction
+
+Vous pouvez récupérez la correction de ce TP en clonant comme suit : `git clone -b jenkins_tp0_correction https://github.com/Uptime-Formation/corrections_tp.git jenkins_tp0_correction`

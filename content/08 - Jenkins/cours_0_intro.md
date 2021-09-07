@@ -1,6 +1,6 @@
 ---
 title: Cours 0 - Intro - Pourquoi Jenkins et Kubernetes
-draft: false
+draft: true
 ---
 
 

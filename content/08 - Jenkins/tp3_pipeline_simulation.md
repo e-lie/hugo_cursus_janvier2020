@@ -1,6 +1,6 @@
 ---
 title: TP3 - Simuler le pipeline hors de Jenkins
-draft: false
+draft: true
 ---
 
 
@@ -8,9 +8,15 @@ draft: false
 ## Un pipeline classique
 
 <!-- Schéma de la CI puis CD -->
+### Une question de sécurité : ajouter un docker build agent séparé dans une VM
 
 
-## Tests unitaires
+
+## Tests unitaires et intégration
+
+
+
+
 
 
 ## Docker build, login puis push
@@ -26,6 +32,11 @@ draft: false
 
 
 ## Déploiement
+
+
+
+
+## Tests fonctionnels
 
 
 

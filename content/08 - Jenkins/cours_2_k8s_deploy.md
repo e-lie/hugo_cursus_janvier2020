@@ -1,6 +1,6 @@
 ---
 title: Cours 2 - Déploiement Kubernetes paramètres et environnements
-draft: false
+draft: true
 ---
 
 

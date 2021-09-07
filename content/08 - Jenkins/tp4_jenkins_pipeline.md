@@ -1,6 +1,6 @@
 ---
 title: TP4 - Créer le pipeline Jenkins 
-draft: false
+draft: true
 ---
 
 
@@ -18,10 +18,6 @@ draft: false
 
 <!-- try/catch -->
 ## Docker build, tag, login and push
-
-
-### Une question de sécurité : ajouter un docker build agent séparé dans une VM
-
 
 
 

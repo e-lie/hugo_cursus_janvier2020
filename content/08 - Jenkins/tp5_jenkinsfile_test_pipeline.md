@@ -1,6 +1,6 @@
 ---
 title: TP5 - Pipelines et branches git et déploiement avec le Jenkinsfile
-draft: false
+draft: true
 ---
 
 

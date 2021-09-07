@@ -1,6 +1,6 @@
 ---
 title: Cours 1 - Intégration continue et testing logiciel
-draft: false
+draft: true
 ---
 
 
