@@ -106,6 +106,8 @@ Pour cela nous allons utiliser un utilitaire (parmis de nombreux autres possible
 
 - Pour l'installer lancez `sudo wget https://github.com/roboll/helmfile/releases/download/v0.140.0/helmfile_linux_amd64 -c -O /usr/bin/helmfile && sudo chmod +x /usr/bin/helmfile`
 
+- Installez également un plugin helm requis (diff) avec : `helm plugin install https://github.com/databus23/helm-diff`
+
 - Créez ensuite dans le dossier `k8s` un fichier `helmfile.yaml` avec à l'intérieur:
 
 ```yaml
