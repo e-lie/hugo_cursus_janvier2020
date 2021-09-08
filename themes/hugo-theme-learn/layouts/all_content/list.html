@@ -9,7 +9,7 @@
 
     <!-- /* Bulma */ -->
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
-    <link href="{{"css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+    <link href="{{" css/bulma.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 
     <style>
         body {
@@ -29,12 +29,13 @@
     <p><a href="/">Retour au site</a></p>
 
 
-    <h2><b>IB Formation - {{ .Site.Title }}</b></h2>
+    <h2><b>Uptime Formation - {{ .Site.Title }}</b></h2>
 
     <p>
         Supports de formation : Elie Gavoty, Alexandre Aubin, Aurélien N. et Hadrien Pélissier</br>
         <!-- Conçus initialement dans le cadre d'un cursus <a href="https://uptime-formation.fr">Uptime Formation</a>.</br> -->
-        Sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr">licence CC-BY-NC-SA</a> - {{ .Site.Title }}
+        Sous <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.fr">licence CC-BY-NC-SA</a> - {{
+        .Site.Title }}
     </p>
     <hr />
 
