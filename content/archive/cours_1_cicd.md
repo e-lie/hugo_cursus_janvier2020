@@ -16,7 +16,7 @@ Le principe est de construire une **automatisation** *autour du développement l
 3. Être agile dans la livraison du logiciel
 
 
-Ce principe de test test systématique est comme nous l'avons vu dans l'intro au coeur du DevOps:
+Ce principe de test systématique est comme nous l'avons vu dans l'intro au coeur du DevOps:
 - déployer un logiciel jusqu'en production à chaque commit validé dans la branche master ?
 - déployer automatiquement des parties d'infrastructure (as Code) dès que leur description change dans un commit dans master.
 - Valider les opérations as code comme du logiciel avant de les rendre disponible pour application.
@@ -50,7 +50,6 @@ Ce principe de test test systématique est comme nous l'avons vu dans l'intro au
 
 
 
-### Réutiliser des composants logiciels
 
 ## Les tests automatiques
 

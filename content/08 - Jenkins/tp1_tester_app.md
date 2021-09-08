@@ -120,22 +120,11 @@ Nous aimerions maintenant tester notre application pour garantir qu'elle fonctio
 
 ## Tests unitaires avec Pytest: valider le comportement des fonctions internes du programme
 
-Le premier type de test applicatif classique est le **test unitaire**:
+le premier type de test applicatif classique est le **test unitaire**:
 
-- il s'agit de **tester chaque fonction** interne du programme pour s'assurer que le changement d'une fonction ne va pas "casser" un autre endroit du programme.
+il s'agit de **tester chaque fonction** interne du programme pour s'assurer que le changement d'une fonction ne va pas "casser" un autre endroit du programme.
 
-- ce type de test cherche a garantir la maintenabilité du programme en permettant de repérer les incohérences interne qui apparaissent entre les parties
-
-- Les tests unitaires sont écris et utilisés quotidiennement par les développeur.e.s
-
-- Un jeu de tests unitaire contient très vite des milliers de petits tests et doit pouvoir s'executer le plus rapidement possible (moins de 15-20 secondes idéalement). Il faut que les développeur.e.s puissent et veuille le lancer toutes les 10 min pour valider leurs modifications.
-
-- Ils sont donc importants **indépendamment du DevOps** pour valider la **cohérence "logique"** du programme.
-
-- Les tests unitaires ne valident pas le fonctionnement du programme juste la stabilités de ses fonctions internes.
-
-
-Le framework de test le plus populaire en `Python` se nomme `pytest` : [documentation de pytest](https://docs.pytest.org/)
+le framework de test le plus populaire en `python` se nomme `pytest` : [documentation de pytest](https://docs.pytest.org/)
 
 - C'est un exécuteur de tests qui cherche automatiquement toutes les fonctions commençant par `test_` pour
     - les exécuter
@@ -225,13 +214,6 @@ Observons les tests unitaires: le principe est d'appeler les fonctions à tester
 
 Les tests d'intégration sont des tests sur les fonctions du programme qui valident si les différents composants/fonctions d'une application fonctionnent toujours bien ensembles.
 
-- Comme pour tests unitaires il s'agit de tests pour aider les développeurs dans leur travail de chasse aux bugs.
-- Ils testent l'apparition de bugs impliquant plusieurs composants en interaction.
-- Ils nécessitent souvent (pas toujours) de lancer l'application complètement.
-- Les tests d'intégration sont plus lents généralement que les tests unitaires et on les lance moins souvent, généralement comme nous le verrons avec la CI.
-- Plutôt que des fonction individuelles voire isolées grâce à du "mocking" ils testent des appels de fonctions impliquant des chaînes de composants/autre fonctions.
-- Ils ne testent pas le bon déploiement de l'application mais sont fonctionnement interne "intégré"
-
 Nous allons écrire un test pour la fonction `redis_visits_counter` qui implique un appel à la librairie `redis` et à une véritable base `Redis` (même si on pourrait facilement faire ici du mocking pour avoir un test unitaire plutôt)
 
 - Créez le fichier `integration_tests.py` dans `tests` avec à l'intérieur:
@@ -265,7 +247,7 @@ def test_redis_counter():
 - Relancez le test précédent. L'intégration correct de redis a été testée.
 
 
-## Tests fonctionnels: vérifier que l'application fonction d'un point de vue extérieur
+## Tests fonctionnels: vérifier que l'application fonctionne d'un point de vue extérieur
 
 Les fonctionnels sont des tests pour vérifier le bon fonctionnement d'une application en train de tourner.
 
