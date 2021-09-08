@@ -1,10 +1,10 @@
 ---
 title: TP2 - Déployer notre application dans plusieurs contextes avec `kustomize`
-draft: true
+draft: false
 ---
 
 
-## Reprendre le déploiement du module kubernetes (TP3)
+## Reprendre le déploiement du TP3 kubernetes pour l'adapté un déploiement multienvironnement
 
 Pour continuer, nous allons reprendre la correction du TP1 avec en plus le déploiement kubernetes du TP3 kubernetes.
 
@@ -81,8 +81,6 @@ secrets:
 - Poussez une image par exemple `python:3.9` en la tagguant avec l'adresse du dépot:
     - `docker tag registry.<votrenom>.vagrantk3s.dopl.uk/python:3.9 python:3.9`
 
-
-
 ## Faire varier une installation kubernetes
 
 Nous avons besoin de pouvoir déployer notre application **monsterstack** dans Kubernetes de façon légèrement différente selon les environnements `prod` et `dev`.
@@ -108,27 +106,40 @@ L'idée générale est de supprimer tous ces paramètres variables des fichiers 
 
 Il contiendra une seule version de l'application avec des paramètres de production.
 
-- Commitez vos modifications puis lancez `git checkout jenkins_tp2_prod_env`
+- Commitez vos modifications puis lancez `git checkout jenkins_tp2_correction`.
 
-- Observez les fichiers dans le dossier `overlays/prod`. Il contiennent les paramètres spécifiques
+- Remplacez automatiquement toutes les instances de `<votrenom>` par votre nom avec la fonction de search and replace de VSCode.
 
-- Depuis le dossier `k8s` lancez la commande `kubectl kustomize overlays/prod > result.yaml` puis observez ce fichier `result.yaml`
+- Observez les fichiers dans le dossier `overlays/prod`. Il contiennent les paramètres spécifiques de la production à ajouter par dessus les fichiers de base
+
+- Depuis le dossier `k8s` lancez la commande `kubectl kustomize overlays/prod > result.yaml` puis observez ce fichier `resultprod.yaml`.
+
+- Créez un namespace de prod pour le déploiement avec `kubectl create namespace prod`
+
+- Supprimez le fichier précédent et appliquez la configuration de prod avec `kubectl apply -k overlays/prod -n prod`
 
 ### Environnement par défaut : `dev`
 
 Il contiendra potentiellement plusieurs version de l'application dans le même namespace.
 
-- Donc il faut que **chaque release ait un nom différent pour ses objets```
-
+- Donc il faut idéalement que **chaque release ait un nom différent pour ses objets.
 - Il faut également que la version de l'image puisse changer dynamiquement au moment du déploiement.
 
-Sinon le principe est un peu le même que pour la production
-
-- Depuis le dossier `k8s` lancez la commande `kubectl kustomize overlays/dev > result.yaml` puis observez ce fichier `result.yaml`
-
-## Tester notre déploiement dans deux namespaces
+Cependant pour garder l'installation simple notre overlay de dev ne permettra d'installer qu'une seule version beta pour le moment.
 
 
+Sinon le principe est un peu le même que pour la production seules les valeurs sont différentes : moins de replicat, le port de dev, une image beta et un nom de domaine beta.
 
+- Depuis le dossier `k8s` vous pouvez lancer la commande `kubectl kustomize overlays/dev > result.yaml` pour observez le résultat dans le fichier `result.yaml`
+
+- Puis déployer dans le namespace default: `kubectl apply -k overlays/dev -n default`
 
 ## Désinstaller et nettoyer
+
+Pour désinstaller une release on peut simplement remplace `apply` par `delete` dans les commandes précédentes.
+
+## Correction
+
+Dans le dépot de corrections: 
+
+- Commitez vos modifications puis lancez `git checkout jenkins_tp2_correction`
