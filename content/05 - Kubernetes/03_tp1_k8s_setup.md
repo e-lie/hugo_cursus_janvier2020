@@ -212,8 +212,8 @@ Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
 ## Install Lens
-curl -LO https://github.com/lensapp/lens/releases/download/v4.1.4/Lens-4.1.4.amd64.deb
-sudo dpkg -i Lens-4.1.4.amd64.deb
+curl -LO https://github.com/lensapp/lens/releases/download/v5.1.3/Lens-5.1.3.amd64.deb
+sudo dpkg -i Lens-5.1.3.amd64.deb
 ```
 
 - Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
