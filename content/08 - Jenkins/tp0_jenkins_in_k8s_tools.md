@@ -199,7 +199,7 @@ data:
   access-token: "Y2hhbmdlX21lX3dpdGhfdG9rZW4K"
 ```
 
-- Vérifiez que vous etes bien dans le dossier cert-manager et appliquez ces deux resources dans le namespace `cert-manager` avec la commande `kubectl -n cert-manager -f .`
+- Vérifiez que vous etes bien dans le dossier cert-manager et appliquez ces deux resources dans le namespace `cert-manager` avec la commande `kubectl apply -n cert-manager -f .`
 
 Le secret précédent est un placeholder (faux secret) qu'il faut maintenant modifier avec la bonne valeur fournie par le formateur. En effet il faut absolument éviter de pousser des tokens et autre secret dans un dépot git.
 
