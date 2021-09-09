@@ -30,7 +30,7 @@ Kaniko manque encore un peu de maturité et fonctionne légèrement différemmen
 
 Nous allons donc créer un serveur agent docker manuellement pour Jenkins à l'aide de Vagrant. Nous dirons ensuite à Jenkins de s'y connecter en SSH avec l'utilisateur Vagrant pour exécuter son job à l'intérieur. Comme nous avons fait pour le noeud ansible dans le TP4 ansible.
 
-- Ajoutez dans un dossier `vagrant_docker_agent` dans le dossier `tp3_infra_et_app/tp3_infra` et à l'intérieur le fichier `Vagrantfile` suivant:
+- Ajoutez dans un dossier `vagrant_docker_agent` dans le dossier `tp2_infra_et_app/tp2_infra` et à l'intérieur le fichier `Vagrantfile` suivant:
 
 ```ruby
 Vagrant.configure('2') do |config|

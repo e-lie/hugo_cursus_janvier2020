@@ -212,8 +212,9 @@ Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
 ## Install Lens
-curl -LO https://github.com/lensapp/lens/releases/download/v5.1.3/Lens-5.1.3.amd64.deb
-sudo dpkg -i Lens-5.1.3.amd64.deb
+sudo apt remove kontena-lens # seulement pour desinstaller l'ancienne version
+curl -LO https://api.k8slens.dev/binaries/Lens-5.2.0-latest.20210908.1.amd64.deb
+sudo dpkg -i Lens-5.2.0-latest.20210908.1.amd64.deb
 ```
 
 - Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
