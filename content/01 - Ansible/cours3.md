@@ -123,7 +123,7 @@ C'est le store de roles officiel d'Ansible : [https://galaxy.ansible.com/](https
 
 C'est également le nom d'une commande `ansible-galaxy` qui permet d'installer des roles et leurs dépendances depuis internet. Un sorte de gestionnaire de paquet pour ansible.
 
-Elle est utilisée généralement sour la forme `ansible install -r roles/requirements.yml -p roles <nom_role>` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
+Elle est utilisée généralement sour la forme `ansible-galaxy install -r roles/requirements.yml -p roles` ou plus simplement `ansible-galaxy install <role>` mais installe dans `/etc/ansible/roles`.
 
 Tous les rôles ansible sont communautaires (pas de roles officiels) et généralement stockés sur github.
 
@@ -150,7 +150,7 @@ Conventionnellement on utilise un fichier `requirements.yml` situé dans `roles`
 - Ensuite pour les installer on lance: `ansible-galaxy install -r roles/requirements.yml -p roles`.
 
 
-<!-- #### Dépendance entre roles
+#### Dépendance entre roles
 
  à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré
 Si un role dépend d'autres roles, les dépendances sont décrite dans le fichier `meta/main.yml` comme suit
@@ -170,7 +170,7 @@ dependencies:
       other_parameter: 12
 ``` 
 
-Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré. -->
+Les dépendances sont exécutées automatiquement avant l'execution du role en question. Ce méchanisme permet de créer des automatisation bien organisées avec une forme de composition de roles simple pour créer des roles plus complexe : plutôt que de lancer les rôles à chaque fois avec un playbook on peut laisser la cascade de dépendances mettre nos serveurs dans un état complexe désiré.
 
 
 <!-- 
