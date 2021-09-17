@@ -196,3 +196,42 @@ Pour les VPS de base Amazon EC2 : utiliser un plugin d'inventaire AWS et les mod
 **Possibilité 1** : Gérer l'exécution de tâches Ansible et le monitoring Nagios séparément, utiliser le [module nagios](https://docs.ansible.com/ansible/latest/modules/nagios_module.html) pour désactiver les alertes Nagios lorsqu'on manipule les ressources monitorées par Nagios.
 
 **Possibilité 2** : Laisser le contrôle à Nagios et utiliser un plugin pour que Nagios puisse lancer des plays Ansible en réponse à des évènements sur les sondes.
+
+### Ansible et Terraform
+
+Voir TP4.
+
+### Ansible et Kubernetes
+
+https://docs.ansible.com/ansible/latest/scenario_guides/guide_kubernetes.html
+
+
+## Exécuter Ansible en Production: les stratégies d'exécution:
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_strategies.html
+
+
+## Serveur pour exécuter ansible dans Une équipe
+
+- AWX/Tower
+  - Serveur officiel RedHat et sa version open source
+  - assez lourd et installable uniquement dans kubernetes/openshift
+  - très puissant
+  - plein de plugins d'intégration
+  - logging des exécutions assez optimal
+  - 
+
+- Jenkins
+  - Un peu vieux mais très versatile
+  - un bon plugin ansible
+  - gestion de ansible-vault et des credentials
+
+- Rundeck
+  - un plugin ansible assez populaire
+
+- Gitlab
+  - faisable mais pas très bien intégré
+
+- Un simple serveur d'exécution
+
+- Depuis la machine de chaque Ops avec un wrapper maison bash ou python pour cloner les bonnes versions et pousser les logs de façon centralisée
