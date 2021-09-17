@@ -196,3 +196,11 @@ Il contient également les corrigés du TP2 et TP4 dans d'autre branches.
 ## Bonus 
 
 Essayez différents exemples de projets de Geerlingguy accessibles sur github à l'adresse [https://github.com/geerlingguy/ansible-for-devops](https://github.com/geerlingguy/ansible-for-devops).
+
+
+## Bonus 2 - Unit testing de role avec Molecule
+
+Pour des roles fiable il est conseillé d'utiliser l'outil de testing molecule dès la création d'un nouveau role pour effectuer des tests unitaire dessus dans un environnement virtuel comme Docker:
+
+- Tutoriel : https://www.adictosaltrabajo.com/2020/05/08/ansible-testing-using-molecule-with-ansible-as-verifier/
+- Documentation : https://molecule.readthedocs.io/en/latest/
