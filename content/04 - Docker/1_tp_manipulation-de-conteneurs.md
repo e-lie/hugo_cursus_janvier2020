@@ -12,8 +12,8 @@ weight: 1015
 - Pour accéder au copier-coller de Guacamole, il faut appuyer sur **`Ctrl+Alt+Shift`** et utiliser la zone de texte qui s'affiche (réappuyer sur `Ctrl+Alt+Shift` pour revenir à la VM).
 
 <!-- - Vérifiez l'installation de Docker en lançant `sudo docker info`. -->
+
 - Pour installer Docker, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository), depuis "Install using the repository" jusqu'aux deux commandes `sudo apt-get update` et `sudo apt-get install docker-ce docker-ce-cli containerd.io`.
-  - Docker nous propose aussi une installation en une ligne (*one-liner*), moins sécurisée : `curl -sSL https://get.docker.com | sudo sh` 
 
 - Lancez `sudo docker run hello-world`. Bien lire le message renvoyé (le traduire sur [Deepl](https://www.deepl.com/translator) si nécessaire). Que s'est-il passé ?
 
@@ -29,6 +29,8 @@ weight: 1015
 <!-- - Relancez la session de terminal (en quittant le terminal puis en le relançant)
 
 - Faites un snapshot de la VM Ubuntu avec VirtualBox -->
+
+Pour les prochaines fois, Docker nous propose aussi une installation en une ligne (_one-liner_) : `curl -sSL https://get.docker.com | sudo sh`
 
 ### Autocomplétion
 
@@ -58,8 +60,8 @@ docker ps -a # affiche  également les conteneurs arrêtés
 
 ## Manipuler un conteneur
 
-* **Commandes utiles :** <https://devhints.io/docker>
-* **Documentation `docker run` :** <https://docs.docker.com/engine/reference/run/>
+- **Commandes utiles :** <https://devhints.io/docker>
+- **Documentation `docker run` :** <https://docs.docker.com/engine/reference/run/>
 
 Mentalité :
 ![](../../images/changingThings.jpg)
@@ -90,6 +92,7 @@ docker run --attached debian
 docker logs <5b91aa9952fa> # n'oubliez pas que l'autocomplétion est activée, il suffit d'appuyer sur TAB !
 => Debian container
 ```
+
 {{% /expand %}}
 
 <!-- - Réessayez en affichant le résultat cette fois-ci avec le mode *attached* -->
@@ -97,17 +100,21 @@ docker logs <5b91aa9952fa> # n'oubliez pas que l'autocomplétion est activée, i
 - Affichez la liste des conteneurs en cours d'exécution
 
 {{% expand "Solution :" %}}
+
 ```bash
 docker ps
 ```
+
 {{% /expand %}}
 
 - Affichez la liste des conteneurs en cours d'exécution et arrêtés.
 
 {{% expand "Solution :" %}}
+
 ```bash
 docker ps -a
 ```
+
 {{% /expand %}}
 
 - Lancez un conteneur debian **en mode détaché** avec la commande `sleep 3600`
@@ -125,18 +132,22 @@ docker stop <conteneur>
 - Trouvez comment vous débarrasser d'un conteneur récalcitrant (si nécessaire, relancez un conteneur avec la commande `sleep 3600` en mode détaché).
 
 {{% expand "Solution :" %}}
+
 ```
 docker kill <conteneur>
 ```
+
 {{% /expand %}}
 
 - Tentez de lancer deux conteneurs avec le nom `debian_container`
 
 {{% expand "Solution :" %}}
+
 ```
 docker run debian -d --name debian_container sleep 500
 docker run debian -d --name debian_container sleep 500
 ```
+
 {{% /expand %}}
 
 Le nom d'un conteneur doit être unique (à ne pas confondre avec le nom de l'image qui est le modèle utilisé à partir duquel est créé le conteneur).
@@ -149,7 +160,6 @@ docker run debian -d --name debian2 sleep 500
 
 - Lancez un conteneur debian en mode interactif (options `-i -t`) avec la commande `/bin/bash` et le nom `debian_interactif`.
 - Explorer l'intérieur du conteneur : il ressemble à un OS Linux Debian normal.
-
 
 ---
 
@@ -180,7 +190,6 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 
 {{% /expand %}}
 
-
 - Arrêtez le(s) conteneur(s) `nginx` créé(s).
 - Relancez un nouveau conteneur `nginx` avec cette fois-ci le port correctement configuré dès le début pour pouvoir visiter votre Nginx en local.
 
@@ -188,7 +197,7 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 docker run -p 8080:80 --name "test2_nginx" nginx # la syntaxe est : port_hote:port_container
 ```
 
-- En visitant l'adresse et le port associé au conteneur Nginx, on doit voir apparaître des logs Nginx dans son terminal car on a lancé le conteneur en mode *attached*.
+- En visitant l'adresse et le port associé au conteneur Nginx, on doit voir apparaître des logs Nginx dans son terminal car on a lancé le conteneur en mode _attached_.
 - Supprimez ce conteneur. NB : On doit arrêter un conteneur avant de le supprimer, sauf si on utilise l'option "-f".
 
 ---
@@ -201,7 +210,7 @@ docker run --name funky_conteneur -p 80:80 funkwhale/all-in-one:1.0.1
 
 Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80 (après quelques secondes à suivre le lancement de l'application dans les logs) ! Mais il n'y aura hélas pas de musique dedans :(
 
-*Attention à ne jamais lancer deux containers connectés au même port sur l'hôte, sinon cela échouera !*
+_Attention à ne jamais lancer deux containers connectés au même port sur l'hôte, sinon cela échouera !_
 
 - Supprimons ce conteneur :
 
@@ -209,7 +218,7 @@ Vous pouvez visiter ensuite ce conteneur Funkwhale sur le port 80 (après quelqu
 docker rm -f funky_conteneur
 ```
 
-### *Facultatif :* Wordpress, MYSQL et les variables d'environnement
+### _Facultatif :_ Wordpress, MYSQL et les variables d'environnement
 
 - Lancez un conteneur Wordpress joignable sur le port `8080` à partir de l'image officielle de Wordpress du Docker Hub
 - Visitez ce Wordpress dans le navigateur
@@ -219,6 +228,7 @@ Nous pouvons accéder au Wordpress, mais il n'a pas encore de base MySQL configu
 Depuis Ubuntu:
 
 - Il va falloir mettre ces deux conteneurs dans le même réseau (nous verrons plus tarde ce que cela implique), créons ce réseau :
+
 ```bash
 docker network create wordpress
 ```
@@ -229,20 +239,18 @@ docker network create wordpress
 
 - Il va aussi falloir définir un nom pour ce conteneur
 
-
 {{% expand "Résultat :" %}}
 
 ```bash
 docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress -p 3306:3306 --network wordpress mysql:5.7
 ```
+
 {{% /expand %}}
 
 - inspectez le conteneur MySQL avec `docker inspect`
 
-
 - Faites de même avec la documentation sur le Docker Hub pour préconfigurer l'app Wordpress.
 - En plus des variables d'environnement, il va falloir le mettre dans le même réseau, et exposer un port
-
 
 {{% expand "Solution :" %}}
 
@@ -271,7 +279,6 @@ docker rm $(docker ps -aq -f status=exited)
 ```
 
 {{% /expand %}}
-
 
 - S'il y a encore des conteneurs qui tournent (`docker ps`), supprimez un des conteneurs restants en utilisant l'autocomplétion et l'option adéquate
 
