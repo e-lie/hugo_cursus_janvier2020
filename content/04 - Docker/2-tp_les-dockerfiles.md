@@ -72,6 +72,7 @@ Pour connaître la liste des instructions des Dockerfiles et leur usage, se réf
 RUN apt-get update -y
 RUN apt-get install -y python3-pip
 ```
+
   <!-- - `RUN apt-get install -y python3-pip python-dev build-essential` -->
 
 - Reconstruisez votre image. Si tout se passe bien, poursuivez.
@@ -117,7 +118,6 @@ CMD ["./boot.sh"]
 
 - Une deuxième instance de l’app est maintenant en fonctionnement et accessible à l’adresse `localhost:5001`
 
-
 ## Docker Hub
 
 - Avec `docker login`, `docker tag` et `docker push`, poussez l'image `microblog` sur le Docker Hub. Créez un compte sur le Docker Hub le cas échéant.
@@ -151,23 +151,22 @@ Pour démarrer l’application, nous avons fait appel à un script de boot `boot
 # ...
 
 set -e
-if [ "$APP_ENVIRONMENT" = 'DEV' ]; then
+if [ "$CONTEXT" = 'DEV' ]; then
     echo "Running Development Server"
-    exec flask run -h 0.0.0.0
+    FLASK_ENV=development exec flask run -h 0.0.0.0
 else
     echo "Running Production Server"
     exec gunicorn -b :5000 --access-logfile - --error-logfile - app_name:app
 fi
 ```
 
-- Déclarez maintenant dans le Dockerfile la variable d'environnement `APP_ENVIRONMENT` avec comme valeur par défaut `PROD`.
+- Déclarez maintenant dans le Dockerfile la variable d'environnement `CONTEXT` avec comme valeur par défaut `PROD`.
 
 - Construisez l'image avec `build`.
 - Puis, grâce aux bons arguments allant avec `docker run`, lancez une instance de l'app en configuration `PROD` et une instance en environnement `DEV` (joignables sur deux ports différents).
 - Avec `docker ps` ou en lisant les logs, vérifiez qu'il existe bien une différence dans le programme lancé.
 
-
-<!-- 
+<!--
 - Avec l'aide du [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/), faire en sorte que l'app `microblog` soit exécutée par un utilisateur appelé `microblog`.
 
 {{% expand "Solution :" %}}
@@ -195,6 +194,7 @@ La construction reprend depuis la dernière étape modifiée. Sinon, la construc
 ### Dockerfile amélioré
 
 {{% expand "`Dockerfile` final :" %}}
+
 ```Dockerfile
 FROM python:3-alpine
 
@@ -205,14 +205,14 @@ ENV FLASK_APP microblog.py
 COPY ./ /microblog
 WORKDIR /microblog
 
-ENV APP_ENVIRONMENT PROD
+ENV CONTEXT PROD
 
 EXPOSE 5000
 
 CMD ["./boot.sh"]
 ```
-{{% /expand %}}
 
+{{% /expand %}}
 
 ## L'instruction HEALTHCHECK
 
@@ -298,6 +298,7 @@ Une image est composée de plusieurs layers empilés entre eux par le Docker Eng
 - Enfin, supprimez votre image en local et récupérez-la depuis votre registry.
 
 {{% expand "Solution :" %}}
+
 ```bash
 # Créer le registry
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
@@ -313,12 +314,14 @@ docker image remove localhost:5000/my-ubuntu
 # Récupérer l'image depuis le registry
 docker pull localhost:5000/my-ubuntu
 ```
+
 {{% /expand %}}
 
 ## _Facultatif :_ Faire parler la vache
 
 Créons un nouveau Dockerfile qui permet de faire dire des choses à une vache grâce à la commande `cowsay`.
 Le but est de faire fonctionner notre programme dans un conteneur à partir de commandes de type :
+
 - `docker run --rm cowsay Coucou !`
 - `docker run --rm cowsay -f stegosaurus Yo!`
 - `docker run --rm cowsay -f elephant-in-snake Un éléphant dans un boa.`
@@ -326,7 +329,6 @@ Le but est de faire fonctionner notre programme dans un conteneur à partir de c
 - Doit-on utiliser la commande `ENTRYPOINT` ou la commande `CMD` ? Se référer au [manuel de référence sur les Dockerfiles](https://docs.docker.com/engine/reference/builder/) si besoin.
 - Pour information, `cowsay` s'installe dans `/usr/games/cowsay`.
 - La liste des options (incontournables) de `cowsay` se trouve ici : <https://debian-facile.org/doc:jeux:cowsay>
-
 
 {{% expand "Solution :" %}}
 
@@ -336,6 +338,7 @@ RUN apt-get update && apt-get install -y cowsay
 ENTRYPOINT ["/usr/games/cowsay"]
 # les crochets sont nécessaires, car ce n'est pas tout à fait la même instruction qui est exécutée sans
 ```
+
 {{% /expand %}}
 
 - L'instruction `ENTRYPOINT` et la gestion des entrées-sorties des programmes dans les Dockerfiles peut être un peu capricieuse et il faut parfois avoir de bonnes notions de Bash et de Linux pour comprendre (et bien lire la documentation Docker).

@@ -32,28 +32,31 @@ docker run --detach --name portainer \
 - Explorez l'interface de Portainer.
 - Créez un conteneur -->
 
-
 # Partie 2 : Volumes Docker
 
 ## Introduction aux volumes
 
 - Pour comprendre ce qu'est un volume, lançons un conteneur en mode interactif et associons-y le dossier `/tmp/data` de l'hôte au dossier `/data` sur le conteneur :
+
 ```bash
 docker run -it -v /tmp/data:/data ubuntu /bin/bash
 ```
 
 - Dans le conteneur, navigons dans ce dossier et créons-y un fichier :
+
 ```bash
 cd /data/
 touch testfile
 ```
 
 - Sortons ensuite de ce conteneur avec la commande `exit`
+
 ```bash
 exit
 ```
 
-- Après être sorti·e du conteneur, listons le contenu du dossier **sur l'hôte** avec la commande suivante ou avec le navigateur de fichiers d'Ubuntu : 
+- Après être sorti·e du conteneur, listons le contenu du dossier **sur l'hôte** avec la commande suivante ou avec le navigateur de fichiers d'Ubuntu :
+
 ```bash
 ls /tmp/data/
 ```
@@ -82,7 +85,7 @@ docker run -d --name moby-counter --network moby-network -p 8000:80 russmckendri
 
 - Visitez votre application dans le navigateur. **Faites un motif reconnaissable en cliquant.**
 
-<!-- - Recréez le conteneur `redis` dans le réseau `moby-network` : 
+<!-- - Recréez le conteneur `redis` dans le réseau `moby-network` :
 ```bash
 docker run -d --name redis --network moby-network redis
 ```
@@ -107,21 +110,21 @@ ENV REDIS_VERSION 3.0.7
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-3.0.7.tar.gz
 ENV REDIS_DOWNLOAD_SHA e56b4b7e033ae8dbf311f9191cf6fdf3ae974d1c
 RUN set -x \
-    && apk add --no-cache --virtual .build-deps \
-        gcc \
-        linux-headers \
-        make \
-        musl-dev \
-        tar \
-    && wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
-    && echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha1sum -c - \
-    && mkdir -p /usr/src/redis \
-    && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
-    && rm redis.tar.gz \
-    && make -C /usr/src/redis \
-    && make -C /usr/src/redis install \
-    && rm -r /usr/src/redis \
-    && apk del .build-deps
+ && apk add --no-cache --virtual .build-deps \
+ gcc \
+ linux-headers \
+ make \
+ musl-dev \
+ tar \
+ && wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL" \
+    && echo "$REDIS_DOWNLOAD_SHA \*redis.tar.gz" | sha1sum -c - \
+ && mkdir -p /usr/src/redis \
+ && tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1 \
+ && rm redis.tar.gz \
+ && make -C /usr/src/redis \
+ && make -C /usr/src/redis install \
+ && rm -r /usr/src/redis \
+ && apk del .build-deps
 
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
@@ -135,7 +138,7 @@ CMD [ "redis-server" ]
 
 Notez que, vers la fin du fichier, il y a une instruction `VOLUME` ; cela signifie que lorque notre conteneur a été lancé, un volume "caché" a effectivement été créé par Docker.
 
-Beaucoup de conteneurs Docker sont des applications *stateful*, c'est-à-dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
+Beaucoup de conteneurs Docker sont des applications _stateful_, c'est-à-dire qui stockent des données. Automatiquement ces conteneurs créent des volument anonymes en arrière plan qu'il faut ensuite supprimer manuellement (avec rm ou prune).
 
 - Inspectez la liste des volumes (par exemple avec Portainer) pour retrouver l'identifiant du volume caché. Normalement il devrait y avoir un volume `portainer_data` (si vous utilisez Portainer) et un volume anonyme avec un hash.
 
@@ -193,6 +196,7 @@ Comme les réseaux et volumes n'étaient plus attachés à des conteneurs en fon
 - Après être entré·e dans le repo `microblog` grâce à `cd microblog`, récupérez une version déjà dockerisée de l'app en chargeant le contenu de la branche Git `tp2-dockerfile` en faisant `git checkout tp2-dockerfile -- Dockerfile`.
 
 - Si vous n'aviez pas encore le repo `microblog` :
+
 ```bash
 git clone https://github.com/uptime-formation/microblog/
 cd microblog
@@ -210,7 +214,7 @@ Nous allons faire apparaître le volume Docker comme un dossier à l'emplacement
 ENV DATABASE_URL=sqlite:////data/app.db
 ```
 
-- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application. 
+- Ajouter au `Dockerfile` une instruction `VOLUME` pour stocker la base de données SQLite de l'application.
 
 {{% expand "Indice :" %}}
 
@@ -222,6 +226,7 @@ Dans le conteneur, le chemin de la base de données est :
 {{% expand "Solution :" %}}
 
 Voici le `Dockerfile` complet :
+
 ```Dockerfile
 FROM python:3-alpine
 
@@ -232,7 +237,7 @@ ENV FLASK_APP microblog.py
 COPY ./ /microblog
 WORKDIR /microblog
 
-ENV APP_ENVIRONMENT PROD
+ENV CONTEXT PROD
 
 EXPOSE 5000
 
@@ -248,7 +253,8 @@ CMD ["./boot.sh"]
 - Vérifier que le volume nommé est bien utilisé en branchant un deuxième conteneur `microblog` utilisant le même volume nommé.
 
 ---
-<!-- 
+
+<!--
 La ligne de code Python qui nous permet de déterminer comment l'app utilise le volume du Dockerfile est la suivante :
 
 `config.py` :
@@ -260,8 +266,6 @@ SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
 ``` -->
 
 <!-- , la variable d'environnement `DATABASE_URL`, qui indique à l'app où est la base de données, doit donc indiquer un fichier présent dans le dossier monté. -->
-
-
 
 <!-- Marquer solution -->
 
@@ -287,7 +291,6 @@ Il faut donc remplacer la variable `DATABASE_URL` au lancement.
 Il va falloir configurer des options de démarrage pour le conteneur `mysql`, à lire sur le [Docker Hub](https://hub.docker.com/).
 
 {{% /expand %}} -->
-
 
 ### _Facultatif :_ Packagez votre propre app
 

@@ -79,7 +79,7 @@ def get_identicon(name):
     return Response(image, mimetype='image/png')
 
 if __name__ == '__main__':
-  app.run(debug=True, host='0.0.0.0', port=9090)
+  app.run(debug=True, host='0.0.0.0', port=5000)
 
 ```
 
@@ -95,9 +95,9 @@ RUN pip install Flask uWSGI requests redis
 WORKDIR /app
 COPY app/identidock.py /app
 
-EXPOSE 9090 9191
+EXPOSE 5000 9191
 USER uwsgi
-CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
+CMD ["uwsgi", "--http", "0.0.0.0:5000", "--wsgi-file", "/app/identidock.py", \
 "--callable", "app", "--stats", "0.0.0.0:9191"]
 ```
 
@@ -108,7 +108,7 @@ CMD ["uwsgi", "--http", "0.0.0.0:9090", "--wsgi-file", "/app/identidock.py", \
 {{% expand "Réponse  :" %}}
 
 - `docker build -t identidock .`
-- `docker run --detach --name identidock -p 9090:9090 identidock`
+- `docker run --detach --name identidock -p 5000:5000 identidock`
 - `docker exec -it identidock /bin/bash`
 
 Une fois dans le conteneur lancez:
@@ -137,7 +137,7 @@ services:
   identidock:
     build: .
     ports:
-      - "9090:9090"
+      - "5000:5000"
 ```
 
 - Plusieurs remarques :
@@ -165,7 +165,7 @@ services:
   identidock:
     build: .
     ports:
-      - "9090:9090"
+      - "5000:5000"
 
   dnmonster:
     image: amouat/dnmonster:1.0
@@ -205,7 +205,8 @@ services:
   identidock:
     build: .
     ports:
-      - "9090:9090"
+      - "5000:5000"
+      - "9191:9191" # port pour les stats
     networks:
       - identinet
 
@@ -346,7 +347,7 @@ if [ "$CONTEXT" = 'DEV' ]; then
     exec python3 "/app/identidock.py"
 else
     echo "Running Production Server"
-    exec uwsgi --http 0.0.0.0:9090 --wsgi-file /app/identidock.py --callable app --stats 0.0.0.0:9191
+    exec uwsgi --http 0.0.0.0:5000 --wsgi-file /app/identidock.py --callable app --stats 0.0.0.0:9191
 fi
 ```
 
@@ -354,10 +355,10 @@ fi
 - Ajoutez un `RUN chmod a+x /boot.sh` pour le rendre executable.
 - Modifiez l'instruction `CMD` pour lancer le script de boot plutôt que `uwsgi` directement.
 - Modifiez l'instruction expose pour déclarer le port 5000 en plus.
-- Ajoutez au dessus une instruction `ENV ENV PROD` pour définir la variable d'environnement `ENV` à la valeur `PROD` par défaut.
+- Ajoutez au dessus une instruction `ENV CONTEXT PROD` pour définir la variable d'environnement `ENV` à la valeur `PROD` par défaut.
 
 - Testez votre conteneur en mode DEV avec `docker run --env CONTEXT=DEV -p 5000:5000 identidock`, visitez localhost:5000
-- Et en mode `PROD` avec `docker run --env CONTEXT=PROD -p 9090:9090 identidock`. Visitez localhost:9090.
+- Et en mode `PROD` avec `docker run --env CONTEXT=PROD -p 5000:5000 identidock`. Visitez localhost:5000.
 
 {{% expand "Solution `Dockerfile`:" %}}
 
@@ -370,7 +371,7 @@ COPY app /app
 COPY boot.sh /
 RUN chmod a+x /boot.sh
 ENV CONTEXT PROD
-EXPOSE 9090 9191 5000
+EXPOSE 9191 5000
 USER uwsgi
 CMD ["/boot.sh"]
 ```
@@ -394,7 +395,7 @@ services:
   identidock:
     image: <votre_hub_login>/identidock:0.1
     ports:
-      - "9090:9090"
+      - "5000:5000"
       - "9191:9191"
     environment:
       - CONTEXT=PROD
@@ -438,7 +439,7 @@ volumes:
 Commentons ce code:
 
 - plus de volume `/app` pour `identidock` car nous sommes en prod
-- on ouvre le port de l'app `9090` mais aussi le port de stat du serveur uWSGI `9191`
+- on ouvre le port de l'app `5000` mais aussi le port de stat du serveur uWSGI `9191`
 - `CONTEXT=PROD` pour lancer l'application avec le serveur uWSGI
 - On a mis un volume nommé à `redis` pour conserver les données sur le long terme
 - on a ajouté un GUI web Redis accessible sur `localhost:8081` pour voir le conteneur de la base de données Redis
