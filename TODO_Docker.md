@@ -70,10 +70,8 @@ problem-centered rather than content-oriented.
 - ajouts illustrations réseau NAT de Docker
 - **REFAIRE TOUT LE QUIZ**
 
-
 - expliquer comment on stocke les images et les conteneurs et les volumes concrètement
 - s'étendre plus longuement sur la partie comment marchent les hashes et l'overlayfs à coup de copiers collers de linux
-
 
 - Pour comprendre les images prendre l'extrait des cours Linux qui parlent de tar.gz et décortiquer une image pour comprendre eque c'est qu'un rootfs gzipé, et chercher plus d'illustrations du overlayfs **ou les créer**.
 
@@ -93,7 +91,7 @@ problem-centered rather than content-oriented.
 
 - rajouter dans slides + TP sur dockerfile plus d'explications et exemples et manips sur VOLUME et sur EXPOSE.
 
-- séparer cours volume et cours network, td aussi ? 
+- séparer cours volume et cours network, td aussi ?
 
 - Virer ou renforcer slide qui parlait de microservices.
 - Check pour depends_on : Version 3 no longer supports the condition form of depends_on.
@@ -167,6 +165,7 @@ COPY \$FOO /quux # COPY $FOO /quux
 ```
 
 https://docs.docker.com/engine/reference/builder/#environment-replacement
+
 ## TD Dockerfile
 
 Mettre une phase de prebuild et une phase de build là avec `as`, nécessite une app qui build ! Donc pas python mias plutôt search-cards par ex.
@@ -252,9 +251,7 @@ TP2 microblog pas grinberg
 TP3 microblog volume ça va pas + buggé sqlite
 dire qu'on peut stocker un volume n'importe où
 
-
 soit parler des vars docerfile et docker compose bien soit ne pas en parler, quel env pour ces vars ? host ? container ?
-
 
 ---
 
@@ -307,7 +304,6 @@ expliquer plus par écrit cette notion de ligne dockerfile = layer et images = g
 
 volume nommé cours dire clairement !
 
-
 flask lance qd meme en production malgré dev server supposé
 
 backup de volume volumes-from à virer
@@ -330,18 +326,17 @@ fin du tp3 docker network plus de prune
 faire d'autre noms que tmp data et data et de la meilleure semantique
 v
 
-TP 3 Volume : 
-* volume DE redis
-* creeez volume pas clair
+TP 3 Volume :
+
+- volume DE redis
+- creeez volume pas clair
 
 peut ne pas marcher, pas éteindre redis violemment ? plusieurs minutes
 
 wo
 rdpress pas mysql port public tp1 et 4
 
-
 - faire exemple avec conf nginx et mount un seul fichier
-
 
 - faire tp plus concret sur gestion utilisateurs dans une iamge et mieux parler commande USER
 
@@ -364,32 +359,67 @@ rdpress pas mysql port public tp1 et 4
 
 - partie réseau trop dense pour devs !
 
+- - docker stack deploy --orchestrator=kubernetes comme ouverture ?
 
-- + docker stack deploy --orchestrator=kubernetes comme ouverture ?
-
-+ CRD K8s avec Docker Stack ? Impossible de retrouver la def
+* CRD K8s avec Docker Stack ? Impossible de retrouver la def
 
 - Istio comme résean network ?
 
 - Parler de weavenet et direqu'en fait vrai bail et puis pareil que du k8s conseillé
 
-
 - trouver outil en ligne pour faire quick polls qd formation àdistance
 
-
 - pas dire que swarm moins losen up sur les pods isolated: In k8s, by default, pods are non-isolated; they accept traffic from any source.
-
 
 - trouver comment évaluer acquis à la fin : QCM par mail ou quiz !!!
 
 ## Ressources
+
 - https://medium.com/google-cloud/init-process-for-containers-d03a471fa0cc
 
+## TP
 
-## TP 
 https://github.com/dockersamples/k8s-wordsmith-demo
 
-
 ## Notes
+
 - Dire qu'il y a 2 types de commandes Dockerfile : modif du systeme de fichiers et modifs des metadata
 - donner un exemple de script buildah et comparer avec dockerfile
+
+---
+
+crediter docker cours 1 illustrations
+sudo usermod et puis pas faire confusion avec le oneliner
+docker run debian sans rien s'arrête tout de suite abus de langage cours 1
+proposer truc sans guac fermer session
+autocompletion docker
+ducker run detache syntaxe avant option
+docker bibliographie
+
+tp git pas miguelgrinberg après y a déjà un dockerfile :'(
+
+docker stop kille au bout d'un moment et c'est pas dit
+
+MEssage running dev server et prod relou + pas de diff avec docker ps
+
+AJOUT d'UN DOCKERIGNORE sur flask au cas où avec app.db et pycache recursif
+
+pas interroger 127.0.0.11
+
+docker volume create exemple manquin
+
+comment mettre de la musique
+
+docker volume prune
+
+virer speech bind mounting
+
+tp3bis "qu'au prune de conteneurs" : faux, d'images
+
+docker tp1 expose le port de mysql ça va pas
+
+docker run attached faux
+
+docker rune arguments debian_container
+
+docker swarm crediter schema
