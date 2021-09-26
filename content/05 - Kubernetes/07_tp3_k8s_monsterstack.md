@@ -185,7 +185,7 @@ La **readinessProbe** est un test qui s'assure que l'application est prête à r
 
 #### Configuration d'une application avec des variables d'environnement simples
 
-- Notre application monstericon doit être configurée en mode DEV pour fonctionner dans le contexte de ce TP exposée sur le port 5000 (sinon par défaut elle tourne sur 9090). Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous devons mettre l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
+- Notre application monstericon peut être configurée en mode DEV ou PROD. Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous mettons l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
 
 ```yaml
 env:
@@ -236,6 +236,7 @@ spec:
 ```
 
 Ajoutez le code précédent au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
+
 <!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`) - le port par le port du service
 <!-- - pourquoi pas selector = celui du deployment? --> - les selectors `app` et `partie` par ceux du pod correspondant.
 
