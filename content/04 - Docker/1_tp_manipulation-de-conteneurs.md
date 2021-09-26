@@ -69,14 +69,14 @@ Il faut aussi prendre l'habitude de bien lire ce que la console indique après a
 
 Avec l'aide du support et de `--help`, et en notant sur une feuille ou dans un fichier texte les commandes utilisées :
 
-- Lancez simplement un conteneur Debian en mode _attached_. Que se passe-t-il ?
+- Lancez simplement un conteneur Debian en mode _attach_. Que se passe-t-il ?
 
 {{% expand "Résultat :" %}}
 
 ```bash
 docker run debian
 # ou
-docker run --attached debian
+docker run --attach debian
 # Il ne se passe rien car comme debian ne contient pas de processus qui continue de tourner le conteneur s'arrête
 ```
 
@@ -144,8 +144,8 @@ docker kill <conteneur>
 {{% expand "Solution :" %}}
 
 ```
-docker run debian -d --name debian_container sleep 500
-docker run debian -d --name debian_container sleep 500
+docker run -d --name debian_container debian sleep 500
+docker run -d --name debian_container debian sleep 500
 ```
 
 {{% /expand %}}
@@ -197,7 +197,7 @@ Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouver
 docker run -p 8080:80 --name "test2_nginx" nginx # la syntaxe est : port_hote:port_container
 ```
 
-- En visitant l'adresse et le port associé au conteneur Nginx, on doit voir apparaître des logs Nginx dans son terminal car on a lancé le conteneur en mode _attached_.
+- En visitant l'adresse et le port associé au conteneur Nginx, on doit voir apparaître des logs Nginx dans son terminal car on a lancé le conteneur en mode _attach_.
 - Supprimez ce conteneur. NB : On doit arrêter un conteneur avant de le supprimer, sauf si on utilise l'option "-f".
 
 ---

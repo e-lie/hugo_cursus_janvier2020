@@ -418,8 +418,4 @@ tp3bis "qu'au prune de conteneurs" : faux, d'images
 
 docker tp1 expose le port de mysql ça va pas
 
-docker run attached faux
-
-docker rune arguments debian_container
-
 docker swarm crediter schema
