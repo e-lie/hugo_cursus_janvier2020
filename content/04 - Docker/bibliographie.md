@@ -24,6 +24,7 @@ weight: 2000
 - Portainer, GUI pour Docker : https://www.portainer.io/installation/
 - Lazy Docker, terminal pour Docker : https://github.com/jesseduffield/lazydocker
 - Convoy, driver pour volumes Docker : https://github.com/rancher/convoy
+- Marcel, le Docker français : https://github.com/brouberol/marcel
 - Accéder à ses containers dans Minecraft : https://github.com/docker/dockercraft
   <!-- https://jpetazzo.github.io/2017/01/20/docker-logging-gelf/ -->
 - Doc officielle sur la sécurité dans Docker : https://docs.docker.com/engine/security/
