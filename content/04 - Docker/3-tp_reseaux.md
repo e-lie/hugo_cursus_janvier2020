@@ -41,13 +41,13 @@ Récupérons les images depuis Docker Hub:
 - `docker image pull redis:alpine`
 - `docker image pull russmckendrick/moby-counter`
 
-- Lancez la commande `ip a | tee /tmp/interfaces_avant.txt` pour lister vos interfaces réseau et les écrire dans le fichier
+- Lancez la commande `ip -br a` pour lister vos interfaces réseau et les écrire dans le fichier
 
 Pour connecter les deux applications créons un réseau manuellement:
 
 - `docker network create moby-network`
 
-Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip a | tee /tmp/interfaces_apres.txt` et comparez (`diff /tmp/interfaces_avant.txt /tmp/interfaces_apres.txt`). Qu'est-ce qui a changé ?
+Docker implémente ces réseaux virtuels en créant des interfaces. Lancez la commande `ip -br a` de nouveau et comparez. Qu'est-ce qui a changé ?
 
 Maintenant, lançons les deux applications en utilisant notre réseau :
 
@@ -101,4 +101,3 @@ Par contre, notre deuxième réseau fonctionne complètement isolé de notre pre
 - De même `docker network prune` permet de faire le ménage des réseaux qui ne sont plus utilisés par aucun conteneur.
 
 ---
-
