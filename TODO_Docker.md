@@ -417,3 +417,13 @@ virer speech bind mounting
 tp3bis "qu'au prune de conteneurs" : faux, d'images
 
 docker swarm crediter schema
+
+heakthcheck
+
+faire autre chose que cache miss, cahce used
+
+wordpress volume nommé pas utile (sauf si theme) mais celui de la db oui
+
+farie que failover si pas redis,
+
+docker compose timeout 600s
