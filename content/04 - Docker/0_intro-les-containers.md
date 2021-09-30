@@ -108,7 +108,9 @@ Pour la culture, 6 types de _namespaces_ :
 > `:(){ : | :& }; :`
 
 Ceci est une _fork bomb_. Dans un conteneur **non privilégié**, on bloque tout Docker, voire tout le système sous-jacent, en l'empêchant de créer de nouveaux processus.
+
 <!-- `docker run -it --name fork-bomb bash` -->
+
 Pour éviter cela il faudrait limiter la création de processus via une option kernel.
 
 Ex: `docker run -it --ulimit nproc=3 --name fork-bomb bash`
@@ -187,8 +189,8 @@ VM et conteneurs proposent une flexibilité de manipulation des ressources de ca
   - La RAM est-elle un facteur limite ? Non elle n'est pas cher
   - Les CPU pareil : on est rarement bloqués par la puissance du CPU
   - Le vrai problème c'est l'I/O : l'accès en entrée-sortie au disque et au réseau
-    - en réalité Docker peut être bien plus lent pour l'implémentation de la sécurité réseau (usage du NAT et du bridging)
-    - pareil pour l'accès au disque : la technologie d'_overlay_ (qui a une place centrale dans Docker) s'améliore mais reste lente.
+    - en réalité Docker peut être plus lent (par défaut) pour l'implémentation de la sécurité réseau (usage du NAT), ou l'implémentation du réseau de Docker Swarm
+    - pour l'accès au disque : la technologie d'_overlay_ (qui a une place centrale dans Docker) s'améliore, surtout is on utilise un filesystem optimisé pour cela (ZFS, btrfs...).
 
 La comparaison VM / conteneurs est un thème extrêmement vaste et complexe.
 
@@ -240,15 +242,17 @@ Docker modifie beaucoup la **"logistique"** applicative.
 # Docker : positionnement sur le marché
 
 - Docker est la technologie ultra-dominante sur le marché de la conteneurisation
+
   - La simplicité d'usage et le travail de standardisation (un conteneur Docker est un conteneur OCI : format ouvert standardisé par l'Open Container Initiative) lui garantissent légitimité et fiabilité
   - La logique du conteneur fonctionne, et la bonne documentation et l'écosystème aident !
 
 - **LXC** existe toujours et est très agréable à utiliser, notamment avec **LXD** (développé par Canonical, l'entreprise derrière Ubuntu).
+
   - Il a cependant un positionnement différent : faire des conteneurs pour faire tourner des OS Linux complets.
 
 - **Apache Mesos** : un logiciel de gestion de cluster qui permet de se passer de Docker, mais propose quand même un support pour les conteneurs OCI (Docker) depuis 2016.
 
-- **Podman** : une alternative à Docker qui utilise la même syntaxe que Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode *rootless* et *daemonless* intéressant.
+- **Podman** : une alternative à Docker qui utilise la même syntaxe que Docker pour faire tourner des conteneurs OCI (Docker) qui propose un mode _rootless_ et _daemonless_ intéressant.
 
 - **systemd-nspawn** : technologie de conteneurs isolés proposée par systemd
 

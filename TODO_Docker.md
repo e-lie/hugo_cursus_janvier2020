@@ -221,7 +221,7 @@ RUN pip install -r requirements.txt
 
 ---
 
-docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog -p 3306:3306 --network microblog mysql:5.7
+docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=microblog -e MYSQL_USER=microblog -e MYSQL_PASSWORD=microblog --network microblog mysql:5.7
 
 docker run --name microblog -e DATABASE_URL=mysql+mysqlconnector://microblog:microblog@mysql/microblog -p 5000:5000 --network microblog microblog
 
@@ -415,7 +415,5 @@ docker volume prune
 virer speech bind mounting
 
 tp3bis "qu'au prune de conteneurs" : faux, d'images
-
-docker tp1 expose le port de mysql ça va pas
 
 docker swarm crediter schema

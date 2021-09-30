@@ -19,14 +19,13 @@ Solutions :
 
 ---
 
-
 ## Réseau
 
 ### Gestion des ports réseaux (_port mapping_)
 
 <!-- Schéma -->
 
-- L'instruction `EXPOSE` dans le Dockerfile informe Docker que le conteneur écoute sur les ports réseau au lancement. L'instruction `EXPOSE` **ne publie pas les ports**. C'est une sorte de **documentation entre la personne qui construit les images et la personne qui lance le conteneur à propos des ports que l'on souhaite publier**. 
+- L'instruction `EXPOSE` dans le Dockerfile informe Docker que le conteneur écoute sur les ports réseau au lancement. L'instruction `EXPOSE` **ne publie pas les ports**. C'est une sorte de **documentation entre la personne qui construit les images et la personne qui lance le conteneur à propos des ports que l'on souhaite publier**.
 
 - Par défaut les conteneurs n'ouvrent donc pas de port même s'ils sont déclarés avec `EXPOSE` dans le Dockerfile.
 
@@ -37,6 +36,7 @@ Solutions :
 ---
 
 ### Bridge et overlay
+
 <!-- Schéma réseau classique bridge -->
 
 - Un réseau bridge est une façon de créer un pont entre deux carte réseaux pour construire un réseau à partir de deux.
@@ -46,12 +46,15 @@ Solutions :
 - par défaut les adresses sont en 172.0.0.0/8, typiquement chaque hôte définit le bloc d'IP 172.17.0.0/16 configuré avec DHCP.
 
 <!-- Schéma réseau overlay -->
+
 - Un réseau overlay est un réseau virtuel privé déployé par dessus un réseau existant (typiquement public). Pour par exemple faire un cloud multi-datacenters.
 
 ---
 
 #### Le réseau Docker est très automatique
+
 <!-- Schéma DNS et DHCP -->
+
 - Serveur DNS et DHCP intégré dans le "user-defined network" (c'est une solution IPAM)
 
 - Donne un nom de domaine automatique à chaque conteneur.
@@ -64,6 +67,7 @@ Solutions :
 ### Lier des conteneurs
 
 - Aujourd'hui il faut utiliser un réseau dédié créé par l'utilisateur ("user-defined bridge network")
+
   - avec l'option `--network` de `docker run`
   - avec l'instruction `networks:` dans un docker composer
 
@@ -71,7 +75,6 @@ Solutions :
   - avec l'option `--link` de `docker run`
   - avec l'instruction `link:` dans un docker composer
   - MAIS cette fonctionnalité est **obsolète** et déconseillée
-
 
 ### Plugins réseaux
 
@@ -89,6 +92,7 @@ Il existe :
 ---
 
 ## Volumes
+
 <!-- Ajout schéma -->
 <!-- Ajout raisonnement tout ce qui est stateful sur un volume : fichiers de config, certifs, fichiers de base de données -->
 
@@ -99,7 +103,6 @@ Il existe :
 - `docker volume prune`
 - `docker volume create`
 - `docker volume rm`
-
 
 <!-- ## Volumes nommés -->
 <!-- Où sont ils stockés -->
@@ -112,24 +115,30 @@ C'est quelque peu trompeur, car tous les volumes sont techniquement "bind mounte
 Exemple :
 
 ```bash
-docker run -it -v /tmp/data:/data ubuntu /bin/bash
+# Sur l'hôte
+docker run -it -v /home/user/app/config.conf:/config/main.conf:ro -v /home/user/app/data:/data ubuntu /bin/bash
 
+# Dans le conteneur
 cd /data/
 touch testfile
 exit
 
-ls /tmp/data/
+# Sur l'hôte
+ls /home/user/app/data:
 ```
 
-<!-- Autre exemple avec config -->
+## Volumes nommés
+
+- L'autre technique est de créer d'abord un volume nommé avec :
+  `docker volume create mon_volume`
+  `docker run -d -v mon_volume:/data redis`
 
 ---
+
 ### L'instruction `VOLUME` dans un `Dockerfile`
 
 L'instruction `VOLUME` dans un `Dockerfile` permet de désigner les volumes qui devront être créés lors du lancement du conteneur. On précise ensuite avec l'option `-v` de `docker run` à quoi connecter ces volumes. Si on ne le précise pas, Docker crée quand même un volume Docker au nom généré aléatoirement, un volume "caché".
 
-<!-- ### Création de volume au lancement -->
-<!-- Avec docker run on peut en créer où on veut -->
 ### Partager des données avec un volume
 
 - Pour partager des données on peut monter le même volume dans plusieurs conteneurs.
@@ -201,6 +210,4 @@ CMD ["echo", "Data container for graphite"]
 - Pour effectuer un backup la méthode recommandée est d'utiliser un conteneur suplémentaire dédié
 - qui accède au volume avec `--volume-from`
 - qui est identique aux autres et donc normalement avec les mêmes UID/GID/permissions.
-- permet de ne pas perdre bêtement le volume lors d'un `prune` car il reste un conteneur qui y est lié
-
----
+<!-- - permet de ne pas perdre bêtement le volume lors d'un `prune` car il reste un conteneur qui y est lié -->

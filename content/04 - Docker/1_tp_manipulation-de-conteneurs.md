@@ -242,7 +242,7 @@ docker network create wordpress
 {{% expand "Résultat :" %}}
 
 ```bash
-docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress -p 3306:3306 --network wordpress mysql:5.7
+docker run --name mysqlpourwordpress -d -e MYSQL_ROOT_PASSWORD=motdepasseroot -e MYSQL_DATABASE=wordpress -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=monwordpress --network wordpress mysql:5.7
 ```
 
 {{% /expand %}}
