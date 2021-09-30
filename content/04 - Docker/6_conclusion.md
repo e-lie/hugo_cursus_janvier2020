@@ -31,10 +31,15 @@ Avec Traefik, aussi grâce aux labels sur les conteneurs Docker
 
 ![](../../images/docker/traefik-architecture.png)
 
+Ou avec Nginx, avec deux projets :
+
+- https://github.com/nginx-proxy/nginx-proxy
+- https://github.com/nginx-proxy/acme-companion
+
 ## Monitorer des conteneurs
 
-* Avec Prometheus pour Docker et Docker Swarm
-* Ou bien Netdata, un peu plus joli et configuré pour monitorer des conteneurs *out-of-the-box*
+- Avec Prometheus pour Docker et Docker Swarm
+- Ou bien Netdata, un peu plus joli et configuré pour monitorer des conteneurs _out-of-the-box_
 
 ## Tests sur des conteneurs
 
@@ -46,8 +51,6 @@ Ansible comme source de healthcheck
 
 Présentation d'un workflow Docker, du développement à la production -->
 
-
-
 ## Bonnes pratiques et outils
 
 ### Sécurité / durcissement
@@ -56,8 +59,7 @@ Présentation d'un workflow Docker, du développement à la production -->
 
 - des _cgroups_ correct : `ulimit -a`
 
-
-- par défaut les *user namespaces* ne sont pas utilisés !
+- par défaut les _user namespaces_ ne sont pas utilisés !
   - exemple de durcissement conseillé : <https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b>
 
 <!-- Exemple de renforcement :
@@ -75,9 +77,10 @@ htop
 - le benchmark Docker CIS : <https://github.com/docker/docker-bench-security/>
 
 - La sécurité de Docker c'est aussi celle de la chaîne de dépendance, des images, des packages installés dans celles-ci : on fait confiance à trop de petites briques dont on ne vérifie pas la provenance ou la mise à jour
+
   - [Clair](https://github.com/quay/clair) : l'analyse statique d'images Docker
 
-- [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) : protéger la *socket* Docker quand on a besoin de la partager à des conteneurs comme Traefik ou Portainer
+- [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) : protéger la _socket_ Docker quand on a besoin de la partager à des conteneurs comme Traefik ou Portainer
 
     <!-- - alpine par exemple c'est uclibc donc un glibc recodé par un seul mec : y a des erreurs de compilation sur par exemple compilation d'une JVAPP java et on sait pas pourquoi : du coup l'argument de dire "c'est le même binaire de A à Z", à relativiser car alpine a pas du tout les mêmes binaires par exemplee t donc plus fragile -->
 
@@ -110,11 +113,10 @@ htop
   - **Solution 1** : solutions applicatives robustes
     - pour MySQL/MariaDB : [Galera](https://mariadb.com/kb/en/what-is-mariadb-galera-cluster/)
     - pour Postgres : on peut citer [Citus](https://hub.docker.com/r/citusdata/citus/) ou [pgpool](https://hub.docker.com/r/bitnami/pgpool/), voir la [comparaison de différentes solutions](https://wiki.postgresql.org/wiki/Replication,_Clustering,_and_Connection_Pooling)
-    - Elasticsearch est distribué *out-of-the-box*
+    - Elasticsearch est distribué _out-of-the-box_
   - **Solution 2** : volume drivers avec Docker
     - [Flocker](https://flocker.readthedocs.io/en/latest/docker-integration/tutorial-swarm-compose.html), [Convoy](https://github.com/rancher/convoy), visent à intégrer une technologie de réplication
-     - c'est un moyen, pas une solution : reste un outil pour configurer ce que l'on souhaite
-
+    - c'est un moyen, pas une solution : reste un outil pour configurer ce que l'on souhaite
 
 ## Aller plus loin
 
@@ -123,7 +125,8 @@ htop
 - la liste de [Awesome Docker](https://github.com/veggiemonk/awesome-docker)
 
 ![](../../images/dockercraft.gif)
-*[Dockercraft](https://github.com/docker/dockercraft) : administrez vos containers dans Minecraft*
+_[Dockercraft](https://github.com/docker/dockercraft) : administrez vos containers dans Minecraft_
+
 ## Retours
 
 - Comment ça s'est passé ?
@@ -132,4 +135,3 @@ htop
   - Attentes sur le contenu ? Les manipulations ?
   - Questions restées ouvertes ? Nouvelles questions ?
   - Envie d'utiliser Docker ? ou de le jeter à la poubelle ?
-
