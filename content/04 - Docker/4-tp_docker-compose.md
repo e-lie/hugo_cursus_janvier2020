@@ -243,13 +243,17 @@ networks:
 
 ## D'autres services
 
-### Exercice de _google-fu_ : un pad CodiMD
+### Exerciced de _google-fu_
 
-<!-- On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud ou votre logiciel préféré. -->
+#### ex: un pad HedgeDoc
 
-- Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad CodiMD avec sa base de données. Je vous conseille de toujours chercher **dans la documentation officielle** ou le repository officiel (souvent sur Github) en premier. Attention, CodiMD avant s'appelait **HackMD**.
+On se propose ici d'essayer de déployer plusieurs services pré-configurés comme Wordpress, Nextcloud, Sentry ou votre logiciel préféré.
 
-- Vérifiez que le pad est bien accessible sur le port donné.
+- Récupérez (et adaptez si besoin) à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un pad HedgeDoc ou autre avec sa base de données. Je vous conseille de toujours chercher **dans la documentation officielle** ou le repository officiel (souvent sur Github) en premier.
+
+- Vérifiez que le service est bien accessible sur le port donné.
+
+- Le cas échéant, lisez les logs s'il y a un bug et adaptez les variables d'environnement.
 
 <!-- Assemblez à partir d'Internet un fichier `docker-compose.yml` permettant de lancer un Wordpress et un Nextcloud **déjà pré-configurés** (pour l'accès à la base de données notamment). Ajoutez-y un pad CodiMD / HackMD (toujours grâce à du code trouvé sur Internet). -->
 
@@ -316,14 +320,16 @@ networks:
 
 Il suffit ensuite de se rendre sur Kibana (port `5601`) et de configurer l'index en tapant `*` dans le champ indiqué, de valider et de sélectionner le champ `@timestamp`, puis de valider. L'index nécessaire à Kibana est créé, vous pouvez vous rendre dans la partie Discover à gauche (l'icône boussole 🧭) pour lire vos logs.
 
-<!-- ### _Facultatif :_ Ajouter un nœud Elasticsearch
+### _Facultatif :_ Ajouter un nœud Elasticsearch
 
-Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier. -->
+Puis, à l'aide de la documentation Elasticsearch et/ou en adaptant de bouts de code Docker Compose trouvés sur internet, ajoutez et configurez un nœud Elastic. Toujours à l'aide de la documentation Elasticsearch, vérifiez que ce nouveau nœud communique bien avec le premier.
 
-<!-- ### _Facultatif_ : ajouter une stack ELK à `microblog` -->
+### _Facultatif_ : ajouter une stack ELK à `microblog`
+
 <!-- TODO: Fiare avec ma version de l'app et du docker compose -->
-<!-- Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
-Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`. -->
+
+Dans la dernière version de l'app `microblog`, Elasticsearch est utilisé pour fournir une fonctionnalité de recherche puissante dans les posts de l'app.
+Avec l'aide du [tutoriel de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xix-deployment-on-docker-containers), écrivez le `docker-compose.yml` qui permet de lancer une stack entière pour `microblog`. Elle devra contenir un conteneur `microblog`, un conteneur `mysql`, un conteneur `elasticsearch` et un conteneur `kibana`.
 
 <!-- ### _Facultatif / avancé_ : centraliser les logs de microblog sur ELK
 
