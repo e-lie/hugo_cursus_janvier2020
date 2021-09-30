@@ -3,7 +3,8 @@ title: Préparation
 weight: 20
 draft: true
 ---
-<!-- 
+
+<!--
 ## Importez une machine Linux
 
 - Récupérez (sur un disque ou dans le partage réseau) une machine virtualbox ubuntu (18.04)
@@ -14,10 +15,9 @@ draft: true
 
 # Un peu de logistique
 
-- **Les supports de présentation et les TD sont disponibles à l'adresse <https://cours.hadrienpelissier.fr>**
+- **Les supports de présentation et les TD sont disponibles à l'adresse <https://supports.uptime-formation.fr>**
 
 - Pour exporter les TD utilisez la fonction d'impression pdf de google chrome.
-
 
 ⚠️ **Pour l'anglais, si un texte ne vous paraît pas clair, quelques liens :**
 
@@ -36,6 +36,7 @@ draft: true
 - Ouvrez un autre onglet et cliquez aussi sur la machine appelée `vnc-formateur-...`
 
 - Pour faire un **copier-coller** depuis l'extérieur à votre VM, il faut appuyer sur les touches `Ctrl+Alt+Maj`, puis coller ce que l'on veut dans le presse-papier, et refermer la sidebar avec `Ctrl+Alt+Maj`.
+
 ## Installer quelques logiciels
 
 - Installez VSCode avec le gestionnaire de paquet `snap install code --classic`
@@ -46,7 +47,8 @@ draft: true
 ## Explorer l'éditeur VSCode : Démo
 
 ---
-<!-- 
+
+<!--
 ## Comment installer une machine virtuelle
 
 - Un ordinateur "simulé" dans un ordinateur
