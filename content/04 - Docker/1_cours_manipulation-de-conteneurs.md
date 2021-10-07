@@ -60,7 +60,6 @@ Choisir une édition :
 
 # L'environnement de développement
 
-
 - Docker Engine pour lancer des commandes docker
 
 - Docker Compose pour lancer des application multiconteneurs
@@ -70,7 +69,6 @@ Choisir une édition :
 - VirtualBox pour avoir une VM Linux quand on est sur Windows
 
 ---
-
 
 # Installer Docker sur Windows ou MacOS
 
@@ -87,17 +85,25 @@ Docker est basé sur le noyau Linux :
 
 Quatre possibilités :
 
-- Solution WSL2 : on utilise **Docker Desktop WSL2**:
+- Solution WSL2 :
+
   - Fonctionne avec Windows Subsystem for Linux : c'est une VM Linux très bien intégrée à Windows
   - Le meilleur des deux mondes ?
   - Workflow similaire à celui d'un serveur Linux
 
+    - Solution WSL2 numéro 1 : on installe _Ubuntu et le paquet officiel Docker_ depuis le terminal WSL2 (recommandé)
+    - Solution WSL2 numéro 2 : on utilise **Docker Desktop WSL2**
+
+  - Les deux ont leurs avantages et leurs inconvénients en terme d'intégration Windows et Linux (réseau, volumes, système de fichiers...)
+
 - Solution Windows : on utilise **Docker Desktop for Windows**:
+
   - Fonctionne avec Hyper-V (l'hyperviseur optimisé de Windows)
   - Casse VirtualBox/VMWare (incompatible avec la virtualisation logicielle)
   - Proche du monde Windows et de PowerShell
 
 - Solution VirtualBox : on utilise **Docker Engine** dans une VM Linux
+
   - Utilise une VM Linux avec VirtualBox
   - Workflow identique à celui d'un serveur Linux
   - Proche de la réalité de l'administration système actuelle
@@ -112,7 +118,7 @@ Quatre possibilités :
 # Installer Docker sous MacOS
 
 - Solution standard : on utilise **Docker Desktop for MacOS** (fonctionne avec la bibliothèque HyperKit qui fait de l'hypervision)
-- Solution Virtualbox / *legacy* : On utilise une VM Linux
+- Solution Virtualbox / _legacy_ : On utilise une VM Linux
 
 ---
 
@@ -138,8 +144,6 @@ Pas de virtualisation nécessaire car Docker (le Docker Engine) utilise le noyau
 - Une image est le **résultat** d'un build :
   - on peut la voir un peu comme une boîte "modèle" : on peut l'utiliser plusieurs fois comme base de création de containers identiques, similaires ou différents.
 
-
-
 Pour lister les images on utilise :
 
 ```bash
@@ -153,7 +157,6 @@ docker image ls
 
 - Un conteneur est une instance en cours de fonctionnement ("vivante") d'une image.
   - un conteneur en cours de fonctionnement est un processus (et ses processus enfants) qui tourne dans le Linux hôte (mais qui est isolé de celui-ci)
-
 
 ## Commandes Docker
 
@@ -192,7 +195,6 @@ docker run [-d] [-p port_h:port_c] [-v dossier_h:dossier_c] <image> <commande>
 - **L'ordre des arguments est important !**
 - **Un nom est automatiquement généré pour le conteneur à moins de fixer le nom avec `--name`**
 - On peut facilement lancer autant d'instances que nécessaire tant qu'il n'y a **pas de collision** de **nom** ou de **port**.
-
 
 ---
 
@@ -298,4 +300,5 @@ On peut également y créer un compte gratuit pour pousser et distribuer ses pro
 # En résumé
 
 ![](../../images/docker-architecture.png)
+
 <!-- ![](../../images/docker-components.png) -->

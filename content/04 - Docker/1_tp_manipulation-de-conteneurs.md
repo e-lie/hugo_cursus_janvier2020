@@ -15,13 +15,15 @@ weight: 1015
 
 - Pour installer Docker, suivez la [documentation officielle pour installer Docker sur Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository), depuis "Install using the repository" jusqu'aux deux commandes `sudo apt-get update` et `sudo apt-get install docker-ce docker-ce-cli containerd.io`.
 
+  - Docker nous propose aussi une installation en une ligne (_one-liner_), moins sécurisée : `curl -sSL https://get.docker.com | sudo sh`
+
 - Lancez `sudo docker run hello-world`. Bien lire le message renvoyé (le traduire sur [Deepl](https://www.deepl.com/translator) si nécessaire). Que s'est-il passé ?
 
 - Il manque les droits pour exécuter Docker sans passer par `sudo` à chaque fois.
 
   - Le daemon tourne toujours en `root`
   - Un utilisateur ne peut accéder au client que s'il est membre du groupe `docker`
-  - Ajoutez-le au groupe avec la commande `usermod -aG docker <user>` (en remplaçant `<user>` par ce qu'il faut)
+  - Ajoutez-le au groupe avec la commande `sudo usermod -aG docker <user>` (en remplaçant `<user>` par ce qu'il faut)
   - Pour actualiser la liste de groupes auquel appartient l'utilisateur, redémarrez la VM avec `sudo reboot` puis reconnectez-vous avec Guacamole pour que la modification sur les groupes prenne effet.
 
   <!-- **à l'aide du bouton en haut à droite de l'écran sur Ubuntu (pas simplement le terminal mais bien la session Ubuntu, redémarrer marche aussi)**  -->
@@ -39,8 +41,6 @@ Pour les prochaines fois, Docker nous propose aussi une installation en une lign
 ```bash
 sudo apt update
 sudo apt install bash-completion curl
-sudo mkdir /etc/bash_completion.d/
-sudo curl -L https://raw.githubusercontent.com/docker/docker-ce/master/components/cli/contrib/completion/bash/docker -o /etc/bash_completion.d/docker.sh
 sudo curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 ```
 
@@ -82,7 +82,7 @@ docker run --attach debian
 
 {{% /expand %}}
 
-- Lancez un conteneur Debian (`docker run` puis les arguments nécessaires, cf. l'aide `--help`) en mode détaché avec la commande `echo "Debian container"`. Rien n'apparaît. En effet en mode détaché la sortie standard n'est pas connectée au terminal.
+- Lancez un conteneur Debian (`docker run` puis les arguments nécessaires, cf. l'aide `--help`)n avec l'option "mode détaché" et la commande passée au conteneur `echo "Je suis le conteneur basé sur Debian"`. Rien n'apparaît. En effet en mode détaché la sortie standard n'est pas connectée au terminal.
 
 - Lancez `docker logs` avec le nom ou l'id du conteneur. Vous devriez voir le résultat de la commande `echo` précédente.
 
@@ -178,7 +178,7 @@ docker pull nginx
 docker run --name "test_nginx" nginx
 ```
 
-Ce conteneur n'est pas très utile, car on a oublié de configurer un port ouvert.
+Ce conteneur n'est pas très utile, car on a oublié de configurer un port exposé sur `localhost`.
 
 - Trouvez un moyen d'accéder quand même au Nginx à partir de l'hôte Docker (indice : quelle adresse IP le conteneur possède-t-il ?).
 
