@@ -11,7 +11,7 @@ weight: 1045
 <!-- - Si Docker n'est pas déjà installé, installez Docker par la méthode officielle accélérée et moins sécurisée (un _one-liner™_) avec `curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh`. Que fait cette commande ? Pourquoi est-ce moins sécurisé ? -->
 <!-- - Installez VSCode avec la commande `sudo snap install --classic code` -->
 
-- Installez docker-compose avec `sudo apt install docker-compose`.
+- Installez docker-compose avec `sudo apt install docker-compose`. (ou pip)
   <!-- - S'il y a un bug  -->
   <!-- - S'ajouter au groupe `docker`avec `usermod -a -G docker stagiaire` et actualiser avec `newgrp docker stagiaire` -->
 
@@ -58,7 +58,7 @@ def mainpage():
 
     salted_name = salt + name
     name_hash = hashlib.sha256(salted_name.encode()).hexdigest()
-    header = '<html><head><title>Identidock</title></head><body>'
+    header = '<html><head><title>Identidock</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"></head><body>'
     body = '''<form method="POST">
                 Salut <input type="text" name="name" value="{0}"> !
                 <input type="submit" value="submit">

@@ -26,7 +26,7 @@ def mainpage():
         name = request.form['name']
     salted_name = salt + name
     name_hash = hashlib.sha256(salted_name.encode()).hexdigest()
-    header = '<html><head><title>Identidock</title></head><body>'
+    header = '<html><head><title>Identidock</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"></head><body>'
     body = '''<form method="POST">
                 Hello <input type="text" name="name" value="{0}">
                 <input type="submit" value="submit">
