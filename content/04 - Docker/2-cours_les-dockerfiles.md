@@ -30,7 +30,7 @@ weight: 1020
 ```Dockerfile
 FROM debian:latest
 
-RUN apt update && apt install htop
+RUN apt update && apt install -y htop
 
 CMD ['sleep 1000']
 ```
