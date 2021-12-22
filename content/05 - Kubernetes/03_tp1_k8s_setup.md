@@ -163,8 +163,20 @@ K3s est une distribution de Kubernetes orientée vers la création de petits clu
 
 Avec K3s, il est possible d'installer un petit cluster d'un seul noeud en une commande ce que nous allons faire ici:
 
-- Passez votre terminal en root avec la commande `sudo -i` puis:
+<!-- - Passez votre terminal en root avec la commande `sudo -i` puis: -->
 - Lancez dans un terminal la commande suivante: `curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh - `
+
+ La configuration kubectl pour notre nouveau cluster k3s est dans le fichier `/etc/rancher/k3s/k3s.yaml` et accessible en lecture uniquement par `root`. Pour se connecter au cluster on peut donc faire (parmis d'autre méthodes pour gérer la kubeconfig):
+
+ - Copie de la conf `sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/k3s.yaml`
+ - Changer les permission `sudo chown $USER ~/.kube/k3s.yaml`
+ - activer cette configuration pour kubectl avec une variable d'environnement: `export KUBECONFIG=~/.kube/k3s.yaml`
+ - Tester la configuration avec `kubectl get nodes` qui devrait renvoyer quelque chose proche de:
+
+ ```
+NAME                 STATUS   ROLES                  AGE   VERSION
+vnc-stagiaire-...   Ready    control-plane,master   10m   v1.21.7+k3s1
+```
 
 
 ## Merger la configuration kubectl
