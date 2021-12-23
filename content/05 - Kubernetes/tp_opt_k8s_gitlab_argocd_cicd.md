@@ -105,11 +105,11 @@ spec:
 
 - Chargez la page `argocd.<votre sous domaine>` dans un navigateur. exp `argocd.stagiaire1.docker.dopl.uk`
 
-- Récupérer le mot de passe admin en allant chercher le secret `argocd-initial-admin-secret`
+- Pour se connecter utilisez le login admin et récupérez le mot de passe admin en allant chercher le secret `argocd-initial-admin-secret` dans Lens (Config > Secrets avec le namespace argocd activé).
 
-## Récupérer le corriger du TP et le pousser sur Gitlab
+## Récupérer le corrigé du TP et le pousser sur Gitlab
 
-- Récupérer le corriger à compléter du TP CICD gitlab argocd avec `git clone -b k8s_gitlab_argocd_correction https://github.com/Uptime-Formation/corrections_tp.git k8s_gitlab_argocd_correction`
+- Récupérer le corrigé à compléter du TP CICD gitlab argocd avec `git clone -b k8s_gitlab_argocd_correction https://github.com/Uptime-Formation/corrections_tp.git k8s_gitlab_argocd_correction`
 
 - Ouvrez le projet dans VSCode
 
