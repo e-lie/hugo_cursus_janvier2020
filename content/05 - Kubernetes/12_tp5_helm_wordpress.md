@@ -26,8 +26,6 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 ### Utiliser un chart Helm pour installer Wordpress
 
-- Pour installer argocd sur notre cluster k3s lancez: `kubectl config use-context default` ou `kubectl config use-context k3s` puis `kubectl get nodes` pour vérifier.
-
 - Cherchez Wordpress sur [https://artifacthub.io/](https://artifacthub.io/).
 
 - Prenez la version de **Bitnami** et ajoutez le dépôt avec la première commande à droite (ajouter le dépôt et déployer une release).
@@ -91,6 +89,14 @@ ingress:
 On peut maintenant lire dans ce fichier les objets kubernetes déployés par le chart et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut constater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
 ### Installer ArgoCD
+
+Cette partie requiert d'avoir installé k3s sur votre machine de formation (ou sur un autre VPS ubuntu 20.04 min 8Go de RAM) comme indiqué dans le TP1 section 3e méthode d'installation.
+
+- Pour bien effectuer l'installation sur notre cluster k3s (et pas dans minikube ou sur un cluster loué) lancez:
+
+- `minikube stop`
+
+`kubectl config use-context default` ou `kubectl config use-context k3s` puis `kubectl get nodes` pour vérifier.
 
 Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster. En particulier pour visualiser les charts Helm déployés.
 

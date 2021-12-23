@@ -8,9 +8,10 @@ weight: 2089
 
 <!-- Suivre ce tutorial : https://sysadmins.co.za/https-using-letsencrypt-and-traefik-with-k3s/ -->
 
-## Installer un certificat avec k3S
 
-1. Installer cert-manager avec la commande `kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml`
+1. Installer cert-manager avec la commande `kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml`
+
+## Créer un certificat Letsencrypt pour notre cluster k3s: version Traefik
 
 2. Objet de type `ClusterIssuer` à créer pour configurer Let's Encrypt :
 
@@ -74,3 +75,5 @@ spec:
 ```
 
 _NB :_ si vous n'arrivez pas à obtenir de certificat HTTPS, modifiez l'objet `ClusterIssuer` pour obtenir un certificat depuis les serveurs _staging_ de Let's Encrypt : Let's Encrypt limite très fortement le nombre de certificats installables sur les mêmes domaines et sous-domaines.
+
+## Créer un certificat Letsencrypt pour notre cluster k3s: version Nginx

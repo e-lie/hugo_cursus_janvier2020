@@ -32,7 +32,7 @@ Ce nom de domaine va nous permettre de générer un certificat HTTPS pour notre 
 
 #### Installer Cert-manager dans k3s
 
-- Pour installer cert-manager lancez : `kubectl apply -f `
+- Pour installer cert-manager lancez : `kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml`
 
 - Il faut maintenant créer une ressource de type `ClusterIssuer` pour pourvoir émettre (to issue) des certificats.
 
