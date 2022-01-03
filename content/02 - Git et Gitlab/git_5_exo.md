@@ -17,6 +17,10 @@ A l'aide des ressources suivantes, créez une pipeline (un fichier `.gitlab-ci.y
 - **Get started with GitLab CI/CD : <https://docs.gitlab.com/ee/ci/quick_start/>**
 - Documentation de référence de `.gitlab-ci.yml` : <https://docs.gitlab.com/ee/ci/yaml/>
 
+### Vidéos
+Issues, Merge Requests and Integrations in GitLab:
+https://www.youtube.com/watch?v=raXvuwet78M
+
 ### Tutoriels
 - [TP Docker : Gitlab CI](../../04-docker/6-tp-gitlab-ci/)
 
