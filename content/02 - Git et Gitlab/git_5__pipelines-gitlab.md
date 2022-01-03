@@ -59,9 +59,12 @@ Avantages :
   - Gitlab propose par défaut des runners préconfigurés qui utilisent des conteneurs Docker et tournent en général dans un cluster Kubernetes.
   - Gitlab propose aussi un registry d'images Docker, privé ou public, par projet.
 
+---
+
 ![](../../images/devops/gitlab_workflow_example.png)
 ![](../../images/devops/pipeline_status.png)
 
+---
 
 ## Ressources
 

@@ -19,8 +19,10 @@ A l'aide des ressources suivantes, créez une pipeline (un fichier `.gitlab-ci.y
 
 ### Tutoriels
 - [TP Docker : Gitlab CI](../../04-docker/6-tp-gitlab-ci/)
+
 Code Refinery :
 - <https://coderefinery.github.io/testing/continuous-integration/>
 - <https://coderefinery.github.io/testing/full-cycle-ci/>
+
 Cloud Consultancy Team :
 - <https://tsi-ccdoc.readthedocs.io/en/master/ResOps/2019/Gitlab.html>
