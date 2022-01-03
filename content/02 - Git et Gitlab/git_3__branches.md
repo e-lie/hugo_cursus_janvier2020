@@ -68,3 +68,7 @@ Le rebase interactif est un outil un peu compliqué à manipuler, qui nous perme
 
 L'article suivant, extrêmement riche, est une référence à laquelle on peut revenir en cas de doute sur le choix de merge ou de rebase :
 [_Bien utiliser Git merge et rebase_, par Delicious Insights](https://delicious-insights.com/fr/articles/bien-utiliser-git-merge-et-rebase/)
+
+---
+
+![](../../images/git/git-cheat-sheet.jpg)
