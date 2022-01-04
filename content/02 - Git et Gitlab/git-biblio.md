@@ -1,7 +1,7 @@
 ---
 title: "Bibliographie"
 weight: 1010
-pre: "<i class='fab fa-git'></i> - "
+# pre: "<i class='fab fa-git'></i> - "
 # chapter: true
 draft: false
 ---

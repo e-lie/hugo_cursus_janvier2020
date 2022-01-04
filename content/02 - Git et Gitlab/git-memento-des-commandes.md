@@ -1,5 +1,5 @@
 ---
-title: "Memento des commandes Git"
+title: "Memento des commandes"
 draft: false
 weight: 1000
 ---
