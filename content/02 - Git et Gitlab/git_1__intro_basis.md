@@ -136,3 +136,7 @@ Un commit est composé :
 <!-- ## FIXME: gitignore -->
 
 ## Premiers exercices
+
+---
+
+![](../../images/git/git-cheat-sheet.jpg)
