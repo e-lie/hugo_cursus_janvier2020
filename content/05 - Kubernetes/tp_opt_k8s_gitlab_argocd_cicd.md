@@ -113,11 +113,13 @@ spec:
 
 - Ouvrez le projet dans VSCode
 
-- Remplacez dans tout le projet, les occurences de `<votre sous domaine>` par votre sous domaine par exemple `stagiaire1.docker.dopl.uk`
+- Créer un nouveau projet vide sur gitlab
+
+- Remplacez dans tout le projet, les occurences de `<sousdomain>.dopl.uk` par votre sous domaine par exemple `stagiaire1.docker.dopl.uk`
 
 - Remplacez également partout `gitlab.com/e-lie/cicd_gitlab_argocd_corrections` par l'url de votre dépot Gitlab (sans le https:// ou git@).
 
-- Créer un nouveau projet vide sur gitlab et pousser ce projet dans la branche `k8s_gitlab_argocd_correction` avec : 
+- Poussez ce projet dans la branche `k8s_gitlab_argocd_correction` du dépot créé précédement: 
 
 ```bash
 git remote add gitlab <votre dépot gitlab>
@@ -125,29 +127,27 @@ git push gitlab
 ```
 - Observons le fichier `.gitlab-ci.yml`.
 
-- Allons voir le pipeline dans l'interface de gitlab. Les deux premier stages devraient s'être bien déroulés.
+- Allons voir le pipeline dans l'interface CI/CD de gitlab. Les deux premier stages du pipeline devraient s'être bien déroulés.
 
 ## Déploiement de l'application dans argoCD
 
 Expliquons un peu le reste du projet projet.
 
-- Créez un token de déploiement dans `Gitlab > Settings > Repository > Deploy Tokens`. Ce token va nous permettre de donner l'authorisation à ArgoCD de lire le dépôt gitlab (facultatif si le dépôt est public cela ne devrait pas être nécessaire). Complétez ensuite **2 fois** le token dans le fichier k8s/argocd-apps.yaml comme suit : `https://<nom_token>:<motdepasse_token>@gitlab.com/...gocd_corrections.git` dans les deux section `repoURL:` des deux applications.
-
-<!-- https://gitlab+deploy-token-704427:oGvgk3btvLG2oEnud6d_@gitlab.com/e-lie/cicd_gitlab_argocd_corrections.git -->
+- Créez un token de déploiement dans `Gitlab > Settings > Repository > Deploy Tokens`. Ce token va nous permettre de donner l'authorisation à ArgoCD de lire le dépôt gitlab (facultatif si le dépôt est public cela ne devrait pas être nécessaire). Complétez ensuite **2 fois** le token dans le fichier k8s/argocd-apps.yaml comme suit : `https://<nom_token>:<motdepasse_token>@gitlab.com/<votre depo>.git` dans les deux sections `repoURL:` des deux applications.
 
 - Créer les deux applications `monstericon-dev` et `monstericon-prod` dans argocd avec `kubectl apply -f k8s/argocd-apps.yaml`.
 
-- Allons voir dans l'interface d'argocd pour vérifier que les applications se déploient bien sauf le conteneur monstericon dont l'image n'a pas encore été buildée avec le bon tag. Pour cela il va falloir que notre pipeline s'execute complètement.
+- Allons voir dans l'interface d'ArgoCD pour vérifier que les applications se déploient bien sauf le conteneur monstericon dont l'image n'a pas encore été buildée avec le bon tag. Pour cela il va falloir que notre pipeline s'execute complètement.
 
-Les deux étapes de déploiement (dev et prod) du pipeline nécessitent de pousser automatiquement le code du projet à nouveau pour déclencher le redéploiement automatique dans ArgoCD (en mode pull depuis gitlab). Pour cela nous avons besoin de créer également un toker utilisateur:
+Les deux étapes de déploiement (dev et prod) du pipeline nécessitent de pousser automatiquement le code du projet à nouveau pour déclencher le redéploiement automatique dans ArgoCD (en mode pull depuis gitlab). Pour cela nous avons besoin de créer également un token utilisateur:
 
 - Allez dans `Gitlab > User Settings (en haut à droite dans votre profil) > Access Tokens` et créer un token avec `read_repository write_repository read_registry write_registry` activés. Sauvegardez le token dans un fichier.
 
 - Allez dans `Gitlab > Settings > CI/CD > Variables` pour créer deux variables de pipelines: `CI_USERNAME` contenant votre nom d'utilisateur gitlab et `CI_PUSH_TOKEN` contenant le token précédent. Ces variables de pipelines nous permettent de garder le token secret dans gitlab et de l'ajouter automatiquement aux pipeline pour pouvoir autoriser la connexion au dépot depuis le pipeline (git push).
 
-- Nous allons maintenant tester si le pipeline s'exécute correctement en poussant à nouveau le code avec `git push gitlab`
+- Nous allons maintenant tester si le pipeline s'exécute correctement en commitant et poussant à nouveau le code avec `git push gitlab`.
 
-- Debuggons ensemble les pipelines s'ils sont en échec.
+- Debuggons les pipelines s'ils sont en échec.
 
 - Allons voir dans ArgoCD pour voir si l'application dev a été déployée correctement. Regardez la section `events` et `logs` des pods si nécessaire.
 
