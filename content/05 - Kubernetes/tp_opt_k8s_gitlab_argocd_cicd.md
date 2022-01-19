@@ -16,9 +16,12 @@ Avant de pouvoir déployer notre application automatiquement (Continuous Deliver
 
 ## Installation d'un cluster avec argoCD
 
-ArgoCD est un outil de GitOps extrêment pratique et puissant mais il nécessite d'être installé dans un cluster public (avec un IP publique) et avec un certificat HTTPS pour être utilisé correctement.
+ArgoCD est un outil de GitOps extrêment pratique et puissant.
 
 Qu'est-ce que le GitOps: https://www.objectif-libre.com/fr/blog/2019/12/17/gitops-tour-horizon-pratiques-outils/
+
+
+Mais, dans notre cas, avec un ingress NGINX, il nécessite un accès HTTPS et donc la génération d'un certificat. Une solution est de l'installer dans un cluster accessible publiquement (avec un IP publique) pour pouvoir générer un certificat avec cert-manager et un Challenge ACME HTTP 101. C'est le cas de notre cluster k3s.
 
 Vos serveurs VNC qui sont aussi désormais des clusters k3s ont déjà plusieurs sous-domaines configurés: `<votrelogin>.<soudomaine>.dopl.uk` et `*.<votrelogin>.<soudomaine>.dopl.uk`. Le sous domaine `argocd.<login>.<soudomaine>.dopl.uk` pointe donc déjà sur le serveur (Wildcard DNS).
 
@@ -155,3 +158,21 @@ Les deux étapes de déploiement (dev et prod) du pipeline nécessitent de pouss
 
 - On peut ensuite déclencer le stage `deploy-prod` manuellement dans le pipeline, vérifier que l'application est healthy dans ArgoCD (debugger sinon) puis visiter `https://monster.<votre_sous_domaine>`.
 
+
+### Idées d'amélioration
+
+- Déplacer le code de déploiement dans un autre dépôt que le code d'infrastructure. Le pipeline de devra cloner le dépôt d'infrastructure, templater avec kustomize la bonne version de l'image dans le bon environnement. Pousser le code d'infrastructure sur le dépôt d'infrastructure. Corriger l'application ArgoCD pour monitorer le dépôt d'infrastructure.
+
+- Mutualiser le code de déploiement k8s avec des overlays kustomize
+
+- Utiliser une stragégie de blue/green ou A/B déploiement avec Argo Rollouts ou Istio avec vérification de réussite du déploiement et rollback en cas d'échec.
+
+- Ajouter plus d'étapes réalistes de CI/CD en se basant par exemple sur le livre GitOps suivant.
+
+- Gérer la création des ressources gitlab automatiquement avec Terraform et gérer les secrets (tokens gitlab) consciencieusement.
+
+### Bibliographie
+
+2021 - GitOps and Kubernetes Continuous Deployment with Argo CD, Jenkins X, and Flux
+
+-> Billy Yuen, Alexander Matyushentsev, Todd Ekenstam, Jesse Suen (z-lib.org)

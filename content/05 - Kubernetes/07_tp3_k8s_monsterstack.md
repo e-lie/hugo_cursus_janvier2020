@@ -1,6 +1,6 @@
 ---
 title: "07 - TP 3 - Déployer des conteneurs de A à Z"
-draft: true
+draft: false
 weight: 2050
 ---
 

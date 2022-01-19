@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "09 - TP 4 - Déployer Wordpress Avec une base de donnée persistante"
 weight: 2055
 ---
@@ -32,10 +32,19 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 
 - Supprimer tout avec `kubectl delete -k .`. Que s'est-il passé ? (côté storage)
 
-En l'état les `PersistentVolumes` générés par la combinaise du `PersistentVolumeClaim` et de la `StorageClass` de minikube sont également supprimés en même tant que les PVC. Les données sont donc perdues et au chargement du site on doit relancer l'installation.
+En l'état les `PersistentVolumes` générés par la combinaison du `PersistentVolumeClaim` et de la `StorageClass` de minikube sont également supprimés en même tant que les PVCs. Les données sont donc perdues et au chargement du site on doit relancer l'installation.
 
-Pour éviter cela il faut que la `storageClass` standard soit configurée avec une `Reclaim Policy` à `retain` (conserver) et non `delete`. Cependant minikube dans docker ne permet pas simplement de faire une storage class en mode retain (à cause d'un bug semble-t-il). Nous allons donc créer manuellement des volumes avec une storageClass retain.
+Pour éviter cela il faut avec une `Reclaim Policy` à `retain` (conserver) et non `delete` comme suit https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/. Les volumes sont alors conservées et les données peuvent être récupérées manuellement. Mais les volumes ne peuvent pas être reconnectés à des PVCs automatiquement.
 
+- Pour récupérer les données on peut monter le PV manuellement dans un pod
+- Utiliser la nouvelle fonctionnalité de clone de volume
+
+### Pour aller plus loin
+
+- 
+
+
+<!-- 
 - Créez deux volumes en cliquant sur le `+ > create resource` en bas à gauche de Lens et collez le code suivant:
 
 ```yaml
@@ -73,9 +82,9 @@ spec:
 
 - Modifiez les `PersistentVolumeClaims`(PVC) des deploiements wordpress et mysql pour passer le storage à `100Mi` et ajouter `storageClassName: manual` dans la `spec:` de chaque PVC.
 
-- Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress.
+- Recréez les ressources avec `apply`. Les volumes devraient se connecter à nos conteneurs mysql et wordpress. -->
 
-### Essayons avec Scaleway
+<!-- ### Essayons avec Scaleway -->
 
 
 

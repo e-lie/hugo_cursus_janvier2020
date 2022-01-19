@@ -10,7 +10,7 @@ Helm est un "gestionnaire de paquet" ou vu autrement un "outil de templating ava
 - Possibilité de créer du code générique et flexible avec pleins de paramètres pour le déploiement.
 - Des déploiements avancés avec plusieurs étapes
 
-Inconvénient: Helm ajoute souvent de la complexité non nécessaire car les Charts sur internet sont très paramétrables pour de multiples cas d'usages (plein de code qui n'est utile que dans des situations spécifiques).
+Inconvénient: Helm ajoute souvent de la complexité non nécessaire car les Charts sur internet sont très paramétrables pour de multiples cas d'usage (plein de code qui n'est utile que dans des situations spécifiques).
 
 Helm ne dispense pas de maîtriser l'administration de son cluster.
 
@@ -88,9 +88,11 @@ ingress:
 
 On peut maintenant lire dans ce fichier les objets kubernetes déployés par le chart et ainsi apprendre de nouvelles techniques et syntaxes. En le parcourant on peut constater que la plupart des objets abordés pendant cette formation y sont présent plus certains autres.
 
-### Installer ArgoCD
+### Installer le ingress NGINX et ArgoCD
 
-Cette partie requiert d'avoir installé k3s sur votre machine de formation (ou sur un autre VPS ubuntu 20.04 min 8Go de RAM) comme indiqué dans le TP1 section 3e méthode d'installation.
+voir TP Gitlab Argocd
+
+<!-- Cette partie requiert d'avoir installé k3s sur votre machine de formation (ou sur un autre VPS ubuntu 20.04 min 8Go de RAM) comme indiqué dans le TP1 section 3e méthode d'installation.
 
 - Pour bien effectuer l'installation sur notre cluster k3s (et pas dans minikube ou sur un cluster loué) lancez:
 
@@ -122,7 +124,7 @@ Vos serveurs VNC qui sont aussi désormais des clusters k3s ont déjà deux sous
 - Ensuite installez **ArgoCD** avec la commande: `kubectl apply -f argocd-kluster/argocd/manifests -n argocd`
 - Enfin `kubectl apply -f argocd-kluster/argocd/argocd-ingress.yaml`
 
-- Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`.
+- Affichez les ingress du namespace argocd: il devrait y avoir 2 ingress pendant un moment (car le http challenge implique un ingress temporaire) puis un seul celui de l'interface web de argocd. Vous pouvez également vérifier que le certificat est ready avec : `kubectl get certificates -n argocd`. -->
 
 ### ArgoCD pour installer et visualiser en live les ressources de notre chart
 

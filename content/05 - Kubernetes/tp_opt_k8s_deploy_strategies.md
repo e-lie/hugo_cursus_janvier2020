@@ -224,13 +224,13 @@ Par exemple pour la stratégie **recreate** le graphique donne: ![](../../images
 
 ### Facultatif : Installer Istio pour des scénarios plus avancés
 
-Pour des scénarios plus avancés de déploiement, on a besoin d'utiliser un _service mesh_. Un des plus connus est Istio.
+Pour des scénarios plus avancés de déploiement, on a besoin d'utiliser soit un _service mesh_ comme Istio (soit un plugin de rollout comme Argo Rollouts mais pas ce que nous proposons ici).
 
 <!-- TODO trouver comment exporter les bonnes dashboard grafana pour les réimporter plus + comprendre un peu mieux promQL -->
 
-1. Sur k3s, supprimer la release Helm de Traefik pour remplacer le Ingress Controller Traefik par Istio.
+1. Sur k3s, supprimer la release Helm du Ingress Controller Traefik (ou le ingress Nginx) pour le remplacer par l'ingress Istio.
 2. Installer Istio, créer du trafic vers l'ingress de l'exemple et afficher le graphe de résultat dans le dashboard Istio : https://istio.io/latest/docs/setup/getting-started/
 3. Utiliser ces deux ressources pour appliquer une stratégie de déploiement de type A/B testing poussée :
    - https://istio.io/latest/docs/tasks/traffic-management/request-routing/
    - https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing
-   -
+
