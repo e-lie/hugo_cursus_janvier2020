@@ -80,9 +80,10 @@ spec:
 
 - Appliquez ce nouvel objet avec kubectl.
 - Inspectez le service dans Lens.
-- Visitez votre application avec le lien Lens, le nombre de réplicat devrait apparaître.
-- Changez les labels du template et du selector dans le **déploiement** (2 fois `app: rancher-demo` à remplacer dans le fichier ) et supprimez le déploiement et réappliquez.
+- Visitez votre application avec l'Internal ip du noeud (à trouver dans les information du node) et le nodeport (port 3xxxx) associé au service, le nombre de réplicat devrait apparaître.
+- Pour tester, changez le label du selector dans le **service** (`app: rancher-demo` à remplacer dans le fichier ) et réappliquez.
 - Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
+- Allez voir la section endpoints dans lens, constatez que quand l'étiquette est la bonne la liste des ips des pods est présente et après la maodification du selector la liste est vide (None)
 
 => Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
 

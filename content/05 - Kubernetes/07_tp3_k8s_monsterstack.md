@@ -29,7 +29,9 @@ Passons maintenant à Kubernetes.
 
 Explorer avec Kompose comment on peut traduire un fichier `docker-compose.yml` en ressources Kubernetes (ce sont les instructions à la page suivante : https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/).
 
-D'abord, installons Kompose :
+En général il est recommandé de coder les ressources Kubernetes à la main comme nous allons le faire dans la partie suivante. Mais kompose peut être intéressant pour démarre un portage d'une application de docker vers kubernetes et pour bien comprendre l'équivalence des objets docker-compose et kubernetes.
+
+Pour l'essayer installons d'abord Kompose :
 
 ```bash
 # Linux
@@ -111,7 +113,7 @@ spec:
 
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 
-- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 3 réplicats sont bien lancés.
+- Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 5 + 1 réplicats sont bien lancés.
 
 ## Déploiement du frontend `monstericon`
 
