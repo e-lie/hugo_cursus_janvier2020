@@ -113,6 +113,8 @@ Kubernetes intègre depuis quelques versions un système de permissions fines su
 
 Exemple de comment générer un certificat à créer un nouvel utilisateur dans minikube: https://docs.bitnami.com/tutorials/configure-rbac-in-your-kubernetes-cluster/
 
+Doc officielle: https://kubernetes.io/docs/reference/access-authn-authz/authentication/
+
 ### Roles et ClusterRoles + bindings
 
 Une `role` est un objet qui décrit un ensemble d'actions permises sur certaines ressources et s'applique sur **un seul namespace**. Pour prendre un exemple concret, voici la description d'un roles qui authorise la lecture, création et modification de `pods` et de `services` dans le namespace par défaut:
