@@ -32,7 +32,7 @@ Helm ne dispense pas de maîtriser l'administration de son cluster.
 
 - Installer une **"release"** `wordpress-tp` de cette application (ce chart) avec `helm install wordpress-tp bitnami/wordpress`
 
-- Suivez les instructions affichées dans le terminal pour trouver l'IP et afficher le login et password de notre installation. Dans minikube il faut également lancer `minikube service wordpress-tp`.
+- Des instructions sont affichées dans le terminal pour trouver l'IP et afficher le login et password de notre installation. La commande pour récupérer l'IP ne fonctionne que dans les cluster proposant une intégration avec un loadbalancer et fournissant donc des IP externe. Dans minikube (qui ne fournit pas de loadbalancer) il faut à la place lancer `minikube service wordpress-tp` pour y accéder avec le NodePort.
 
 - Notre Wordpress est prêt. Connectez-vous-y avec les identifiants affichés (il faut passer les commandes indiquées pour récupérer le mot de passe stocké dans un secret k8s).
 
