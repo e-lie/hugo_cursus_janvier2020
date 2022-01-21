@@ -1,6 +1,6 @@
 ---
 title: TP opt. - Gestion d'un cluster de production
-draft: true
+draft: false
 weight: 2100
 ---
 

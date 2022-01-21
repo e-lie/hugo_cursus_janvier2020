@@ -26,7 +26,11 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 
 ### Observez la persistence
 
-- Supprimez et recréer les deux déploiements (mais pas le total). En rechargeant le site on constate que les données ont été conservées.
+- Supprimez uniquement les deux déploiements.
+
+- redéployez a nouveau avec `kubectl apply -k .`, les deux déploiements sont recréés.
+
+- En rechargeant le site on constate que les données ont été conservées.
 
 - Allez observer la section stockage dans `Lens`. Commentons ensemble.
 
