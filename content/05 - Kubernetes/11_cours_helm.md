@@ -1,6 +1,6 @@
 ---
 title: 11 - Cours - Helm, le gestionnaire de paquets Kubernetes et les Opérateurs
-draft: false
+draft: true
 weight: 2070
 ---
 
