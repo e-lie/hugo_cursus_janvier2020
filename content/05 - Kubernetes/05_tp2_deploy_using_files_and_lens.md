@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "05 - TP 2 - Déployer en utilisant des fichiers ressource et Lens"
 weight: 2045
 ---
