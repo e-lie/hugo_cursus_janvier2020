@@ -1,6 +1,6 @@
 ---
 title: 04 - Cours - Objets Kubernetes - Partie 1
-draft: true
+draft: false
 weight: 2030
 ---
 
