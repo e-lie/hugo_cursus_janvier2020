@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: 08 - Cours - Le réseau dans Kubernetes
 weight: 2052
 ---
