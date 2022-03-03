@@ -1,5 +1,5 @@
 ---
-title: TP opt. - CI/CD avec gitlab et ArgoCD 
+title: TP opt. - CI/CD avec Gitlab et ArgoCD 
 draft: true
 weight: 2100
 ---
@@ -173,6 +173,6 @@ Les deux étapes de déploiement (dev et prod) du pipeline nécessitent de pouss
 
 ### Bibliographie
 
-2021 - GitOps and Kubernetes Continuous Deployment with Argo CD, Jenkins X, and Flux
+- 2021 - GitOps and Kubernetes Continuous Deployment with Argo CD, Jenkins X, and Flux
 
--> Billy Yuen, Alexander Matyushentsev, Todd Ekenstam, Jesse Suen (z-lib.org)
+- Billy Yuen, Alexander Matyushentsev, Todd Ekenstam, Jesse Suen (z-lib.org)
