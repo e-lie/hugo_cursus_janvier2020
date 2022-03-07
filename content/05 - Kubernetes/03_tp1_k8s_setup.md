@@ -95,27 +95,27 @@ Un cluster Kubernetes a généralement un namespace appelé `default` dans leque
 
 Nous allons maintenant déployer une première application conteneurisée. Le déploiement est un peu plus complexe qu'avec Docker, en particulier car il est séparé en plusieurs objets et plus configurable.
 
-- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment rancher-demo --image=monachus/rancher-demo`.
+- Pour créer un déploiement en ligne de commande (par opposition au mode déclaratif que nous verrons plus loin), on peut lancer par exemple: `kubectl create deployment demonstration --image=monachus/rancher-demo`.
 
-Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/rancher-demo`.
+Cette commande crée un objet de type `deployment`. Nous pourvons étudier ce deployment avec la commande `kubectl describe deployment/demonstration`.
 
 - Notez la liste des événements sur ce déploiement en bas de la description.
 - De la même façon que dans la partie précédente, listez les `pods` avec `kubectl`. Combien y en a-t-il ?
 
-- Agrandissons ce déploiement avec `kubectl scale deployment rancher-demo --replicas=5`
-- `kubectl describe deployment/rancher-demo` permet de constater que le service est bien passé à 5 replicas.
+- Agrandissons ce déploiement avec `kubectl scale deployment demonstration --replicas=5`
+- `kubectl describe deployment/demonstration` permet de constater que le service est bien passé à 5 replicas.
   - Observez à nouveau la liste des évènements, le scaling y est enregistré...
   - Listez les pods pour constater
 
 A ce stade impossible d'afficher l'application : le déploiement n'est pas encore accessible de l'extérieur du cluster. Pour régler cela nous devons l'exposer grace à un service :
 
-- `kubectl expose deployment rancher-demo --type=NodePort --port=8080 --name=rancher-demo-service`
+- `kubectl expose deployment demonstration --type=NodePort --port=8080 --name=demonstration-service`
 
 - Affichons la liste des services pour voir le résultat: `kubectl get services`
 
 Un service permet de créer un point d'accès unique exposant notre déploiement. Ici nous utilisons le type Nodeport car nous voulons que le service soit accessible de l'extérieur par l'intermédiaire d'un forwarding de port.
 
-Avec minikube ce forwarding de port doit être concrêtisé avec la commande `minikube service rancher-demo-service`. Normalement la page s'ouvre automatiquement et nous voyons notre application.
+Avec minikube ce forwarding de port doit être concrêtisé avec la commande `minikube service demonstration-service`. Normalement la page s'ouvre automatiquement et nous voyons notre application.
 
 - Sauriez-vous expliquer ce que l'app fait ?
 - Pour le comprendre ou le confirmer, diminuez le nombre de réplicats à l'aide de la commande utilisée précédement pour passer à 5 réplicats. Qu se passe-t-il ?
@@ -123,7 +123,7 @@ Avec minikube ce forwarding de port doit être concrêtisé avec la commande `mi
 
 Une autre méthode pour accéder à un service (quel que soit sont type) en mode développement est de forwarder le traffic par l'intermédiaire de kubectl (et des composants kube-proxy installés sur chaque noeuds du cluster).
 
-- Pour cela on peut par exemple lancer: `kubectl port-forward svc/rancher-demo-service 8080:8080 --address 127.0.0.1`
+- Pour cela on peut par exemple lancer: `kubectl port-forward svc/demonstration-service 8080:8080 --address 127.0.0.1`
 - Vous pouvez désormais accéder à votre app via via kubectl sur: `http://localhost:8080`. Quelle différence avec l'exposition précédente via minikube ?
 
 => Un seul conteneur s'affiche. En effet `kubectl port-forward` sert à créer une connexion de developpement/debug qui pointe toujours vers le même pod en arrière plan.
