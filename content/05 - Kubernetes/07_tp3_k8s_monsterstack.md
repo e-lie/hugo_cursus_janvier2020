@@ -147,7 +147,22 @@ spec:
             - containerPort: 5000
 ```
 
-L'image `monstericon` de ce déploiement n'existe pas sur le dockerhub. Elle doit être construite à partir du `Dockerfile` et nous allons utiliser `skaffold` pour cela.
+L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`. Nous allons utiliser `skaffold` pour cela.
+Il y a plusieurs possibilités :
+- utiliser **minikube** : minikube a la capacité de se connecter au registry de notre installation Docker locale
+- **sur k3s ou sur un cluster cloud** : pousser à chaque itération notre image sur un registry distant (Docker Hub)
+  - pour ce faire, il faut éditer le fichier `skaffold.yaml` et le fichier de **Deployment** correspondant pour remplacer le nom de l'image `monstericon` pour faire référence à l'adresse à laquelle on souhaite pousser l'image sur le registry distant (ex: `docker.io/MON_COMPTE_DOCKER_HUB/monstericon`)
+  - il est possible qu'il faille ajouter au même niveau que `artifacts:` dans le fichier `skaffold.yaml` ceci :
+```yaml
+  local:
+    push: true
+```
+  - heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build
+- (plus long) configurer un registry local (en Docker ou en Kubernetes) auquel Skaffold et Kubernetes peuvent accéder
+  - c'est plus long car il faut simplement configurer les certificats HTTPS ou expliciter que l'on peut utiliser un registry non sécurisé (HTTP)
+  - ensuite il suffit de déployer un registry tout simple (l'image officielle `registry:2`) ou plus avancé ([Harbour](https://goharbor.io/) par exemple)
+- (plus avancé) utiliser Kaniko, un programme de Google qui permet de builder directement dans le cluster Kubernetes : https://skaffold.dev/docs/pipeline-stages/builders/docker/#dockerfile-in-cluster-with-kaniko
+
 
 - Observons le fichier `skaffold.yaml`
 - Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici le registry docker local et `kubectl`)
