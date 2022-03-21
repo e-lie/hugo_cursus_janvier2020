@@ -162,8 +162,13 @@ Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance
 On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 
-<!-- ## Remarque sur les clusters hybrides
+## Quelques PaaS (Plateforme as a Service) basés sur Kubernetes
 
+- **Rancher**: Un écosystème Kubernetes très complet, assez _opinionated_ et entièrement open-source, non lié à un fournisseur de cloud. Inclut l'installation de stack de monitoring (Prometheus), de logging, de réseau mesh (Istio) via une interface web agréable. Rancher maintient aussi de nombreuses solutions open source, comme par exemple Longhorn pour le stockage distribué.
+- **Openshift** : Une version de Kubernetes configurée et optimisée par Red Hat pour être utilisée dans son écosystème. Elle intègre notamment du monitoring et monitoring, Jenkins&Tekton pour le déploiement, un registry d'image etc. Tout est intégré avec l'inconvénient d'être un peu captif·ve de l'écosystème et des services vendus par Red Hat.
+- **BKPR** une couche de PaaS générique à installer sur n'importe quel cluster.
+
+<!-- ## Remarque sur les clusters hybrides
 Il est possible de connecter plusieurs clusters ensemble dans le cloud chez plusieurs fournisseurs -->
 ### Bibliographie pour approfondir le choix d'une distribution Kubernetes :
 
