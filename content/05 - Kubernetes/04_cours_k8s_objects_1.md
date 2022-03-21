@@ -182,6 +182,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: rancher-demo-pod
+  labels:
+    app: rancher-demo
 spec:
   containers:
     - image: monachus/rancher-demo:latest
