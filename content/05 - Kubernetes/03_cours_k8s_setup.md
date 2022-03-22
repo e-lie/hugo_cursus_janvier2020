@@ -1,7 +1,7 @@
 ---
 title: 03 - Cours - Mettre en place un cluster Kubernetes
 draft: false
-weight: 2020
+weight: 2025
 ---
 
 ## Architecture de Kubernetes

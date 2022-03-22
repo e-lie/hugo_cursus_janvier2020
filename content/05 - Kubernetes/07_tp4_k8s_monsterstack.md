@@ -1,6 +1,6 @@
 ---
 title: "07 - TP 4 - Déployer une application multiconteneurs"
-draft: true
+draft: false
 weight: 2050
 ---
 

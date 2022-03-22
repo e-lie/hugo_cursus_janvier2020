@@ -1,7 +1,7 @@
 ---
 title: 02 - TP1 - Découvrir la cli kubectl et dépoyer une application
 draft: false
-weight: 2025
+weight: 2015
 ---
 
 Au cours de nos TPs nous allons passer rapidement en revue quelques manières de mettre en place Kubernetes :
