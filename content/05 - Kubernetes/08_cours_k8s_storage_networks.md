@@ -40,6 +40,7 @@ Mentionnons quelques d'usage de base des volumes:
 - `emptyDir`: un dossier temporaire qui est supprimé en même temps que le pod
 - `configMap`: pour monter des fichiers de configurations provenant du cluster à l'intérieur des pods
 - `secret`: pour monter un secret (configuration) provenant du cluster à l'intérieur des pods
+- `nfs`: stockage réseau classique
 - `cephfs`: monter un volume ceph provenant d'un ceph installé sur le cluster
 - etc.
 

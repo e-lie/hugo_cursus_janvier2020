@@ -135,7 +135,7 @@ Pour exposer cette application en production sur un véritable cluster, nous dev
 
 #### Simplifier les lignes de commande k8s
 
-- Pour gagner du temps on dans les commandes Kubernetes on peut définir un alias: `alias kc='kubectl'` (à mettre dans votre `.bash_profile` en faisant `echo "alias kc='kubectl'" >> ~/.bash_profile`, puis en faisant `source ~/.bash_profile`).
+- Pour gagner du temps on dans les commandes Kubernetes on peut définir un alias: `alias kc='kubectl'` (à mettre dans votre `.bashrc` en faisant `echo "alias kc='kubectl'" >> ~/.bashrc`, puis en faisant `source ~/.bashrc`).
 - Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
 
 - Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :

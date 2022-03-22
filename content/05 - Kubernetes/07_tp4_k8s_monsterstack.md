@@ -9,60 +9,42 @@ Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
 
-- d'un front-end en Flask (Python) appelé `monstericon`,
-- d'un service de backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères) appelé `dnmonster`
-- et d'un datastore `redis` servant de cache pour les images de monstericon
+- d'un frontend en Flask (Python),
+- d'un service de backend qui génère des images (un avatar de monstre correspondant à une chaîne de caractères)
+- et d'un datastore `redis` servant de cache pour les images de l'application
 
-Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `monstericon` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans `minikube`.
+Nous allons également utiliser le builder kubernetes `skaffold` pour déployer l'application en mode développement : l'image du frontend `frontend` sera construite à partir du code source présent dans le dossier `app` et automatiquement déployée dans le cluster (`minikube` ou `k3s`).
 
 # Etudions le code et testons avec `docker-compose`
 
-- Monstericon est une application web python (flask) qui propose un petit formulaire et lance une requete sur le backend pour chercher une image et l'afficher.
-- Monstericon est construit à partir du `Dockerfile` présent dans le dossier `TP3`.
+- Le frontend est une application web python (flask) qui propose un petit formulaire et lance une requete sur le backend pour chercher une image et l'afficher.
+- Il est construit à partir du `Dockerfile` présent dans le dossier `TP3`.
 - Le fichier `docker-compose.yml` est utile pour faire tourner les trois services de l'application dans docker rapidement (plus simple que kubernetes)
 
 Pour lancer l'application il suffit d'exécuter: `docker-compose up`
 
 Passons maintenant à Kubernetes.
 
-## Utiliser Kompose (facultatif)
+## Déploiements pour le backend d'image (`imagebackend`) et le datastore `redis`
 
-Explorer avec Kompose comment on peut traduire un fichier `docker-compose.yml` en ressources Kubernetes (ce sont les instructions à la page suivante : https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/.
+Maintenant nous allons également créer un déploiement pour `imagebackend`:
 
-En général il est recommandé de coder les ressources Kubernetes à la main comme nous allons le faire dans la partie suivante. Mais kompose peut être intéressant pour démarre un portage d'une application de docker vers kubernetes et pour bien comprendre l'équivalence des objets docker-compose et kubernetes.
+- créez `imagebackend.yaml` dans le dossier `k8s-deploy` et collez-y le code suivant :
 
-Pour l'essayer installons d'abord Kompose :
-
-```bash
-# Linux
-curl -L https://github.com/kubernetes/kompose/releases/download/v1.16.0/kompose-linux-amd64 -o kompose
-
-chmod +x kompose
-sudo mv ./kompose /usr/local/bin/kompose
-```
-
-Puis, utilisons la commande `kompose convert` et observons les fichiers générés. On peut aussi faire `kompose up`, qui regroupe `kompose convert` et `kubectl apply` avec les ressources créées à partir du fichier Compose.
-
-## Déploiements pour le backend d'image `dnmonster` et le datastore `redis`
-
-Maintenant nous allons également créer un déploiement pour `dnmonster`:
-
-- créez `dnmonster.yaml` dans le dossier `k8s-deploy-dev` et collez-y le code suivant :
-
-`dnmonster.yaml` :
+`imagebackend.yaml` :
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dnmonster
+  name: imagebackend
   labels:
     app: monsterstack
 spec:
   selector:
     matchLabels:
       app: monsterstack
-      partie: dnmonster
+      partie: imagebackend
   strategy:
     type: Recreate
   replicas: 5
@@ -70,14 +52,14 @@ spec:
     metadata:
       labels:
         app: monsterstack
-        partie: dnmonster
+        partie: imagebackend
     spec:
       containers:
         - image: amouat/dnmonster:1.0
-          name: dnmonster
+          name: imagebackend
           ports:
             - containerPort: 8080
-              name: dnmonster
+              name: imagebackend
 ```
 
 - Ensuite, configurons un deuxième deployment `redis.yaml`:
@@ -111,26 +93,67 @@ spec:
               name: redis
 ```
 
-- Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
-
 - Appliquez ces ressources avec `kubectl` et vérifiez dans `Lens` que les 5 + 1 réplicats sont bien lancés.
 
-## Déploiement du frontend `monstericon`
+## Installer et configurer skaffold
 
-Ajoutez au fichier `monstericon.yml` du dossier `k8s-deploy-dev` le code suivant:
+Par rapport au workflow de développement docker, nous avons ici une difficultée : construire l'image avec `docker build` ou `docker-compose` ajoute bien l'image à notre installation docker en local mais cette image n'est pas automatiquement accessible depuis notre cluster (k3s ou minikube).
+
+=> Si on essaye de déployer l'image frontend en créant un déploiement nous auront donc une erreur `ErrImagePull` et le pod ne se lancera pas.
+
+Pour remédier à ce problème dans les situations de développement simple on peut utiliser deux méthodes classiques:
+
+- utiliser `minikube` et son intégration avec Docker tel qu'expliqué ici: https://minikube.sigs.k8s.io/docs/handbook/pushing/#1-pushing-directly-to-the-in-cluster-docker-daemon-docker-env. Une fois la commande `eval $(minikube docker-env)` lancée les commande type `docker build` contruiront l'image directement dans le cluster.
+
+- Accéder à ou héberger un service de registry d'images docker un pour pouvoir pousser nos builds d'images dedans et ensuite les télécharger dans le cluster. <!-- TODO (Voir le cours **Problématiques pratiques de production** pour une discussion sur les différentes options de registries) -->
+
+Cette seconde solution est générique et correspond au processus général de déploiement dans kubernetes. Le problème en situation de développement est que ce processus de build et push docker à chaque modification est très/trop lent et fatiguant en pratique. Heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build mais cela ne règle pas le fond du problème du processus manuel répétif qui viens gréver le développement.
+
+La solution puissante et générique choisie dans ce TP pour avoir un workflow développement confortable et compatible avec `minikube`, `k3s` ou tout autre distribution kubernetes est l'utilisation de `skaffold` en plus d'un registry d'image dédié au développement.
+
+- Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
+- Déployons ensuite un registry de base (insecure => en prod il faudrait utiliser une solution plus avancée ou au moins un registry configuré en https) : `docker run -d -p 0.0.0.0:5555:5000 --restart=always --name registry registry:2`.
+
+Ce registry sera accessible sur le domaine de votre instance (xubuntu/k3s) : `<votrenom>.<domaine>` à demander au formateur (exemple : jacques.k8s.domaine.tld) et sur le port `5555`.
+
+- Configurons Docker pour accepter cette insécurité avec la commande (bien remplacer le domaine pour votre cas):
+
+```bash
+echo '{"insecure-registries": ["<votrenom>.<domaine>:5555"]}' | sudo tee /etc/docker/daemon.json
+sudo systemctl reload docker
+```
+- Créez ou modifiez un fichier `skaffold.yaml` avec le contenu :
+
+```yaml
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+  - image: <votrenom>.<domaine>:5555/frontend
+deploy:
+  kubectl:
+    manifests:
+      - k8s-deploy/*.yaml
+```
+
+`skaffold dev --tail=false`
+
+## Déploiement du `frontend`
+
+Ajoutez au fichier `frontend.yml` du dossier `k8s-deploy` le code suivant:
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: monstericon
+  name: frontend
   labels:
     app: monsterstack
 spec:
   selector:
     matchLabels:
       app: monsterstack
-      partie: monstericon
+      partie: frontend
   strategy:
     type: Recreate
   replicas: 3
@@ -138,30 +161,16 @@ spec:
     metadata:
       labels:
         app: monsterstack
-        partie: monstericon
+        partie: frontend
     spec:
       containers:
-        - name: monstericon
-          image: monstericon
+        - name: frontend
+          image: frontend
           ports:
             - containerPort: 5000
 ```
 
-L'image `monstericon` de ce déploiement n'existe pas sur le Docker Hub, et notre Kubernetes doit pouvoir accéder à la nouvelle version de l'image construite à partir du `Dockerfile`. Nous allons utiliser `skaffold` pour cela.
-Il y a plusieurs possibilités :
-- utiliser **minikube** : minikube a la capacité de se connecter au registry de notre installation Docker locale
-- **sur k3s ou sur un cluster cloud** : pousser à chaque itération notre image sur un registry distant (Docker Hub)
-  - pour ce faire, il faut éditer le fichier `skaffold.yaml` et le fichier de **Deployment** correspondant pour remplacer le nom de l'image `monstericon` pour faire référence à l'adresse à laquelle on souhaite pousser l'image sur le registry distant (ex: `docker.io/MON_COMPTE_DOCKER_HUB/monstericon`)
-  - il est possible qu'il faille ajouter au même niveau que `artifacts:` dans le fichier `skaffold.yaml` ceci :
-```yaml
-  local:
-    push: true
-```
-  - heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build
-- (plus long) configurer un registry local (en Docker ou en Kubernetes) auquel Skaffold et Kubernetes peuvent accéder
-  - c'est plus long car il faut simplement configurer les certificats HTTPS ou expliciter que l'on peut utiliser un registry non sécurisé (HTTP)
-  - ensuite il suffit de déployer un registry tout simple (l'image officielle `registry:2`) ou plus avancé ([Harbour](https://goharbor.io/) par exemple)
-- (plus avancé) utiliser Kaniko, un programme de Google qui permet de builder directement dans le cluster Kubernetes : https://skaffold.dev/docs/pipeline-stages/builders/docker/#dockerfile-in-cluster-with-kaniko
+
 
 
 - Observons le fichier `skaffold.yaml`
@@ -202,7 +211,7 @@ La **readinessProbe** est un test qui s'assure que l'application est prête à r
 
 #### Configuration d'une application avec des variables d'environnement simples
 
-- Notre application monstericon peut être configurée en mode DEV ou PROD. Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous mettons l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
+- Notre application frontend peut être configurée en mode DEV ou PROD. Pour cela elle attend une variable d'environnement `CONTEXT` pour lui indiquer si elle doit se lancer en mode `PROD` ou en mode `DEV`. Ici nous mettons l'environnement `DEV` en ajoutant (aligné avec la livenessProbe):
 
 ```yaml
 env:
@@ -227,7 +236,7 @@ resources:
 Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.
 
 - Relancer `skaffold run` pour appliquer les modifications.
-- Avec `kubectl describe deployment monstericon`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`.
+- Avec `kubectl describe deployment frontend`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`.
 
 #### Exposer notre stack avec des services
 
@@ -254,14 +263,14 @@ spec:
 
 Ajoutez le code précédent au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
 
-<!-- - le nom du service et le nom du tier par le nom de notre programme (`monstericon` et `dnmonster`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`monstericon`, `dnmonster` et `redis`) - le port par le port du service
+<!-- - le nom du service et le nom du tier par le nom de notre programme (`frontend` et `imagebackend`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`frontend`, `imagebackend` et `redis`) - le port par le port du service
 <!-- - pourquoi pas selector = celui du deployment? --> - les selectors `app` et `partie` par ceux du pod correspondant.
 
-Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `monstericon`.
+Le type sera : `ClusterIP` pour `imagebackend` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `frontend`.
 
 - Appliquez à nouveau avec `skaffold run`.
 - Listez les services avec `kubectl get services`.
-- Visitez votre application dans le navigateur avec `minikube service monstericon`.
+- Visitez votre application dans le navigateur avec `minikube service frontend`.
 - Supprimez l'application avec `skaffold delete`.
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
@@ -274,7 +283,7 @@ Le type sera : `ClusterIP` pour `dnmonster` et `redis`, car ce sont des services
 
 Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'adaptant directement aux objets services k8s) basée sur nginx configurée pour s'interfacer avec un cluster k8s.
 
-- Repassez le service `monstericon` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utiliser l'ingress à la place pour afficher la page.
+- Repassez le service `frontend` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utiliser l'ingress à la place pour afficher la page.
 
 - Ajoutez également l'objet `Ingress` suivant dans le fichier `monster-ingress.yaml` :
 
@@ -293,7 +302,7 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: monstericon
+              serviceName: frontend
               servicePort: 5000
 ```
 
@@ -311,7 +320,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: monstericon
+                name: frontend
                 port:
                   number: 5000
 ```
