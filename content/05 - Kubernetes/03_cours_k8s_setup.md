@@ -1,5 +1,5 @@
 ---
-title: 02 - Cours - Mettre en place un cluster Kubernetes
+title: 03 - Cours - Mettre en place un cluster Kubernetes
 draft: false
 weight: 2020
 ---
@@ -38,17 +38,7 @@ L'ensemble de la configuration kubernetes est stockée de façon résiliante (co
 `etcd` peut être installé de façon redondante sur les noeuds du control plane ou configuré comme un système externe sur un autre ensemble de serveurs.
 
 Lien vers la documentation pour plus de détails sur les composants : https://kubernetes.io/docs/concepts/overview/components/
-## Interagir avec le cluster : le client CLI `kubectl`
 
-En pratique on interagit avec le cluster à l'aide d'un client CLI depuis sa machine de travail. Ce client se charge de traduire en appel d'API les commandes de manipulation.
-Cette cli ressemble sous pas mal d'aspect à celle de Docker (cf. TP1 et TP2). Elle permet de :
-
-- Lister les ressources
-- Créer et supprimer les ressources
-- Gérer les droits d'accès
-- etc.
-
-`kubectl` s'installe avec un gestionnaire de paquet classique mais est souvent fourni directement avec les distributions de développement de kubernetes que nous verrons par la suite.
 
 #### Configuration de connexion `kubeconfig`
 

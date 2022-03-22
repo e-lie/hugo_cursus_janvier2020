@@ -1,19 +1,83 @@
 ---
 draft: true
-title: 08 - Cours - Le réseau dans Kubernetes
+title: 08 - Cours - Le stockage et le réseau dans Kubernetes
 weight: 2052
 ---
 
-Les solutions réseau dans Kubernetes ne sont pas standard.
-Il existe plusieurs façons d'implémenter le réseau.
+## Le stockage dans Kubernetes
 
-## Rappel, les objets Services
+### Les Volumes Kubernetes
+
+Comme dans Docker, Kubernetes fournit la possibilité de monter des volumes virtuels dans les conteneurs de nos pod. On liste séparément les volumes de notre pod puis on les monte une ou plusieurs dans les différents conteneurs. Exemple:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: k8s.gcr.io/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-pd
+      name: test-volume
+  volumes:
+  - name: test-volume
+    hostPath:
+      # chemin du dossier sur l'hôte
+      path: /data
+      # ce champ est optionnel
+      type: Directory
+```
+
+La problématique des volumes et du stockage est plus compliquée dans kubernetes que dans docker car k8s cherche à répondre à de nombreux cas d'usages. [doc officielle](https://kubernetes.io/fr/docs/concepts/storage/volumes/). Il y a donc de nombeux types de volumes kubernetes correspondants à des usages de base et aux solutions proposées par les principaux fournisseurs de cloud.
+
+Mentionnons quelques d'usage de base des volumes:
+
+- `hostPath`: monte un dossier du noeud ou est plannifié le pod à l'intérieur du conteneur.
+- `local`: comme hostPath mais conscient de la situation physique du volume sur le noeud et à combiner avec les placements de pods avec `nodeAffinity`
+- `emptyDir`: un dossier temporaire qui est supprimé en même temps que le pod
+- `configMap`: pour monter des fichiers de configurations provenant du cluster à l'intérieur des pods
+- `secret`: pour monter un secret (configuration) provenant du cluster à l'intérieur des pods
+- `cephfs`: monter un volume ceph provenant d'un ceph installé sur le cluster
+- etc.
+
+En plus de la gestion manuelle des volumes avec les option précédentes, kubernetes permet de provisionner dynamiquement du stockage en utilisant des plugins de création de volume grâce à 3 types d'objets: `StorageClass` `PersistentVolume` et `PersistentVolumeClaim`.
+### Les types de stockage avec les `StorageClasses`
+
+Le stockage dynamique dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
+
+- dans le cloud, ce sont les différentes offres de volumes du fournisseur,
+- dans un cluster auto-hébergé c'est par exemple des opérateurs de stockage comme `rook.io` ou `longhorn`(Rancher).
+
+[doc officielle](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+
+### Demander des volumes et les liers aux pods :`PersistentVolumes` et `PersistentVolumeClaims`
+
+Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : une demande de volume (persistant). Si un des objets *StorageClass* est en capacité de le fournir, alors un *PersistentVolume* est créé et lié à ce conteneur : il devient disponible en tant que volume monté dans le conteneur.
+
+- les *StorageClasses* fournissent du stockage
+- les conteneurs demandent du volume avec les *PersistentVolumeClaims*
+- les *StorageClasses* répondent aux *PersistentVolumeClaims* en créant des objets *PersistentVolumes* : le conteneur peut accéder à son volume.
+
+[doc officielle](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+
+Le provisionning de `PersistentVolume` peut être manuel (on crée un objet `PersistentVolume` en amont ou non. Dans le second cas la création d'un `PersistentVolumeClaim` mène directement à la création d'un volume si possible)
+
+## Problématiques réseau
+
+<!-- Partie 1 a développer dans une partie avancée -->
+
+### Rappel, les objets Services
 
 <!-- 
 https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0
  -->
 
-Les Services sont de trois types principaux :
+Le `Service` kubernetes est un objet qui sert à fournir un endpoint dynamique pour contacter plusieurs backend/pods sur leur adresses IP variables, fournir un nom de domaine interne et éventuellement une stratégie d'exposition vers l'extérieur du cluster.
+
+Les Services peuvent être de plusieurs type :
 
 - `ClusterIP`: expose le service **sur une IP interne** au cluster appelée ClusterIP. Les autres pods peuvent alors accéder au service mais pas l'extérieur.
 
@@ -27,6 +91,15 @@ Les Services sont de trois types principaux :
 ![](../../images/kubernetes/loadbalancer.png?width=400px)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
 
+<!-- Un 4e type existe, il est moins utilisé :
+- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
+
+<!-- - On peut aussi créer des services *headless* en spécifiant `ClusterIP: none` pour les communications internes au cluster, non basées sur les IP. -->
+
+<!-- ## Le DNS des services et le `kube-proxy`
+
+TODO Routing internodes -->
+
 ### Fournir des services LoadBalancer on premise avec `MetalLB`
 
 Dans un cluster managé provenant d'un fournisseur de cloud, la création d'un objet Service Lodbalancer entraine le provisionning d'une nouvelle machine de loadbalancing à l'extérieur du cluster avec une IPv4 publique grâce à l'offre d'IaaS du provideur (impliquant des frais supplémentaires).
@@ -38,7 +111,6 @@ Cette intégration n'existe pas par défaut dans les clusters de dev comme minik
 
 ![](../../images/kubernetes/ingress.png)
 *Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
-
 
 Un Ingress est un objet pour gérer dynamiquement le **reverse proxy** HTTP/HTTPS dans Kubernetes. Documentation: https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress
 
@@ -135,14 +207,6 @@ spec:
               number: 80
 ```
 
-## Le mesh networking et les *service meshes*
-
-Un **service mesh** est un type d'outil réseau pour connecter un ensemble de pods, généralement les parties d'une application microservices de façon encore plus intégrée que ne le permet Kubernetes.
-
-En effet opérer une application composée de nombreux services fortement couplés discutant sur le réseau implique des besoins particuliers en terme de routage des requêtes, sécurité et monitoring qui nécessite l'installation d'outils fortement dynamique autour des nos conteneurs.
-
-Un exemple de service mesh est `https://istio.io` qui, en ajoutant en conteneur "sidecar" à chacun des pods à supervisés, ajoute à notre application microservice un ensemble de fonctionnalités d'intégration très puissant. 
-
 ## CNI (container network interface) : Les implémentations du réseau Kubernetes
 
 Beaucoup de solutions de réseau qui se concurrencent, demandant un comparatif un peu fastidieux.
@@ -160,6 +224,25 @@ Beaucoup de solutions de réseau qui se concurrencent, demandant un comparatif u
 Comparaisons :
 - <https://www.objectif-libre.com/fr/blog/2018/07/05/comparatif-solutions-reseaux-kubernetes/>
 - <https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/>
+
+## Vidéos
+
+Des vidéos assez complètes sur le réseau, faites par Calico :
+- [Kubernetes Ingress networking](https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5)
+- [Kubernetes Services networking](https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4)
+- [Kubernetes networking on Azure](https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2)
+
+Sur MetalLB, les autres vidéos de la chaîne sont très intéressantes également :
+- [Why you need to use MetalLB -  Adrian Goins](https://www.youtube.com/watch?v=Ytc24Y0YrXE)
+
+
+## Le mesh networking et les *service meshes*
+
+Un **service mesh** est un type d'outil réseau pour connecter un ensemble de pods, généralement les parties d'une application microservices de façon encore plus intégrée que ne le permet Kubernetes.
+
+En effet opérer une application composée de nombreux services fortement couplés discutant sur le réseau implique des besoins particuliers en terme de routage des requêtes, sécurité et monitoring qui nécessite l'installation d'outils fortement dynamique autour des nos conteneurs.
+
+Un exemple de service mesh est `https://istio.io` qui, en ajoutant en conteneur "sidecar" à chacun des pods à supervisés, ajoute à notre application microservice un ensemble de fonctionnalités d'intégration très puissant. 
 
 ## Les network policies : des firewalls dans le cluster
 
@@ -184,15 +267,7 @@ Les pods deviennent isolés en ayant une NetworkPolicy qui les sélectionne. Une
 
 - [Doc officielle sur les solutions de networking](https://kubernetes.io/docs/concepts/cluster-administration/networking/)
 
-### Vidéos
 
-Des vidéos assez complètes sur le réseau, faites par Calico :
-- [Kubernetes Ingress networking](https://www.youtube.com/watch?v=40VfZ_nIFWI&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=5)
-- [Kubernetes Services networking](https://www.youtube.com/watch?v=NFApeJRXos4&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=4)
-- [Kubernetes networking on Azure](https://www.youtube.com/watch?v=JyLtg_SJ1lo&list=PLoWxE_5hnZUZMWrEON3wxMBoIZvweGeiq&index=2)
-
-Sur MetalLB, les autres vidéos de la chaîne sont très bien :
-- [Why you need to use MetalLB -  Adrian Goins](https://www.youtube.com/watch?v=Ytc24Y0YrXE)
 
 
 <!-- 

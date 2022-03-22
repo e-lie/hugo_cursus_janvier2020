@@ -1,5 +1,5 @@
 ---
-title: "06 - Rappels Docker"
+title: "Rappels Docker"
 draft: false
 weight: 2048
 ---

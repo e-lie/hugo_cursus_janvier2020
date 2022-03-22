@@ -1,5 +1,5 @@
 ---
-title: "07 - TP 3 - Déployer des conteneurs de A à Z"
+title: "07 - TP 4 - Déployer une application multiconteneurs"
 draft: true
 weight: 2050
 ---

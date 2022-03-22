@@ -5,66 +5,46 @@ weight: 2060
 ---
 
 
-## Le stockage dans Kubernetes
+## Les autres types de Workloads Kubernetes
 
-### Les Volumes Kubernetes
+![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
 
-Comme dans Docker, Kubernetes fournit la possibilité de mondes volumes virtuels dans les conteneurs de nos pod. On liste séparément les volumes de notre pod puis on les monte une ou plusieurs dans les différents conteneurs Exemple:
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test-pd
-spec:
-  containers:
-  - image: k8s.gcr.io/test-webserver
-    name: test-container
-    volumeMounts:
-    - mountPath: /test-pd
-      name: test-volume
-  volumes:
-  - name: test-volume
-    hostPath:
-      # chemin du dossier sur l'hôte
-      path: /data
-      # ce champ est optionnel
-      type: Directory
-```
+En plus du déploiement d'un application, Il existe pleins d'autre raisons de créer un ensemble de Pods:
 
-La problématique des volumes et du stockage est plus compliquée dans kubernetes que dans docker car k8s cherche à répondre à de nombreux cas d'usages. [doc officielle](https://kubernetes.io/fr/docs/concepts/storage/volumes/). Il y a donc de nombeux types de volumes kubernetes correspondants à des usages de base et aux solutions proposées par les principaux fournisseurs de cloud.
+- Le **DaemonSet**: Faire tourner un agent ou démon sur chaque nœud, par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
+- Le **Job** : Effectuer une tache unique de durée limitée et ponctuelle, par exemple de nettoyage d'un volume ou la préparation initiale d'une application, etc.
+- Le **CronJob** : Effectuer une tache unique de durée limitée et récurrente, par exemple de backup ou de régénération de certificat, etc.
 
-Mentionnons quelques d'usage de base des volumes:
+De plus même pour faire tourner une application, les déploiements ne sont pas toujours suffisants. En effet ils sont peu adaptés à des applications statefull comme les bases de données de toutes sortes qui ont besoin de persister des données critiques. Pour celà on utilise un **StatefulSet** que nous verrons par la suite.
 
-- `hostPath`: monte un dossier du noeud ou est plannifié le pod à l'intérieur du conteneur.
-- `local`: comme hostPath mais conscient de la situation physique du volume sur le noeud et à combiner avec les placements de pods avec `nodeAffinity`
-- `emptyDir`: un dossier temporaire qui est supprimé en même temps que le pod
-- `configMap`: pour monter des fichiers de configurations provenant du cluster à l'intérieur des pods
-- `secret`: pour monter un secret (configuration) provenant du cluster à l'intérieur des pods
-- `cephfs`: monter un volume ceph provenant d'un ceph installé sur le cluster
-- etc.
+Étant donné les similitudes entre les DaemonSets, les StatefulSets et les Deployments, il est important de comprendre un peu précisément quand les utiliser.
 
-En plus de la gestion manuelle des volumes avec les option précédentes, kubernetes permet de provisionner dynamiquement du stockage en utilisant des plugins de création de volume grâce à 3 types d'objets: `StorageClass` `PersistentVolume` et `PersistentVolumeClaim`.
-### Les types de stockage avec les `StorageClasses`
+Les **Deployments** (liés à des ReplicaSets) doivent être utilisés :
 
-Le stockage dynamique dans Kubernetes est fourni à travers des types de stockage appelés *StorageClasses* :
+  - lorsque votre application est complètement découplée du nœud
+  - que vous pouvez en exécuter plusieurs copies sur un nœud donné sans considération particulière
+  - que l'ordre de création des replicas et le nom des pods n'est pas important
+  - lorsqu'on fait des opérations *stateless*
 
-- dans le cloud, ce sont les différentes offres de volumes du fournisseur,
-- dans un cluster auto-hébergé c'est par exemple des opérateurs de stockage comme `rook.io` ou `longhorn`(Rancher).
+Les **DaemonSets** doivent être utilisés :
+  - lorsqu'au moins une copie de votre application doit être exécutée sur tous les nœuds du cluster (ou sur un sous-ensemble de ces nœuds).
 
-[doc officielle](https://kubernetes.io/docs/concepts/storage/storage-classes/)
+Les **StatefulSets** doivent être utilisés :
+  - lorsque l'ordre de création des replicas et le nom des pods est important
+  - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
 
-### Demander des volumes et les liers aux pods :`PersistentVolumes` et `PersistentVolumeClaims`
+### Jobs
 
-Quand un conteneur a besoin d'un volume, il crée une *PersistentVolumeClaim* : une demande de volume (persistant). Si un des objets *StorageClass* est en capacité de le fournir, alors un *PersistentVolume* est créé et lié à ce conteneur : il devient disponible en tant que volume monté dans le conteneur.
+Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod dans un deployment:
 
-- les *StorageClasses* fournissent du stockage
-- les conteneurs demandent du volume avec les *PersistentVolumeClaims*
-- les *StorageClasses* répondent aux *PersistentVolumeClaims* en créant des objets *PersistentVolumes* : le conteneur peut accéder à son volume.
+- Dès que la migration se finit le processus du pod s'arrête.
+- Le **replicaset** qui détecte que l'"application" s'est arrêter va tenter de la redémarrer en recréant le pod.
+- Votre tâche de migration de base de données se déroulera donc en boucle, en repeuplant continuellement la base de données.
 
-[doc officielle](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
+### CronJobs
 
-Le provisionning de volume peut être manuelle (on crée un objet `PersistentVolume` ou non la `PersistentVolumeClaim` mène directement à la création d'un volume persistant si possible)
+Comme des jobs, mais se lancent à un intervalle régulier, comme les `cron` sur les systèmes unix.
 
 ### Des déploiements plus stables et précautionneux : les StatefulSets
 

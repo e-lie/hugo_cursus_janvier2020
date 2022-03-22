@@ -138,20 +138,20 @@ Un des intérêts principaux de Kubernetes est de fournir un modèle de Platefor
 
 Cependant cette interopérabilité n'est pas automatique (pour les cas complexes) car Kubernetes permet beaucoup de variations. Concrètement il existe des variations entre les installations possibles de Kubernetes
 
-<!-- ## Distributions et "flavours" de Kubernetes
+## Distributions et "flavours" de Kubernetes
 
 Kubernetes est avant tout un ensemble de standards qui peuvent avoir des implémentations concurrentes. Il existe beaucoup de variétés (**flavours**) de Kubernetes, implémentant concrètement les solutions techniques derrière tout ce que Kubernetes ne fait que définir : solutions réseau, stockage (distribué ou non), loadbalancing, service de reverse proxy (Ingress), autoscaling de cluster (ajout de nouvelles VM au cluster automatiquement), monitoring…
 
-Il est très possible de monter un cluster Kubernetes en dehors de ces fournisseurs, mais cela demande de faire des choix (ou bien une solution _opinionated_ ouverte comme Rancher) et une relative maîtrise d'un nombre varié de sujets (bases de données, solutions de loadbalancing, redondance du stockage…).
+Nous verrons cela plus en détail dans la partie suivante.
 
-C'est là un tradeoff de kubernetes : tout est ouvert et standardisé, mais devant la (relative) complexité et connaissance nécessaire pour mettre en place sa propre solution (de stockage distribué par exemple) il est souvent préférable de louer un cluster chez un fournisseur quitte à retomber dans un certain [*vendor lock-in* (enfermement propriétaire)](https://fr.wikipedia.org/wiki/Enfermement_propri%C3%A9taire).
+## Interagir avec le cluster : le client CLI `kubectl`
 
-Quelques variantes connues de Kubernetes:
+En pratique on interagit avec le cluster à l'aide d'un client CLI depuis sa machine de travail (ou en ssh depuis un noeud master ou avec un VPN). Ce client se charge de traduire en appel d'API les commandes de manipulation.
+Cette cli ressemble sous pas mal d'aspect à celle de Docker (cf. TP1 et TP2). Elle permet de :
 
-- Google Kubernetes Engine (**GKE**) (Google Cloud Plateform): L'écosystème Kubernetes développé par Google. Très populaire car très flexible tout en étant l'implémentation de référence de Kubernetes.
-- Azure Kubernetes Services (**AKS**) (Microsoft Azure): Un écosystème Kubernetes axé sur l'intégration avec les services du cloud Azure (stockage, registry, réseau, monitoring, services de calcul, loadbalancing, bases de données…).
-- Elastic Kubernetes Services (**EKS**) (Amazon Web Services): Un écosystème Kubernetes assez standard à la sauce Amazon axé sur l'intégration avec le cloud Amazon (la gestion de l'accès, des loadbalancers ou du scaling notamment, le stockage avec Amazon EBS, etc.).
-- **Rancher**: Un écosystème Kubernetes très complet, assez _opinionated_ et entièrement open-source, non lié à un fournisseur de cloud. Inclut l'installation de stack de monitoring (Prometheus), de logging, de réseau mesh (Istio) via une interface web agréable. Rancher maintient aussi de nombreuses solutions open source, comme par exemple Longhorn pour le stockage distribué.
-- **K3S**: Un écosystème Kubernetes fait par l'entreprise Rancher et axé sur la légèreté. Il remplace `etcd` par une base de données Postgres, utilise Traefik pour l'ingress et Klipper pour le loadbalancing.
-- **Openshift** : Une version de Kubernetes configurée et optimisée par Red Hat pour être utilisée dans son écosystème. Tout est intégré donc plus guidé, avec l'inconvénient d'être un peu captif·ve de l'écosystème et des services vendus par Red Hat. -->
+- Lister les ressources
+- Créer et supprimer les ressources
+- Gérer les droits d'accès
+- etc.
 
+`kubectl` s'installe avec un gestionnaire de paquet classique mais est souvent fourni directement avec les distributions de développement de kubernetes que nous verrons par la suite.

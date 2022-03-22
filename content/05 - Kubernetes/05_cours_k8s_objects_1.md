@@ -334,7 +334,7 @@ En général on ne les manipule pas directement (c'est déconseillé) même s'il
 ### Les Services
 
 Dans Kubernetes, un **service** est un objet qui :
-- Désigne un ensemble de pods (grâce à des tags) généralement géré par un déploiement.
+- Désigne un ensemble de pods (grâce à des labels) généralement géré par un déploiement.
 - Fournit un endpoint réseau pour les requêtes à destination de ces pods.
 - Configure une politique permettant d’y accéder depuis l'intérieur ou l'extérieur du cluster.
 
@@ -349,7 +349,7 @@ L’abstraction du service permet ce découplage : les clients frontend s'addres
 <!-- Paragraphe aussi présent en haut du cours network -->
 Les Services sont de trois types principaux :
 
-- `ClusterIP`: expose le service **sur une IP interne** au cluster. Les autres pods peuvent alors accéder au service de l'intérieur du cluster, mais il n'est pas l'extérieur.
+- `ClusterIP`: expose le service **sur une IP interne** au cluster.
 
 - `NodePort`: expose le service depuis l'IP de **chacun des noeuds du cluster** en ouvrant un port directement sur le nœud, entre 30000 et 32767. Cela permet d'accéder aux pods internes répliqués. Comme l'IP est stable on peut faire pointer un DNS ou Loadbalancer classique dessus.
 
@@ -358,51 +358,3 @@ Les Services sont de trois types principaux :
 
 - `LoadBalancer`: expose le service en externe à l’aide d'un Loadbalancer de fournisseur de cloud. Les services NodePort et ClusterIP, vers lesquels le Loadbalancer est dirigé sont automatiquement créés.
 
-![](../../images/kubernetes/loadbalancer.png?width=400px)
-*Crédits [Ahmet Alp Balkan](https://medium.com/@ahmetb)*
-
-<!-- Un 4e type existe, il est moins utilisé :
-- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
-
-<!-- - On peut aussi créer des services *headless* en spécifiant `ClusterIP: none` pour les communications internes au cluster, non basées sur les IP. -->
-
-## Les autres types de Workloads Kubernetes
-
-![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
-
-
-En plus du déploiement d'un application, Il existe pleins d'autre raisons de créer un ensemble de Pods:
-
-- Le **DaemonSet**: Faire tourner un agent ou démon sur chaque nœud, par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
-- Le **Job** : Effectuer une tache unique de durée limitée et ponctuelle, par exemple de nettoyage d'un volume ou la préparation initiale d'une application, etc.
-- Le **CronJob** : Effectuer une tache unique de durée limitée et récurrente, par exemple de backup ou de régénération de certificat, etc.
-
-De plus même pour faire tourner une application, les déploiements ne sont pas toujours suffisants. En effet ils sont peu adaptés à des applications statefull comme les bases de données de toutes sortes qui ont besoin de persister des données critiques. Pour celà on utilise un **StatefulSet** que nous verrons par la suite.
-
-Étant donné les similitudes entre les DaemonSets, les StatefulSets et les Deployments, il est important de comprendre un peu précisément quand les utiliser.
-
-Les **Deployments** (liés à des ReplicaSets) doivent être utilisés :
-
-  - lorsque votre application est complètement découplée du nœud
-  - que vous pouvez en exécuter plusieurs copies sur un nœud donné sans considération particulière
-  - que l'ordre de création des replicas et le nom des pods n'est pas important
-  - lorsqu'on fait des opérations *stateless*
-
-Les **DaemonSets** doivent être utilisés :
-  - lorsqu'au moins une copie de votre application doit être exécutée sur tous les nœuds du cluster (ou sur un sous-ensemble de ces nœuds).
-
-Les **StatefulSets** doivent être utilisés :
-  - lorsque l'ordre de création des replicas et le nom des pods est important
-  - lorsqu'on fait des opérations *stateful* (écrire dans une base de données)
-
-### Jobs
-
-Les jobs sont utiles pour les choses que vous ne voulez faire qu'une seule fois, comme les migrations de bases de données ou les travaux par lots. Si vous exécutez une migration en tant que Pod dans un deployment:
-
-- Dès que la migration se finit le processus du pod s'arrête.
-- Le **replicaset** qui détecte que l'"application" s'est arrêter va tenter de la redémarrer en recréant le pod.
-- Votre tâche de migration de base de données se déroulera donc en boucle, en repeuplant continuellement la base de données.
-
-### CronJobs
-
-Comme des jobs, mais se lancent à un intervalle régulier, comme les `cron` sur les systèmes unix.
