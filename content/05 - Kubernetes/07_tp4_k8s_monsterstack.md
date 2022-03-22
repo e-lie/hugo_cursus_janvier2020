@@ -27,7 +27,7 @@ Passons maintenant à Kubernetes.
 
 ## Utiliser Kompose (facultatif)
 
-Explorer avec Kompose comment on peut traduire un fichier `docker-compose.yml` en ressources Kubernetes (ce sont les instructions à la page suivante : https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/).
+Explorer avec Kompose comment on peut traduire un fichier `docker-compose.yml` en ressources Kubernetes (ce sont les instructions à la page suivante : https://kubernetes.io/fr/docs/tasks/configure-pod-container/translate-compose-kubernetes/.
 
 En général il est recommandé de coder les ressources Kubernetes à la main comme nous allons le faire dans la partie suivante. Mais kompose peut être intéressant pour démarre un portage d'une application de docker vers kubernetes et pour bien comprendre l'équivalence des objets docker-compose et kubernetes.
 

@@ -44,12 +44,10 @@ metadata:
   name: demonstration
   labels:
     nom-app: demonstration
-    partie: objet-deploiement
 spec:
   selector:
     matchLabels:
       nom-app: demonstration
-      partie: pods-demo
   strategy:
     type: Recreate
   replicas: 1
@@ -57,7 +55,6 @@ spec:
     metadata:
       labels:
         nom-app: demonstration
-        partie: les-petits-pods-demo
     spec:
       containers:
         - image: <image>
@@ -71,6 +68,7 @@ spec:
 - Inspectez le déploiement dans Lens.
 - Changez le nom d'un conteneur et réappliquez: Cette fois le déploiement se charge créer un nouveau pod avec les bonnes caractéristiques et de supprimer l'ancien.
 - Changez le nombre de réplicats.
+- Que se passe-t-il si on change l'étiquette de `matchLabel` en se trompant de valeur ?
 
 ## Ajoutons un service en mode NodePort
 
@@ -83,13 +81,11 @@ metadata:
   name: demo-service
   labels:
     nom-app: demonstration
-    partie: le-fameux-service-demo
 spec:
   ports:
     - port: <port>
   selector:
     nom-app: demonstration
-    partie: les-petits-pods-demo
   type: NodePort
 ```
 
@@ -100,7 +96,7 @@ spec:
 - Constatez que l'application n'est plus accessible dans le navigateur. Pourquoi ?
 - Allez voir la section endpoints dans lens, constatez que quand l'étiquette est la bonne la liste des ips des pods est présente et après la maodification du selector la liste est vide (None)
 
-=> Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc de même éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
+=> Les services kubernetes redirigent le trafic basés sur les étiquettes(labels) appliquées sur les pods du cluster. Il faut donc aussi éviter d'utiliser deux fois le même label pour des parties différentes de l'application.
 
 ### Solution
 

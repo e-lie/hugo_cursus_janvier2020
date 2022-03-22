@@ -1,5 +1,5 @@
 ---
-title: 02 - TP1 - Découvrir la cli kubectl et dépoyer une application
+title: 02 - TP1 - Découvrir la cli kubectl et déployer une application
 draft: false
 weight: 2015
 ---
