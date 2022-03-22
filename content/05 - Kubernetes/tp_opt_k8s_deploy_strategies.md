@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Stratégies de déploiement et monitoring
-draft: true
+draft: false
 ---
 
 <!-- https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
@@ -149,7 +149,7 @@ annotations:
 
 Grafana est une interface de dashboard de monitoring facilement intégrable avec Prometheus. Elle va nous permettre d'afficher un histogramme en temps réel du nombre de requêtes vers l'application.
 
-Créez un secret Kubernetes pour stocker le loging admin de grafana.
+Créez un secret Kubernetes pour stocker le login admin de grafana.
 
 ```bash
 cat <<EOF | kubectl apply -n monitoring -f -
@@ -222,7 +222,7 @@ Maintenant que l'environnement a été configuré :
 
 Par exemple pour la stratégie **recreate** le graphique donne: ![](../../images/prometheus/grafana-recreate.png)
 
-### Facultatif : Installer Istio pour des scénarios plus avancés
+<!-- ### Facultatif : Installer Istio pour des scénarios plus avancés
 
 Pour des scénarios plus avancés de déploiement, on a besoin d'utiliser soit un _service mesh_ comme Istio (soit un plugin de rollout comme Argo Rollouts mais pas ce que nous proposons ici).
 
@@ -232,5 +232,5 @@ Pour des scénarios plus avancés de déploiement, on a besoin d'utiliser soit u
 2. Installer Istio, créer du trafic vers l'ingress de l'exemple et afficher le graphe de résultat dans le dashboard Istio : https://istio.io/latest/docs/setup/getting-started/
 3. Utiliser ces deux ressources pour appliquer une stratégie de déploiement de type A/B testing poussée :
    - https://istio.io/latest/docs/tasks/traffic-management/request-routing/
-   - https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing
+   - https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing -->
 

@@ -148,7 +148,7 @@ En plus des rôles que vous pouvez créer pour les utilisateur·ices et processu
 
 La plupart de ces rôles intégrés sont destinés au `kube-system`, c'est-à-dire aux processus internes du cluster.
 
-Cependant quatre rôles génériques existent aussi par défaut :
+Cependant quelques rôles génériques existent aussi par défaut :
 
 - Le rôle `cluster-admin` fournit un accès complet à l'ensemble du cluster.
 - Le rôle `admin` fournit un accès complet à un espace de noms précis.
