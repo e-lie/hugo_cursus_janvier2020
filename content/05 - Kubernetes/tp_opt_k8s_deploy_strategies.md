@@ -19,6 +19,8 @@ Prometheus est un serveur de métriques c'est à dire qu'il enregistre des infor
 
 ![](../../images/prometheus/overview.jpg)
 
+Une très bonne série d'articles à jour à propos de Prometheus/Graphana et AlertManager dans kubernetes et les concept de l'observability : https://www.augmentedmind.de/2021/09/05/observability-prometheus-guide/
+
 ### Installer Prometheus avec Helm
 
 Installez Helm si ce n'est pas déjà fait. Sur Ubuntu : `sudo snap install helm --classic`
