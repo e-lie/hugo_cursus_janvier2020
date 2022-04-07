@@ -1,6 +1,6 @@
 ---
 title: TP opt. - Le RBAC
-draft: true
+draft: false
 weight: 2090
 ---
 
@@ -8,7 +8,7 @@ weight: 2090
 
 1. Configurer Minikube pour activer RBAC.
 ```bash
-minikube start --extra-config=apiserver.Authorization.Mode=RBAC
+minikube start --extra-config=apiserver.Authorization-Mode=RBAC
 
 kubectl create clusterrolebinding add-on-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:default
 ```

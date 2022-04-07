@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Stratégies de déploiement et monitoring
-draft: true
+draft: false
 ---
 
 <!-- https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
@@ -9,7 +9,7 @@ https://blog.container-solutions.com/kubernetes-deployment-strategies
 
 https://github.com/ContainerSolutions/k8s-deployment-strategies -->
 
-## Installer Prometheus pour monitorer le cluster Minikube
+## Installer Prometheus pour monitorer le cluster
 
 Pour comprendre les stratégies de déploiement et mise à jour d'application dans Kubernetes (deployment and rollout strategies) nous allons installer puis mettre à jour une application d'exemple et observer comment sont gérées les requêtes vers notre application en fonction de la stratégie de déploiement choisie.
 
@@ -18,6 +18,8 @@ Pour cette observation on peut utiliser un outil de monitoring. Nous utiliserons
 Prometheus est un serveur de métriques c'est à dire qu'il enregistre des informations précises (de petite taille) sur différents aspects d'un système informatique et ce de façon périodique en effectuant généralement des requêtes vers les composants du système (metrics scraping).
 
 ![](../../images/prometheus/overview.jpg)
+
+Une très bonne série d'articles à jour à propos de Prometheus/Graphana et AlertManager dans kubernetes et les concept de l'observability : https://www.augmentedmind.de/2021/09/05/observability-prometheus-guide/
 
 ### Installer Prometheus avec Helm
 
@@ -65,18 +67,18 @@ docker system info | grep Name # devrait afficher minikube si le contexte docker
 
 {{% /expand %}}
 
-- Allez dans le dossier `goprom_app` et "construisez" l'image docker de l'application avec le tag `uptime-formation/goprom`.
+- Allez dans le dossier `goprom_app` et "construisez" l'image docker de l'application avec le tag `tecpi/goprom`.
 
 {{% expand "réponse:" %}}
 
 ```bash
 cd goprom_app
-docker build -t uptime-formation/goprom .
+docker build -t tecpi/goprom .
 ```
 
 {{% /expand %}}
 
-- Allez dans le dossier de la première stratégie `recreate` et ouvrez le fichier `app-v1.yml`. Notez que `image:` est à `uptime-formation/goprom` et qu'un paramètre `imagePullPolicy` est défini à `Never`. Ainsi l'image sera récupéré dans le registry local du docker de minikube ou sont stockées les images buildées localement plutôt que récupéré depuis un registry distant.
+- Allez dans le dossier de la première stratégie `recreate` et ouvrez le fichier `app-v1.yml`. Notez que `image:` est à `tecpi/goprom` et qu'un paramètre `imagePullPolicy` est défini à `Never`. Ainsi l'image sera récupéré dans le registry local du docker de minikube ou sont stockées les images buildées localement plutôt que récupéré depuis un registry distant.
 
 - Appliquez ce déploiement kubernetes:
 
@@ -149,7 +151,7 @@ annotations:
 
 Grafana est une interface de dashboard de monitoring facilement intégrable avec Prometheus. Elle va nous permettre d'afficher un histogramme en temps réel du nombre de requêtes vers l'application.
 
-Créez un secret Kubernetes pour stocker le loging admin de grafana.
+Créez un secret Kubernetes pour stocker le login admin de grafana.
 
 ```bash
 cat <<EOF | kubectl apply -n monitoring -f -
@@ -222,15 +224,15 @@ Maintenant que l'environnement a été configuré :
 
 Par exemple pour la stratégie **recreate** le graphique donne: ![](../../images/prometheus/grafana-recreate.png)
 
-### Facultatif : Installer Istio pour des scénarios plus avancés
+<!-- ### Facultatif : Installer Istio pour des scénarios plus avancés
 
 Pour des scénarios plus avancés de déploiement, on a besoin d'utiliser soit un _service mesh_ comme Istio (soit un plugin de rollout comme Argo Rollouts mais pas ce que nous proposons ici).
 
 <!-- TODO trouver comment exporter les bonnes dashboard grafana pour les réimporter plus + comprendre un peu mieux promQL -->
 
-1. Sur k3s, supprimer la release Helm du Ingress Controller Traefik (ou le ingress Nginx) pour le remplacer par l'ingress Istio.
+<!-- 1. Sur k3s, supprimer la release Helm du Ingress Controller Traefik (ou le ingress Nginx) pour le remplacer par l'ingress Istio.
 2. Installer Istio, créer du trafic vers l'ingress de l'exemple et afficher le graphe de résultat dans le dashboard Istio : https://istio.io/latest/docs/setup/getting-started/
 3. Utiliser ces deux ressources pour appliquer une stratégie de déploiement de type A/B testing poussée :
    - https://istio.io/latest/docs/tasks/traffic-management/request-routing/
-   - https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing
-
+   - https://github.com/ContainerSolutions/k8s-deployment-strategies/tree/master/ab-testing -->
+ -->
