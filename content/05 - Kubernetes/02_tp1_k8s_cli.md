@@ -7,7 +7,7 @@ weight: 2015
 Au cours de nos TPs nous allons passer rapidement en revue quelques manières de mettre en place Kubernetes :
 
 - Un cluster de développement avec `minikube`
-- Un cluster k3s de un noeud (TP2)
+- Un cluster k3s simple de un noeud (TP2)
 - Un cluster managed loué chez un provider (TP2)
 - Bonus : un cluster à la main avec `kubeadm`
 
@@ -147,13 +147,17 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
+## Facultatif CLI: paramétrer et filtrer la sortie des commandes `kubectl`
+
+La sortie des com
+
 ## Au délà de la ligne de commande...
 
 #### Accéder à la dashboard Kubernetes
 
 Le moyen le plus classique pour avoir une vue d'ensemble des ressources d'un cluster est d'utiliser la Dashboard officielle. Cette Dashboard est généralement installée par défaut lorsqu'on loue un cluster chez un provider.
 
-On peut aussi l'installer dans minikube ou k3s.
+On peut aussi l'installer dans minikube ou k3s. Nous allons ici préférer le client lourd Lens
 
 #### Installer Lens
 
@@ -163,16 +167,13 @@ Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
 ## Install Lens
-curl -LO https://github.com/lensapp/lens/releases/download/v4.1.4/Lens-4.1.4.amd64.deb
-sudo dpkg -i Lens-4.1.4.amd64.deb
+export LENS_VERSION="5.4.5" # change this with the current stable version
+curl -LO https://github.com/lensapp/lens/releases/download/v${LENS_VERSION}/Lens-${LENS_VERSION}.amd64.deb
+sudo dpkg -i Lens-${LENS_VERSION}.amd64.deb
 ```
 
-- Lancez l'application `Lens` dans le menu "internet" de votre machine VNC
-- Sélectionnez le cluster Scaleway en cliquant sur le bouton plus au lancement
+- Lancez l'application `Lens` dans le menu "internet" de votre machine (VNC).
+- Cliquer sur "skip" juste après le lancement car la création d'un compte n'est pas du tout nécessaire
+- Sélectionnez le cluster de votre choix la liste et épinglez la connection dans la barre de menu
 - Explorons ensemble les ressources dans les différentes rubriques et namespaces
 
-#### Installer `Argocd` sur notre cluster k3s
-
-Argocd est une solution de "Continuous Delivery" dédiée au **GitOps** avec Kubernetes. Elle fourni une interface assez géniale pour détecter et monitorer les ressources d'un cluster.
-
-Nous verrons dans un TP suivant comment l'installer et l'utiliser.

@@ -142,7 +142,7 @@ Cependant cette interopérabilité n'est pas automatique (pour les cas complexes
 
 Kubernetes est avant tout un ensemble de standards qui peuvent avoir des implémentations concurrentes. Il existe beaucoup de variétés (**flavours**) de Kubernetes, implémentant concrètement les solutions techniques derrière tout ce que Kubernetes ne fait que définir : solutions réseau, stockage (distribué ou non), loadbalancing, service de reverse proxy (Ingress), autoscaling de cluster (ajout de nouvelles VM au cluster automatiquement), monitoring…
 
-Nous verrons cela plus en détail dans la partie suivante.
+Nous verrons cela plus en détail dans le cours suivant.
 
 ## Interagir avec le cluster : le client CLI `kubectl`
 

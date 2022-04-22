@@ -27,8 +27,6 @@ Lorsqu'on vient d'appliquer une description on peut l'afficher dans le terminal 
 
 Globalement Kubernetes garde un historique de toutes les transformations des objets : on peut explorer, par exemple avec la commande `kubectl rollout history deployment`.
 
-
-
 ## Parenthèse : Le YAML
 
 Kubernetes décrit ses ressources en YAML. A quoi ça ressemble, YAML ?
@@ -59,13 +57,9 @@ Kubernetes décrit ses ressources en YAML. A quoi ça ressemble, YAML ?
 ## Syntaxe
 
 - Alignement ! (**2 espaces** !!)
-- ALIGNEMENT !! (comme en python)
-- **ALIGNEMENT !!!** (le défaut du YAML, pas de correcteur syntaxique automatique, c'est bête mais vous y perdrez forcément du temps !)
-
 - des listes (tirets)
-- des paires **clé: valeur**
+- des ditionnaires composés d'un ensemble de paires **clé: valeur** (dans n'importe quel ordre !)
 - Un peu comme du JSON, avec cette grosse différence que le JSON se fiche de l'alignement et met des accolades et des points-virgules
-
 - **les extensions Kubernetes et YAML dans VSCode vous aident à repérer des erreurs**
 
 ### Syntaxe de base d'une description YAML Kubernetes
@@ -137,21 +131,20 @@ Pour utiliser un namespace autre que `default` avec `kubectl` il faut :
 
 Kubernetes gère lui-même ses composants internes sous forme de pods et services.
 
-- Si vous ne trouvez pas un objet, essayez de lancer la commande kubectl avec l'option `-A` ou `--all-namespaces`
+- Si vous ne trouvez pas un objet et que votre cluster n'est pas trop rempli, essayez de lancer la commande kubectl avec l'option `-A` ou `--all-namespaces`
 
 ### Les Pods
 
-Un Pod est l’unité d’exécution de base d’une application Kubernetes que vous créez ou déployez. Un Pod représente des process en cours d’exécution dans votre Cluster.
+Un Pod est l’unité de base d’une application Kubernetes que vous déployez : un Pod est un `groupe atomique de conteneurs`, ce qui veut dire qu'il est garanti que ces conteneurs atterrirons sur le même noeud et seront toujours lancé ensembles et connectés.
 
-Un Pod encapsule un conteneur (ou souvent plusieurs conteneurs), des ressources de stockage, **une IP réseau unique**, et des options qui contrôlent comment le ou les conteneurs doivent s’exécuter (ex: *restart policy*). Cette collection de conteneurs et volumes tournent dans le même environnement d'exécution mais les processus sont isolés.
+Un Pod comprend en plus des conteneurs, des `ressources de stockage`, `une IP réseau unique`, et des options qui contrôlent comment le ou les conteneurs doivent s’exécuter (ex: `restart policy`). Cette collection de conteneurs tournent ainsicdans le même environnement d'exécution mais les processus sont isolés.
 
-Un Pod représente une unité de déploiement : un petit nombre de conteneurs qui sont étroitement liés et qui partagent :
+Plus précisément ces conteneurs étroitement liés et qui partagent :
 
 - les mêmes ressources de calcul
 - des volumes communs
-- la même IP donc le même nom de domaine
-- peuvent se parler sur localhost
-- peuvent se parler en IPC
+- la même interface réseau : la même IP, les même noms de domaine internes
+- les conteneurs peuvent se parler en IPC
 - ont un nom différent et des logs différents
 
 Chaque Pod est destiné à exécuter une instance unique d’un workload donné. Si vous désirez mettre à l’échelle votre workload, vous devez multiplier le nombre de Pods avec un déploiement.
