@@ -330,6 +330,7 @@ Dans Kubernetes, un **service** est un objet qui :
 - Désigne un ensemble de pods (grâce à des labels) généralement géré par un déploiement.
 - Fournit un endpoint réseau pour les requêtes à destination de ces pods.
 - Configure une politique permettant d’y accéder depuis l'intérieur ou l'extérieur du cluster.
+- Configure un nom de domaine pointant sur le groupe de pods en backend.
 
 <!-- Un service k8s est en particulier adapté pour implémenter une architecture micro-service. -->
 

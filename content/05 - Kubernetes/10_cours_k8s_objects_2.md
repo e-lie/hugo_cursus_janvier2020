@@ -9,7 +9,6 @@ weight: 2060
 
 ![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
 
-
 En plus du déploiement d'un application, Il existe pleins d'autre raisons de créer un ensemble de Pods:
 
 - Le **DaemonSet**: Faire tourner un agent ou démon sur chaque nœud, par exemple pour des besoins de monitoring, ou pour configurer le réseau sur chacun des nœuds.
@@ -154,6 +153,5 @@ Cependant quelques rôles génériques existent aussi par défaut :
 - Le rôle `admin` fournit un accès complet à un espace de noms précis.
 - Le rôle `edit` permet à un·e utilisateur·ice de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
-
 
 La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.

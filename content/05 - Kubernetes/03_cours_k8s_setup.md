@@ -30,7 +30,7 @@ Donc concrêtement les noeuds du control plane Kubernetes font tourner, en plus 
 
   - `kube-apiserver`: expose l'API (rest) kubernetes, point d'entrée central pour la communication interne (intercomposants) et externe (kubectl ou autre) au cluster.
   - `kube-controller-manager`: controlle en permanence l'état des resources et essaie de le corriger s'il n'est plus conforme.
-  - `kube-scheduler`: Surveille et cartographie les resources matérielles et le placement des pods sur les différents noeuds pour décider ou doivent être créés ou supprimés les conteneurs/pods.
+  - `kube-scheduler`: Surveille et cartographie les resources matérielles et les contraintes de placement des pods sur les différents noeuds pour décider ou doivent être créés ou supprimés les conteneurs/pods.
   - `cloud-controller-manager`: Composant *facultatif* qui gère l'intégration avec le fournisseur de cloud comme par exemple la création automatique de loadbalancers pour exposer les applications kubernetes à l'extérieur du cluster.
 
 L'ensemble de la configuration kubernetes est stockée de façon résiliante (consistance + haute disponilibilité) dans un gestionnaire configuration distributé qui est généralement `etcd`.
@@ -38,7 +38,6 @@ L'ensemble de la configuration kubernetes est stockée de façon résiliante (co
 `etcd` peut être installé de façon redondante sur les noeuds du control plane ou configuré comme un système externe sur un autre ensemble de serveurs.
 
 Lien vers la documentation pour plus de détails sur les composants : https://kubernetes.io/docs/concepts/overview/components/
-
 
 #### Configuration de connexion `kubeconfig`
 
@@ -151,6 +150,8 @@ Mais la encore il s'agit de ne pas sous-estimer la complexité de la maintenance
 
 On peut également installer Kubernetes de façon encore plus manuelle pour mieux comprendre ses rouages et composants.
 Ce type d'installation est décrite par exemple ici : [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way).
+
+Il existe également une série de tutoriel pour faire cette installation manuelle à l'aide d'Ansible
 
 ## Quelques PaaS (Plateforme as a Service) basés sur Kubernetes
 

@@ -147,9 +147,9 @@ La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-hepti
 
 - Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
 
-## Facultatif CLI: paramétrer et filtrer la sortie des commandes `kubectl`
+<!-- ## Facultatif CLI: paramétrer et filtrer la sortie des commandes `kubectl`
 
-La sortie des com
+La sortie des com TODO -->
 
 ## Au délà de la ligne de commande...
 

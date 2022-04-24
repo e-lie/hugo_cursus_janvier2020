@@ -6,7 +6,7 @@ weight: 2025
 
 ## Une 2e installation : Mettre en place un cluster K8s managé chez le provider de cloud Scaleway
 
-Je vais louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
+Le formateur peut louer pour vous montrer un cluster kubernetes managé. Vous pouvez également louez le votre si vous préférez en créant un compte chez ce provider de cloud.
 
 - Créez un compte (ou récupérez un accès) sur [Scaleway](https://console.scaleway.com/).
 - Créez un cluster Kubernetes avec [l'interface Scaleway](https://console.scaleway.com/kapsule/clusters/create)
