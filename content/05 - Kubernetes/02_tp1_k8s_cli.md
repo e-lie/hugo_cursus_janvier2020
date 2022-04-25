@@ -47,7 +47,7 @@ Minikube configure automatiquement kubectl (dans le fichier `~/.kube/config`) po
 
 Affichez à nouveau la version `kubectl version`. Cette fois-ci la version de kubernetes qui tourne sur le cluster actif est également affichée. Idéalement le client et le cluster devrait être dans la même version mineure par exemple `1.20.x`.
 
-##### Bash completion
+##### Bash completion et racourcis
 
 Pour permettre à `kubectl` de compléter le nom des commandes et ressources avec `<Tab>` il est utile d'installer l'autocomplétion pour Bash :
 
@@ -60,6 +60,13 @@ echo "source <(kubectl completion bash)" >> ${HOME}/.bashrc
 ```
 
 **Vous pouvez désormais appuyer sur `<Tab>` pour compléter vos commandes `kubectl`, c'est très utile !**
+
+- Notez également que pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :
+  - `services` devient `svc`
+  - `deployments` devient `deploy`
+  - etc.
+
+La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202>
 
 ### Explorons notre cluster k8s
 
@@ -133,23 +140,21 @@ Une autre méthode pour accéder à un service (quel que soit sont type) en mode
 
 Pour exposer cette application en production sur un véritable cluster, nous devrions plutôt avoir recours à service de type un LoadBalancer. Mais minikube ne propose pas par défaut de loadbalancer. Nous y reviendrons dans le cours sur les objets kubernetes.
 
-#### Simplifier les lignes de commande k8s
+### CheatSheet pour kubectl et formattage de la sortie
 
-- Pour gagner du temps on dans les commandes Kubernetes on peut définir un alias: `alias kc='kubectl'` (à mettre dans votre `.bashrc` en faisant `echo "alias kc='kubectl'" >> ~/.bashrc`, puis en faisant `source ~/.bashrc`).
-- Vous pouvez ensuite remplacer `kubectl` par `kc` dans les commandes.
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
-- Également pour gagner du temps en ligne de commande, la plupart des mots-clés de type Kubernetes peuvent être abrégés :
-  - `services` devient `svc`
-  - `deployments` devient `deploy`
-  - etc.
+Vous noterez dans cette page qu'il est possible de traiter la sortie des commandes kubectl de multiple façon (yaml, json, gotemplate, jsonpath, etc)
 
-La liste complète : <https://blog.heptio.com/kubectl-resource-short-names-heptioprotip-c8eff9fb7202>
+Le mode de sortie le plus utilisé pour filtrer une information parmis l'ensemble des caractéristiques d'une resource est `jsonpath` qui s'utilise comme ceci:
 
-- Essayez d'afficher les serviceaccounts (users) et les namespaces avec une commande courte.
+```bash
+kubectl get pod <tab>
+kubectl get pod demonstration-7645747fc6-f5z55 -o yaml # pour afficher la spécification
+kubectl get pod demonstration-7645747fc6-f5z55 -o jsonpath='{.spec.containers[0].image}' # affiche le nom de l'image
+```
 
-<!-- ## Facultatif CLI: paramétrer et filtrer la sortie des commandes `kubectl`
-
-La sortie des com TODO -->
+Essayez de la même façon d'afficher le nombre de répliques de notre déploiement.
 
 ## Au délà de la ligne de commande...
 

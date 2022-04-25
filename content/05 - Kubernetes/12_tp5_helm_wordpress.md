@@ -74,7 +74,7 @@ service:
 
 ingress:
   enabled: true
-  hostname: wordpress.<stagiaire>.formation.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
+  hostname: wordpress.<stagiaire>.k8s.dopl.uk # replace with your hostname pointing on the cluster ingress loadbalancer IP
   tls: true
   certManager: true
   annotations:
@@ -126,7 +126,7 @@ spec:
 
         ingress:
           enabled: true
-          hostname: wordpress.elie.formation.dopl.uk
+          hostname: wordpress.elie.k8s.dopl.uk
           pathType: Prefix
           tls: true
           certManager: true
@@ -137,7 +137,7 @@ spec:
 
 - Appliquez ce fichier avec `kubectl apply -f`.
 
-- Visitez la page `https://argocd.<votrelogin>.formation.dopl.uk`.
+- Visitez la page `https://argocd.<votrelogin>.k8s.dopl.uk`.
 
 Une application wordpress est apparue
 
@@ -146,7 +146,7 @@ Une application wordpress est apparue
 
 En une minute ou deux, l'application est installée et l'ingress avec son certificat devrait être généré.
 
-Vous pouvez visiter le blog à l'adresse: `https://wordpress.<votrelogin>.formation.dopl.uk`
+Vous pouvez visiter le blog à l'adresse: `https://wordpress.<votrelogin>.k8s.dopl.uk`
 
 ### Solution
 
