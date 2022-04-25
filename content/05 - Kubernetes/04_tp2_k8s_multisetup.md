@@ -52,7 +52,7 @@ La/Les configurations de kubectl sont à déclarer dans la variable d'environnem
 
 - Pour afficher la configuration fusionnée des fichiers et l'exporter lancez: `kubectl config view --flatten >> ~/.kube/merged.yaml`.
 
-- Pour sélectionner ensuite cette configuration mergée: `export KUBECONFIG='~/.kube/merged.yaml'`.
+- Pour sélectionner ensuite cette configuration mergée: `export KUBECONFIG=~/.kube/merged.yaml`.
 
 - Maintenant que nos trois configs sont fusionnées, observons l'organisation du fichier `~/.kube/config` en particulier les éléments des listes YAML de:
   - `clusters`

@@ -4,7 +4,7 @@ draft: false
 weight: 2050
 ---
 
-Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp3_base https://github.com/Uptime-Formation/corrections_tp.git tp3`
+Récupérez le projet de base en clonant la correction du TP2: `git clone -b tp_monsterstack_base https://github.com/Uptime-Formation/corrections_tp.git tp3`
 
 Ce TP va consister à créer des objets Kubernetes pour déployer une application microservices (plutôt simple) : `monsterstack`.
 Elle est composée :
@@ -285,13 +285,13 @@ Il s'agit d'une implémentation de reverse proxy dynamique (car ciblant et s'ada
 
 - Repassez le service `frontend` en mode `ClusterIP`. Le service n'est plus accessible sur un port. Nous allons utiliser l'ingress à la place pour afficher la page.
 
-- Ajoutez également l'objet `Ingress` suivant dans le fichier `monster-ingress.yaml` :
+- Ajoutez également l'objet `Ingress` suivant dans le fichier `monsterstack-ingress.yaml` :
 
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: monster-ingress
+  name: monsterstack
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -336,4 +336,4 @@ spec:
 
 ### Solution
 
-Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b tp3 https://github.com/Uptime-Formation/corrections_tp.git`
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b tp_monsterstack_final https://github.com/Uptime-Formation/corrections_tp.git`

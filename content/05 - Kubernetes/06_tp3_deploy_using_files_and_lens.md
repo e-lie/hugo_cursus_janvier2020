@@ -14,10 +14,10 @@ Dans ce court TP nous allons redéployer notre application `demonstration` du TP
 Nous allons d'abord déployer notre application comme un simple **Pod** (non recommandé mais montré ici pour l'exercice).
 
 - Créez un fichier `demo-pod.yaml` avec à l'intérieur le code d'exemple du cours précédent de la partie Pods.
-- Appliquez le fichier avec `kubectl apply -f <fichier>`
+- Appliquez le fichier avec `kubectl apply -f <fichier>`.
 - Constatez dans Lens dans la partie pods que les deux conteneurs du pod sont bien démarrés (deux petits carrés vert à droite de la ligne du pod)
 - Modifiez l'étiquette (`label`) du pod dans la description précédente et réappliquez la configuration. Kubernetes mets à jour le pod.
-- Modifier le nom du conteneur `rancher-demo` et réappliquez la configuration. Que se passe-t-il ?
+- Modifier le nom du conteneur `rancher-demo` (et pas du pod) et réappliquez la configuration. Que se passe-t-il ?
 
 => Kubernetes refuse d'appliquer le nouveau nom de conteneur car un pod est largement immutable. Pour changer d'une quelquonque façon les conteneurs du pod il faut supprimer (`kubectl delete -f <fichier>`) et recréer le pod. Mais ce travail de mise à jour devrais être géré par un déploiement pour automatiser et pour garantir la haute disponibilité de notre application `demonstration`.
 
@@ -27,7 +27,7 @@ Kubernetes fournit un ensemble de commande pour débugger des conteneurs :
 
 - `kubectl logs <pod-name> -c <conteneur_name>` (le nom du conteneur est inutile si un seul)
 - `kubectl exec -it <pod-name> -c <conteneur_name> -- bash`
-- `kubectl attach -it <pod-name>`
+- `kubectl attach -it <pod-name>` (attacher l'entrée et la sortie standard du processus principal d'un pod au terminal courant, rarement utilisé)
 
 - Explorez le pod avec la commande `kubectl exec -it <pod-name> -c <conteneur_name> -- bash` écrite plus haut.
 
@@ -100,4 +100,4 @@ spec:
 
 ### Solution
 
-Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b correction_k8s_tp2 https://github.com/Uptime-Formation/corrections_tp.git`
+Le dépôt Git de la correction de ce TP est accessible ici : `git clone -b tp_rancher_demo_files https://github.com/Uptime-Formation/corrections_tp.git`
