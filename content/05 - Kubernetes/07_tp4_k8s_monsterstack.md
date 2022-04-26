@@ -111,6 +111,7 @@ Cette seconde solution est générique et correspond au processus général de d
 
 La solution puissante et générique choisie dans ce TP pour avoir un workflow développement confortable et compatible avec `minikube`, `k3s` ou tout autre distribution kubernetes est l'utilisation de `skaffold` en plus d'un registry d'image dédié au développement.
 
+- Vérifiez que vous n'êtes pas dans l'environnement minikube docker-env avec `env | grep DOCKER` qui doit ne rien renvoyer.
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
 - Déployons ensuite un registry de base (insecure => en prod il faudrait utiliser une solution plus avancée ou au moins un registry configuré en https) : `docker run -d -p 0.0.0.0:5555:5000 --restart=always --name registry registry:2`.
 
@@ -165,16 +166,12 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: frontend
+          image: <nom et tag de l'image>
           ports:
             - containerPort: 5000
 ```
 
-
-
-
-- Observons le fichier `skaffold.yaml`
-- Lancez `skaffold run` pour construire et déployer l'application automatiquement (skaffold utilise ici le registry docker local et `kubectl`)
+- Complétez le nom et tag de l'image (`frontend` si on utilise minikube et `<votrenom>.<domaine>:5555/frontend`)
 
 #### Santé du service avec les `Probes`
 
@@ -201,13 +198,18 @@ readinessProbe:
   failureThreshold: 3
 ```
 
-La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas rempli le pod est automatiquement supprimé et recréé en attendant que le test fonctionne.
+La **livenessProbe** est un test qui s'assure que l'application est bien en train de tourner. S'il n'est pas rempli le pod est automatiquement redé en attendant que le test fonctionne.
 
 Ainsi, k8s sera capable de savoir si notre conteneur applicatif fonctionne bien, quand le redémarrer. C'est une bonne pratique pour que le `replicaset` Kubernetes sache quand redémarrer un pod et garantir que notre application se répare elle même (self-healing).
 
 Cependant une application peut être en train de tourner mais indisponible pour cause de surcharge ou de mise à jour par exemple. Dans ce cas on voudrait que le pod ne soit pas détruit mais que le traffic évite l'instance indisponible pour être renvoyé vers un autre backend `ready`.
 
 La **readinessProbe** est un test qui s'assure que l'application est prête à répondre aux requêtes en train de tourner. S'il n'est pas rempli le pod est marqué comme non prêt à recevoir des requêtes et le `service` évitera de lui en envoyer.
+
+- Pendant que `skaffold dev --tail=false` tourne, on peut tester mettre volontairement port 3000 pour la livenessProbe et constater que k8s redémarrent les conteneurs frontend un certain nombre de fois avant d'abandonner.
+
+- On peut le constater avec `kubectl describe deployment frontend` dans la section évènement ou avec `Lens` en bas du panneau latéral droite d'une ressource.
+
 
 #### Configuration d'une application avec des variables d'environnement simples
 
@@ -218,6 +220,7 @@ env:
   - name: CONTEXT
     value: DEV
 ```
+- Généralement la valeur d'une variable est fournie au pod à l'aide d'une ressource de type `ConfigMap` ou `Secret` ce que nous verrons par la suite.
 
 #### Ajouter des indications de ressource nécessaires pour garantir la qualité de service
 
@@ -235,8 +238,6 @@ resources:
 
 Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.
 
-- Relancer `skaffold run` pour appliquer les modifications.
-- Avec `kubectl describe deployment frontend`, lisons les résultats de notre `readinessProbe`, ainsi que comment s'est passée la stratégie de déploiement `type: Recreate`.
 
 #### Exposer notre stack avec des services
 
