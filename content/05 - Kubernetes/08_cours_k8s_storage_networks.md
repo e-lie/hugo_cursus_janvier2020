@@ -83,7 +83,6 @@ Beaucoup de solutions de réseau qui se concurrencent, demandant un comparatif u
 - Cilium a la particularité d'utiliser la technologie eBPF de Linux qui permet une sécurité et une rapidité accrue
 
 Comparaisons :
-- <https://www.objectif-libre.com/fr/blog/2018/07/05/comparatif-solutions-reseaux-kubernetes/>
 - <https://rancher.com/blog/2019/2019-03-21-comparing-kubernetes-cni-providers-flannel-calico-canal-and-weave/>
 
 ## Vidéos
