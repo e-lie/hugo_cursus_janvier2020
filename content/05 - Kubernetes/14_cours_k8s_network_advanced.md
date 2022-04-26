@@ -1,6 +1,6 @@
 ---
 title: 14 -Réseau Kubernetes avancé 
-draft: true
+draft: false
 weight: 2100
 ---
 
@@ -51,11 +51,11 @@ Un 4e type existe, il est moins utilisé :
 - `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place.
 
 
-TODO DNS
+<!-- TODO DNS
 
 TODO move and extend Network Policies
 
-TODO move and extend Service Mesh
+TODO move and extend Service Mesh -->
 
 
 ## Le mesh networking et les *service meshes*

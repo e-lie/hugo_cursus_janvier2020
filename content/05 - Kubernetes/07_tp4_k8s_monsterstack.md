@@ -238,6 +238,8 @@ resources:
 
 Nos pods auront alors **la garantie** de disposer d'un dixième de CPU (100/1000) et de 50 mégaoctets de RAM. Ce type d'indications permet de remplir au maximum les ressources de notre cluster tout en garantissant qu'aucune application ne prend toute les ressources à cause d'un fuite mémoire etc.
 
+Documentation : https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/
+
 
 #### Exposer notre stack avec des services
 

@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Stratégies de déploiement et monitoring
-draft: true
+draft: false
 ---
 
 <!-- https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-interactive/
