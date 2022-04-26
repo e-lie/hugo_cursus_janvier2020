@@ -206,7 +206,7 @@ Cependant une application peut être en train de tourner mais indisponible pour 
 
 La **readinessProbe** est un test qui s'assure que l'application est prête à répondre aux requêtes en train de tourner. S'il n'est pas rempli le pod est marqué comme non prêt à recevoir des requêtes et le `service` évitera de lui en envoyer.
 
-- Pendant que `skaffold dev --tail=false` tourne, on peut tester mettre volontairement port 3000 pour la livenessProbe et constater que k8s redémarrent les conteneurs frontend un certain nombre de fois avant d'abandonner.
+- Pendant que `skaffold dev --tail=false` tourne, on peut tester mettre volontairement port 3000 pour la livenessProbe et constater que k8s redémarre les conteneurs frontend un certain nombre de fois avant d'abandonner.
 
 - On peut le constater avec `kubectl describe deployment frontend` dans la section évènement ou avec `Lens` en bas du panneau latéral droite d'une ressource.
 
@@ -264,15 +264,19 @@ spec:
 
 Ajoutez le code précédent au début de chaque fichier déploiement. Complétez pour chaque partie de notre application :
 
-<!-- - le nom du service et le nom du tier par le nom de notre programme (`frontend` et `imagebackend`) --> - le nom du service et le nom de la `partie` par le nom de notre programme (`frontend`, `imagebackend` et `redis`) - le port par le port du service
-<!-- - pourquoi pas selector = celui du deployment? --> - les selectors `app` et `partie` par ceux du pod correspondant.
+<!-- - le nom du service et le nom du tier par le nom de notre programme (`frontend` et `imagebackend`) -->
+
+- le nom du service et le nom de la `partie` par le nom de notre programme (`frontend`, `imagebackend` et `redis`)
+- le port par le port du service
+<!-- - pourquoi pas selector = celui du deployment? -->
+- les selectors `app` et `partie` par ceux du pod correspondant.
 
 Le type sera : `ClusterIP` pour `imagebackend` et `redis`, car ce sont des services qui n'ont à être accédés qu'en interne, et `LoadBalancer` pour `frontend`.
 
-- Appliquez à nouveau avec `skaffold run`.
+- Appliquez à nouveau avec `skaffold run` ou `skaffold dev --tail=false`.
 - Listez les services avec `kubectl get services`.
 - Visitez votre application dans le navigateur avec `minikube service frontend`.
-- Supprimez l'application avec `skaffold delete`.
+- Supprimez éventuellement l'application avec `skaffold delete`.
 
 ### Ajoutons un ingress (~ reverse proxy) pour exposer notre application en http
 
