@@ -10,11 +10,11 @@ Nous allons suivre ce tutoriel pas à pas : https://kubernetes.io/docs/tutorials
 
 Il faut :
 - Créez un projet TP4.
-- Créer la `kustomization.yaml` avec le générateur de secret.
+- Créer la `kustomization.yaml` avec le générateur de secrets.
 - Copier les 2 fichiers dans le projet.
 - Les ajouter comme resources à la `kustomization.yaml`.
 
-Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpress-deployment.yaml`.
+Commentons un peu le contenu des deux fichiers `mysql-deployment.yaml` et `wordpress-deployment.yaml`.
 
 - Vérifier que le stockage et le secret ont bien fonctionnés.
 - Exposez et visitez le service avec `minikube service wordpress`. Faite la configuration de base de wordpress.
@@ -22,7 +22,7 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 ### Observer le déploiement du secret à l'intérieur des pods
 
 - Entrez dans le pod de mysql grâce au terminal de `Lens`.
-- Cherchez la variable d'environnement `MYSQL_ROOT_PASSWORD` à l'aide des commande `env | grep MYSQL`. Le conteneur mysql a utilisé cette variable accessible de lui seul pour se configurer.
+- Cherchez la variable d'environnement `MYSQL_ROOT_PASSWORD` à l'aide des commandes `env | grep MYSQL`. Le conteneur mysql a utilisé cette variable accessible de lui seul pour se configurer.
 
 ### Observez la persistence
 
@@ -38,12 +38,12 @@ Commentons un peu le contenu des deux fichier `mysql-deployment.yaml` et `wordpr
 
 En l'état les `PersistentVolumes` générés par la combinaison du `PersistentVolumeClaim` et de la `StorageClass` de minikube sont également supprimés en même tant que les PVCs. Les données sont donc perdues et au chargement du site on doit relancer l'installation.
 
-Pour éviter cela il faut avec une `Reclaim Policy` à `retain` (conserver) et non `delete` comme suit https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/. Les volumes sont alors conservées et les données peuvent être récupérées manuellement. Mais les volumes ne peuvent pas être reconnectés à des PVCs automatiquement.
+Pour éviter cela il faut avec une `Reclaim Policy` à `retain` (conserver) et non `delete` comme suit https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/. Les volumes sont alors conservés et les données peuvent être récupérées manuellement. Mais les volumes ne peuvent pas être reconnectés à des PVCs automatiquement.
 
 - Pour récupérer les données on peut monter le PV manuellement dans un pod
 - Utiliser la nouvelle fonctionnalité de clone de volume
 
-### Pour aller plus loin
+<!-- ### Pour aller plus loin -->
 
 - 
 
