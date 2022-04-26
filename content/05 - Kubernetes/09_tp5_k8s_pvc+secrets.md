@@ -16,7 +16,7 @@ Il faut :
 
 Commentons un peu le contenu des deux fichiers `mysql-deployment.yaml` et `wordpress-deployment.yaml`.
 
-- Vérifier que le stockage et le secret ont bien fonctionnés.
+- Vérifier que le stockage et le secret ont bien fonctionné.
 - Exposez et visitez le service avec `minikube service wordpress`. Faite la configuration de base de wordpress.
 
 ### Observer le déploiement du secret à l'intérieur des pods
@@ -28,7 +28,7 @@ Commentons un peu le contenu des deux fichiers `mysql-deployment.yaml` et `wordp
 
 - Supprimez uniquement les deux déploiements.
 
-- redéployez a nouveau avec `kubectl apply -k .`, les deux déploiements sont recréés.
+- Redéployez a nouveau avec `kubectl apply -k .`, les deux déploiements sont recréés.
 
 - En rechargeant le site on constate que les données ont été conservées.
 
@@ -44,8 +44,6 @@ Pour éviter cela il faut avec une `Reclaim Policy` à `retain` (conserver) et n
 - Utiliser la nouvelle fonctionnalité de clone de volume
 
 <!-- ### Pour aller plus loin -->
-
-- 
 
 
 <!-- 

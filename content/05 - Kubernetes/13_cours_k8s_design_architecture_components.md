@@ -1,6 +1,6 @@
 ---
-title: 10 - Principes de conception et architecture détaillée de Kubernetes
-draft: true
+title: 13 - Principes de conception et architecture détaillée de Kubernetes
+draft: false
 weight: 2100
 ---
 
@@ -10,7 +10,7 @@ Exemple : "Je veux qu'il y ait 3 instances de mon serveur en fonctionnement à t
 
 La puissance de cette approche déclarative (qui est plus complexe au départ que l'approche impérative) est qu'en donnant au système une déclaration de l'état que vous souhaitez plutôt qu'une série d'instructions de bas niveau vous lui permettez de prendre des mesures autonomes. Il peut mettre en œuvre des comportements automatiques pour se réparer lui-même sans vous réveiller au milieu de la nuit.
 
-Et ce cadre déclaratif de haut niveau peut servir de base à une automatisation extrêmement dynamique de nombreuses tâche opérationnelles. (nous parlerons des opérateurs plus tard)
+Et ce cadre déclaratif de haut niveau peut servir de base à une automatisation extrêmement dynamique de nombreuses tâche opérationnelles grâce aux opérateurs.
 
 ## Contrôleurs et boucles de réconciliation
 
@@ -46,6 +46,10 @@ Dans Kubernetes chaque objet d'API peut avoir `un nombre arbitraire de  "labels"
 
 # Retour détaillé sur les composants du `Control Plane`
 
+
+![](../../images/kubernetes/shema-persos/k8s-archi.jpg)
+
+
 Kubernetes adhère à la philosophie (Unix) de modularité de petits composants qui font bien leur travail. Kubernetes n'est pas une application d'un seul tenant qui implémente les diverses fonctionnalités du système dans un seul binaire. Il s'agit plutôt d'une collection de différentes applications qui travaillent toutes ensemble, en grande partie en s'ignorant les unes les autres, pour mettre en œuvre le système global.
 
 Même lorsqu'il existe un binaire (par exemple, le `controller manager`) qui regroupe un grand nombre de fonctions différentes, ces fonctions sont maintenues indépendantes les unes des autres dans ce binaire. Elles sont compilées ensemble pour faciliter la tâche de déploiement et de gestion réseaux de Kubernetes.
@@ -62,7 +66,7 @@ Les serveurs etcd fournissent également deux autres fonctionnalités importante
 
 - Le protocole `watch`. L'intérêt de `watch` est qu'il permet aux clients de surveiller efficacement les changements dans le `key/value store` pour un grand ensemble de valeurs. Par exemple, tous les objets objets d'un `Namespace` sont stockés dans un répertoire dans etcd. L'utilisation d'une veille permet à un client d'attendre et de réagir efficacement aux changements dans ce `Namespace` sans avoir à interroger en permanence le serveur etcd.
 
-# L'API comme gateway pour toutes les interactions
+## L'API comme gateway pour toutes les interactions
 
 Un autre concept structurel central de Kubernetes est que toutes les interactions entre les composants sont pilotées à travers une API centralisée : l'API que les composants utilisent est exactement la même API que celle utilisée par tous les autres utilisateurs du cluster:
 
@@ -70,33 +74,58 @@ Un autre concept structurel central de Kubernetes est que toutes les interaction
 
 - Et aussi chaque composant peut être remplacé pour une implémentation alternative sans avoir à reconstruire les composants de base. Même le `Scheduler` peut être échangé ou simplement augmenté par des implémentations alternatives.
 
-Le serveur d'API est la plaque tournante du cluster Kubernetes. actions entre les clients et les objets API stockés dans etcd. Par conséquent, il est le point de rencontre central pour tous les différents composants.
+Le serveur API implémente une API RESTful en HTTP, exécute toutes les opérations d'API et est responsable du stockage des objets d'API dans un backend de stockage persistant, généralement etcd.
 
+Il sert de médiateur pour toutes les interactions entre les clients et les objets API stockés dans etcd. Par conséquent, il est le point de rencontre central de tous les différents composants.
 
+### Kubernetes API et extension par APIgroups
 
-# `Scheduler` : assigner des pods aux noeuds
+Tous les types de resources Kubernetes correspondent à un morceau (un sous arbre) d'API REST de Kubernetes. Ces chemins d'API pour chaque ressources sont classés par groupe qu'on appelle des `apiGroups`:
 
-Avec etcd et le serveur API fonctionnant correctement, un cluster Kubernetes est, d'une certaine manière, fonctionnellement complet. d'une certaine manière, fonctionnellement complet. Vous pouvez créer tous les différents objets de l'API, tels que Deployments et Pods. Cependant, vous constaterez qu'il ne commence jamais à fonctionner. Trouver un emplacement pour l'exécution d'un Pod est le travail de l'ordonnanceur de Kubernetes. Le planificateur scanne le serveur d'API à la recherche de Pods non programmés et détermine ensuite les meilleurs nœuds sur lesquels les exécuter. Comme le serveur d'API, le `scheduler` est un sujet complexe et riche qui est couvert plus en profondeur dans le chapitre 5. plus en profondeur dans le chapitre 5.
+- On peut lister les resources et leur groupes d'API avec la commande `kubectl api-resources -o wide`.
+- Ces groups correspondent aux préfixes indiqué dans la section `apiVersion` des descriptions de ressources.
+- Ces groupes d'API sont versionnés sémantiquement et classés en `alpha` `beta` et `stable`. `beta` indique déjà un bon niveau de stabilité et d'utilisabilité et beaucoup de ressources officielles de kubernetes ne sont pas encore en api stable. Exemple: les `CronJobs` viennent de se stabiliser au début 2021.
+- N'importe qui peut développer ses propres types de resources appelées `CustomResourceDefinition` (voir ci dessous) et créer un `apiGroup` pour les ranger.
 
-# `Controller Manager` : les boucles de réconciliations
+Documentation: https://kubernetes.io/docs/reference/using-api/
 
-Une fois qu'`etcd`, le serveur API et l'ordonnanceur sont opérationnels, vous pouvez créer des pods et les voir programmés. Pods et les voir programmés sur les nœuds, mais vous constaterez que les ReplicaSets, les déploiements et les services ne fonctionnent pas comme vous l'attendez. Cela est dû au fait que toutes les boucles de contrôle de réconciliation nécessaires à la mise en œuvre de cette fonctionnalité ne sont pas actuellement en cours d'exécution. L'exécution de ces boucles est le travail du gestionnaire du contrôleur. Le gestionnaire de contrôleur est le plus varié de tous les composants Kubernetes, puisqu'il possède en son sein de nombreuses boucles de contrôle de réconciliation différentes pour mettre en œuvre cette fonctionnalité. boucles de contrôle de réconciliation différentes pour implémenter de nombreuses parties du système du système Kubernetes global.
+## `Scheduler` : assigner des pods aux noeuds
 
-# Composants des nœuds de travail
+Avec etcd et le serveur API fonctionnant correctement, un cluster Kubernetes est, d'une certaine manière, fonctionnellement complet. Avec seulement ces deux composants, vous pouvez créer tous les différents objets de l'API, tels que Deployments et Pods. Cependant, en testant cela on peut se rendre compte que les pods ne sont jamais exécutés.
+
+En effet, trouver un emplacement pour l'exécution d'un Pod est le travail du scheduler de Kubernetes. Il scanne le serveur d'API à la recherche de Pods non programmés et détermine ensuite les meilleurs nœuds sur lesquels les exécuter.
+
+## `Controller Manager` : les boucles de réconciliations
+
+Une fois qu'`etcd`, le serveur API et le `scheduler` sont opérationnels, vous pouvez créer des pods et les voir positionnes et exécutés sur les nœuds, mais vous constaterez que les `ReplicaSets`, les `Deployment` et `Services` ne fonctionnent pas . Cela est dû au fait que toutes les boucles de contrôle de réconciliation nécessaires à leur mise en œuvre ne sont pas actuellement en cours d'exécution. C'est le travail du `Controller Manager`. Il regroupe de nombreuses boucles de contrôle/réconciliation différentes nécessaires au fonctionnement de la plupart des objects auto-piloté/auto-réparant (selfhealing) ou simplement dynamiques du cluster.
+
+# Composants des nœuds `worker`
 
 ## Kubelet
 
-Le kubelet est le démon de nœud pour toutes les machines qui font partie d'un cluster Kubernetes. Le kubelet est le pont qui relie le CPU, le disque et la mémoire disponibles d'un nœud à la grande grappe Kubernetes. dans le grand cluster Kubernetes. Le kubelet communique avec le serveur API pour pour trouver les conteneurs qui devraient être exécutés sur son nœud. De même, le kubelet communique. De même, le kubelet communique l'état de ces conteneurs au serveur API afin que d'autres boucles de contrôle de réconciliation puissent observer l'état des conteneurs. boucles de contrôle de réconciliation puissent observer l'état actuel de ces conteneurs. En plus d'ordonnancer et de communiquer l'état des conteneurs s'exécutant dans des Pods sur sur leurs machines, les kubelets sont également responsables de la vérification de l'état de santé et du redémarrage des conteneurs qui sont censés s'exécuter sur leurs machines. Il serait assez inefficace de repousser toutes les informations sur l'état de santé vers le serveur API afin que les boucles de réconciliation puissent prendre des mesures pour corriger l'état d'un conteneur sur une machine particulière. Au lieu de cela, le kubelet court-circuite cette interaction et exécute lui-même la boucle de réconciliation. réconciliation elle-même. Ainsi, si un conteneur exécuté par le kubelet meurt ou échoue à son contrôle de santé, le kubelet redémarre. de santé, le kubelet le redémarre, tout en communiquant cet état de santé (et le redémarrage) à l'API.
+Le `kubelet` est l'agent de base pour tous les serveur d'un cluster Kubernetes qui doivent exécuter des conteneurs. Il est nécessaire installé directement sous forme de binaire car il est lui-même en charge des conteneurs. Il est l'élément qui relie le CPU, le disque et la mémoire disponibles d'un nœud au cluster : il communique avec le serveur API pour pour définir et démarrer les conteneurs qui à exécuter sur son nœud.
 
-## Heapster
+Le kubelet communique également l'état de ces conteneurs au serveur API afin que d'autres boucles de contrôle de réconciliation puissent observer leur état à tout moment. Il est également en charge de la vérification de l'état de santé et du redémarrage des conteneurs.
 
-L'autre composant planifié est un binaire appelé Heapster, qui est chargé de collecter des mesures telles que l'utilisation du CPU, du réseau et du disque de tous les conteneurs s'exécutant dans le cluster Kubernetes. Ces métriques peuvent être poussées vers un système de surveillance, comme InfluxDB, pour l'alerte et la surveillance générale de la santé des applications dans le cluster. De plus, et c'est important, ces mesures sont utilisées pour mettre en œuvre la mise à l'échelle automatique des Pods au sein du cluster Kubernetes. Kubernetes dispose d'une implémentation d'autoscaling, qui, par exemple, qui, par exemple, peut automatiquement augmenter la taille d'un déploiement lorsque l'utilisation du CPU des containers du déploiement dépasse 80 %. Heapster est le composant qui recueille et agrège ces métriques pour alimenter la boucle de réconciliation mise en œuvre par l'autoscaler. L'autoscaler observe l'état actuel du monde à travers des appels API à Heapster.
+Comme il est assez inefficace d'envoyer toutes les informations sur l'état de santé vers le serveur API, le kubelet court-circuite cette interaction API et exécute lui-même la boucle de réconciliation. Ainsi, si un conteneur exécuté par le kubelet s'arrête ou échoue a son `healthcheck`, le kubelet le redémarre tout en communiquant cet état de santé (et le redémarrage) à l'API.
 
 ## kube-proxy et KubeDNS
 
 Voir la partie réseau avancé.
 
 
+<!--
+
+## Autoscaling TODO
+
+# Kubernetes Metric Server remplacement de heapster
+
+Heapster est supprimé depuis 1.13
+Il s'agit d'un autre composant nécessairement binaire (non conteneurisé) qui est chargé de collecter des mesures telles que l'utilisation du CPU, du réseau et du disque de tous les conteneurs s'exécutant dans le cluster Kubernetes.
+
+Ces métriques peuvent être poussées vers un système de monitoring. De plus elles sont utilisées comme base pour gérer la mise à l'échelle automatique des Pods au sein du cluster Kubernetes. En répondant à des appel régulier de via l'API, le `Heapster` fournit les métriques pour alimenter la boucle de réconciliation de l'autoscaler `HorizontalPodAutoscaler`. Cette objet peut, par exemple, automatiquement augmenter la taille d'un `Deployment` lorsque l'utilisation du CPU des containers du déploiement dépasse 80 %. Heapster. -->
+
+<!-- 
 ## Serveur API
 
 Bien que etcd soit au cœur d'un cluster Kubernetes, il n'y a en fait qu'un seul serveur qui est autorisé à avoir un accès direct au cluster Kubernetes, et c'est le serveur API. Le serveur API est la plaque tournante du cluster Kubernetes ; il sert de médiateur pour toutes les interactions entre les clients et les objets API stockés dans etcd. Par conséquent, il est le point de rencontre central de tous les différents composants. Le serveur d'API met en œuvre une API RESTful sur HTTP, exécute toutes les opérations d'API et est responsable du stockage des objets d'API dans un backend de stockage persistant.
@@ -220,5 +249,5 @@ En plus du débogage du serveur d'API via les journaux, il est également possib
 
 ## Mise en place de l'autoscaling
 
-## Backup du Cluster avec Velero
+## Backup du Cluster avec Velero -->
 

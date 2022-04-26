@@ -68,7 +68,7 @@ Article récapitulatif des fonctionnalités de base pour applications stateful: 
 
 ### Les ConfigMaps 
 
-D'après les recommandations de développement [12factor](https://12factor.net/fr), la configuration de nos programmes doit venir de l'environnement. L'environnement est ici Kubernetes.
+D'après les recommandations de développement [12factor](https://12factor.net), la configuration de nos programmes doit venir de l'environnement. L'environnement est ici Kubernetes.
 
 Les objets ConfigMaps permettent d'injecter dans des pods des ensemble clés/valeur de configuration en tant que volumes/fichiers de configuration ou variables d'environnement.
 
@@ -88,7 +88,15 @@ Pour définir qui et quelle app a accès à quel secret, on peut utiliser les fo
 
 <!-- TODO: add ABAC? https://kubernetes.io/docs/reference/access-authn-authz/abac/ -->
 
-Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces. Il fonctionne en liant des ensembles de permissions appelées `Roles` à des identités/comptes humains appelés `User` ou des comptes de services pour vos programmes appelés `ServiceAccount`.
+Kubernetes intègre depuis quelques versions un système de permissions fines sur les ressources et les namespaces. Il fonctionne en liant des ensembles de permissions appelées `Roles` à des identités. Ces identités peuvent être celles d'humains appelés `User` ou des comptes de services/automatisation pour vos programmes appelés `ServiceAccount`.
+
+### L'authentification des `User`
+
+On peut authentifier un utilisateur:
+  - de façon statique à l'aide d'un `fichier token`  ou d'un `certificat X509` a créer manuellement par l'administrateur.
+  - à l'aide d'une intégration avec l'une ou l'autre solution de gestion d'identité (compatible OpenID, fournie par un cloudprovider comme IAM d'AWS, Active Directory etc)
+
+<!-- Chaque pod dans le Cluster dispose est créé avec un service account, le paramètre service account TODO-->
 
 Exemple de comment générer un certificat à créer un nouvel utilisateur dans minikube: https://docs.bitnami.com/tutorials/configure-rbac-in-your-kubernetes-cluster/
 
