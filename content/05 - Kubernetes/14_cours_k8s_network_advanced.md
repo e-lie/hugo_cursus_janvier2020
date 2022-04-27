@@ -32,23 +32,21 @@ Le trafic est-ouest désigne la communication de vos services entre eux. D'une m
 
 Une fois que l'on a mis en place un moyen de communication inter-pod la communication est-ouest de notre cluster n'est pas encore opérationnelle. En effet Kubernetes étant un environnement dynamique avec des pods crées et détruit automatiquement par des Deployment ou autre controller, gérer les IP des pods manuellement est en réalité impraticable. Pour cela nous avons besoin de la gestion automatique d'une ip virtuelle associée fournissant le loadbalancing proposé par les resources de type Service.
 
-Cette gestion d'IP virtuelle est réalisée par le composant Kubernetes appelé `kube-proxy`. Ce nom historique n'est pas très adéquat. Dans le cas standard `kube-proxy` est implémenté
+Cette gestion d'IP virtuelle est réalisée par le composant Kubernetes appelé `kube-proxy`. Le kube-proxy est généralement installé dans le cluster en temps que pod privilégié sur chaque noeud (mais peut également être un service systemd) et manipule `iptable`. On peut s'en rendre compte par exemple avec la commande `sudo iptables-save | grep KUBE | grep "kubernetes-dashboard" # ou autre nom de service`.
 
-Le kube-proxy est généralement installé dans le cluster en temps que pod privilégié sur chaque noeud (mais peut également être un service systemd) et manipule `iptable`. On peut s'en rendre compte par exemple avec la commande `sudo iptables-save | grep KUBE | grep "kubernetes-dashboard" # ou autre nom de service`.
-
-Traditionnellement kube-proxy créé dynamiquement des règles iptable qui indiquent que tout paquet venant du CIDR des pods et à destination de l'IP virtuelle du service (en réalité l'IP de l'objet endpoint) doit être redirigé aléatoirement vers l'un des pods de backend d'un groupe désignés comme nous l'avons vu grace à un selecteur de labels.
+Ainsi, traditionnellement `kube-proxy` créé dynamiquement des règles `iptable` qui indiquent que tout paquet venant du CIDR des pods et à destination de l'IP virtuelle du service (en réalité l'IP de l'objet endpoint) doit être redirigé aléatoirement vers l'un des pods de backend d'un groupe désignés comme nous l'avons vu grace à un selecteur de labels.
 
 kube-proxy peut également être configuré pour utiliser à la place de iptable la fonctionnalité d'IP virtuelle du noyau Linux appelé IPVS. Cela amène surtout de meilleures performances mais seulement dans le cas d'un très grand nombre de pods (<100 000).
 
-# Découverte de service avec kube-DNS
+<!-- # Découverte de service avec kube-DNS
 
 
-Deux type de services moins connus :
+Deux types de services moins connus :
 
 On peut également créé des service de type `headless` avec `ClusterIP=None` pour implémenter soit même d'une manière ou d'une autre ce load balancing
 
 Un 4e type existe, il est moins utilisé :
-- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place.
+- `ExternalName`: utilise CoreDNS pour mapper le service au contenu du champ `externalName` (par exemple `foo.bar.example.com`), en renvoyant un enregistrement `CNAME` avec sa valeur. Aucun proxy d’aucune sorte n’est mis en place. -->
 
 
 <!-- TODO DNS
