@@ -67,12 +67,17 @@ Voici quelques commandes de bases pour Helm :
 
 ### Les Operateurs et les Custom Resources Definitions (CRD)
 
-Kubernetes étant modulaire et ouvert, en particulier son API et ses processus de controlle il est possible et même encouragé d'étendre son fonctionnement depuis l'intérieur en respectant ses principes natifs de conception:
+Kubernetes étant modulaire et ouvert, en particulier son API et ses processus de contrôle il est possible et même encouragé d'étendre son fonctionnement depuis l'intérieur en respectant ses principes natifs de conception:
 
 - Exprimer les objets/resources à manipuler avec des descriptions de haut niveau sous forme de manifestes YAML fournies à l'API
 - Gérer ces resources à l'aide de boucles de contrôle/réconciliation qui vont s'assurer automatiquement de maintenir l'état désiré exprimé dans les descriptions.
 
 Un opérateur désigne toute extension de Kubernetes qui respecte ces principes.
+
+Les Custom Resources Definitions (CRDs) sont les nouveaux types de resources ajoutés pour étendre l'API
+
+- On peut lister toutes les resources (custom ou non) dans kubectl avec `kubectl api-resources -o wide`. les CRDs sont affichées dans la dernière section du menu Lens.
+- On peut utiliser `kubectl explain` dessus pour découvrir les types qu'on ne connais pas
 
 Quelques exemples d'opérateurs:
 
