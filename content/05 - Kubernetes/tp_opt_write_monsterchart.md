@@ -8,7 +8,7 @@ weight: 2090
 
 - Ouvrez le dans VSCode
 
-- Pour démarrer le développement d'un chart on peut utiliser une commande helm d'initiation qui va générer un chart d'exemple : `helm create monsterchart`
+- Pour démarrer le développement d'un chart on peut utiliser une commande helm d'initialisation qui va générer un chart d'exemple : `helm create monsterchart`
 
 Observons un peu le contenu de notre Chart d'exemple :
 
@@ -45,6 +45,8 @@ Nous allons paramétrer à minima nos template pour pouvoir modifier:
 - les images utilisée pour l'installation des services
 - le nom des resources pour éviter les conflits
 - la configuration du ingress
+
+Pour ce faire:
 
 - Déplacez le fichier `values.yaml` existant dans le dossier `template_backup`.
 - Ajoutez à un nouveau fichier `values.yaml` avec le code suivant : 

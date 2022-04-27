@@ -76,8 +76,8 @@ Un opérateur désigne toute extension de Kubernetes qui respecte ces principes.
 
 Les Custom Resources Definitions (CRDs) sont les nouveaux types de resources ajoutés pour étendre l'API
 
-- On peut lister toutes les resources (custom ou non) dans kubectl avec `kubectl api-resources -o wide`. les CRDs sont affichées dans la dernière section du menu Lens.
-- On peut utiliser `kubectl explain` dessus pour découvrir les types qu'on ne connais pas
+- On peut lister toutes les resources (custom ou non) dans kubectl avec `kubectl api-resources -o wide`. les CRDs sont aussi affichées dans la dernière section du menu Lens.
+- On peut utiliser `kubectl explain` sur ces noms de resources pour découvrir les types qu'on ne connait pas
 
 Quelques exemples d'opérateurs:
 
