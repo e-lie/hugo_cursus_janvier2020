@@ -42,7 +42,7 @@ Ce chart statique a plusieurs soucis mais notamment il ne permet par d'être ins
 
 Nous allons paramétrer à minima nos template pour pouvoir modifier: 
 
-- les images utilisée pour l'installation des services
+- les images utilisées pour l'installation des services
 - le nom des resources pour éviter les conflits
 - la configuration du ingress
 

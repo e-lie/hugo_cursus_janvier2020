@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Bootstrapper un cluster multi-noeud avec Ansible (Kubeadm ou mode manuel)
-draft: true
+draft: false
 weight: 2090
 ---
 
