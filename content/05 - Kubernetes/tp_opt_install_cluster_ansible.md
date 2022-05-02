@@ -198,6 +198,19 @@ voir le début du TP `CI/CD avec Gitlab et ArgoCD`
 
 voir le début du TP `CI/CD avec Gitlab et ArgoCD`
 
+### Installer du monitoring
+
+voir TP monitoring et série de tutorial dans ce TP pour plus avancé
+
+### Installer le gestionnaire d'utilisateurs keycloak
+
+- https://www.talkingquickly.co.uk/installing-keycloak-kubernetes-helm
+- https://www.keycloak.org/getting-started/getting-started-kube
+- https://www.talkingquickly.co.uk/setting-up-oidc-login-kubernetes-kubectl-with-keycloak
+
+
+
+
 <!-- ### Installer BKPR
 
 https://github.com/vmware-archive/kube-prod-runtime/blob/master/docs/quickstart-generic.md -->
