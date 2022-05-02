@@ -76,8 +76,6 @@ Beaucoup de solutions de réseau qui se concurrencent, demandant un comparatif u
   - diffèrent sur l'implémentation : BGP, réseau overlay ou non (encapsulation VXLAN, IPinIP, autre)
   - toutes ne permettent pas d'appliquer des **NetworkPolicies** : l'isolement et la sécurité réseau
   - peuvent parfois s'hybrider entre elles (Canal = Calico + Flannel)
-  <!-- - ou être plus ou moins compatible avec des *service meshes* (Envoy, Istio) -->
-  - ces implémentations sont souvent concrètement des *DaemonSets* : des pods qui tournent dans chacun des nodes de Kubernetes
 
 - Calico, Flannel, Weave ou Cilium sont très employées et souvent proposées en option par les fournisseurs de cloud
 - Cilium a la particularité d'utiliser la technologie eBPF de Linux qui permet une sécurité et une rapidité accrue

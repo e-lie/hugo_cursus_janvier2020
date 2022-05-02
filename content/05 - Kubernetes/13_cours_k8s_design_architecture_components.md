@@ -107,7 +107,7 @@ Voici les composants des deux chemins différents pour les types de ressources n
 - `/api/v1/namespaces/<namespace-name>/<resource-type-name>/<resource-name>`.
 - `/apis/<api-group>/<api-version>/namespaces/<namespace-name>/<resource-type-name>/<resource-name>`.
 
-Voici les composants des deux chemins différents pour les types de ressources sans espace-nom :
+Voici les composants des deux chemins différents pour les types de ressources sans namespace :
 
 - `/api/v1/<nom-de-la-ressource>/<nom-de-la-ressource>`
 - `/apis/<api-group>/<api-version>/<resource-type-name>/<resource-name>`
@@ -127,21 +127,19 @@ Pour mieux comprendre ce que fait le serveur d'API pour chacune de ces différen
 
 #### Authentification
 
-La première étape du traitement des demandes est l'authentification, qui établit l'identité associée à la demande. Le serveur API prend en charge plusieurs modes différents d'établissement de l'identité, notamment les certificats clients, les jetons porteurs et l'authentification de base HTTP. En général, les certificats de client ou les jetons de porteur doivent être utilisés pour l'authentification ; l'utilisation de l'authentification de base HTTP est déconseillée.
-
-En plus de ces méthodes locales d'établissement de l'identité, l'authentification est enfichable, et il existe plusieurs implémentations de plug-in qui utilisent des fournisseurs d'identité distants. Il s'agit notamment de la prise en charge du protocole OpenID Connect (OIDC), ainsi que d'Azure Active Directory. Ces plug-ins d'authentification sont compilés à la fois dans le serveur API et dans les bibliothèques client. Cela signifie que vous devrez peut-être vous assurer que les outils de ligne de commande et le serveur API ont à peu près la même version.
+La première étape du traitement des demandes est l'authentification, qui établit l'identité associée à la demande. Le serveur API prend en charge plusieurs modes d'authentification : certificat x509, Token ou backend d'identité principalement. voir cours sécurité.
 
 #### RBAC/Autorisation
 
-Après que le serveur API ait déterminé l'identité d'une requête, il passe à l'autorisation de celle-ci. Chaque demande adressée à Kubernetes suit un modèle RBAC traditionnel. Pour accéder à une demande, l'identité doit avoir le rôle approprié associé à la demande. Le RBAC de Kubernetes est un sujet riche et compliqué, et nous avons donc consacré un chapitre entier aux détails de son fonctionnement. Aux fins de ce résumé du serveur API, lors du traitement d'une demande, le serveur API détermine si l'identité associée à la demande peut accéder à la combinaison du verbe et du chemin HTTP dans la demande. Si l'identité de la demande a le rôle approprié, elle est autorisée à poursuivre. Dans le cas contraire, une réponse HTTP 403 est renvoyée. Ce point est abordé de manière beaucoup plus détaillée dans un chapitre ultérieur.
+Après que le serveur API ait déterminé l'identité d'une requête, il passe à l'autorisation de celle-ci avec RBAC
 
 #### Contrôle d'admission
 
-Une fois qu'une demande a été authentifiée et autorisée, elle passe au contrôle d'admission. L'authentification et le RBAC déterminent si la demande est autorisée à se produire, et ceci est basé sur les propriétés HTTP de la demande (en-têtes, méthode et chemin). Le contrôle d'admission détermine si la demande est bien formée et applique éventuellement des modifications à la demande avant qu'elle ne soit traitée. Le contrôle d'admission définit une interface enfichable :
+Une fois qu'une demande a été authentifiée et autorisée, elle passe au contrôle d'admission. Le contrôle d'admission détermine si la demande est bien formée (syntaxe) et applique éventuellement des modifications à la demande avant qu'elle ne soit traitée. On peut ajouter des plugin pour l'admission
 
-`apply(request) : (transformedRequest, error)`
+Si un contrôleur d'admission trouve une erreur, la requête est rejetée. Si la demande est acceptée, la demande transformée est utilisée à la place de la demande initiale. Les contrôleurs d'admission sont appelés en série, chacun recevant le résultat du précédent.
 
-Si un contrôleur d'admission trouve une erreur, la requête est rejetée. Si la demande est acceptée, la demande transformée est utilisée à la place de la demande initiale. Les contrôleurs d'admission sont appelés en série, chacun recevant le résultat du précédent. Comme le contrôle d'admission est un mécanisme si général et pluggable, il est utilisé pour une grande variété de fonctionnalités différentes dans le serveur API. Par exemple, il est utilisé pour ajouter des valeurs par défaut aux objets. Il peut également être utilisé pour appliquer une politique (par exemple, exiger que tous les objets aient une certaine étiquette). En outre, il peut être utilisé pour faire des choses comme injecter un conteneur supplémentaire dans chaque pod. Le service mesh Istio utilise cette approche pour injecter son conteneur sidecar de manière transparente. Les contrôleurs d'admission sont assez génériques et peuvent être ajoutés dynamiquement au serveur API via le contrôle d'admission basé sur les webhooks.
+C'est un méchanisme très général utilisé par exemple pour ajouter des valeurs par défaut aux objets, appliquer une pod security policy etc.
 
 ### Requêtes spécialisées
 
@@ -157,39 +155,23 @@ En plus de ces flux, le serveur API Kubernetes introduit en fait un protocole de
 
 #### Opérations Watch 
 
-En plus des données en continu, le serveur API prend en charge une API pour surveiller les ressources. watch surveille un chemin à la recherche de changements. Ainsi, au lieu d'interroger à un certain intervalle pour d'éventuelles mises à jour, ce qui introduit soit une charge supplémentaire (en raison d'une interrogation rapide), soit une latence supplémentaire (en raison d'une interrogation lente), l'utilisation d'une surveillance permet à un utilisateur d'obtenir des mises à jour à faible latence avec une seule connexion. Lorsqu'un utilisateur établit une connexion de veille au serveur API en ajoutant le paramètre de requête `?watch=true` à une demande du serveur API, il peut obtenir des mises à jour à faible latence avec une seule connexion.
+En plus des données en continu, le serveur API prend en charge une API pour surveiller les ressources. Ainsi, au lieu d'interroger l'API à intervalle régulier pour détecter d'éventuelles mises à jour, ce qui introduit soit une charge/latence supplémentaire, le mode `watch` permet à un utilisateur d'obtenir des mises à jour à faible latence avec une seule connexion en ajoutant le paramètre de requête `?watch=true`.
 
-#### Les CRD et leur boucle de contrôle
+#### Boucle de controlle de l'API pour les CRD
 
-Les définitions de ressources personnalisées (CRD) sont des objets API dynamiques qui peuvent être ajoutés à un serveur API en cours d'exécution. Étant donné que l'acte de création d'une CRD crée intrinsèquement de nouveaux chemins HTTP que le serveur d'API doit savoir comment servir, le contrôleur responsable de l'ajout de ces chemins est situé au même endroit que le serveur d'API. Avec l'ajout des serveurs d'API délégués (décrits dans un chapitre ultérieur), ce contrôleur a en fait été en grande partie abstrait du serveur d'API. Actuellement, il s'exécute toujours en processus par défaut, mais il peut également être exécuté hors processus.
+Les définitions de ressources personnalisées (CRD) sont des objets API dynamiques qui peuvent être ajoutés à un serveur API en cours d'exécution. Étant donné que l'acte de création d'une CRD crée de nouveaux chemins HTTP que le serveur d'API doit savoir comment ajouter ces chemins et implémente pour cela un contrôleur avec un boucle de contrôle.
+#### Journaux d'audit
 
-## Débogage du serveur API
+`/var/log/kubernetes/kube-apiserver.log` traditionnellement.
 
-Bien sûr, comprendre la mise en œuvre du serveur d'API est une bonne chose, mais le plus souvent, ce dont vous avez vraiment besoin est de pouvoir déboguer ce qui se passe réellement avec le serveur d'API (ainsi que les clients qui appellent le serveur d'API). Le moyen le plus simple d'y parvenir est d'utiliser les journaux que le serveur d'API écrit.
+Les journaux d'audit sont destinés à permettre à un administrateur de serveur de récupérer "forensically" l'état du serveur et la série d'interactions avec les clients qui ont abouti à l'état actuel des données dans l'API Kubernetes. Par exemple, il permet à un utilisateur de répondre à des questions telles que : "Pourquoi ce ReplicaSet a-t-il été mis à l'échelle à 100 ? ", " Qui a supprimé ce Pod ? ", entre autres. Les journaux d'audit peuvent être poussés dans un backend spécifique (SIEM ?) pour stockage et analyse
 
-### Journaux de base
-Par défaut, le serveur d'API enregistre chaque requête envoyée au serveur d'API. Ce journal inclut l'adresse IP du client, le chemin de la requête et le code que le serveur a renvoyé. Si une erreur inattendue entraîne une panique du serveur, le serveur détecte également cette panique, renvoie un message 500 et consigne cette erreur.
-
-I0803 19:59:19.929302
- 1 trace.go:76] Trace [1449222206] :
-"Créer /api/v1/namespaces/default/events" (démarré : 2018-08-03
-19:59:19.001777279 +0000 UTC m=+25.386403121) (durée totale : 927.484579ms) :
-Trace[1449222206] : [927.401927ms] [927.279642ms] Objet stocké dans la base de données
-I0803 19:59:20.402215
- 1 controller.go:537] admission de quota ajouté
-évaluateur pour : { espaces de noms}
-
-Dans ce journal, vous pouvez voir qu'il commence par l'horodatage I0803 19:59 :... quand la ligne de journal a été émise, suivi du numéro de la ligne qui l'a émise, trace.go:76, et enfin le message du journal lui-même.
-
-### Journaux d'audit
-
-Le journal d'audit est destiné à permettre à un administrateur de serveur de récupérer de manière forensique l'état du serveur et la série d'interactions avec les clients qui ont abouti à l'état actuel des données dans l'API Kubernetes. Par exemple, il permet à un utilisateur de répondre à des questions telles que : " Pourquoi ce ReplicaSet a-t-il été mis à l'échelle à 100 ? ", " Qui a supprimé ce Pod ? ", entre autres. Les journaux d'audit ont un backend enfichable pour l'endroit où ils sont écrits.
-
-### Activation de journaux supplémentaires
-
-Kubernetes utilise le paquet github.com/golang/glog leveled logging pour sa journalisation. En utilisant le drapeau --v sur le serveur API, vous pouvez ajuster le niveau de verbosité de la journalisation. En général, le projet Kubernetes a défini le niveau de verbosité de la journalisation à 2 (--v=2).
+En utilisant --v sur le serveur API, vous pouvez ajuster le niveau de verbosité de la journalisation (defaut --v=2).
 
 En plus du débogage du serveur d'API via les journaux, il est également possible de déboguer les interactions avec le serveur d'API, via l'outil de ligne de commande kubectl. Comme le serveur d'API, l'outil de ligne de commande kubectl enregistre les journaux via le paquet github.com/golang/glog et prend en charge l'indicateur de verbosité --v. Définir la verbosité au niveau 10 (`--v=10`)
+
+
+
 
 ## `Scheduler` : assigner des pods aux noeuds
 
@@ -197,7 +179,11 @@ Avec etcd et le serveur API fonctionnant correctement, un cluster Kubernetes est
 
 En effet, trouver un emplacement pour l'exécution d'un Pod est le travail du scheduler de Kubernetes. Il scanne le serveur d'API à la recherche de Pods non programmés et détermine ensuite les meilleurs nœuds sur lesquels les exécuter.
 
-# `Controller Manager` : les boucles de réconciliations
+Le scheduler va pour cela cartographier en temps réel les ressources encore disponible sur les noeuds, les resources demandées par les pods, les étiquettes de caractéristiques des noeuds appelées `Taints`, et autres contraintes géographiques des pods comme les `Affinity, Anti-affinity` ainsi que contraintes de volume etc.
+
+
+
+## `Controller Manager` : les boucles de réconciliations
 
 Une fois qu'`etcd`, le serveur API et le `scheduler` sont opérationnels, vous pouvez créer des pods et les voir positionnes et exécutés sur les nœuds, mais vous constaterez que les `ReplicaSets`, les `Deployment` et `Services` ne fonctionnent pas . Cela est dû au fait que toutes les boucles de contrôle de réconciliation nécessaires à leur mise en œuvre ne sont pas actuellement en cours d'exécution. C'est le travail du `Controller Manager`. Il regroupe de nombreuses boucles de contrôle/réconciliation différentes nécessaires au fonctionnement de la plupart des objects auto-piloté/auto-réparant (selfhealing) ou simplement dynamiques du cluster.
 
@@ -215,30 +201,6 @@ Comme il est assez inefficace d'envoyer toutes les informations sur l'état de s
 
 Voir la partie réseau avancé.
 
-<!-- ## Autoscaling TODO -->
-
 # Kubernetes Metric Server remplacement de heapster
 
-Heapster est supprimé depuis 1.13
-Il s'agit d'un autre composant nécessairement binaire (non conteneurisé) qui est chargé de collecter des mesures telles que l'utilisation du CPU, du réseau et du disque de tous les conteneurs s'exécutant dans le cluster Kubernetes.
-
-Ces métriques peuvent être poussées vers un système de monitoring. De plus elles sont utilisées comme base pour gérer la mise à l'échelle automatique des Pods au sein du cluster Kubernetes. En répondant à des appel régulier de via l'API, le `Heapster` fournit les métriques pour alimenter la boucle de réconciliation de l'autoscaler `HorizontalPodAutoscaler`. Cette objet peut, par exemple, automatiquement augmenter la taille d'un `Deployment` lorsque l'utilisation du CPU des containers du déploiement dépasse 80 %. Heapster. 
-
-
-
-
-<!-- 
-## Scheduler détaillé
-
-- Positionner un pod avec les affinity
-
-## Manipuler son Cluster
-
-- Mise à jour du cluster
-
-- Drain node et poddisruptionbudget
-
-## Mise en place de l'autoscaling
-
-## Backup du Cluster avec Velero -->
-
+Il s'agit d'un autre composant nécessairement binaire (non conteneurisé) qui est chargé de collecter des mesures telles que l'utilisation du CPU, du réseau et du disque de tous les conteneurs s'exécutant dans le cluster Kubernetes. Son objectif est d'être plus réactif que le monitoring classique en mode pull et de fournir les données de base pour gérer la mise à l'échelle automatique des Pods (pour alimenter la boucle de réconciliation de l'autoscaler `HorizontalPodAutoscaler`). Cet objet peut, par exemple, automatiquement augmenter la taille d'un `Deployment` lorsque l'utilisation du CPU des containers du déploiement dépasse 80 %. 
