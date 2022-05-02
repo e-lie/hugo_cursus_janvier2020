@@ -4,13 +4,37 @@ draft: false
 weight: 2010
 ---
 
+
+## Bonjour à tous ! 
+
+### A propos de moi
+
+<!-- Élie Gavoty
+
+- Developpeur backend et DevOps (Sewan Group / Yunohost)
+- Formateur DevOps, Linux, Python
+- Philosophie de la technique -->
+
+<!-- Hadrien Pélissier
+
+- Ingénieur DevOps (Ansible / Docker / Kubernetes / Gitlab CI) / sécurité / développeur Python et Elixir
+- Formateur DevOps et sécurité informatique -->
+
+### A propos de vous
+
+- Attentes ?
+- Début du cursus :
+  - Est-ce que ça vous plait ?
+  - Quels modules avez vous déjà fait ?
+
 - Kubernetes est une solution d'orchestration de conteneurs extrêmement populaire.
 - Le projet est très ambitieux : une façon de considérer son ampleur est de voir Kubernetes comme un système d'exploitation (et un standard ouvert) pour les applications distribuées et le cloud.
 - Le projet est développé en Open Source au sein de la Cloud Native Computing Foundation.
 
 ## Concrètement : Architecture de Kubernetes
 
-![](../../images/kubernetes/k8s_archi1.png?width=800px)
+<!-- ![](../../images/kubernetes/k8s_archi1.png?width=800px) -->
+![](../../images/kubernetes/shema-persos/k8s-archi.jpg)
 
 - Kubernetes rassemble en un cluster et fait coopérer un groupe de serveurs appelés **noeuds**(nodes).
 
@@ -129,7 +153,7 @@ Les microservices permettent justement le DevOps car:
 
 Au delà de ces trois éléments, l'écosystème d'objets de Kubernetes est vaste et complexe
 
-![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px)
+<!-- ![](../../images/kubernetes/k8s_objects_hierarchy.png?width=600px) -->
 
 
 ## Kubernetes entre Cloud et auto-hébergement

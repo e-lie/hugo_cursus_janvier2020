@@ -61,7 +61,13 @@ Voici quelques commandes de bases pour Helm :
 
 - `helm upgrade my-release my-chart` : permet de mettre à jour notre release avec une nouvelle version.
 
-- `helm ls`: Permet de lister les Charts installés sur votre Cluster
+- `helm plugin install https://github.com/databus23/helm-diff` pour télécharger le plugin helm diff important avant de lancer un upgrade
+
+- Ensuite `helm diff upgrade my-release mychart --values values.yaml`
+
+- `helm list`: Permet de lister les Charts installés sur votre Cluster
+
+- `kubectl get all --all-namespaces -l='app.kubernetes.io/managed-by=Helm,app.kubernetes.io/instance=release-name` ou `kubectl api-resources --verbs=list -o name | xargs -n 1 kubectl get --show-kind -l release=awesome-nginx --ignore-not-found -o name` => pour lister les resources d'un chart à partir des étiquettes
 
 - `helm delete my-release`: Permet de désinstaller la release `my-release` de Kubernetes
 

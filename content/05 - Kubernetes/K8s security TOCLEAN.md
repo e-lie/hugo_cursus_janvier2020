@@ -4,8 +4,6 @@ draft: true
 weight: 2100
 ---
 
-
-
 ## Modèles de menace
 
 - Deux modèles fondamentaux :
