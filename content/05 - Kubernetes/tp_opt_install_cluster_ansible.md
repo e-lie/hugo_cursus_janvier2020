@@ -144,7 +144,7 @@ Pour installer toute l'infrastructure en une seule commande : `bash deploy_all.s
 
 ## Cluster de 4 noeuds terraform/kubeadm avec metallb, rook, argoCD et BKPR
 
-- `git clone -b kubeadm_tf_prod_cluster https://github.com/e-lie/provisionning.git `
+- `git clone -b kubadm_tf_prod_cluster https://github.com/e-lie/provisioning.git `
 
 - compléter le subdomain avec votre prenom ou autre dans `variables.tf`
 - compléter les tokens infra et DNS dans en copiant `env_secrets.dist` en `env_secret` et complétant avec les token formateur.
