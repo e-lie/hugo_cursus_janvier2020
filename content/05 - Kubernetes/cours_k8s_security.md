@@ -20,13 +20,13 @@ Face à ce type de menace l'idée de sécuriser simplement l'accès au cluster d
 
 L'API est le point d'accès universel au Cluster. Les composants de base du cluster, comme les utilisateurs et même tous les pods du Cluster y ont accès par défaut et peuvent donc contrôler potentiellement n'importe quoi dans le cluster si on en donne le droit. Il est donc impératif de bien limiter l'accès à l'API au cas par cas, pour les utilisateurs humains du cluster mais aussi les pods/composants.
 
-Kubernetes intègre un système de permissions fines pour chaque action sur les ressources et les namespaces. Il fonctionne en liant des ensembles de permissions appelées `Roles` à des identités. Ces identités peuvent être celles d'humains appelés `User`/`Group` ou des comptes de services/automatisation pour vos programmes appelés `ServiceAccount`.
+Kubernetes intègre un système de permissions fines pour chaque action sur les ressources et les namespaces. Il fonctionne en liant des ensembles de permissions appelées `Roles` à des identités. Ces identités peuvent être celles d'humains appelés `User`/`Group` ou des comptes de service/automatisation pour vos programmes appelés `ServiceAccount`.
 
 ### L'authentification des `User`
 
 On peut authentifier un utilisateur avec notamment:
   - de façon statique à l'aide d'un `fichier token`  ou d'un `certificat X509` a créer par l'administrateur.
-  - à l'aide d'une intégration avec l'une ou l'autre solution de gestion d'identité (compatible OpenID, fournie par un cloudprovider comme IAM d'AWS, Active Directory, Keycloak etc)
+  - à l'aide d'une intégration avec l'une ou l'autre solution de gestion d'identité (compatible OpenID, fournie par un cloudprovider comme IAM d'AWS, Active Directory, Keycloak etc). Pour une solution keycloak voir fin du TP : Bootstrapper un cluster multi-noeud avec Ansible.
 
 Exemple de comment générer un certificat à créer un nouvel utilisateur dans minikube: https://docs.bitnami.com/tutorials/configure-rbac-in-your-kubernetes-cluster/
 
@@ -34,7 +34,9 @@ Doc officielle: https://kubernetes.io/docs/reference/access-authn-authz/authenti
 
 ### Le `ServiceAccount` d'un pod
 
-Chaque pod dans le Cluster est lié à sa création avec un `ServiceAccount` soit implicitement au service account par défaut (default) du namespace soit explicitement à un autre `ServiceAccount` adapté. Il peut ensuite utiliser une authentification à l'API grâce au token associé. 
+Chaque pod dans le Cluster est lié à sa création avec un `ServiceAccount` soit implicitement au service account par défaut (default) du namespace soit explicitement à un autre `ServiceAccount` adapté. Il peut ensuite utiliser une authentification à l'API grâce au token associé.
+
+Tutoriel pour jouer avec le RBAC et les `ServiceAccounts` : https://dzone.com/articles/using-rbac-with-service-accounts-in-kubernetes
 
 ### Roles et ClusterRoles
 
@@ -58,7 +60,7 @@ Les rules sont décrites à l'aide de verbes qui décrivent des type d'action su
 
 ![](https://i.stack.imgur.com/EhmDC.png)
 
-Il y a aussi le verbe `impersonate` qui permet d'agir en tant qu'autre utilisateur avec la syntaxe `--as=myuser`. Exemple: https://johnharris.io/2019/08/least-privilege-in-kubernetes-using-impersonation/
+Il y a aussi le verbe `impersonate` qui permet d'agir en tant qu'autre utilisateur/identité avec la syntaxe `--as=myuser`. Exemple: https://johnharris.io/2019/08/least-privilege-in-kubernetes-using-impersonation/
 
 
 - Classiquement on crée des `Roles` comme `admin` ou `monitoring` qui désignent un ensemble de permission consistante pour une tâche donnée.
@@ -97,9 +99,14 @@ En plus des rôles que vous pouvez créer pour les utilisateur·ices et processu
 - Le rôle `edit` permet à un·e utilisateur·ice de modifier des choses dans un espace de noms.
 - Le rôle `view` permet l'accès en lecture seule à un espace de noms.
 
-Il y a plein d'autre `roles` et `clusterroles destinés`
+Il y a plein d'autre `roles` et `clusterroles` destinés à différents composants du cluster qu'on peut étudier.
 
-La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes.
+La commande `kubectl auth can-i <verb> <type_de_resource>` permet de déterminer selon le profil utilisé (défini dans votre `kubeconfig`) les permissions actuelles de l'user sur les objets Kubernetes. On peut en plus utiliser l'impersonnation avec can-i (et toutes les commandes kubectl) pour tester les limites d'une d'action avec identité. Exemple:
+
+```bash
+$ kubectl auth can-i delete pod --as=my-limited-serviceaccount
+no
+```
 
 ### Auditer le RBAC...
 
@@ -113,7 +120,7 @@ Un vaste sujet : Cf livre Oreilly `Container Security`.
 
 - Containerd et CRI-O n'ont pas besoin de démon privilégié comme Docker pour fonctionner et sont plus simple. Elles sont donc à conseiller d'un point de vue sécurité.
 
-- Éviter les conteneurs privilégiés sauf cas exceptionnel (exemple `kube-proxy` est privilégié pour éditer les règles iptables) et les isolés le cas échéant.
+- Éviter les conteneurs privilégiés sauf cas exceptionnel (exemple `kube-proxy` est privilégié pour éditer les règles iptables) et les isoler le cas échéant.
 ## Auditer les images
 
 Avoir une analyse statique des images incluses dans son registry (harbor ou quay.io, ou le registry d'un provider par exemple) et qui bloque les déploiements au niveau de la CI/CD si trop de failles critiques.

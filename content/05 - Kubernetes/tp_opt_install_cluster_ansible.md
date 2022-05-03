@@ -128,6 +128,10 @@ playbook : `githubixx_playbooks/coredns.yml` appliquer avec `ansible-playbook -K
 Faire un déploiement de test `kubectl -n default apply -f https://k8s.io/examples/application/deployment.yaml`
 - `kubectl -n default get all -o wide`
 - `ansible -m get_url -a "url=http://10.200.1.23 dest=/tmp/test.html" k8s_worker`
+
+### Mise à jour de l'infra
+
+La mise à jour des différents composant est discutée dans les posts de blogs tauceti mais pour une vue générale on peut se référer à la documentation officielle : https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade/
 ### Correction par un script
 
 Pour installer toute l'infrastructure en une seule commande : `bash deploy_all.sh`

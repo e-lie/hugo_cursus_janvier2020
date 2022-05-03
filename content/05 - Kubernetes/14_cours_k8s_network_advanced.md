@@ -24,6 +24,8 @@ Une fois cette configuration mise en place les pods sont capables de communiquer
 
 On donc peut tester la base du fonctionnement d'un plugin CNI installé en essayant de pinguer depuis un pod l'IP d'un autre pod sur un autre noeud.
 
+https://projectcalico.docs.tigera.io/about/about-k8s-networking
+
 <!-- ## Traffic réseau "North-South-East-West"
 
 - Lorsque vous avez un cluster Kubernetes avec vos services en cours d'exécution, comment l'utilisateur final extérieur ou un service extérieur entrent-t-ils en contact avec votre service ?. C'est ce que l'on appelle le trafic nord, c'est-à-dire une requête extérieure qui arrive sur votre cluster. Pour gérer ce trafic entrant, vous pouvez mettre en place un loadbalancer. Un loadbalancer kubernetes (LB) donne une seule adresse IP externe qui transmettra tout votre trafic entrant à votre service.
@@ -93,13 +95,15 @@ Il ne dispose pas d'implémentation des Network Policies à moins d'être compl�
 
 Calico développé par l'entreprise Tigera est le plugin CNI le plus populaire pour les clusters à grande échelle avec des configurations avancées et des performances exemplaires.
 
-Il implémente la communication inter-Pod en routant le traffic entre les noeuds à l'aide d'un routeur virtuel utilisant BGP (protocole inter-routeur structurant internet) : 
+Il peut implémente la communication inter-Pod avec un réseau overlay ou en routant le traffic entre les noeuds à l'aide d'un routeur virtuel utilisant BGP (protocole inter-routeur structurant internet) : https://projectcalico.docs.tigera.io/networking/determine-best-networking
 
 Calico est assez modulaire et très configurable. Il peut: 
-- venir complémenter flannel avec des network policies (Cannal) : https://ubuntu.com/kubernetes/docs/cni-canal
+- venir complémenter flannel avec des network policies (Canal) : https://ubuntu.com/kubernetes/docs/cni-canal
 - s'intégrer avec Istio pour proposer de network policies au niveau application (HTTP ou gRPC etc) https://projectcalico.docs.tigera.io/security/tutorials/app-layer-policy/enforce-policy-istio
 - S'intégrer avec metallb pour fournir des LoadBalancer in cluster résilient avec BGP
 - Ou encore depuis peu fournir un dataplane complet basé sur eBPF (des hooks surs et programmables pour étendre le noyau le noyau linux et en particulier sa gestion des paquets réseau): https://www.tigera.io/blog/introducing-the-calico-ebpf-dataplane/. Dans cette configuration il prend complètement en charge la communication inter-Services.
+
+Calico est extrêment fin sur les network policies mais peut aussi gérer le traffic en dehors de kubernetes et notamment s'occuper de règles de firewall pour des VM. Toutes ces règles sont alors configurées par exemple avec des CRD kubernetes ou via la dashboard Tigera (offre Saas) : https://www.tigera.io/features/microsegmentation/
 
 Calico dispose de plus de nombreuses offres managées de différents vendeurs. Il s'intègre en particulier avec l'offre de Tigera et stack complète d'observabilité et sécurité réseau. Cf cours sur la sécurité.
 
@@ -107,9 +111,19 @@ Calico dispose de plus de nombreuses offres managées de différents vendeurs. I
 
 Solution plus récente mais très en vogue, Cilium implémente depuis le départ un dataplane eBPF qui lui permet d'associer une configuration simple avec des fonctionnalités puissantes qui concurrencent Calico:
 - remplace kube-proxy pour sa communication inter-services eBPF
-- fournit une observabilité réseau puissante via une récolte de métrique et son dashboard Hubble
-- fournit des Network Policies standard et avancées au niveau transport (OSI 3-4) et application (OSI 7)
+- fournit une observabilité réseau puissante via une récolte de métrique et son dashboard Hubble (Open source ce qui est un avantage par rapport à Tigera)
+- fournit des Network Policies standard et avancées au niveau transport (OSI 3-4) et application (OSI 7) qui sont DNS-aware
 - fournit en option un chiffrement du traffic
+- Permet de créer facilement un multi-cluster
+
+### Comparaison Cilium et Calico
+
+Cilium et Calico on a peu prêt le même périmetre de fonctionnalité puissantes et performance exemplaires mais :
+- Calico est plus modulaire et peut s'installer de plusieurs façons...
+- Cilium avec moins de paramétrage est légèrement plus simple à déployer et gérer
+- Cilium est plus open source côté dashboard et intégration SIEM car non adossé à une offre SaaS
+- Calico est capable d'étendre sa gestion de sécurité réseau au delà du cluster à d'autre machines avec l'agent calico installé ce qui peut être très puissant.
+
 
 ## Ressources sur le réseau
 
