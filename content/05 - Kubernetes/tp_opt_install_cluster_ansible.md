@@ -202,11 +202,15 @@ voir le début du TP `CI/CD avec Gitlab et ArgoCD`
 
 voir TP monitoring et série de tutorial dans ce TP pour plus avancé
 
-### Installer le gestionnaire d'utilisateurs keycloak
+### Installer le gestionnaire d'identité keycloak et la connection openID à Kubernetes
+
+- https://github.com/int128/kubelogin
+- https://www.keycloak.org/getting-started/getting-started-kube
 
 - https://www.talkingquickly.co.uk/installing-keycloak-kubernetes-helm
-- https://www.keycloak.org/getting-started/getting-started-kube
 - https://www.talkingquickly.co.uk/setting-up-oidc-login-kubernetes-kubectl-with-keycloak
+
+
 
 
 
