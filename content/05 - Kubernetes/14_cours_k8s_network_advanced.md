@@ -110,7 +110,7 @@ Calico dispose de plus de nombreuses offres managées de différents vendeurs. I
 ### Cilium
 
 Solution plus récente mais très en vogue, Cilium implémente depuis le départ un dataplane eBPF qui lui permet d'associer une configuration simple avec des fonctionnalités puissantes qui concurrencent Calico:
-- remplace kube-proxy pour sa communication inter-services eBPF
+- remplace kube-proxy avec sa communication inter-services eBPF ()
 - fournit une observabilité réseau puissante via une récolte de métrique et son dashboard Hubble (Open source ce qui est un avantage par rapport à Tigera)
 - fournit des Network Policies standard et avancées au niveau transport (OSI 3-4) et application (OSI 7) qui sont DNS-aware
 - fournit en option un chiffrement du traffic
@@ -118,11 +118,10 @@ Solution plus récente mais très en vogue, Cilium implémente depuis le départ
 
 ### Comparaison Cilium et Calico
 
-Cilium et Calico on a peu prêt le même périmetre de fonctionnalité puissantes et performance exemplaires mais :
-- Calico est plus modulaire et peut s'installer de plusieurs façons...
-- Cilium avec moins de paramétrage est légèrement plus simple à déployer et gérer
+Cilium et Calico on a peu prêt le même périmetre de fonctionnalités puissantes et performances exemplaires mais :
+- Calico est un peu plus modulaire et peut s'installer de plusieurs façons... ce qui peut être un avantage mais peut aussi amener de la complexité.
 - Cilium est plus open source côté dashboard et intégration SIEM car non adossé à une offre SaaS
-- Calico est capable d'étendre sa gestion de sécurité réseau au delà du cluster à d'autre machines avec l'agent calico installé ce qui peut être très puissant.
+- Calico est capable d'étendre sa gestion de sécurité réseau au delà du cluster à d'autres machines avec l'agent calico installé ce qui peut être très puissant.
 
 
 ## Ressources sur le réseau
