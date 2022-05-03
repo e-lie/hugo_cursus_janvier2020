@@ -31,7 +31,9 @@ Chaque étape sera l'occasion de commenter le code Ansible et explorer notre clu
 ### Créer les serveurs en IaC avec Terraform
 
 - compléter le subdomain dans `terraform/variables.tf`
-- compléter les tokens infra et DNS en copiant `terraform/secrets.auto.tfvars.dist` sans le .dist puis en complétant avec les tokens formateur.
+- compléter les tokens infra et DNS en copiant `terraform/secrets.auto.tfvars.dist` sans le .dist puis en complétant avec les tokens formateur. 
+
+=> pour éviter les conflits, besoin de faire autant de projet hcloud que de stagiaires et envoyer un fichier avec un token cloud par personne par exemple dans le dépot git
 
 Observons et expliquons ensemble le code.
 
@@ -105,6 +107,7 @@ test des composants avec :
 ### Installation de `containerd`,  `kubelet` et `kube-proxy` sur les workers
 
 Chapitre : https://www.tauceti.blog/posts/kubernetes-the-not-so-hard-way-with-ansible-worker-2020/
+alternative plus ancienne avec Docker et Flannel CNI : https://www.tauceti.blog/posts/kubernetes-the-not-so-hard-way-with-ansible-worker/
 
 variables dans `k8s_worker`
 
@@ -113,7 +116,7 @@ role : `githubixx.containerd` appliquer avec `ansible-playbook --tags=role-conta
 Puis role `githubixx.kubernetes-worker` appliquer avec `ansible-playbook --tags=role-kubernetes-worker k8s.yml`
 
 Tester avec `kubectl get nodes` les nodes sont notready car il manque le plugin CNI
-### Installation du CNI `cilium` (ou `flannel`)
+### Installation du CNI `cilium`
 
 Même chapitre
 
