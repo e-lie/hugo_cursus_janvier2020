@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Bootstrapper un cluster multi-noeud avec Ansible (Kubeadm ou mode manuel)
-draft: false
+draft: true
 weight: 2090
 ---
 
@@ -142,7 +142,7 @@ Pour installer toute l'infrastructure en une seule commande : `bash deploy_all.s
 
 - `./cloud_init destroy_infra`
 
-## Cluster de 4 noeuds terraform/kubeadm avec metallb, rook, argoCD et BKPR
+## Cluster de 4 noeuds terraform/kubeadm avec metallb, rook, argoCD
 
 - `git clone -b kubadm_tf_prod_cluster https://github.com/e-lie/provisioning.git `
 

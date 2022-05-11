@@ -1,7 +1,7 @@
 ---
 title: Introduction DevOps
 weight: 3
-draft: true
+draft: false
 ---
 
 ## A propos de moi

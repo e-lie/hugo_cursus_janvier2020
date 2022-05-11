@@ -1,6 +1,6 @@
 ---
 title: "12 - TP 6 - Déployer Wordpress avec Helm et ArgoCD"
-draft: false
+draft: true
 weight: 2071
 ---
 

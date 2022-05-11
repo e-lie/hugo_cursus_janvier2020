@@ -1,6 +1,6 @@
 ---
 title: 14 -Réseau Kubernetes avancé 
-draft: false
+draft: true
 weight: 2100
 ---
 
