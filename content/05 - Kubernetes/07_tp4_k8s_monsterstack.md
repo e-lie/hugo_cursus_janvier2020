@@ -29,7 +29,7 @@ Passons maintenant à Kubernetes.
 
 Maintenant nous allons également créer un déploiement pour `imagebackend`:
 
-- créez `imagebackend.yaml` dans le dossier `k8s-deploy` et collez-y le code suivant :
+- Ouvrez `imagebackend.yaml` dans le dossier `k8s-deploy` et collez-y le code suivant :
 
 `imagebackend.yaml` :
 
@@ -62,7 +62,7 @@ spec:
               name: imagebackend
 ```
 
-- Ensuite, configurons un deuxième deployment `redis.yaml`:
+- Ensuite, configurons le deuxième deployment `redis.yaml`:
 
 ```yaml
 apiVersion: apps/v1
@@ -99,7 +99,7 @@ spec:
 
 Par rapport au workflow de développement docker, nous avons ici une difficultée : construire l'image avec `docker build` ou `docker-compose` ajoute bien l'image à notre installation docker en local mais cette image n'est pas automatiquement accessible depuis notre cluster (k3s ou minikube).
 
-=> Si on essaye de déployer l'image frontend en créant un déploiement nous auront donc une erreur `ErrImagePull` et le pod ne se lancera pas.
+=> Si on essaye de déployer le frontend en créant un déploiement nous auront donc une erreur `ErrImagePull` et le pod ne se lancera pas.
 
 Pour remédier à ce problème dans les situations de développement simple on peut utiliser deux méthodes classiques:
 
@@ -109,19 +109,11 @@ Pour remédier à ce problème dans les situations de développement simple on p
 
 Cette seconde solution est générique et correspond au processus général de déploiement dans kubernetes. Le problème en situation de développement est que ce processus de build et push docker à chaque modification est très/trop lent et fatiguant en pratique. Heureusement le mécanisme de layers des images Docker ne nous oblige à uploader que les layers modifiés de notre image à chaque build mais cela ne règle pas le fond du problème du processus manuel répétif qui viens gréver le développement.
 
-La solution puissante et générique choisie dans ce TP pour avoir un workflow développement confortable et compatible avec `minikube`, `k3s` ou tout autre distribution kubernetes est l'utilisation de `skaffold` en plus d'un registry d'image dédié au développement.
+La solution puissante et générique choisie dans ce TP pour avoir un workflow développement confortable et compatible avec `minikube`, `k3s` ou tout autre distribution kubernetes est `skaffold` combiné à un registry d'images.
 
 - Vérifiez que vous n'êtes pas dans l'environnement minikube docker-env avec `env | grep DOCKER` qui doit ne rien renvoyer.
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
-- Déployons ensuite un registry de base (insecure => en prod il faudrait utiliser une solution plus avancée ou au moins un registry configuré en https) : `docker run -d -p 0.0.0.0:5555:5000 --restart=always --name registry registry:2`.
-
-Ce registry sera accessible sur le domaine de votre instance (xubuntu/k3s) : `<votrenom>.<domaine>` à demander au formateur (exemple : jacques.k8s.domaine.tld) et sur le port `5555`.
-
-- Configurons Docker pour accepter cette insécurité avec la commande (bien remplacer le domaine pour votre cas):
-
-```bash
-echo '{"insecure-registries": ["<votrenom>.<domaine>:5555"]}' | sudo tee /etc/docker/daemon.json
-sudo systemctl reload docker
+ systemctl reload docker
 ```
 - Créez ou modifiez un fichier `skaffold.yaml` avec le contenu :
 
@@ -130,14 +122,16 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-  - image: <votrenom>.<domaine>:5555/frontend
+  - image: registry.kluster.ptych.net/frontend
 deploy:
   kubectl:
     manifests:
-      - k8s-deploy/*.yaml
+      - k8s-deploy-dev/*.yaml
 ```
 
-`skaffold dev --tail=false`
+- Identifiez-vous sur le registry avec `docker login registry.kluster.ptych.net` et en utilisant le login du formateur.
+
+- Lancez le build, push, et le déploiement du imagebackend et du redis avec `skaffold dev --tail=false`
 
 ## Déploiement du `frontend`
 
@@ -166,13 +160,18 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: <nom et tag de l'image>
+          image: registry.kluster.ptych.net/frontend
           ports:
             - containerPort: 5000
+      imagePullSecrets:
+        - name: registry-credential
 ```
 
-- Complétez le nom et tag de l'image (`frontend` si on utilise minikube et `<votrenom>.<domaine>:5555/frontend`)
+- Pour pouvoir tirer l'image depuis le cluster il faut ajouter le login sous forme d'un secret dans Kubernetes : `kubectl create secret docker-registry registry-credential --docker-server=registry.kluster.ptych.net --docker-username=elie --docker-password=<thepasspword>`
 
+- Relancez `skaffold dev --tail=false` si nécessaire.
+
+- Testez le fonctionnement du frontend avec la commande `kubectl port-forward ...`
 #### Santé du service avec les `Probes`
 
 - Ajoutons des healthchecks au conteneur dans le pod avec la syntaxe suivante (le mot-clé `livenessProbe` doit être à la hauteur du `i` de `image:`) :
