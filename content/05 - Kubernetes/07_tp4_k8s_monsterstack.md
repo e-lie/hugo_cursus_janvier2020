@@ -305,7 +305,8 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: monsterstack.local
+    - host: monsterstack.local # à changer si envie/besoin
+    
       http:
         paths:
           - path: /
@@ -314,7 +315,7 @@ spec:
               servicePort: 5000
 ```
 
-- Ajoutez ce fichier avec `skaffold run`. Il y a un warning: l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
+- Ajoutez ce fichier avec `skaffold run` ou `dev`. Il y a une erreur l'API (ie la syntaxe) de kubernetes a changé depuis l'écriture du TP et il faudrait réécrire ce fichier ingress pour intégrer de petites modifications de syntaxe.
 
 - Pour corriger ce warning remplacez l'`apiVersion` par `networking.k8s.io/v1`. La syntaxe de la `spec` a légèrement changée depuis la v1beta1, modifiez comme suit:
 

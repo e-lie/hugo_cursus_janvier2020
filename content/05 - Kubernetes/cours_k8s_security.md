@@ -1,6 +1,6 @@
 ---
 title: Cours - Problématiques de securité Kubernetes
-draft: true
+draft: false
 weight: 2100
 ---
 

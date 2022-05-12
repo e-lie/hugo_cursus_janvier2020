@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Exposer une application en HTTPS via certmanager et un ingress nginx
-draft: true
+draft: false
 weight: 2089
 ---
 
