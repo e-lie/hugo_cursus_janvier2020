@@ -281,7 +281,11 @@ Le type sera : `ClusterIP` pour `imagebackend` et `redis`, car ce sont des servi
 
 
 - Pour **Minikube** : Installons le contrôleur Ingress Nginx avec `minikube addons enable ingress`.
-- Pour les autres types de cluster (**cloud** ou **k3s**), lire la documentation sur les prérequis pour les objets Ingress et installez l'ingress controller appelé `ingress-nginx` : <https://kubernetes.io/docs/concepts/services-networking/ingress/#prerequisites>. Si besoin, aidez-vous du TP suivant sur l'utilisation de Helm.
+
+- Pour **k3s** : Installer l'ingress nginx avec la commande: `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml` Puis vérifiez l'installation avec `kubectl get svc -n ingress-nginx ingress-nginx-controller` : le service `ingress-nginx-controller` devrait avoir une IP externe.
+
+- Pour les autres types de cluster (**cloud** ou **manuel**), lire la documentation sur les prérequis pour les objets Ingress et installez l'ingress controller appelé `ingress-nginx` : <https://kubernetes.io/docs/concepts/services-networking/ingress/#prerequisites>.
+
 
 - Si vous êtes dans k3s, avant de continuer, vérifiez l'installation du contrôleur Ingress Nginx avec `kubectl get svc -n ingress-nginx ingress-nginx-controller` : le service `ingress-nginx-controller` devrait avoir une IP externe.
 
@@ -298,8 +302,8 @@ metadata:
   name: monsterstack
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
 spec:
-  ingressClassName: nginx
   rules:
     - host: monsterstack.local
       http:
