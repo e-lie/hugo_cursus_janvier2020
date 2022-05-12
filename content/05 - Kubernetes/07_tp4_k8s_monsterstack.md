@@ -113,8 +113,6 @@ La solution puissante et générique choisie dans ce TP pour avoir un workflow d
 
 - Vérifiez que vous n'êtes pas dans l'environnement minikube docker-env avec `env | grep DOCKER` qui doit ne rien renvoyer.
 - Installez `skaffold` en suivant les indications ici: `https://skaffold.dev/docs/install/`
- systemctl reload docker
-```
 - Créez ou modifiez un fichier `skaffold.yaml` avec le contenu :
 
 ```yaml
