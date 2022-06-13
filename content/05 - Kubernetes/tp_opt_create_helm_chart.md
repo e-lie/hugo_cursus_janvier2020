@@ -1,6 +1,6 @@
 ---
 title: TP optionnel - Écrire un chart helm
-draft: false
+draft: true
 weight: 2090
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: 13 - Principes de conception et architecture détaillée de Kubernetes
-draft: false
+draft: true
 weight: 2100
 ---
 
