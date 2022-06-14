@@ -1,6 +1,6 @@
 ---
 title: 11 - Cours - Méthodes pour installer des applications Kubernetes
-draft: true
+draft: false
 weight: 2070
 ---
 

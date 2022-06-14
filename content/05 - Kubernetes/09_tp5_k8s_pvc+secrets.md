@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "09 - TP 5 - Déployer Wordpress Avec une base de donnée persistante"
 weight: 2055
 ---
