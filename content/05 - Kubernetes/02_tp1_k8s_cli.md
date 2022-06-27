@@ -170,17 +170,18 @@ On peut aussi l'installer dans minikube ou k3s. Nous allons ici préférer le cl
 
 Lens est une interface graphique (un client "lourd") pour Kubernetes. Elle se connecte en utilisant kubectl et la configuration `~/.kube/config` par défaut et nous permettra d'accéder à un dashboard puissant et agréable à utiliser.
 
+Récemment Mirantis qui a racheté Lens essaye de fermer l'accès à ce logiciel open source. Il faut donc utiliser le build communautaire à la place du build officiel: https://github.com/MuhammedKalkan/OpenLens/releases
+
 Vous pouvez l'installer en lançant ces commandes :
 
 ```bash
 ## Install Lens
-export LENS_VERSION="5.4.5" # change this with the current stable version
-curl -LO https://github.com/lensapp/lens/releases/download/v${LENS_VERSION}/Lens-${LENS_VERSION}.amd64.deb
-sudo dpkg -i Lens-${LENS_VERSION}.amd64.deb
+export LENS_VERSION=5.5.4 # change with the current stable version
+curl -LO "https://github.com/MuhammedKalkan/OpenLens/releases/download/v$LENS_VERSION/OpenLens-$LENS_VERSION.deb"
+sudo dpkg -i "OpenLens-$LENS_VERSION.deb" 
 ```
 
 - Lancez l'application `Lens` dans le menu "internet" de votre machine (VNC).
-- Cliquer sur "skip" juste après le lancement car la création d'un compte n'est pas du tout nécessaire
 - Sélectionnez le cluster de votre choix la liste et épinglez la connection dans la barre de menu
 - Explorons ensemble les ressources dans les différentes rubriques et namespaces
 
