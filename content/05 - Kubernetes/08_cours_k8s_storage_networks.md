@@ -1,5 +1,5 @@
 ---
-draft: false
+draft: true
 title: 08 - Cours - Le stockage et le réseau dans Kubernetes
 weight: 2052
 ---

@@ -1,6 +1,6 @@
 ---
 title: TP opt. - CI/CD avec Gitlab et ArgoCD 
-draft: false
+draft: true
 weight: 2100
 ---
 
